@@ -1,0 +1,21 @@
+.additional_coverages_container {
+  max-width: 1150px;
+  margin: auto;
+  justify-content: space-between;
+}
+.additional_coverages_container .right__content {
+  padding-right: 0;
+}
+
+.additional_coverages_container .vertical-image {
+  position: relative;
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+  aspect-ratio: 9/10;
+}
+
+.vertical-image img {
+  object-fit: cover;
+  object-position: center;
+  height: 100%;
+}

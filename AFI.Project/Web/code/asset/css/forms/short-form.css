@@ -1,0 +1,24 @@
+#short-form .grid-three {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
+    padding: 4.5rem 3.5rem;
+}
+
+
+#short-form .field {
+    margin-bottom: 2rem;
+}
+
+.short-form__button.js-submit-button {
+    display: block !important;
+    margin: auto;
+}
+
+
+@media screen and (max-width:991px) {
+    #short-form .grid-three {
+        grid-template-columns: 1fr;
+        padding: 2rem;
+    }
+}

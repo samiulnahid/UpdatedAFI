@@ -1,0 +1,189 @@
+.frontier___hero {
+    display: block;
+    max-width: 1600px;
+    margin: auto;
+    padding: 0;
+    position: relative;
+}
+
+.frontier___hero .backround_image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    /* display: none; */
+}
+
+.frontier___hero .container {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0 auto;
+}
+
+.frontier___hero .video-wrapper {
+    background-color: transparent;
+    aspect-ratio: 16 / 9;
+    padding: 0;
+}
+
+.frontier___hero .video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+}
+
+.frontier___hero .quote-start {
+    background-image: linear-gradient(120deg, #cb2c30, #881b26);
+    background-image: linear-gradient(120deg,
+            var(--color-red-10),
+            var(--color-red-20));
+    color: #fff;
+    color: var(--color-white);
+    padding: 2.75rem 2.25rem;
+}
+
+.frontier___hero .quote-start__controls {
+    text-align: left;
+}
+
+.frontier___hero form {
+    max-width: 260px;
+    margin: auto;
+}
+
+.frontier___hero .quote-start__type-image {
+    height: 2.9375rem;
+    width: auto;
+}
+
+.frontier___hero .quote-start__heading {
+    margin-top: 0.8rem !important;
+}
+
+.frontier___hero .quote-start__upper-wrapper p {
+    line-height: 2 !important;
+}
+
+.frontier___hero .quote-start__controls .button {
+    width: 100%;
+    font-size: 1.125rem;
+    /* padding: 12px 20px !important; */
+}
+
+
+/* New Update 10 Aug */
+/* .container {
+    max-width: 1280px;
+    position: relative;
+    margin: auto;
+} */
+
+.frontier___hero .quote-start .type-label {
+    display: block;
+}
+
+.frontier___hero .quote-start .field {
+    width: 170px;
+    text-align: left;
+    margin: 0 auto 25px;
+}
+
+.frontier___hero .quote-start .input {
+    width: 100%;
+}
+
+@media screen and (min-width: 992px) {
+    .frontier___hero {
+        display: block;
+        height: 32.5rem;
+        overflow: hidden;
+        padding: 25px;
+    }
+
+    .frontier___hero .align-items-center {
+        align-items: center !important;
+        height: 100%;
+        padding: 12px !important;
+    }
+
+    .frontier___hero .video-wrapper {
+        max-width: 800px;
+    }
+
+    .frontier___hero .backround_image img {
+        display: block;
+    }
+
+    .frontier___hero .quote-start {
+        max-width: 20rem;
+        margin-left: auto;
+        /* max-height: 370px; */
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .frontier___hero .backround_image img {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    /* for Homeowner page */
+    .frontier___hero.homeowner_hero .quote-start {
+        max-height: 400px;
+        top: 45px;
+    }
+
+    /* 08 Aug */
+    .frontier___hero .quote-start .quote-start_ctn {
+        bottom: -0.625rem;
+        left: 50%;
+        min-width: 41.75rem;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }
+
+    .frontier___hero .quote-start .quote-start_ctn .quote-start__lower-wrapper {
+        text-align: center;
+    }
+
+    .frontier___hero .quote-start .quote-start_ctn .quote-start__lower-wrapper .button {
+        width: auto !important;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .frontier___hero .video-wrapper {
+        padding: 0;
+    }
+}
+
+@media screen and (max-width:991px) {
+    .backround_image.mv_bg_image_remove {
+        display: none;
+    }
+}
+
+
+@media screen and (max-width:1024px) {
+
+    /* .hero_section .quote-selector { */
+    .frontier___hero .quote-selector {
+        padding: 1.5rem 2rem !important;
+        max-width: unset !important;
+    }
+}
+
+/* Updated 08 Aug */
+.frontier___hero .quote__start_left .quote-start {
+    right: unset !important;
+    left: 0 !important;
+}
+
+.frontier___hero .quote__start_left .video-wrapper {
+    margin-left: auto;
+}

@@ -1,0 +1,22 @@
+﻿
+@using Sitecore.Links
+@using Sitecore.Mvc
+@using Sitecore
+@using Sitecore.Data.Fields
+@using Sitecore.Resources.Media
+@using Sitecore.Data.Items
+
+@model Sitecore.Mvc.Presentation.RenderingModel
+@{
+
+    string date = "";
+    if (Model.Item.Fields["Date"] != null && Model.Item.Fields["Date"].HasValue)
+    {
+        var dtStart = (Sitecore.Data.Fields.DateField)Model.Item.Fields["Date"];
+        var serverTime = Sitecore.DateUtil.ToServerTime(dtStart.DateTime);
+        date =serverTime.Day.ToString();
+    }
+    
+
+}
+<div class="article-detail__dateline">Publish @date </div>

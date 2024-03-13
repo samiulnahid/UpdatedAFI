@@ -1,0 +1,393 @@
+﻿@using AFI.Feature.QuoteForm.Areas.AFIWEB.Models.Form_Models
+@model AFI.Feature.QuoteForm.Areas.AFIQuoteForm.Models.QuoteLeadForm.QuoteLeadForm
+
+
+
+<!-- ************************************************ -->
+<!---------------------- MULTI-STEP 1 ------------------>
+<!-- ************************************************ -->
+@{
+    Section dataitem = Model.form.sections.Where(x => x.id == "policyHolder").SingleOrDefault();
+}
+<section class="form_section lead__form active_section">
+    <div class="container">
+        <div class="quote_request__section_wrapper">
+            <!-- ******* FORM  *******-->
+            <div class="form_container">
+                <h2 class="quote_request_heading bold">@dataitem.heading</h2>
+
+                <div class="fields-row name_suffix">
+                    <!-- First Name -->
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@dataitem.fields[0].id">@dataitem.fields[0].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input alphabeticOnly required"
+                                   id="@dataitem.fields[0].id"
+                                   name="@dataitem.fields[0].id"
+                                   data-name="@dataitem.fields[0].id"
+                                   type="text"
+                                   pattern="^[a-zA-Z]+$"
+                                   maxlength="50"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+
+                    <!-- Last Name -->
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@dataitem.fields[1].id">@dataitem.fields[1].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input alphabeticOnly required"
+                                   id="@dataitem.fields[1].id"
+                                   name="@dataitem.fields[1].id"
+                                   data-name="@dataitem.fields[1].id"
+                                   type="text"
+                                   pattern="^[a-zA-Z]+$"
+                                   maxlength="50"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+
+                    <!-- Suffix -->
+                    <div class="field field--small">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@dataitem.fields[2].id">@dataitem.fields[2].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input"
+                                    id="@dataitem.fields[2].id"
+                                    name="@dataitem.fields[2].id"
+                                    data-name="@dataitem.fields[2].id"
+                                    type="select">
+                                <option value="">--</option>
+                                @foreach (Options opt in dataitem.fields[2].options)
+                                {
+                                    <option value="@opt.value">@opt.label</option>
+                                }
+                            </select>
+                            <p class="field__note">@dataitem.fields[2].note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spouse -->
+                <div class="fields-row">
+                    <!-- Spouse First Name-->
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@dataitem.fields[3].id">@dataitem.fields[3].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input typeAlphabetic"
+                                   id="@dataitem.fields[3].id"
+                                   name="@dataitem.fields[3].id"
+                                   data-name="@dataitem.fields[3].id"
+                                   type="text"
+                                   pattern="^[a-zA-Z]+$"
+                                   maxlength="50"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+
+                    <!-- Spouse Last Name -->
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@dataitem.fields[4].id">@dataitem.fields[4].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input typeAlphabetic"
+                                   id="@dataitem.fields[4].id"
+                                   name="@dataitem.fields[4].id"
+                                   data-name="@dataitem.fields[4].id"
+                                   type="text"
+                                   pattern="^[a-zA-Z]+$"
+                                   maxlength="50"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email, Phone -->
+                <div class="fields-row">
+                    <!-- Email -->
+                    <div class="field field--xlarge">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@dataitem.fields[5].id">@dataitem.fields[5].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required email"
+                                   id="@dataitem.fields[5].id"
+                                   name="@dataitem.fields[5].id"
+                                   data-name="@dataitem.fields[5].id"
+                                   type="email"
+                                   maxlength="100"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+
+                    <!-- Phone Type -->
+                    <div class="field field--medium">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@dataitem.fields[6].id">@dataitem.fields[6].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input required"
+                                    id="@dataitem.fields[6].id"
+                                    name="@dataitem.fields[6].id"
+                                    data-name="@dataitem.fields[6].id"
+                                    type="select">
+                                <option value="">--</option>
+                                @foreach (Options opt in dataitem.fields[6].options)
+                                {
+                                    <option value="@opt.value">@opt.label</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Phone Number -->
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@dataitem.fields[7].id">@dataitem.fields[7].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required phone"
+                                   id="@dataitem.fields[7].id"
+                                   name="@dataitem.fields[7].id"
+                                   data-name="@dataitem.fields[7].id"
+                                   type="text"
+                                   pattern="\(\d\d\d\) \d\d\d-?\d\d\d\d"
+                                   maxlength="14"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mailing Address -->
+                <div class="fields-row">
+                    <!-- Mailing Address -->
+                    <div class="field field--xlarge">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@dataitem.fields[8].id">@dataitem.fields[8].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required client__field"
+                                   id="@dataitem.fields[8].id"
+                                   name="@dataitem.fields[8].id"
+                                   data-match="address1"
+                                   type="text"
+                                   maxlength="100" />
+                        </div>
+                    </div>
+
+                    <div class="field field--xlarge">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@dataitem.fields[9].id">@dataitem.fields[9].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input client__field"
+                                   id="@dataitem.fields[9].id"
+                                   name="@dataitem.fields[9].id"
+                                   data-match="address2"
+                                   type="text"
+                                   maxlength="100" />
+                        </div>
+                    </div>
+
+                    <!-- city -->
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@dataitem.fields[10].id">@dataitem.fields[10].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required client__field"
+                                   id="@dataitem.fields[10].id"
+                                   name="@dataitem.fields[10].id"
+                                   data-match="city"
+                                   type="text"
+                                   maxlength="100" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- State, Zip -->
+                <div class="fields-row">
+                    <div class="field field--xlarge">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="state">@dataitem.fields[11].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input required client__field" id="@dataitem.fields[11].id" name="@dataitem.fields[11].id" type="select" data-match="state">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field field--medium">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="zip">@dataitem.fields[12].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required zip numberOnly client__field"
+                                   id="@dataitem.fields[12].id"
+                                   name="@dataitem.fields[12].id"
+                                   data-match="zip"
+                                   type="text"
+                                   maxlength="5"
+                                   pattern="[0-9]{5}"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ********************* Property Address Heading ********************* -->
+                <div class="fields-row">
+                    <h2 class="quote_request_heading bold no__margin">@dataitem.fields[13].label</h2>
+                </div>
+
+                <!-- same mailing checkbox -->
+                <div class="fields-row">
+                    <div class="field field--full field-checkbox">
+                        <div class="field-group field-group--inline">
+                            <div class="field__input-wrapper leadCheckboxWrapper">
+                                @foreach (Options opt in dataitem.fields[14].options)
+                                {
+                                    <input class="field__input leadSameAsMailing--true"
+                                           id="@dataitem.fields[14].id--@opt.value"
+                                           name="@dataitem.fields[14].id"
+                                           type="checkbox"
+                                           value="true" /><label class="field__label leadSameAsMailingLabel" for="@dataitem.fields[14].id--@opt.value">@opt.label</label>
+                                    }
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- address -->
+                <div class="fields-row">
+                    <div class="field field--xxlarge">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="policyHolderPrimaryResidenceAddress">@dataitem.fields[15].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required leadPropertyAddress property__field"
+                                   id="@dataitem.fields[15].id"
+                                   name="@dataitem.fields[15].id"
+                                   type="text"
+                                   data-match="address1"
+                                   maxlength="100"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- address 2 opt -->
+                <div class="fields-row">
+                    <div class="field field--xxlarge">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="propertyAddress2">@dataitem.fields[16].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input property__field"
+                                   id="@dataitem.fields[16].id"
+                                   name="@dataitem.fields[16].id"
+                                   type="text"
+                                   maxlength="100"
+                                   placeholder=""
+                                   data-match="address2" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- city -->
+                <div class="fields-row">
+                    <div class="field field--xxlarge">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="policyHolderPrimaryResidenceCity">@dataitem.fields[17].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required property__field"
+                                   id="@dataitem.fields[17].id"
+                                   name="@dataitem.fields[17].id"
+                                   type="text"
+                                   data-match="city"
+                                   maxlength="50"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- state, zip -->
+                <div class="fields-row">
+                    <div class="field field--xlarge">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@dataitem.fields[18].id">@dataitem.fields[18].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input required property__field"
+                                    id="@dataitem.fields[18].id"
+                                    name="@dataitem.fields[18].id"
+                                    type="select"
+                                    data-match="state">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field field--medium">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="policyHolderPrimaryResidenceZip">@dataitem.fields[19].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required zip numberOnly property__field"
+                                   id="@dataitem.fields[19].id"
+                                   name="@dataitem.fields[19].id"
+                                   type="text"
+                                   data-match="zip"
+                                   pattern="[0-9]{5}"
+                                   maxlength="5"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+                </div>
+
+                <p class="note">
+                    @Html.Raw(dataitem.fields[20].note)
+                </p>
+            </div>
+
+            <!-- ******* ASIDE  *******-->
+            @if (dataitem.sidebar != null && dataitem.sidebar.content.Count > 0)
+            {
+                <aside class="quote_request_aside" style="max-width: 200px">
+                    <h2 class="quote_request_sidebar__heading">@dataitem.sidebar.heading</h2>
+                    <div class="quote_request_sidebar__content">
+                        @foreach (SideBarContent sideContent in dataitem.sidebar.content)
+                        {
+                            <div class="quote_request_sidebar__item">
+                                <h3 class="quote_request_sidebar__item_heading">
+                                    @sideContent.heading
+                                </h3>
+                                <p class="quote_request_sidebar__item_description">
+                                    @sideContent.content
+                                </p>
+                            </div>
+                        }
+                    </div>
+                </aside>
+            }
+        </div>
+    </div>
+</section>

@@ -1,0 +1,18 @@
+﻿@using Sitecore.Mvc
+@using Sitecore.XA.Foundation.Presentation
+@using Sitecore.XA.Foundation.SitecoreExtensions.Extensions
+@using Sitecore.ExperienceForms.Mvc.Html
+
+@{
+    Layout = Sitecore.Configuration.Settings.GetSetting("XA.Foundation.Presentation.MetaComponentLayoutPath", "../SXA/Meta Component Layout.cshtml");
+    var isEditingMetaPartial = Sitecore.Context.PageMode.IsExperienceEditorEditing && Sitecore.Context.Item.InheritsFrom(Templates.MetadataPartialDesign.ID);
+}
+@if (isEditingMetaPartial)
+{
+    @Html.Raw(System.Net.WebUtility.HtmlEncode("<script src='/ExperienceForms/scripts/sample.js'></script>"))
+}
+else
+{
+    @Html.RenderFormStyles()
+    @Html.RenderFormScripts()
+}

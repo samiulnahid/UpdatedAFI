@@ -1,0 +1,263 @@
+﻿
+@using Sitecore.Mvc;
+@using Sitecore.Data.Fields;
+@using Sitecore.Mvc.Presentation;
+@using Sitecore.Data.Items
+@using AFI.Foundation.Helper
+@model Sitecore.Mvc.Presentation.RenderingModel
+
+
+@{
+    Item item = Sitecore.Context.Database.GetItem("{F53F6F52-7506-4BF7-81A1-81E5F821FD5E}");
+    if (item == null)
+    {
+        return;
+    }
+
+    if (item.Fields["PageList"] != null && !string.IsNullOrWhiteSpace(item.Fields["PageList"].Value))
+    {
+        Sitecore.Data.Fields.MultilistField multiselectField = item.Fields["PageList"];
+        Sitecore.Data.Items.Item[] items = multiselectField.GetItems();
+        if (items != null && items.Length > 0)
+        {
+            var _currentId = RenderingContext.Current.Rendering.Item.ID;
+            for (int i = 0; i < items.Length; i++)
+            {
+                if (items[i].ID == _currentId)
+                {
+                    return;
+                }
+            }
+        }
+    }
+
+
+    var Message = item.Fields["Message"].ToString() ?? "";
+    ImageField image = item.Fields["Icon"];
+    var IconUrl = "";
+    if (image.MediaItem != null)
+    {
+        IconUrl = Sitecore.Resources.Media.MediaManager.GetMediaUrl(image.MediaItem);
+    }
+
+    var startTime = "";
+    if (item.Fields["StartTime"] != null && !string.IsNullOrWhiteSpace(item.Fields["StartTime"].Value))
+    {
+        var dtStart = (DateField)item.Fields["StartTime"];
+        var serverTime = Sitecore.DateUtil.ToServerTime(dtStart.DateTime);
+        startTime = Sitecore.DateUtil.FormatShortDateTime(serverTime);
+    }
+
+    var endTime = "";
+    if (item.Fields["EndTime"] != null && !string.IsNullOrWhiteSpace(item.Fields["EndTime"].Value))
+    {
+        var dtEnd = (DateField)item.Fields["EndTime"];
+        var serverTime = Sitecore.DateUtil.ToServerTime(dtEnd.DateTime);
+        endTime = Sitecore.DateUtil.FormatShortDateTime(serverTime);
+    }
+
+    var themeItem = item.Fields["Theme"].ToString().ToLower() ?? "";
+    var status = item.Fields["Status"].ToString().ToLower() ?? "";
+    var linkUrl = ((LinkField)item.Fields["ActionLink"]).GetFriendlyUrl().ToString() ?? "";
+    var linkName = item.Fields["LinkName"].ToString() ?? "";
+    var isButton = item.Fields["LinkIsButton"].ToString() ?? "";
+
+
+}
+<style type="text/css">
+
+    .communication-banner__container {
+        padding-top: 1.25rem;
+        padding-bottom: 1.25rem;
+        padding-left: 2.5rem;
+        padding-right: 2.5rem;
+        background-color: #363636;
+        color: #eee;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    @@media screen and (min-width: 768px) {
+        .communication-banner__container {
+            flex-direction: row;
+        }
+    }
+
+
+    .communication-banner__container[data-style="default"] {
+        background-color: #363636;
+        color: #eee;
+    }
+
+        .communication-banner__container[data-style="default"] img {
+            filter: invert(97%) sepia(91%) saturate(4694%) hue-rotate(181deg) brightness(131%) contrast(87%);
+        }
+
+
+    .communication-banner__container[data-style="informational"] {
+        background-color: #e7f0f6;
+        color: #004976;
+    }
+
+        .communication-banner__container[data-style="informational"] img {
+            filter: invert(10%) sepia(76%) saturate(6412%) hue-rotate(192deg) brightness(86%) contrast(101%);
+        }
+
+    .communication-banner__container[data-style="danger"] {
+        background-color: #f5c2c7;
+        color: #842029;
+    }
+
+        .communication-banner__container[data-style="danger"] img {
+            filter: invert(11%) sepia(78%) saturate(2911%) hue-rotate(340deg) brightness(98%) contrast(88%);
+        }
+
+    .communication-banner__container[data-style="warning"] {
+        background-color: #ffecb5;
+        color: #664d03;
+    }
+
+        .communication-banner__container[data-style="warning"] img {
+            filter: invert(28%) sepia(8%) saturate(6190%) hue-rotate(16deg) brightness(98%) contrast(98%);
+        }
+
+    .communication-banner__container[data-style="off"] {
+        display: none;
+    }
+
+    .communication-banner__content {
+        display: flex;
+        align-items: center;
+        line-height: 1.5rem;
+    }
+
+    .communication-banner__icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-right: 1.25rem;
+        flex-shrink: 0;
+    }
+
+        .communication-banner__icon img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+    .communication-banner__actions {
+        flex-shrink: 0;
+    }
+
+    .communication-banner__action-link {
+        color: currentColor;
+        margin-left: 1rem;
+    }
+
+    .customize {
+        background: #eee;
+        padding: 0 1rem;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+        border-top: 1px solid #ccc;
+    }
+
+        .customize label {
+            margin-left: 1rem;
+        }
+
+    .cButton {
+        background-color: #0570c5;
+        border-color: #0570c5;
+        border-radius: 1.625rem;
+        border-style: solid;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 1rem;
+        font-weight: 400;
+        min-width: 9.25rem;
+        opacity: 1;
+        padding: 0.75rem 1.25rem;
+        text-align: center;
+        transition: background-color 0.25s, border-color 0.25s, color 0.25s, opacity 0.25s;
+        color: #fff;
+        transition: background-color var(--anim-duration-half), border-color var(--anim-duration-half), color var(--anim-duration-half), opacity var(--anim-duration-half);
+    }
+
+        .cButton:hover {
+            background-color: #045494;
+            border-color: #045494;
+            text-decoration: none;
+        }
+</style>
+
+@if (Sitecore.Context.PageMode.IsExperienceEditor)
+{
+    <div class="communication-banner__container @themeItem" id="communication-banner" data-style="@themeItem">
+        <div class="communication-banner__content">
+            <div class="communication-banner__icon">
+                @Html.Sitecore().Field("Icon", item)
+            </div>
+            @Html.Sitecore().Field("Message", item)
+
+        </div>
+
+        @if (linkName != "" || linkUrl != "")
+        {
+            <div class="communication-banner__actions">
+
+                @if (isButton == "1")
+                {
+                    <button class='cButton' href="@linkUrl">@linkName</button>
+                }
+                else
+                {
+                    <a href="@linkUrl" class="communication-banner__action-link">@linkName</a>
+                }
+            </div>
+        }
+    </div>
+}
+else
+{
+    if (status == "active" && !string.IsNullOrEmpty(startTime) && !string.IsNullOrEmpty(endTime))
+    {
+        DateTime now = DateTime.Now;
+
+        if ((now > Convert.ToDateTime(startTime)) && (now < Convert.ToDateTime(endTime)))
+        {
+            <div class="communication-banner__container @themeItem"
+                 id="communication-banner"
+                 data-style="@themeItem">
+                <div class="communication-banner__content">
+                    @if (!string.IsNullOrEmpty(IconUrl))
+                    {
+                        <div class="communication-banner__icon">
+                            <img src="@IconUrl" alt="Icon" />
+                        </div>
+                    }
+                    @Message
+                </div>
+                @if (linkName != "" || linkUrl != "")
+                {
+                    <div class="communication-banner__actions">
+                        @if (isButton == "1")
+                        {
+                            <button class='cButton' href="@linkUrl">@linkName</button>
+                        }
+                        else
+                        {
+                            <a href="@linkUrl" class="communication-banner__action-link">@linkName</a>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    }
+}
+
+

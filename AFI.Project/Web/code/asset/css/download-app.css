@@ -1,0 +1,46 @@
+.afi-section-wrapper {
+  padding: 1.75rem;
+  margin: 10px 0;
+  margin-top: 20px;
+}
+
+.download__app h1,
+.download__app p {
+  text-align: center !important;
+  color: #000;
+}
+
+.download__app .app__link_container {
+  margin: 25px 0;
+}
+
+
+
+.app__link_container img {
+  max-width: 150px !important;
+  margin-right: 20px;
+  width: 90%;
+}
+
+
+
+@media screen and (min-width: 48em) {
+  .afi-section-wrapper {
+    padding: 1rem 0 2rem;
+  }
+}
+
+/* 28 April */
+@media screen and (max-width: 768px) {
+  .app__link_container p {
+    margin-bottom: 20px;
+  }
+}
+
+/* 03 May */
+.app__link_container h1,
+.app__link_container h2 {
+  margin-bottom: 20px;
+  font-size: 24px !important;
+  font-weight: 400 !important;
+}

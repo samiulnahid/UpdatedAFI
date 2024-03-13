@@ -1,0 +1,280 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FiftyOne.DeviceDetection.Cloud</name>
+    </assembly>
+    <members>
+        <member name="T:FiftyOne.DeviceDetection.Cloud.Data.DeviceDataCloud">
+            <summary>
+            A data class that makes working with device data from cloud 
+            services easier for the user.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.Cloud.Data.DeviceDataCloud.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Engines.Data.AspectDataBase},FiftyOne.Pipeline.Core.FlowElements.IPipeline,FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine,FiftyOne.Pipeline.Engines.Services.IMissingPropertyService)">
+            <summary>
+            Construct a new instance of the wrapper.
+            </summary>
+            <param name="logger">
+            The logger instance to use.
+            </param>
+            <param name="pipeline">
+            The Pipeline that created this data instance.
+            </param>
+            <param name="engine">
+            The engine that create this data instance.
+            </param>
+            <param name="missingPropertyService">
+            The <see cref="T:FiftyOne.Pipeline.Engines.Services.IMissingPropertyService"/> to use if a requested
+            property does not exist.
+            </param>
+        </member>
+        <member name="T:FiftyOne.DeviceDetection.Cloud.Data.MultiDeviceDataCloud">
+            <summary>
+            A data class that is used to access details of cloud responses
+            that contain multiple device data records.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.DeviceDetection.Cloud.Data.MultiDeviceDataCloud.DEVICE_LIST_KEY">
+            <summary>
+            The key of the 'profiles' list in the base data store.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.Cloud.Data.MultiDeviceDataCloud.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Engines.Data.AspectDataBase},FiftyOne.Pipeline.Core.FlowElements.IPipeline,FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger">
+            The logger instance to use.
+            </param>
+            <param name="pipeline">
+            The Pipeline that created this data instance.
+            </param>
+            <param name="engine">
+            The engine that create this data instance.
+            </param>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.Cloud.Data.MultiDeviceDataCloud.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Engines.Data.AspectDataBase},FiftyOne.Pipeline.Core.FlowElements.IPipeline,FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine,FiftyOne.Pipeline.Engines.Services.IMissingPropertyService)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger">
+            The logger instance to use.
+            </param>
+            <param name="pipeline">
+            The Pipeline that created this data instance.
+            </param>
+            <param name="engine">
+            The engine that create this data instance.
+            </param>
+            <param name="missingPropertyService">
+            The <see cref="T:FiftyOne.Pipeline.Engines.Services.IMissingPropertyService"/> to use if a requested
+            property does not exist.
+            </param>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.Cloud.Data.MultiDeviceDataCloud.Initialize">
+            <summary>
+            Create the empty list of device data.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.DeviceDetection.Cloud.Data.MultiDeviceDataCloud.Profiles">
+            <summary>
+            Get the list of devices.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.Cloud.Data.MultiDeviceDataCloud.AddProfile(FiftyOne.DeviceDetection.IDeviceData)">
+            <summary>
+            Add a 'profile' to this list.
+            </summary>
+            <remarks>
+            Note that 'profile' is usually used to refer to data for 
+            an individual component such as 'hardware' or 'browser'.
+            In this case, a complete <see cref="T:FiftyOne.DeviceDetection.IDeviceData"/> is passed,
+            which may contain data from profiles for multiple components. 
+            </remarks>
+            <param name="profile">
+            The data instance to add to the list.
+            </param>
+        </member>
+        <member name="T:FiftyOne.DeviceDetection.Cloud.FlowElements.DeviceDetectionCloudEngine">
+            <summary>
+            Engine that takes the JSON response from the 
+            <see cref="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine"/> and uses it populate a 
+            DeviceDataCloud instance for easier consumption.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.Cloud.FlowElements.DeviceDetectionCloudEngine.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.DeviceDetection.Cloud.FlowElements.DeviceDetectionCloudEngine},System.Func{FiftyOne.Pipeline.Core.FlowElements.IPipeline,FiftyOne.Pipeline.Core.FlowElements.FlowElementBase{FiftyOne.DeviceDetection.Cloud.Data.DeviceDataCloud,FiftyOne.Pipeline.Engines.Data.IAspectPropertyMetaData},FiftyOne.DeviceDetection.Cloud.Data.DeviceDataCloud})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger">
+            The logger for this instance to use
+            </param>
+            <param name="deviceDataFactory">
+            Factory function to use when creating aspect data instances.
+            </param>
+        </member>
+        <member name="P:FiftyOne.DeviceDetection.Cloud.FlowElements.DeviceDetectionCloudEngine.ElementDataKey">
+            <summary>
+            The key to use for storing this engine's data in a 
+            <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instance.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.DeviceDetection.Cloud.FlowElements.DeviceDetectionCloudEngine.EvidenceKeyFilter">
+            <summary>
+            The filter that defines the evidence that is used by 
+            this engine.
+            This engine needs no evidence as it works from the response
+            from the <see cref="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.ICloudRequestEngine"/>.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.Cloud.FlowElements.DeviceDetectionCloudEngine.ProcessCloudEngine(FiftyOne.Pipeline.Core.Data.IFlowData,FiftyOne.DeviceDetection.Cloud.Data.DeviceDataCloud,System.String)">
+            <summary>
+            Perform the processing for this engine:
+            1. Extract properties relevant to this engine from the JSON.
+            2. Deserialize JSON data to populate a 
+            <see cref="T:FiftyOne.DeviceDetection.Cloud.Data.DeviceDataCloud"/> instance.
+            </summary>
+            <param name="data">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instance containing data for the 
+            current request.
+            </param>
+            <param name="aspectData">
+            The <see cref="T:FiftyOne.DeviceDetection.Cloud.Data.DeviceDataCloud"/> instance to populate with
+            values.
+            </param>
+            <param name="json">
+            The JSON data from the <see cref="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine"/> 
+            response.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if a required parameter is null
+            </exception>
+        </member>
+        <member name="T:FiftyOne.DeviceDetection.Cloud.FlowElements.DeviceDetectionCloudEngineBuilder">
+            <summary>
+            Fluent builder used to create a cloud-based device detection
+            engine.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.Cloud.FlowElements.DeviceDetectionCloudEngineBuilder.#ctor(Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="loggerFactory">
+            The factory to use when creating a logger.
+            </param>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.Cloud.FlowElements.DeviceDetectionCloudEngineBuilder.Build">
+            <summary>
+            Build a new engine using the configured values.
+            </summary>
+            <returns>
+            A new <see cref="T:FiftyOne.DeviceDetection.Cloud.FlowElements.DeviceDetectionCloudEngine"/>
+            </returns>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.Cloud.FlowElements.DeviceDetectionCloudEngineBuilder.NewEngine(System.Collections.Generic.List{System.String})">
+            <summary>
+            This method is called by the base class to create a new
+            <see cref="T:FiftyOne.DeviceDetection.Cloud.FlowElements.DeviceDetectionCloudEngine"/> instance before 
+            additional configuration is applied.
+            </summary>
+            <param name="properties">
+            A string list of the properties that the engine should populate.
+            In this case, this list is ignored as the resource key 
+            defines the properties that are returned by the cloud service.
+            </param>
+            <returns>
+            A new <see cref="T:FiftyOne.DeviceDetection.Cloud.FlowElements.DeviceDetectionCloudEngine"/> instance.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.DeviceDetection.Cloud.FlowElements.HardwareProfileCloudEngine">
+            <summary>
+            A cloud-based engine that can return multiple hardware profiles 
+            from a single request.
+            For example, A single TAC code can match multiple hardware devices.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.Cloud.FlowElements.HardwareProfileCloudEngine.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.CloudRequestEngine.FlowElements.PropertyKeyedCloudEngineBase{FiftyOne.DeviceDetection.Cloud.Data.MultiDeviceDataCloud,FiftyOne.DeviceDetection.IDeviceData}},System.Func{FiftyOne.Pipeline.Core.FlowElements.IPipeline,FiftyOne.Pipeline.Core.FlowElements.FlowElementBase{FiftyOne.DeviceDetection.Cloud.Data.MultiDeviceDataCloud,FiftyOne.Pipeline.Engines.Data.IAspectPropertyMetaData},FiftyOne.DeviceDetection.Cloud.Data.MultiDeviceDataCloud})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger">
+            The logger for this instance to use
+            </param>
+            <param name="deviceDataFactory">
+            Factory function to use when creating aspect data instances.
+            </param>
+        </member>
+        <member name="P:FiftyOne.DeviceDetection.Cloud.FlowElements.HardwareProfileCloudEngine.ElementDataKey">
+            <summary>
+            The key to use for storing this engine's data in a 
+            <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instance.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.Cloud.FlowElements.HardwareProfileCloudEngine.CreateProfileData">
+            <summary>
+            Called by the base class to create a new data instance.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:FiftyOne.DeviceDetection.Cloud.FlowElements.HardwareProfileCloudEngineBuilder">
+            <summary>
+            Fluent builder used to create a cloud-based engine that can
+            return multiple hardware profiles from a single request.
+            For example, A single TAC code can match multiple hardware devices.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.Cloud.FlowElements.HardwareProfileCloudEngineBuilder.#ctor(Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="loggerFactory">
+            The factory to use when creating a logger.
+            </param>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.Cloud.FlowElements.HardwareProfileCloudEngineBuilder.Build">
+            <summary>
+            Build a new engine using the configured values.
+            </summary>
+            <returns>
+            A new <see cref="T:FiftyOne.DeviceDetection.Cloud.FlowElements.HardwareProfileCloudEngine"/>
+            </returns>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.Cloud.FlowElements.HardwareProfileCloudEngineBuilder.NewEngine(System.Collections.Generic.List{System.String})">
+            <summary>
+            This method is called by the base class to create a new
+            <see cref="T:FiftyOne.DeviceDetection.Cloud.FlowElements.HardwareProfileCloudEngine"/> instance before 
+            additional configuration is applied.
+            </summary>
+            <param name="properties">
+            A string list of the properties that the engine should populate.
+            In this case, this list is ignored as the resource key 
+            defines the properties that are returned by the cloud service.
+            </param>
+            <returns>
+            A new <see cref="T:FiftyOne.DeviceDetection.Cloud.FlowElements.HardwareProfileCloudEngine"/> instance.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.DeviceDetection.Cloud.Messages">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.DeviceDetection.Cloud.Messages.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.DeviceDetection.Cloud.Messages.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.DeviceDetection.Cloud.Messages.ExceptionNotAddedToPipeline">
+            <summary>
+              Looks up a localized string similar to {0} has not been added to a Pipeline..
+            </summary>
+        </member>
+    </members>
+</doc>

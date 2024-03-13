@@ -1,0 +1,421 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Sitecore.Xdb.Common.HttpTransientFaultHandling</name>
+    </assembly>
+    <members>
+        <member name="T:Sitecore.Xdb.Common.HttpTransientFaultHandling.Abstractions.IsHttpTransientErrorDelegate">
+            <summary>
+            Determines whether the specified status code represents a transient failure that can be compensated by a retry.
+            </summary>
+        </member>
+        <member name="T:Sitecore.Xdb.Common.HttpTransientFaultHandling.Abstractions.RetryStrategy">
+            <summary>
+                Represents a retry strategy that determines the number of retry attempts and the interval between retries.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.Abstractions.RetryStrategy.#ctor(System.String,System.Boolean)">
+            <summary>
+                Initializes a new instance of the class.
+            </summary>
+            <param name="name">The name of the retry strategy.</param>
+            <param name="firstFastRetry">
+                true to immediately retry in the first attempt; otherwise, false. The subsequent retries
+                will remain subject to the configured retry interval.
+            </param>
+        </member>
+        <member name="P:Sitecore.Xdb.Common.HttpTransientFaultHandling.Abstractions.RetryStrategy.FastFirstRetry">
+            <summary>
+                Gets or sets a value indicating whether the first retry attempt will be made immediately,
+                whereas subsequent retries will remain subject to the retry interval.
+            </summary>
+        </member>
+        <member name="P:Sitecore.Xdb.Common.HttpTransientFaultHandling.Abstractions.RetryStrategy.Name">
+            <summary>
+                Gets the name of the retry strategy.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.Abstractions.RetryStrategy.GetShouldRetry">
+            <summary>
+                Returns the corresponding ShouldRetry delegate.
+            </summary>
+            <returns>The ShouldRetry delegate.</returns>
+        </member>
+        <member name="T:Sitecore.Xdb.Common.HttpTransientFaultHandling.Abstractions.ShouldRetry">
+            <summary>
+             Defines a callback delegate that will be invoked whenever a retry condition is encountered.
+            </summary>
+            <param name="retryCount">Count of executed retries.</param>
+            <param name="delay">Delay between tries.</param>
+            <param name="lastMessage">Response from executing task.</param>
+        </member>
+        <member name="T:Sitecore.Xdb.Common.HttpTransientFaultHandling.ConfigBuilderExtensions">
+            <summary>
+            Config extensions.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.ConfigBuilderExtensions.AddDefaultHttpRetryer(Sitecore.Framework.TransientFaultHandling.ITransientFaultHandlingConfigBuilder,System.String,Sitecore.Xdb.Common.HttpTransientFaultHandling.HttpPolicyRetryerOptions)">
+            <summary>
+            Registers an <see cref="T:Sitecore.Framework.TransientFaultHandling.IRetryer"/>, with the specified name, default transient error delegate and retry strategy based on <see cref="T:Sitecore.Xdb.Common.HttpTransientFaultHandling.HttpPolicyRetryerOptions"/>, in the <see cref="T:Sitecore.Framework.TransientFaultHandling.IRetryerRegistry"/>.
+            </summary>
+            <param name="builder"><see cref="T:Sitecore.Framework.TransientFaultHandling.ITransientFaultHandlingConfigBuilder"/> that is extended.</param>
+            <param name="name">The name associated with the <see cref="T:Sitecore.Framework.TransientFaultHandling.IRetryer"/> instance.</param>
+            <param name="options">Retryer detection and retry options.</param>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.ConfigBuilderExtensions.AddRetryer(Sitecore.Framework.TransientFaultHandling.ITransientFaultHandlingConfigBuilder,System.String,Sitecore.Xdb.Common.HttpTransientFaultHandling.Abstractions.IsHttpTransientErrorDelegate,Sitecore.Xdb.Common.HttpTransientFaultHandling.Abstractions.RetryStrategy)">
+            <summary>
+            Registers an <see cref="T:Sitecore.Framework.TransientFaultHandling.IRetryer"/>, with the specified name, custom transient error delegate and retry strategy, in the <see cref="T:Sitecore.Framework.TransientFaultHandling.IRetryerRegistry"/>.
+            </summary>
+            <param name="builder"><see cref="T:Sitecore.Framework.TransientFaultHandling.ITransientFaultHandlingConfigBuilder"/> that is extended.</param>
+            <param name="name">The name associated with the <see cref="T:Sitecore.Framework.TransientFaultHandling.IRetryer"/> instance.</param>
+            <param name="errorDetection">The custom transient delegate.</param>
+            <param name="retry">The custom retry strategy.</param>
+        </member>
+        <member name="T:Sitecore.Xdb.Common.HttpTransientFaultHandling.DefaultHttpPolicyRetryerFactory">
+            <summary>
+            Http client retryer factory.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.DefaultHttpPolicyRetryerFactory.#ctor(Sitecore.Xdb.Common.HttpTransientFaultHandling.HttpPolicyRetryerOptions)">
+            <summary>
+            Default factory of http retryer.
+            </summary>
+            <param name="options">Options that contain information about detection and retry strategies used to create retryer.</param>
+            <exception cref="T:System.ArgumentNullException">Will be thrown if <see cref="T:Sitecore.Xdb.Common.HttpTransientFaultHandling.HttpPolicyRetryerOptions"/> argument is null.</exception>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.DefaultHttpPolicyRetryerFactory.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Default factory of http retryer with options through config.
+            </summary>
+            <param name="config">Corresponded section of config file that was read and will be use to define <see cref="T:Sitecore.Xdb.Common.HttpTransientFaultHandling.HttpPolicyRetryerOptions"/> options.</param>
+            <exception cref="T:System.ArgumentNullException">Will be thrown if nothing can be read from config.</exception>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.DefaultHttpPolicyRetryerFactory.Create">
+            <summary>
+            Implementation with default http transient fault handling and exponential retry strategy.
+            </summary>
+            <returns><see cref="T:Sitecore.Framework.TransientFaultHandling.IRetryer"/> instance with http transient fault handling based on <see cref="T:Sitecore.Xdb.Common.HttpTransientFaultHandling.HttpPolicyRetryerOptions"/> options.</returns>
+        </member>
+        <member name="T:Sitecore.Xdb.Common.HttpTransientFaultHandling.ErrorDetection.HttpTransientError">
+            <summary>
+            Defines transient error detection predicates.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.ErrorDetection.HttpTransientError.DetectHttpError(System.Collections.Generic.IEnumerable{System.Net.HttpStatusCode})">
+            <summary>
+            A transient error detection predicate that will detect only the specified http <see cref="T:System.Net.HttpStatusCode"/> status codes as transient.
+            </summary>
+            <param name="customCodes">The custom error code numbers that will be detected.</param>
+            <returns>A delegate implementing the predicate, that includes checking for the custom code numbers.</returns>
+        </member>
+        <member name="T:Sitecore.Xdb.Common.HttpTransientFaultHandling.ErrorDetection.HttpTransientErrorDetection">
+            <summary>
+            Class with default transient status codes and methods to fill ErrorCodes list.
+            </summary>
+        </member>
+        <member name="F:Sitecore.Xdb.Common.HttpTransientFaultHandling.ErrorDetection.HttpTransientErrorDetection.TooManyRequests">
+            <summary>
+            Occurs when too many requests are taking place.
+            </summary>
+        </member>
+        <member name="F:Sitecore.Xdb.Common.HttpTransientFaultHandling.ErrorDetection.HttpTransientErrorDetection.DefaultErrorCodes">
+            <summary>
+            Collection of transient http status codes by default.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.ErrorDetection.HttpTransientErrorDetection.CreateIsTransient(System.Collections.Generic.IEnumerable{System.Net.HttpStatusCode})">
+            <summary>
+            Set detection strategy based on received custom HttpStatusCodes (or default codes if none is passed).
+            </summary>
+            <param name="customCodes">Custom HttpStatusCodes counted as transient.</param>
+            <returns>Next iteration of setting detection strategy.</returns>
+        </member>
+        <member name="T:Sitecore.Xdb.Common.HttpTransientFaultHandling.ErrorDetection.IsTransientErrorDelegateHttpUtilities">
+            <summary>
+            Util class.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.ErrorDetection.IsTransientErrorDelegateHttpUtilities.CreateIsTransient(System.Collections.Generic.IEnumerable{System.Net.HttpStatusCode})">
+            <summary>
+            Checking the response message for the transient status codes.
+            </summary>
+            <param name="errorCodes">Collection of transient HttpStatusCodes based on current detection strategy.</param>
+            <returns>True if current HttpStatusCode is transient based on current detection strategy, otherwise false.</returns>
+        </member>
+        <member name="T:Sitecore.Xdb.Common.HttpTransientFaultHandling.ExponentialRetryOptions">
+            <summary>
+            Retry options.
+            </summary>
+        </member>
+        <member name="P:Sitecore.Xdb.Common.HttpTransientFaultHandling.ExponentialRetryOptions.MaxAttempts">
+            <summary>
+            The maximum number of retry attempts.
+            </summary> 
+        </member>
+        <member name="P:Sitecore.Xdb.Common.HttpTransientFaultHandling.ExponentialRetryOptions.MinBackoff">
+            <summary>
+            The minimum backoff time.
+            </summary>
+        </member>
+        <member name="P:Sitecore.Xdb.Common.HttpTransientFaultHandling.ExponentialRetryOptions.MaxBackoff">
+            <summary>
+            The maximum backoff time.
+            </summary>
+        </member>
+        <member name="P:Sitecore.Xdb.Common.HttpTransientFaultHandling.ExponentialRetryOptions.DeltaBackoff">
+            <summary>
+            The value that will be used to calculate a random delta in the exponential delay between
+            retries.
+            </summary>
+        </member>
+        <member name="T:Sitecore.Xdb.Common.HttpTransientFaultHandling.HttpPolicyRetryerOptions">
+            <summary>
+            Defines the configuration options for a  http retry strategy.
+            </summary>
+        </member>
+        <member name="P:Sitecore.Xdb.Common.HttpTransientFaultHandling.HttpPolicyRetryerOptions.ExponentialRetry">
+            <summary>
+            The parameters to the exponential retry function.
+            </summary>
+        </member>
+        <member name="P:Sitecore.Xdb.Common.HttpTransientFaultHandling.HttpPolicyRetryerOptions.CustomCodes">
+            <summary>
+            List of potential http codes that indicates a transient error.
+            </summary>
+        </member>
+        <member name="T:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryerExtensions">
+            <summary>
+            Extension methods for <see cref="T:Sitecore.Framework.TransientFaultHandling.IRetryer"/> that retries HTTP requests.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryerExtensions.ExecuteWithRetry(Sitecore.Framework.TransientFaultHandling.IRetryer,System.Func{System.Net.Http.HttpResponseMessage})">
+            <summary>
+            Extension method for <see cref="T:Sitecore.Framework.TransientFaultHandling.IRetryer"/> that retries the specified work if needed.
+            </summary>
+            <param name="retryer">The retryer implementation that is extended.</param>
+            <param name="work">Any method that returned <see cref="T:System.Net.Http.HttpResponseMessage"/>.</param>
+            <returns>Executing of Execute implementation with specified type.</returns>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryerExtensions.ExecuteWithRetryAsync(Sitecore.Framework.TransientFaultHandling.IRetryer,System.Func{System.Threading.Tasks.Task{System.Net.Http.HttpResponseMessage}},System.Threading.CancellationToken)">
+            <summary>
+            Extension methods for <see cref="T:Sitecore.Framework.TransientFaultHandling.IRetryer"/> that retries asynchronous HTTP requests if needed.
+            </summary>
+            <param name="retryer">The retryer implementation that is extended.</param>
+            <param name="work">Any task that returned <see cref="T:System.Net.Http.HttpResponseMessage"/>.</param>
+            <param name="cancellationToken">The cancellation token you can use to interrupt retrying of this task.</param>
+            <returns>Executing of ExecuteAsync implementation with specified type.</returns>
+        </member>
+        <member name="T:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryingHttpEventArgs">
+            <summary>
+                Contains information that is required for the Retrying event.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryingHttpEventArgs.#ctor(System.Int32,System.TimeSpan,System.Net.Http.HttpResponseMessage)">
+            <summary>
+            Initializes a new instance of the RetryingHttpEventArgs class.
+            </summary>
+            <param name="currentRetryCount">Current attempt of retry.</param>
+            <param name="delay">Delay between tries.</param>
+            <param name="lastMessage">Response from executing task.</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="P:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryingHttpEventArgs.CurrentRetryCount">
+            <summary>
+                Gets the current retry count.
+            </summary>
+        </member>
+        <member name="P:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryingHttpEventArgs.Delay">
+            <summary>
+                Gets the delay that indicates how long the current thread will be suspended before the next iteration is invoked.
+            </summary>
+        </member>
+        <member name="P:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryingHttpEventArgs.LastMessage">
+            <summary>
+                Gets the status code that caused the retry conditions to occur.
+            </summary>
+        </member>
+        <member name="T:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryPolicy">
+            <summary>
+            Provides the base implementation of the retry mechanism for unreliable actions and transient conditions.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryPolicy.#ctor(Sitecore.Xdb.Common.HttpTransientFaultHandling.Abstractions.IsHttpTransientErrorDelegate,Sitecore.Xdb.Common.HttpTransientFaultHandling.Abstractions.RetryStrategy)">
+            <summary>
+            Initializes new RetryPolicy entity with custom parameters.
+            </summary>
+            <param name="errorDetectionStrategy">Defined error detection strategy to provide http transient fault handling.</param>
+            <param name="retryStrategy">Defined retry strategy to use while retrying.</param>
+            <exception cref="T:System.ArgumentNullException">Will be thrown if any parameter is null.</exception>
+        </member>
+        <member name="E:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryPolicy.Retrying">
+            <summary>
+                An instance of a callback delegate that will be invoked whenever a retry condition is encountered.
+            </summary>
+        </member>
+        <member name="P:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryPolicy.RetryStrategy">
+            <summary>
+                Gets the retry strategy.
+            </summary>
+        </member>
+        <member name="P:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryPolicy.ErrorDetectionStrategy">
+            <summary>
+                Gets the instance of the error detection strategy.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryPolicy.ExecuteAction(System.Func{System.Net.Http.HttpResponseMessage})">
+            <summary>
+                Repeatedly executes the specified action while it satisfies the current retry policy.
+            </summary>
+            <param name="func"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryPolicy.ExecuteAsync(System.Func{System.Threading.Tasks.Task{System.Net.Http.HttpResponseMessage}},System.Threading.CancellationToken)">
+            <summary>
+                Repeatedly executes the specified asynchronous task while it satisfies the current retry policy.
+            </summary>
+            <param name="taskFunc">A function that returns a started task (also known as "hot" task).</param>
+            <param name="cancellationToken">
+            The token used to cancel the retry of task. This token does not cancel the execution of the asynchronous task, only retry attempts heading next.
+            </param>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryPolicy.OnRetrying(System.Int32,System.Net.Http.HttpResponseMessage,System.TimeSpan)">
+            <summary>
+                Notifies the subscribers whenever a retry condition is encountered.
+            </summary>
+            <param name="retryCount">The current retry attempt count.</param>
+            <param name="lastMessage">The exception that caused the retry conditions to occur.</param>
+            <param name="delay">
+                The delay that indicates how long the current thread will be suspended before the next iteration is invoked.
+            </param>
+        </member>
+        <member name="T:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryPolicyRetryer">
+            <summary>
+            Implementation of <see cref="T:Sitecore.Framework.TransientFaultHandling.IRetryer"/> based on retry policy.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryPolicyRetryer.#ctor(Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryPolicy)">
+            <summary>
+            Initializes new instance of <see cref="T:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryPolicyRetryer"/>.
+            </summary>
+            <param name="policy">Define current retry policy that includes detection and retry strategies.</param>
+            <exception cref="T:System.ArgumentNullException">Will be thrown if passed <see cref="T:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryPolicy"/> policy is null.</exception>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryPolicyRetryer.Execute(System.Action)">
+            <summary>
+            Method that executes user-initiated action. Not supported in current implementation.
+            </summary>
+            <param name="work">Any <see cref="T:System.Action"/> with no value returned.</param>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryPolicyRetryer.Execute``1(System.Func{``0})">
+            <summary>
+            Method that executes user-initiated method.
+            </summary>
+            <param name="work">Any method that returns some value.</param>
+            <typeparam name="T">Type of returning value, only <see cref="T:System.Net.Http.HttpResponseMessage"/> is allowed here.</typeparam>
+            <returns>Result of execution, <see cref="T:System.Net.Http.HttpResponseMessage"/> only.</returns>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryPolicyRetryer.ExecuteAsync(System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken)">
+            <summary>
+            Method that executes user-initiated async task. Not supported in current implementation.
+            </summary>
+            <param name="work">Any asynchronous task.</param>
+            <param name="cancellationToken">The cancellation token you can use to interrupt retrying of this task.</param>
+            <returns><see cref="T:System.NotSupportedException"/>.</returns>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryPolicyRetryer.ExecuteAsync``1(System.Func{System.Threading.Tasks.Task{``0}},System.Threading.CancellationToken)">
+            <summary>
+            Method that executes user-initiated async task.
+            </summary>
+            <param name="work">Any asynchronous task.</param>
+            <param name="cancellationToken">The cancellation token you can use to interrupt retrying of this task.</param>
+            <typeparam name="T">Type of returning value, only <see cref="T:System.Net.Http.HttpResponseMessage"/> is allowed here.</typeparam>
+            <returns>Result of execution <see cref="T:System.Threading.Tasks.Task"/>, <see cref="T:System.Net.Http.HttpResponseMessage"/> only.</returns>
+        </member>
+        <member name="T:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryStrategies.CustomInterval">
+            <summary>
+              A retry strategy with parameters for the custom delay between retries.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryStrategies.CustomInterval.#ctor(System.String,System.Collections.Generic.IReadOnlyList{System.TimeSpan},System.Boolean)">
+            <summary>
+            Initializes a new instance of CustomInterval class with the specified name, retry settings and fast retry option.
+            </summary>
+            <param name="name">Name of retry strategy.</param>
+            <param name="intervals">Collection of intervals you want to retry based on.</param>
+            <param name="firstFastRetry">True if you want to make first retry attempt immediately ,otherwise false.</param>
+            <exception cref="T:System.ArgumentNullException">Will be thrown if interval's collection is null.</exception>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryStrategies.CustomInterval.GetShouldRetry">
+            <summary>
+            Method to implement logic that determined retry strategy.
+            </summary>
+            <returns>The corresponding ShouldRetry delegate.</returns>
+        </member>
+        <member name="T:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryStrategies.ExponentialBackoff">
+            <summary>
+                A retry strategy with backoff parameters for calculating the exponential delay between retries.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryStrategies.ExponentialBackoff.#ctor(System.String,System.Int32,System.TimeSpan,System.TimeSpan,System.TimeSpan,System.Boolean)">
+            <summary>
+            Initializes a new instance of ExponentialBackoff class with the specified name, retry settings and fast retry option.
+            </summary>
+            <param name="name">Name of retry strategy.</param>
+            <param name="retryCount">Count of retries.</param>
+            <param name="minBackoff">Min value of backoff time.</param>
+            <param name="maxBackoff">Max value of backoff time.</param>
+            <param name="deltaBackoff">Possible delta between the values of backoff time.</param>
+            <param name="firstFastRetry">True if you want to make first retry attempt immediately ,otherwise false.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Will be thrown if parameters do not correspond conditions.</exception>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryStrategies.ExponentialBackoff.GetShouldRetry">
+            <summary>
+            Method to implement logic that determined retry strategy.
+            </summary>
+            <returns>The corresponding ShouldRetry delegate.</returns>
+        </member>
+        <member name="T:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryStrategies.FixedInterval">
+            <summary>
+            Represents a retry strategy with a specified number of retry attempts and a default, fixed time interval between retries.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryStrategies.FixedInterval.#ctor(System.String,System.Int32,System.TimeSpan,System.Boolean)">
+            <summary>
+            Initializes a new instance of the FixedInterval with specified number of retry attempts, time interval, retry strategy, and fast start option.
+            </summary>
+            <param name="name">The retry strategy name.</param>
+            <param name="retryCount">The number of retry attempts.</param>
+            <param name="retryInterval">The time interval between retries.</param>
+            <param name="firstFastRetry">True if you want to make first retry attempt immediately ,otherwise false.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Will be thrown if parameters do not correspond conditions.</exception>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryStrategies.FixedInterval.GetShouldRetry">
+            <summary>
+            Method to implement logic that determined retry strategy.
+            </summary>
+            <returns>The corresponding ShouldRetry delegate.</returns>
+        </member>
+        <member name="T:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryStrategies.Incremental">
+            <summary>
+                A retry strategy with a specified number of retry attempts and an incremental time interval between retries.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryStrategies.Incremental.#ctor(System.String,System.Int32,System.TimeSpan,System.TimeSpan,System.Boolean)">
+            <summary>
+            Initializes a new instance of the Incremental class with the specified number of retry attempts, time interval, retry strategy, and fast start option.
+            </summary>
+            <param name="name">The retry strategy name.</param>
+            <param name="retryCount">The number of retry attempts.</param>
+            <param name="initialInterval">The initial interval that will apply for the first retry.</param>
+            <param name="increment"> The incremental time value that will be used to calculate the progressive delay between retries.</param>
+            <param name="firstFastRetry">True if you want to make first retry attempt immediately ,otherwise false.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Will be thrown if parameters do not correspond conditions.</exception>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.HttpTransientFaultHandling.RetryStrategies.Incremental.GetShouldRetry">
+            <summary>
+            Method to implement logic that determined retry strategy.
+            </summary>
+            <returns>The corresponding ShouldRetry delegate.</returns>
+        </member>
+    </members>
+</doc>

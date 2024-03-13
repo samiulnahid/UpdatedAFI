@@ -1,0 +1,14 @@
+﻿@using Sitecore.Mvc
+@using Sitecore.Data.Fields
+@using Sitecore.Data.Items
+@using Sitecore.Mvc.Presentation
+@model Sitecore.Mvc.Presentation.RenderingModel
+@{
+        var icon = Model.Item.Fields["Icon"].ToString();
+}
+   
+    <span class="account-pod__icon icon-document">
+        <i class="@icon">
+        
+        </i>
+    </span>

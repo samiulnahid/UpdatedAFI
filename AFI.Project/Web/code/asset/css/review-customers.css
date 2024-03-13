@@ -1,0 +1,46 @@
+.customer_reviews {
+  background-image: linear-gradient(120deg, #cb2c30, #881b26);
+  background-image: linear-gradient(120deg,
+      var(--color-red-10),
+      var(--color-red-20));
+  text-align: center;
+  padding: 2.5rem;
+  color: #fff;
+  color: var(--color-white);
+}
+
+.customer_review {
+  max-width: none;
+  margin-bottom: 1.7rem;
+}
+
+.customer_review__citation,
+.customer_review__quote {
+  font-style: italic;
+  margin-bottom: 0.3rem !important;
+}
+
+.customer_review__citation {
+  margin-bottom: 1.7rem !important;
+}
+
+.customer_reviews h1,
+.customer_review h1,
+.customer_review h2,
+.customer_reviews h2,
+.customer_review .component-content {
+  color: #fff !important;
+}
+
+p.customer-review__quote-body {
+  font-style: italic;
+}
+
+/* 01 Sept */
+.customer-review blockquote p {
+  margin-bottom: 0 !important;
+}
+
+.customer_reviews .customer-reviews__heading {
+  font-size: 2rem !important;
+}

@@ -1,0 +1,110 @@
+/* .blue__cards {
+  margin: 40px 0;
+} */
+.blue__card__container {
+  max-width: 975px;
+  margin: 0 auto 20px;
+  /* display: grid;
+  grid-template-columns: 1fr; */
+  gap: 40px;
+}
+
+.blue__card {
+  background-color: #003864 !important;
+  background-color: var(--color-blue-40) !important;
+  color: #fff !important;
+  color: var(--color-white) !important;
+  padding: 2.5rem !important;
+  height: 100%;
+}
+
+.blue__card p {
+  color: #fff !important;
+  margin-bottom: 20px;
+}
+
+.blue__card h1 {
+  font-weight: 500;
+  color: #fff !important;
+}
+
+.border__button {
+  background-color: transparent !important;
+  border: 0.125rem solid #fff !important;
+  border: 0.125rem solid var(--color-white) !important;
+  color: #fff !important;
+  color: var(--color-white) !important;
+}
+
+.border__button:hover {
+  background: #fff !important;
+  color: #003864 !important;
+  color: var(--color-blue-40) !important;
+  border: 0.125rem solid #fff !important;
+  border: 0.125rem solid var(--color-white) !important;
+}
+
+.acc-btn .field-link {
+  margin-top: 25px;
+}
+
+/* cng end */
+
+@media screen and (min-width: 48em) {
+  /* .blue__cards {
+          padding: 20px 100px;
+        } */
+
+  .blue__card__container {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .card__grid__item {
+    padding: 1.5rem 2.25rem 1rem;
+  }
+}
+
+/* 26 April */
+@media screen and (max-width: 768px) {
+  .mySwiper .grid__item .button {
+    transform: translateY(0) !important;
+  }
+}
+
+/* 28 April */
+.blue__cards {
+  margin-top: 60px !important;
+  margin-bottom: 20px !important;
+}
+
+.blue__card .button {
+  padding: 8px 20px !important;
+}
+
+@media screen and (max-width: 768px) {
+  .blue__card {
+    padding: 1.5rem !important;
+  }
+}
+
+
+/* 18 May */
+.home_blue_cards_grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+}
+
+.home_blue_card_item {
+  width: 100%;
+  background-color: #003864 !important;
+  background-color: var(--color-blue-40) !important;
+}
+
+@media screen and (max-width:768px) {
+  .home_blue_cards_grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+  }
+}

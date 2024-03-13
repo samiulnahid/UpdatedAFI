@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>HotChocolate.AspNetClassic.Abstractions</name>
+    </assembly>
+    <members>
+        <member name="P:HotChocolate.AspNetClassic.GraphiQLOptionsBase.Path">
+            <summary>
+            The path of the GraphiQL middleware.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.AspNetClassic.GraphiQLOptionsBase.QueryPath">
+            <summary>
+            The path of the query middleware.
+            This is basically where GraphiQL
+            send its requests to execute its queries.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.AspNetClassic.GraphiQLOptionsBase.SubscriptionPath">
+            <summary>
+            The path of the subscription middleware.
+            By default this will be the same as the query path.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.AspNetClassic.GraphiQLOptionsBase.EnableSubscription">
+            <summary>
+            Defines if the GraphiQL client shall handle subscriptions.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.AspNetClassic.IUIOptionsAccessor.Path">
+            <summary>
+            The path of the UI middleware.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.AspNetClassic.IUIOptionsAccessor.QueryPath">
+            <summary>
+            The path of the query middleware.
+            This is basically where the UI component
+            send its requests to execute its queries.
+            </summary>
+        </member>
+        <member name="T:HotChocolate.AspNetClassic.QueryMiddlewareBase">
+            <summary>
+            A base <c>GraphQL</c> query middleware.
+            </summary>
+        </member>
+        <member name="M:HotChocolate.AspNetClassic.QueryMiddlewareBase.Invoke(Microsoft.Owin.IOwinContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:HotChocolate.AspNetClassic.QueryMiddlewareBase.CanHandleRequest(Microsoft.Owin.IOwinContext)">
+            <summary>
+            Checks whether the request can be handled by the concrete query
+            middleware.
+            </summary>
+            <param name="context">An OWIN context.</param>
+            <returns>
+            A value indicating whether the request can be handled.
+            </returns>
+        </member>
+    </members>
+</doc>

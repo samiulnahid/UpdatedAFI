@@ -1,0 +1,26 @@
+﻿@using Sitecore.XA.Foundation.MarkupDecorator.Extensions
+@using Sitecore.XA.Foundation.SitecoreExtensions.Extensions
+@using Microsoft.Extensions.DependencyInjection
+
+@model Sitecore.XA.Feature.Composites.Models.SnippetRenderingModel
+
+<div @Html.Sxa().Component(Model.Rendering.RenderingCssClass ?? "snippet", Model.Attributes)>
+    <div class="component-content">
+        @if (Model.HasCompositeLoop)
+        {
+            @Model.MessageHasLoop
+        }
+        else if (Model.CompositeItem == null || (Model.IsEmpty && Sitecore.DependencyInjection.ServiceLocator.ServiceProvider.GetService<Sitecore.XA.Foundation.Horizon.Context.IHorizonContext>().IsHorizonEditing))
+        {
+           @Model.MessageIsEmpty
+        }
+        else
+        {
+            <div class="snippet-inner">
+                <div class="snippet-container">
+                    @{ Html.RenderPartial("SnippetContent", Model); }
+                </div>
+            </div>
+        }
+    </div>
+</div>

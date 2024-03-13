@@ -1,0 +1,173 @@
+﻿@using Sitecore.Mvc;
+@using Sitecore.Data.Fields;
+@using Sitecore.Mvc.Presentation;
+@using AFI.Foundation.Helper
+
+@{
+    Sitecore.Data.Items.Item item = Sitecore.Context.Database.GetItem(FeatureTemplate.Cookie.CookieDatasource);
+    var shortdescription = item.Fields["Cookie Short Description"].ToString();
+    var LinkURL = ((LinkField)item.Fields["Cookie Button Link"]).GetFriendlyUrl().ToString() ?? "";
+    LinkField button = item.Fields["Cookie Button Link"];
+    var buttontext = button.Text;
+}
+
+@if (item != null)
+{
+    <div class="cookie-box" id="cookieboxID" style="visibility: hidden; ">
+        @if (!string.IsNullOrEmpty(shortdescription))
+        {
+            <p>
+                @shortdescription
+
+                @if (!string.IsNullOrEmpty(LinkURL))
+                {
+                    <a href="@LinkURL">@buttontext</a>
+                }
+            </p>
+        }
+        <button class="btn" onclick="document.cookie = 'cookieConsetShown=Yes;'; document.getElementById('cookieboxID').style.visibility = 'hidden';">Got It!</button>
+    </div>
+}
+<script>
+    window.addEventListener("load", PaidMediaNew)
+    function PaidMediaNew() {
+        var domainName = "afi.org";
+
+        if (getQueryParam("responsetype") != "") {
+            document.cookie = "responsetype =" + getQueryParam("responsetype") + ";domain=" + domainName + ";";
+        }
+        if (getQueryParam("responsedescription") != "") {
+            document.cookie = "responsedescription =" + getQueryParam("responsedescription") + ";domain=" + domainName + ";";
+        }
+        if (getQueryParam("utm_campaign") != "") {
+            document.cookie = "utm_campaign=" + getQueryParam("utm_campaign") + ";domain=" + domainName + ";";
+        }
+        if (getQueryParam("utm_content") != "") {
+            document.cookie = "utm_content=" + getQueryParam("utm_content") + ";domain=" + domainName + ";";
+        }
+        if (getQueryParam("utm_medium") != "") {
+            document.cookie = "utm_medium=" + getQueryParam("utm_medium") + ";domain=" + domainName + ";";
+        }
+        if (getQueryParam("utm_source") != "") {
+            document.cookie = "utm_source=" + getQueryParam("utm_source") + ";domain=" + domainName + ";";
+        }
+        if (getQueryParam("utm_term") != "") {
+            document.cookie = "utm_term=" + getQueryParam("utm_term") + ";domain=" + domainName + ";";
+        }
+        if (getQueryParam("gclid") != "") {
+            document.cookie = "gclid=" + getQueryParam("gclid") + ";domain=" + domainName + ";";
+        }
+        if (getQueryParam("msclkid") != "") {
+            document.cookie = "msclkid=" + getQueryParam("msclkid") + ";domain=" + domainName + ";";
+        }
+        if (getQueryParam("fbclid") != "") {
+            document.cookie = "fbclid=" + getQueryParam("fbclid") + ";domain=" + domainName + ";";
+        }
+
+
+        //IE check
+        var user_agent = navigator.userAgent;
+        var is_it_ie = user_agent.indexOf("MSIE ") > -1 || user_agent.indexOf("Trident/") > -1;
+        if (is_it_ie) {
+            var strBrwser = window.location.href;
+            if (strBrwser.indexOf("BrowserSupport") == -1) {
+                window.location.href("https://afi.org/BrowserSupport");
+            }
+        }
+
+        var isCookieModalShown = accessCookie("cookieConsetShown");
+        if (isCookieModalShown == "") {
+            document.getElementById("cookieboxID").style.visibility = "visible";
+        }
+
+
+    }
+    function getQueryParam(param) {
+        var rx = new RegExp("[?&]" + param + "=([^&]+).*$");
+        var returnVal = window.location.search.toLowerCase().match(rx);
+        return returnVal === null ? "" : decodeURIComponent(returnVal[1].replace(/\+/g, " "));
+    }
+    var isCookieModalShown = accessCookie("cookieConsetShown");
+    if (isCookieModalShown == "") {
+        //document.getElementById("cookieboxID").style.visibility = "visible";
+    }
+
+    function getQueryParam(param) {
+        var rx = new RegExp("[?&]" + param + "=([^&]+).*$");
+        var returnVal = window.location.search.toLowerCase().match(rx);
+        return returnVal === null ? "" : decodeURIComponent(returnVal[1].replace(/\+/g, " "));
+    }
+    function PaidMedia() {
+        var ParameterVals = getUrlParameters();
+        if (!(typeof ParameterVals === "undefined")) {
+            //var domainName = window.location.hostname;
+            var domainName = "afi.org";
+            if (!(typeof ParameterVals.responsetype === "undefined")) {
+                document.cookie = "responsetype =" + ParameterVals.responsetype + ";domain=" + domainName + ";";
+            }
+            if (!(typeof ParameterVals.responsedescription === "undefined")) {
+                document.cookie = "responsedescription =" + ParameterVals.responsedescription + ";domain=" + domainName + ";";
+            }
+            if (!(typeof ParameterVals.utm_campaign === "undefined")) {
+                document.cookie = "utm_campaign=" + ParameterVals.utm_campaign + ";domain=" + domainName + ";";
+            }
+            if (!(typeof ParameterVals.utm_content === "undefined")) {
+                document.cookie = "utm_content=" + ParameterVals.utm_content + ";domain=" + domainName + ";";
+            }
+            if (!(typeof ParameterVals.utm_medium === "undefined")) {
+                document.cookie = "utm_medium=" + ParameterVals.utm_medium + ";domain=" + domainName + ";";
+            }
+            if (!(typeof ParameterVals.utm_source === "undefined")) {
+                document.cookie = "utm_source=" + ParameterVals.utm_source + ";domain=" + domainName + ";";
+            }
+            if (!(typeof ParameterVals.utm_term === "undefined")) {
+                document.cookie = "utm_term=" + ParameterVals.utm_term + ";domain=" + domainName + ";";
+            }
+            if (!(typeof ParameterVals.gclid === "undefined")) {
+                document.cookie = "gclid=" + ParameterVals.gclid + ";domain=" + domainName + ";";
+            }
+            if (!(typeof ParameterVals.msclkid === "undefined")) {
+                document.cookie = "msclkid=" + ParameterVals.msclkid + ";domain=" + domainName + ";";
+            }
+            if (!(typeof ParameterVals.fbclid === "undefined")) {
+                document.cookie = "fbclid=" + ParameterVals.fbclid + ";domain=" + domainName + ";";
+            }
+
+        }
+
+    }
+    function accessCookie(cookieName) {
+        var name = cookieName + "=";
+        var allCookieArray = document.cookie.split(';');
+
+        const result = allCookieArray.find(c => c.includes(name));
+
+        if (result) return result.split("=")[1]
+
+        return "";
+    }
+    function getUrlParameters() {
+        var search = window.location.search.substring(1).replace(/&&/g, '&');
+        var fields = {};
+
+        if (search) {
+            fields = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
+        }
+
+        var parameters = {};
+        for (var key in fields) {
+            parameters[key.toLowerCase().trim()] = fields[key];
+        }
+        return parameters;
+    };
+    function deleteAllCookies() {
+        var cookies = document.cookie.split(";");
+
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i];
+            var eqPos = cookie.indexOf("=");
+            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        }
+    }
+</script>

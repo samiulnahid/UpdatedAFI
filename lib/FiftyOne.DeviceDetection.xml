@@ -1,0 +1,585 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FiftyOne.DeviceDetection</name>
+    </assembly>
+    <members>
+        <member name="T:FiftyOne.DeviceDetection.DeviceDetectionCloudPipelineBuilder">
+            <summary>
+            Builder used to create pipelines with an cloud-based 
+            device detection engine.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionCloudPipelineBuilder.#ctor(Microsoft.Extensions.Logging.ILoggerFactory,System.Net.Http.HttpClient)">
+            <summary>
+            Internal Constructor.
+            This builder should only be created through the 
+            <see cref="T:FiftyOne.DeviceDetection.DeviceDetectionPipelineBuilder"/> 
+            </summary>
+            <param name="loggerFactory"></param>
+            <param name="httpClient"></param>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionCloudPipelineBuilder.Build">
+            <summary>
+            Build the pipeline using the configured values.
+            </summary>
+            <returns>
+            A new <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IPipeline"/> instance that contains a 
+            <see cref="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine"/> for making requests
+            to the 51Degrees cloud service and a 
+            <see cref="T:FiftyOne.DeviceDetection.Cloud.FlowElements.DeviceDetectionCloudEngine"/> to interpret the
+            device detection results.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.DeviceDetection.DeviceDetectionOnPremisePipelineBuilder">
+            <summary>
+            Builder used to create pipelines with an on-premise 
+            device detection engine.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionOnPremisePipelineBuilder.#ctor(Microsoft.Extensions.Logging.ILoggerFactory,FiftyOne.Pipeline.Engines.Services.IDataUpdateService,System.Net.Http.HttpClient)">
+            <summary>
+            Internal constructor
+            This builder should only be created through the 
+            <see cref="T:FiftyOne.DeviceDetection.DeviceDetectionPipelineBuilder"/> 
+            </summary>
+            <param name="loggerFactory">
+            The <see cref="T:Microsoft.Extensions.Logging.ILoggerFactory"/> to use when creating loggers.
+            </param>
+            <param name="dataUpdateService">
+            The <see cref="T:FiftyOne.Pipeline.Engines.Services.IDataUpdateService"/> to use when registering 
+            data files for automatic updates.
+            </param>
+            <param name="httpClient">
+            The <see cref="T:System.Net.Http.HttpClient"/> to use for any web requests.
+            </param>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionOnPremisePipelineBuilder.SetFilename(System.String,System.Boolean)">
+            <summary>
+            Set the filename of the device detection data file that the
+            engine should use.
+            </summary>
+            <param name="filename">
+            The data file
+            </param>
+            <param name="createTempDataCopy">
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+            <exception cref="T:FiftyOne.Pipeline.Core.Exceptions.PipelineConfigurationException">
+            Thrown if the filename has an unknown extension.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionOnPremisePipelineBuilder.SetFilename(System.String,System.String,System.Boolean)">
+            <summary>
+            Set the filename of the device detection data file that the
+            engine should use.
+            </summary>
+            <param name="filename">
+            The data file
+            </param>
+            <param name="key">
+            The license key to use when checking for updates to the
+            data file.
+            This parameter can be set to null, but doing so will disable 
+            automatic updates. 
+            </param>
+            <param name="createTempDataCopy">
+            True to create a temporary copy of the data file when 
+            the engine is built.
+            This is required in order for automatic updates
+            to work correctly.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+            <exception cref="T:FiftyOne.Pipeline.Core.Exceptions.PipelineConfigurationException">
+            Thrown if the filename has an unknown extension.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionOnPremisePipelineBuilder.SetEngineData(System.IO.Stream,FiftyOne.DeviceDetection.DeviceDetectionAlgorithm)">
+            <summary>
+            Set the byte array to use as a data source when 
+            creating the engine.
+            </summary>
+            <param name="dataStream">
+            The entire device detection data file as a <see cref="T:System.IO.Stream"/>.
+            </param>
+            <param name="algorithm">
+            The detection algorithm that the supplied data supports.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionOnPremisePipelineBuilder.SetEngineData(System.IO.Stream,FiftyOne.DeviceDetection.DeviceDetectionAlgorithm,System.String)">
+            <summary>
+            Set the byte array to use as a data source when 
+            creating the engine.
+            </summary>
+            <param name="dataStream">
+            The entire device detection data file as a <see cref="T:System.IO.Stream"/>.
+            </param>
+            <param name="algorithm">
+            The detection algorithm that the supplied data supports.
+            </param>
+            <param name="key">
+            The license key to use when checking for updates to the
+            data file.
+            This parameter can be set to null, but doing so will disable 
+            automatic updates. 
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionOnPremisePipelineBuilder.SetProperty(System.String)">
+            <summary>
+            Add the specified property as one to be returned when performing device detection.
+            By default, all properties will be returned.
+            Reducing the properties that are returned can yield a performance improvement in some 
+            scenarios.
+            </summary>
+            <param name="property">
+            The property to be populated by device detection.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionOnPremisePipelineBuilder.SetShareUsage(System.Boolean)">
+            <summary>
+            Set share usage enabled/disabled.
+            Defaults to enabled.
+            </summary>
+            <param name="enabled">
+            true to enable usage sharing. False to disable.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionOnPremisePipelineBuilder.SetAutoUpdate(System.Boolean)">
+            <summary>
+            Enable/Disable auto update.
+            Defaults to enabled.
+            If enabled, the auto update system will automatically download
+            and apply new data files for device detection.
+            </summary>
+            <param name="enabled">
+            true to enable auto update. False to disable.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionOnPremisePipelineBuilder.SetDataUpdateOnStartUp(System.Boolean)">
+            <summary>
+            Enable/Disable update on startup.
+            Defaults to enabled.
+            If enabled, the auto update system will be used to check for
+            an update before the device detection engine is created.
+            If an update is available, it will be downloaded and applied
+            before the pipeline is built and returned for use so this may 
+            take some time.
+            </summary>
+            <param name="enabled">
+            True to enable update on startup. False to disable.
+            </param>
+            <returns>
+            This builder.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionOnPremisePipelineBuilder.SetDataUpdateLicenseKey(System.String)">
+            <summary>
+            Set the license key used when checking for new 
+            device detection data files.
+            Defaults to null.
+            </summary>
+            <param name="key">
+            The license key
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionOnPremisePipelineBuilder.SetUpdatePollingInterval(System.Int32)">
+            <summary>
+            Set the time between checks for a new data file made by the FiftyOne.Pipeline.Engines.Services.DataUpdateService.
+            Default = 30 minutes.
+            </summary>
+            <param name="pollingIntervalSeconds">
+            The number of seconds between checks.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionOnPremisePipelineBuilder.SetUpdatePollingInterval(System.TimeSpan)">
+            <summary>
+            Set the time between checks for a new data file made by the FiftyOne.Pipeline.Engines.Services.DataUpdateService.
+            Default = 30 minutes.
+            </summary>
+            <param name="pollingInterval">
+            The time between checks.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionOnPremisePipelineBuilder.SetUpdateRandomisationMax(System.Int32)">
+            <summary>
+            A random element can be added to the FiftyOne.Pipeline.Engines.Services.DataUpdateService
+            polling interval. This option sets the maximum length of this random addition.
+            Default = 10 minutes.
+            </summary>
+            <param name="maximumDeviationSeconds">
+            The maximum time added to the data update polling interval.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionOnPremisePipelineBuilder.SetUpdateRandomisationMax(System.TimeSpan)">
+            <summary>
+            A random element can be added to the FiftyOne.Pipeline.Engines.Services.DataUpdateService
+            polling interval. This option sets the maximum length of this random addition.
+            Default = 10 minutes.
+            </summary>
+            <param name="maximumDeviation">
+            The maximum time added to the data update polling interval.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionOnPremisePipelineBuilder.SetPerformanceProfile(FiftyOne.Pipeline.Engines.PerformanceProfiles)">
+            <summary>
+            Set the performance profile for the device detection engine.
+            Defaults to balanced.
+            </summary>
+            <param name="profile">
+            The performance profile to use.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionOnPremisePipelineBuilder.SetConcurrency(System.UInt16)">
+            <summary>
+            Set the expected number of concurrent operations using the engine.
+            This sets the concurrency of the internal caches to avoid excessive
+            locking.
+            </summary>
+            <param name="concurrency">Expected concurrent accesses</param>
+            <returns>This builder</returns>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionOnPremisePipelineBuilder.SetDifference(System.Int32)">
+            <summary>
+            Set the maximum difference to allow when processing HTTP headers.
+            The difference is the difference in hash value between the 
+            hash that was found, and the hash that is being searched for. 
+            By default this is 0.
+            </summary>
+            <param name="difference">Difference to allow</param>
+            <returns>This builder</returns>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionOnPremisePipelineBuilder.SetAllowUnmatched(System.Boolean)">
+            <summary>
+            If set to false, a non-matching User-Agent will result in
+            properties without set values. If set to true, a non-matching
+            User-Agent will cause the 'default profiles' to be returned. This
+            means that properties will always have values (i.e. no need to
+            check .HasValue) but some may be inaccurate. By default, this is
+            false.
+            </summary>
+            <param name="allow">
+            True if results with no matched hash nodes should be considered
+            valid
+            </param>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionOnPremisePipelineBuilder.SetUsePerformanceGraph(System.Boolean)">
+            <summary>
+            Specify if the 'performance' evaluation graph should be used 
+            or not.
+            The performance graph is faster than predictive but can
+            be less accurate.
+            Note that the performance graph will always be evaluated first 
+            if it is enableds so if you have both performance and predictive 
+            enabled, you will often be getting results from just the 
+            performance graph.
+            In that situation, predictive will only be used if a match cannot
+            be found using the performance graph.
+            </summary>
+            <param name="use">
+            True to use the performance graph, false to ignore it.
+            </param>
+            <returns>
+            This builder.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionOnPremisePipelineBuilder.SetUsePredictiveGraph(System.Boolean)">
+            <summary>
+            Specify if the 'predictive' evaluation graph should be used 
+            or not.
+            The predictive graph is more accurate than performance
+            but is also slower.
+            Note that the performance graph will always be evaluated first 
+            if it is enabled, so if you have both performance and predictive 
+            enabled, you will often be getting results from just the 
+            performance graph.
+            In that situation, predictive will only be used if a match cannot
+            be found using the performance graph.
+            </summary>
+            <param name="use">
+            True to use the performance graph, false to ignore it.
+            </param>
+            <returns>
+            This builder.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionOnPremisePipelineBuilder.SetDataFileSystemWatcher(System.Boolean)">
+            <summary>
+            The <see cref="T:FiftyOne.Pipeline.Engines.Services.DataUpdateService"/> has the ability to watch a 
+            file on disk and refresh the engine as soon as that file is 
+            updated.
+            This setting enables/disables that feature.
+            </summary>
+            <param name="enabled">
+            Pass true to enable the feature.
+            </param>
+            <returns></returns>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionOnPremisePipelineBuilder.Build">
+            <summary>
+            Build and return a pipeline that can perform device detection.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionOnPremisePipelineBuilder.ConfigureAndBuild``2(FiftyOne.DeviceDetection.Shared.FlowElements.OnPremiseDeviceDetectionEngineBuilderBase{``0,``1})">
+            <summary>
+            Private method used to set configuration options common to 
+            both hash and pattern engines and build the engine.
+            </summary>
+            <typeparam name="TBuilder">
+            The type of the builder. Can be inferred from the builder parameter.
+            </typeparam>
+            <typeparam name="TEngine">
+            The type of the engine. Can be inferred from the builder parameter.
+            </typeparam>
+            <param name="builder">
+            The builder to configure.
+            </param>
+            <returns>
+            A new device detection engine instance.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.DeviceDetection.DeviceDetectionPipelineBuilder">
+            <summary>
+            Builder used to create a Pipeline with a device detection engine.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionPipelineBuilder.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionPipelineBuilder.#ctor(Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="loggerFactory">
+            The factory to use for creating loggers within the pipeline.
+            </param>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionPipelineBuilder.#ctor(Microsoft.Extensions.Logging.ILoggerFactory,System.Net.Http.HttpClient)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="loggerFactory">
+            The factory to use for creating loggers within the pipeline.
+            </param>
+            <param name="httpClient">
+            The HTTP client to use within the pipeline.
+            </param>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionPipelineBuilder.#ctor(Microsoft.Extensions.Logging.ILoggerFactory,System.Net.Http.HttpClient,FiftyOne.Pipeline.Engines.Services.IDataUpdateService)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="loggerFactory">
+            The factory to use for creating loggers within the pipeline.
+            </param>
+            <param name="httpClient">
+            The HTTP client to use within the pipeline.
+            </param>
+            <param name="dataUpdateService">
+            The DataUpdateService to use when checking for data updates.
+            </param>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionPipelineBuilder.UseCloud(System.String)">
+            <summary>
+            Use the 51Degrees Cloud service to perform device detection.
+            </summary>
+            <param name="resourceKey">
+            The resource key to use when querying the cloud service. 
+            Obtain one from https://configure.51degrees.com
+            </param>
+            <returns>
+            A builder that can be used to configure and build a pipeline
+            that will use the cloud device detection engine.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionPipelineBuilder.UseCloud(System.String,System.String)">
+            <summary>
+            Use the 51Degrees Cloud service to perform device detection.
+            </summary>
+            <param name="resourceKey">
+            The resource key to use when querying the cloud service. 
+            Obtain one from https://configure.51degrees.com
+            </param>
+            <param name="endpoint">
+            The 51Degrees Cloud URL.
+            </param>
+            <returns>
+            A builder that can be used to configure and build a pipeline
+            that will use the cloud device detection engine.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionPipelineBuilder.UseOnPremise(System.String,System.Boolean)">
+            <summary>
+            Use a 51Degrees on-premise device detection engine to 
+            perform device detection.
+            </summary>
+            <param name="datafile">
+            The full path to the device detection data file.
+            </param>
+            <param name="createTempDataCopy">
+            If true, the engine will create a temporary copy of the data 
+            file rather than using the data file directly.
+            </param>
+            <returns>
+            A builder that can be used to configure and build a pipeline
+            that will use the on-premise detection engine.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if a required parameter is null
+            </exception>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionPipelineBuilder.UseOnPremise(System.String,System.String,System.Boolean)">
+            <summary>
+            Use a 51Degrees on-premise device detection engine to 
+            perform device detection.
+            </summary>
+            <param name="datafile">
+            The full path to the device detection data file.
+            </param>
+            <param name="key">
+            The license key to use when checking for updates to the
+            data file.
+            A license key can be obtained from the 
+            [51Degrees website](https://51degrees.com/pricing).
+            If you have no license key then this parameter can be 
+            set to null, but doing so will disable automatic updates. 
+            </param>
+            <param name="createTempDataCopy">
+            If true, the engine will create a temporary copy of the data 
+            file rather than using the data file directly.
+            This is required in order for automatic updates to work 
+            correctly.
+            </param>
+            <returns>
+            A builder that can be used to configure and build a pipeline
+            that will use the on-premise detection engine.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if a required parameter is null
+            </exception>
+            <seealso cref="M:FiftyOne.DeviceDetection.DeviceDetectionPipelineBuilder.UseOnPremise(System.IO.Stream,FiftyOne.DeviceDetection.DeviceDetectionAlgorithm,System.String)"/>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionPipelineBuilder.UseOnPremise(System.IO.Stream,FiftyOne.DeviceDetection.DeviceDetectionAlgorithm)">
+            <summary>
+            Use a 51Degrees on-premise device detection engine to 
+            perform device detection.
+            </summary>
+            <param name="dataStream">
+            The device detection data file as a <see cref="T:System.IO.Stream"/>.
+            </param>
+            <param name="algorithm">
+            The detection algorithm that the supplied data supports.
+            </param>
+            <returns>
+            A builder that can be used to configure and build a pipeline
+            that will use the on-premise detection engine.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.DeviceDetection.DeviceDetectionPipelineBuilder.UseOnPremise(System.IO.Stream,FiftyOne.DeviceDetection.DeviceDetectionAlgorithm,System.String)">
+            <summary>
+            Use a 51Degrees on-premise device detection engine to 
+            perform device detection.
+            </summary>
+            <param name="dataStream">
+            The device detection data file as a <see cref="T:System.IO.Stream"/>.
+            </param>
+            <param name="algorithm">
+            The detection algorithm that the supplied data supports.
+            </param>
+            <param name="key">
+            The license key to use when checking for updates to the
+            data file.
+            A license key can be obtained from the 
+            [51Degrees website](https://51degrees.com/pricing).
+            If you have no license key then this parameter can be 
+            set to null, but doing so will disable automatic updates. 
+            </param>
+            <returns>
+            A builder that can be used to configure and build a pipeline
+            that will use the on-premise detection engine.
+            </returns>
+            <seealso cref="M:FiftyOne.DeviceDetection.DeviceDetectionPipelineBuilder.UseOnPremise(System.String,System.String,System.Boolean)"/>
+        </member>
+        <member name="T:FiftyOne.DeviceDetection.DeviceDetectionAlgorithm">
+            <summary>
+            An enumeration containing the device detection algorithms that 
+            are available.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.DeviceDetection.DeviceDetectionAlgorithm.Hash">
+            <summary>
+            The 'Hash' algorithm.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.DeviceDetection.Messages">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.DeviceDetection.Messages.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.DeviceDetection.Messages.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.DeviceDetection.Messages.ExceptionErrorOnStartup">
+            <summary>
+              Looks up a localized string similar to Unexpected error creating device detection engine..
+            </summary>
+        </member>
+        <member name="P:FiftyOne.DeviceDetection.Messages.ExceptionNoEngineData">
+            <summary>
+              Looks up a localized string similar to No source for engine data. Use SetFilename or SetEngineData to configure this..
+            </summary>
+        </member>
+        <member name="P:FiftyOne.DeviceDetection.Messages.ExceptionUnrecognizedFileExtension">
+            <summary>
+              Looks up a localized string similar to Unrecognized filename &apos;{0}&apos;. Expected a &apos;*.hash&apos; Hash data file..
+            </summary>
+        </member>
+    </members>
+</doc>

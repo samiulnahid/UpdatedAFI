@@ -1,0 +1,202 @@
+﻿@model AFI.Feature.QuoteForm.Areas.AFIQuoteForm.Models.FloodForm.FloodForm
+@using AFI.Feature.QuoteForm.Areas.AFIWEB.Models.Form_Models
+
+<!-- ************************************************ -->
+<!---------------------- MULTI-STEP 3 ------------------>
+<!-- ************************************************ -->
+<!-- PROPERTY DETAILS FORM -->
+<section class="form_section flood__step property_details_form">
+    <div class="container">
+        @{
+            int i = 1;
+            var stepsCount = Model.wayfinder.steps.Count;
+        }
+        <!-- ******** STEP ******** -->
+        <div class="step__container">
+            <ul class="steps__list">
+                @foreach (var step in Model.wayfinder.steps)
+                {
+                    <li class="step @(i <= 3 ? "active_step" : "")" data-text="@step.label">@i</li>
+                    @Html.Raw(i != stepsCount ? "<li class='line'></li>" : "")
+                    i++;
+                }
+            </ul>
+        </div>
+
+        <div class="quote_request__section_wrapper">
+            @{
+                Section data = Model.form.sections.Where(x => x.id == "propertyDetails").SingleOrDefault();
+            }
+            <!-- ******* FORM  *******-->
+            <div class="form_container">
+                <!--Updated By  25.7.23 Start-->
+                <button class="quote-request-sidebar__show-trigger" type="button">?</button>
+                <!--Updated By  25.7.23 End-->
+                <h2 class="quote_request_heading">@data.heading</h2>
+
+                <!-- Is the Structure a Condominium? -->
+                <div class="fields-row">
+                    <div class="field field--full">
+                        <div class="field__label-wrapper" style="margin-right: 2rem">
+                            <label class="field__label" for="@data.fields[0].id">@data.fields[0].label</label>
+                        </div>
+                        @{
+                            var j = 1;
+                             var Cmpvaluee = "";
+                        }
+                        @foreach (Options opt in data.fields[0].options)
+                        {
+                             Cmpvaluee = opt.value;
+                            <div class="field-group" style="@(j == 1 ? "margin-right: 1rem" : "")">
+                                <div class="field__input-wrapper">
+                                    <input class="field__input"
+                                           id="@data.fields[0].id--@opt.value"
+                                           name="@data.fields[0].id"
+                                           type="radio"
+                                           required=""
+                                           value="@opt.value"
+                                            @(Cmpvaluee == "No" ? "checked" : "") /><label class="field__label"
+                                                                       for="@data.fields[0].id--@opt.value">@opt.label</label>
+                                                                </div>
+                                                            </div>
+
+                                                            j++;
+                                                        }
+
+                        <div class="field__error-messages structureACondomError"
+                             style="margin-left: 10px">
+                            <span class="field__error-message">This field is required</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- What Floor Is Your Condominium Unit On? -->
+                <div class="fields-row">
+                    <div class="field field--extended-label">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[1].id">@data.fields[1].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input"
+                                    id="@data.fields[1].id"
+                                    name="@data.fields[1].id"
+                                    type="select"
+                                    required=""
+                                    disabled="">
+                                <option value="">--</option>
+                                @foreach (Options opt in data.fields[1].options)
+                                {
+                                    <option value="@opt.value">@opt.label</option>
+                                }
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Floors In Structure (Including Basement) -->
+                <div class="fields-row">
+                    <div class="field field--extended-label">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[2].id">@data.fields[2].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input required"
+                                    id="@data.fields[2].id"
+                                    name="@data.fields[2].id"
+                                    type="select"
+                                    required="">
+                                <option value="">--</option>
+                                @foreach (Options opt in data.fields[2].options)
+                                {
+                                    <option value="@opt.value">@opt.label</option>
+                                }
+                            </select>
+                            <p class="field__note">
+                                @data.fields[2].note
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Foundation Type, Garage Type,Garage Value -->
+                <div class="fields-row">
+                    <div class="field field--large">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[3].id">@data.fields[3].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input required"
+                                    id="@data.fields[3].id"
+                                    name="@data.fields[3].id"
+                                    type="select"
+                                    required="">
+                                <option value="">Choose One</option>
+                                @foreach (Options opt in data.fields[3].options)
+                                {
+                                    <option value="@opt.value">@opt.label</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field field--large">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[4].id">@data.fields[4].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input required"
+                                    id="@data.fields[4].id"
+                                    name="@data.fields[4].id"
+                                    type="select"
+                                    required="">
+                                <option value="">Choose One</option>
+                                @foreach (Options opt in data.fields[4].options)
+                                {
+                                    <option value="@opt.value">@opt.label</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field field--large">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[5].id">@data.fields[5].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input dollar "
+                                   id="@data.fields[5].id"
+                                   name="@data.fields[5].id"
+                                   type="text"
+                                   disabled />
+                            <p class="field__note">@data.fields[5].note</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @if (data.sidebar != null && data.sidebar.content.Count > 0)
+            {
+                <!-- ******* ASIDE  *******-->
+        <aside class="quote_request_aside">
+            <h2 class="quote_request_sidebar__heading">@data.sidebar.heading</h2>
+            <div class="quote_request_sidebar__content">
+                @foreach (SideBarContent sideContent in data.sidebar.content)
+                {
+                    <div class="quote_request_sidebar__item">
+                        <h3 class="quote_request_sidebar__item_heading">
+                            @sideContent.heading
+                        </h3>
+                        <p class="quote_request_sidebar__item_description">
+                            @sideContent.content
+                        </p>
+                    </div>
+                }
+
+            </div>
+            <!--Updated By  25.7.23 Start-->
+            <button class="button button--reversed quote-request-sidebar__hide-trigger" type="button">Close</button>
+            <!--Updated By  25.7.23 End-->
+        </aside>
+            }
+        </div>
+    </div>
+</section>

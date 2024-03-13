@@ -1,0 +1,18 @@
+.additional_coverages_container {
+  max-width: 1150px;
+  margin: auto;
+  justify-content: space-between;
+}
+.additional_coverages_container .right__content {
+  padding-right: 0;
+}
+
+.additional_coverages_container .who_is_covered {
+  margin-top: 2rem;
+}
+.additional_coverages_container .ul {
+  margin-bottom: 1.5rem;
+  margin-bottom: var(--spacing-vertical);
+  margin-left: 1.5rem;
+  list-style: disc;
+}

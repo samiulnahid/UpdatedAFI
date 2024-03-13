@@ -1,0 +1,180 @@
+﻿@using Sitecore.Mvc
+@using Sitecore
+@using Sitecore.Data.Fields
+@using Sitecore.Resources.Media
+@using Sitecore.Data.Items
+@using AFI.Foundation.Helper
+@using Sitecore.Rules.Conditions
+@using Sitecore.Mvc.Presentation
+@{
+    var rendering = RenderingContext.Current.Rendering.Item;
+    Sitecore.Data.Fields.MultilistField multiselectField = rendering.Fields["InsuranceTypeList"];
+    Sitecore.Data.Items.Item[] items = multiselectField.GetItems();
+    var dataTypeUrl = "";
+    int i = 0;
+}
+
+
+<section class="hero_section">
+    <div class="hero-and-quote-selector-wrapper">
+        <section class="hero__wrapper">
+            @{string bgImageUrl = "";
+                ImageField bgimgField = rendering.Fields["Image"];
+                if (bgimgField.MediaItem != null)
+                {
+                    bgImageUrl = MediaManager.GetMediaUrl(bgimgField.MediaItem);
+                }
+            }
+            <picture class="hero__image">
+                <source srcset="@bgImageUrl" media="(min-width: 1025px)">
+                @Html.Sitecore().Field("Image", rendering)
+            </picture>
+        </section>
+
+        <section class="quote-selector">
+            <h1 class="quote-selector__heading">@Html.Sitecore().Field("Title", rendering)</h1>
+            @using (Html.BeginRouteForm(Sitecore.Mvc.Configuration.MvcSettings.SitecoreRouteName, FormMethod.Post, htmlAttributes: new { @class = "quote-selector__form", @id = "quote-selector__form" }))
+            {
+                @Html.Sitecore().FormHandler("QuoteForm", "HomepageQuoteFormSubmit")
+                <fieldset>
+                    <legend class="quote-selector__subheading">@Html.Sitecore().Field("SubTitle", rendering) @Html.Sitecore().Field("Link", rendering)</legend>
+                    <div class="quote-selector__types">
+                        @if (items.Length > 0)
+                        {
+                            foreach (Sitecore.Data.Items.Item item in items)
+                            {
+                                string imageUrl = "";
+                                ImageField imgField = item.Fields["Image"];
+                                if (imgField.MediaItem != null)
+                                {
+                                    imageUrl = MediaManager.GetMediaUrl(imgField.MediaItem);
+                                }
+
+                                i++;
+                                <div class="field quote-selector__type">
+                                    <input alt="" class="quote-selector__type-input is-vishidden" id="quote-type-@item.Fields["InsuranceType"]" name="type" type="radio" value="@item.ID" @(i == 1 ? "checked" : " ")>
+                                    <label class="quote-selector__type-label js-animated-label" for="quote-type-@item.Fields["InsuranceType"]">
+                                        @if (!string.IsNullOrEmpty(item.Fields["AnimatedIcon"].Value))
+                                        {
+                                            <div class="quote-selector__icon js-animated-icon @item.Fields["InsuranceType"]" data-icon="@item.Fields["InsuranceType"]">
+
+                                                <div id="@item.Fields["InsuranceType"]-animation" class="animated"></div>
+                                                <img src="@imageUrl" alt="" class="normal" />
+                                            </div>
+                                        }
+                                        else
+                                        {
+
+                                            <div class="quote-selector__icon js-animated-icon @item.Fields["InsuranceType"]" data-icon="@item.Fields["InsuranceType"]">
+                                                @*<div id="@item.Fields["InsuranceType"]-animation" class="animated"></div>*@
+                                                <img src="@imageUrl" alt="" class="animated" />
+                                                <img src="@imageUrl" alt="" class="normal" />
+
+                                            </div>
+
+                                            @*<div class="quote-selector__icon "> <img class="custom-static-icon" src="@imageUrl" /> </div>*@
+                                        }
+                                        <span class="quote-selector__type-label-text">
+                                            @Html.Sitecore().Field("Title", item)
+
+                                        </span>
+                                    </label>
+                                </div>
+
+                            }
+                        }
+                        else
+                        {
+                            if (Sitecore.Context.PageMode.IsExperienceEditor)
+                            {
+                                <p>No insurance types have been selected</p>
+                            }
+                        }
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="quote-selector__controls">
+                        <div class="field" style="display:none;">
+
+                            <label for="zip" class="label">@Html.Sitecore().Field("PlaceHolderText", rendering)</label>
+                        </div>
+                        <button id="submit-quote-home" class="button button--large-text Click-here" type="button">@Html.Sitecore().Field("ButtonText", rendering)</button>
+                    </div>
+                </fieldset>
+            }
+
+        </section>
+
+    </div>
+</section>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"
+        integrity="sha512-jEnuDt6jfecCjthQAJ+ed0MTVA++5ZKmlUcmDGBv2vUI/REn6FuIdixLNnQT+vKusE2hhTk2is3cFvv5wA+Sgg=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+
+<script src="~/asset/js/animated/home.js"></script>
+<script src="~/asset/js/animated/auto.js"></script>
+<script src="~/asset/js/animated/business.js"></script>
+<script src="~/asset/js/animated/flood.js"></script>
+<script src="~/asset/js/animated/renter.js"></script>
+<script src="~/asset/js/animated/motorcycle.js"></script>
+<script src="~/asset/js/animated/umbrella.js"></script>
+
+<script>
+    const iconParents = document.querySelectorAll(".js-animated-icon");
+    iconParents.forEach((parent) => {
+        let timeout;
+
+        parent.addEventListener("mouseover", () => {
+            clearTimeout(timeout);
+            parent.classList.add("hovered");
+            timeout = setTimeout(() => parent.classList.remove("hovered"), 7000);
+        });
+    });
+
+    bodymovin.loadAnimation({
+        container: document.querySelector("#Homeowners-animation"),
+        animationData: home,
+    });
+
+    bodymovin.loadAnimation({
+        container: document.querySelector("#Auto-animation"),
+        animationData: auto,
+    });
+
+    bodymovin.loadAnimation({
+        container: document.querySelector("#Business-animation"),
+        animationData: business,
+    });
+
+    bodymovin.loadAnimation({
+        container: document.querySelector("#Motorcycle-animation"),
+        animationData: motorcycle,
+    });
+
+    bodymovin.loadAnimation({
+        container: document.querySelector("#umbrella-animation"),
+        animationData: umbrella,
+    });
+
+    bodymovin.loadAnimation({
+        container: document.querySelector("#Renters-animation"),
+        animationData: renter,
+    });
+
+    bodymovin.loadAnimation({
+        container: document.querySelector("#Flood-animation"),
+        animationData: flood,
+    });
+</script>
+
+<script>
+    var submitButton = document.getElementById("submit-quote-home");
+    if (submitButton) {
+        submitButton.addEventListener("click", function () {
+            document.getElementById("quote-selector__form").submit();
+        });
+    }
+</script>

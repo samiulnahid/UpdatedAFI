@@ -1,0 +1,49 @@
+﻿@model AFI.Feature.QuoteForm.Areas.AFIWEB.Models.Form_Models.Section
+@using AFI.Feature.QuoteForm.Areas.AFIWEB.Models.Form_Models
+
+<section class="form_section radio_select form_container active_section">
+    <div class="container">
+        <section class="heading_text_section">
+            <h1 class="quote_request_heading">@Model.heading </h1>
+            @foreach (var desc in Model.description)
+            {
+                <p>@desc</p>
+            }
+
+        </section>
+
+        <section class="field radio__form_section">
+
+            @foreach (var field in Model.fields)
+            {
+
+                <div class="field_label_wrapper">
+                    <label class="radio_field_label" for="eligibilityStatus">
+                        @field.label
+                    </label>
+                </div>
+                foreach (Options opt in field.options)
+                {
+                    <div class="field-group">
+                        <div class="field__input-wrapper">
+                            <input class="field__input"
+                                   id="eligibilityStatus--@opt.value"
+                                   name="eligibilityStatus"
+                                   data-name="eligibilityStatus"
+                                   type="radio"
+                                   value="@opt.value" /><label class="field__label" for="eligibilityStatus--@opt.value">
+                                @opt.label
+                            </label>
+                        </div>
+                    </div>
+
+                }
+            }
+            <div class="field_message">This field is required</div>
+
+             <!--New added 8 August 2023 -->
+            <p id="error-response" class="error-response">Something is wrong.</p>
+        </section>
+    </div>
+</section>
+

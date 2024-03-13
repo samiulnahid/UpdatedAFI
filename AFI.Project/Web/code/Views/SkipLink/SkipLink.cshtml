@@ -1,0 +1,12 @@
+﻿
+@model Sitecore.XA.Feature.Accessibility.Models.SkipLinkModel
+
+@{
+    Layout = Sitecore.Configuration.Settings.GetSetting("XA.Foundation.Presentation.MetaComponentLayoutPath", "../SXA/Meta Component Layout.cshtml");
+    var elementId = string.IsNullOrWhiteSpace(Model.SkipLinkId) ? string.Empty : "id=" + Model.SkipLinkId;
+}
+
+@if (!string.IsNullOrWhiteSpace(Model.ContentId))
+{
+    <a @elementId class="@Model.SkipLinkClass" href="#@Model.ContentId">@Model.SkipLinkTitle</a>
+}

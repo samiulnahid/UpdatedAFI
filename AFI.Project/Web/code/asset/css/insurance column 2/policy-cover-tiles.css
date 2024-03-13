@@ -1,0 +1,10 @@
+.policy__cover {
+  max-width: 1150px;
+  margin: auto !important;
+  text-align: center !important;
+}
+
+.policy__cover .coverage_icon img {
+  width: 80px;
+  margin-bottom: 10px;
+}

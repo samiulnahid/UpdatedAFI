@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Sitecore.GraphQL.Services</name>
+    </assembly>
+    <members>
+        <member name="P:Sitecore.GraphQL.Services.Model.Archives.ArchivedItemAdapter.ArchivalId">
+            <summary>Gets the archival id.</summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Model.Archives.ArchivedItemAdapter.ArchiveDate">
+            <summary>Gets the archive date in UTC time.</summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Model.Archives.ArchivedItemAdapter.ArchivedBy">
+            <summary>Gets the archived by.</summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Model.Archives.ArchivedItemAdapter.ArchiveName">
+            <summary>Gets the name of the archive.</summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Model.Archives.ArchivedItemAdapter.Database">
+            <summary>Gets the database.</summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Model.Archives.ArchivedItemAdapter.ItemId">
+            <summary>Gets the item id.</summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Model.Archives.ArchivedItemAdapter.Name">
+            <summary>Gets the name.</summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Model.Archives.ArchivedItemAdapter.OriginalLocation">
+            <summary>Gets the original location.</summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Model.Archives.ArchivedItemAdapter.ParentId">
+            <summary>Gets the parent id.</summary>
+        </member>
+        <member name="M:Sitecore.GraphQL.Services.Model.FieldCollectionAdapter.GetEnumerator">
+            <summary>Returns an enumerator that iterates through the collection.</summary>
+            <returns>An enumerator that can be used to iterate through the collection.</returns>
+        </member>
+        <member name="M:Sitecore.GraphQL.Services.Model.FieldCollectionAdapter.System#Collections#IEnumerable#GetEnumerator">
+            <summary>Returns an enumerator that iterates through a collection.</summary>
+            <returns>An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.</returns>
+        </member>
+    </members>
+</doc>

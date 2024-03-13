@@ -1,0 +1,7 @@
+﻿@model Sitecore.XA.Feature.SiteMetadata.Models.CanonicalUrlModel
+
+@{
+    Layout = Sitecore.Configuration.Settings.GetSetting("XA.Foundation.Presentation.MetaComponentLayoutPath", "../SXA/Meta Component Layout.cshtml");
+}
+
+<link rel="canonical" href="@Model.Url">

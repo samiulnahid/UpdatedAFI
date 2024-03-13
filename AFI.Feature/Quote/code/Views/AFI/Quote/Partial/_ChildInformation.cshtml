@@ -1,0 +1,82 @@
+﻿@using AFI.Feature.QuoteForm.Areas.AFIWEB.Models.Form_Models
+@model AFI.Feature.QuoteForm.Areas.AFIWEB.Models.Form_Models.Section
+
+<section class="form_section child_information">
+    <div class="container">
+        <h1 class="quote_request_heading">@Model.heading</h1>
+        <div class="quote_request__section_wrapper">
+
+            <div class="form_container min_height">
+                <!--Updated By  25.7.23 Start-->
+                <button class="quote-request-sidebar__show-trigger" type="button">?</button>
+                <!--Updated By  25.7.23 End-->
+                <h2 class="quote_request_heading">
+                    @Model.subheading
+                </h2>
+
+                <div class="fields-row">
+                    <!-- Child's First Name -->
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@Model.fields[0].id">@Model.fields[0].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required alphabeticOnly"
+                                   id="@Model.fields[0].id"
+                                   name="@Model.fields[0].id"
+                                   data-name="@Model.fields[0].id"
+                                   type="text"
+                                   pattern="^[a-zA-Z]+$"
+                                   maxlength="50"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+
+                    <!-- Child's Last Name -->
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@Model.fields[1].id">@Model.fields[1].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required alphabeticOnly"
+                                   id="@Model.fields[1].id"
+                                   name="@Model.fields[1].id"
+                                   data-name="@Model.fields[1].id"
+                                   type="text"
+                                   pattern="^[a-zA-Z]+$"
+                                   maxlength="50"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @if (Model.sidebar != null && Model.sidebar.content.Count > 0)
+            {
+
+        <aside class="quote_request_aside">
+            <h2 class="quote_request_sidebar__heading">@Model.sidebar.heading</h2>
+            <div class="quote_request_sidebar__content">
+                @foreach (SideBarContent sideContent in Model.sidebar.content)
+                {
+                    <div class="quote_request_sidebar__item">
+                        <h3 class="quote_request_sidebar__item_heading">
+                            @sideContent.heading
+                        </h3>
+                        <p class="quote_request_sidebar__item_description">
+                            @sideContent.content
+                        </p>
+                    </div>
+                }
+
+            </div>
+            <!--Updated By  25.7.23 Start-->
+            <button class="button button--reversed quote-request-sidebar__hide-trigger" type="button">Close</button>
+            <!--Updated By  25.7.23 End-->
+        </aside>
+            }
+        </div>
+    </div>
+</section>

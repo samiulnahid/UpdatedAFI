@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="b6ad50c3-2a1a-477f-8a9a-f9c9ff34aa9d" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://172.16.5.74/AgentPortal/Services/WebQuoteService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="WebQuoteService.xsd" MetadataType="Schema" ID="7a14b125-dc96-43fa-93e5-a10a7e14f0ca" SourceId="1" SourceUrl="http://sapashq02.afi.local/AgentPortal/Services/WebQuoteService.svc?xsd=xsd3" />
+    <MetadataFile FileName="WebQuoteService1.xsd" MetadataType="Schema" ID="37b49551-be4f-456f-9e73-ec585386791f" SourceId="1" SourceUrl="http://sapashq02.afi.local/AgentPortal/Services/WebQuoteService.svc?xsd=xsd0" />
+    <MetadataFile FileName="WebQuoteService.wsdl" MetadataType="Wsdl" ID="7568379a-ae5e-4622-aba3-6efe500640dd" SourceId="1" SourceUrl="http://sapashq02.afi.local/AgentPortal/Services/WebQuoteService.svc?wsdl" />
+    <MetadataFile FileName="WebQuoteService2.xsd" MetadataType="Schema" ID="b0a96538-46ed-4e2d-b626-c9bfcf1a381f" SourceId="1" SourceUrl="http://sapashq02.afi.local/AgentPortal/Services/WebQuoteService.svc?xsd=xsd4" />
+    <MetadataFile FileName="WebQuoteService.disco" MetadataType="Disco" ID="d7d382f4-092c-4f7a-9853-0f843f177464" SourceId="1" SourceUrl="http://sapashq02.afi.local/AgentPortal/Services/WebQuoteService.svc?disco" />
+    <MetadataFile FileName="WebQuoteService3.xsd" MetadataType="Schema" ID="2f2dcc45-1abf-4b2d-8a6e-18872c195509" SourceId="1" SourceUrl="http://sapashq02.afi.local/AgentPortal/Services/WebQuoteService.svc?xsd=xsd2" />
+    <MetadataFile FileName="WebQuoteService4.xsd" MetadataType="Schema" ID="d971e8a1-093a-4d70-9666-bbe22f3ac565" SourceId="1" SourceUrl="http://sapashq02.afi.local/AgentPortal/Services/WebQuoteService.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

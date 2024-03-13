@@ -1,0 +1,3334 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FiftyOne.Pipeline.Core</name>
+    </assembly>
+    <members>
+        <member name="T:FiftyOne.Pipeline.Core.Attributes.AlternateNameAttribute">
+            <summary>
+            This attribute can be applied to classes and methods to specify 
+            an alternative name that can be used for that class/method in 
+            Pipeline configuration files.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Attributes.AlternateNameAttribute.Name">
+            <summary>
+            The alternative name for the class/method.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Attributes.AlternateNameAttribute.#ctor(System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="name">
+            The alternative name for the class/method.
+            </param>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Configuration.ElementOptions">
+            <summary>
+            Configuration object that describes how to build an 
+            <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/>.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Configuration.ElementOptions.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Configuration.ElementOptions.BuilderName">
+            <summary>
+            The name of the builder to use when creating the 
+            <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/>.
+            </summary>
+            <remarks>
+            This does not necessarily have to be the full name of the type.
+            The system will match on:
+            1. Exact match of type name
+            2. Convention based match by removing 'Builder' from the end
+            of the type name. e.g. a BuilderName value of 
+            'DeviceDetectionEngine' would match to 'DeviceDetectionEngineBuilder'
+            3. Matching on an AlternateNameAttribute. e.g. a BuilderName value
+            of 'DDEngine' would match to 'DeviceDetectionEngineBuilder' if that
+            class also had [AlternateNameAttribute(Name = "DDEngine")]
+            </remarks>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Configuration.ElementOptions.BuildParameters">
+            <summary>
+            The dictionary keys are method names or names of parameters on
+            the Build method of the builder.
+            The value is the parameter value.
+            </summary>
+            <remarks>
+            Similar to the BuilderName, the key value does not necessarily 
+            have to be the full name of the method. The system will match on:
+            1. Exact match of method name
+            2. Convention based match by removing 'Set' from the start
+            of the method name. e.g. a key value of 
+            'AutomaticUpdatesEnabled' would match to method 
+            'SetAutomaticUpdatesEnabled'
+            3. Matching on an AlternateNameAttribute. e.g. a key value
+            of 'AutoUpdates' would match to 'SetAutoUpdateEnabled' if that
+            class also had [AlternateNameAttribute(Name = "AutoUpdates")]
+            </remarks>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Configuration.ElementOptions.SubElements">
+            <summary>
+            If this property is populated, the flow element is a 
+            <see cref="T:FiftyOne.Pipeline.Core.FlowElements.ParallelElements"/> instance. 
+            <see cref="P:FiftyOne.Pipeline.Core.Configuration.ElementOptions.BuilderName"/> and <see cref="P:FiftyOne.Pipeline.Core.Configuration.ElementOptions.BuildParameters"/> 
+            should be ignored.
+            Each options instance within <see cref="P:FiftyOne.Pipeline.Core.Configuration.ElementOptions.SubElements"/> contains
+            the configuration for an element to be added to a 
+            <see cref="T:FiftyOne.Pipeline.Core.FlowElements.ParallelElements"/> instance.
+            </summary>
+            <remarks>
+            A <see cref="T:FiftyOne.Pipeline.Core.FlowElements.ParallelElements"/> always executes all it's children
+            in parallel so the ordering of this elements is irrelevant.
+            </remarks>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Configuration.PipelineOptions">
+            <summary>
+            Configuration object that describes how to build a 
+            <see cref="N:FiftyOne.Pipeline"/> using a <see cref="T:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilder"/>
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Configuration.PipelineOptions.#ctor">
+            <summary>
+             Default constructor.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Configuration.PipelineOptions.Elements">
+            <summary>
+            Configuration information for the <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/>s 
+            that the Pipeline will contain.
+            </summary>
+            <remarks>
+            The order of elements is important as the pipeline will execute
+            them sequentially in the order they are supplied.
+            To execute elements in parallel, the 
+            <see cref="P:FiftyOne.Pipeline.Core.Configuration.ElementOptions.SubElements"/> property should be used.
+            </remarks>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Configuration.PipelineOptions.PipelineBuilderParameters">
+            <summary>
+            A dictionary where the keys are method names and the values
+            are parameter values.
+            The method names can be exact matches, 'set' + name or match
+            an AlternateNameAttribute.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Constants">
+            <summary>
+            Class containing values for commonly used evidence keys
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Constants.EVIDENCE_SEPERATOR">
+            <summary>
+            The string used to split evidence name parts
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Constants.EVIDENCE_HTTPHEADER_PREFIX">
+            <summary>
+            Used to prefix evidence that is obtained from HTTP headers 
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Constants.EVIDENCE_COOKIE_PREFIX">
+            <summary>
+            Used to prefix evidence that is obtained from HTTP bookies 
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Constants.EVIDENCE_QUERY_PREFIX">
+            <summary>
+            Used to prefix evidence that is obtained from an HTTP request's
+            query string or is passed into the pipeline for off-line 
+            processing.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Constants.EVIDENCE_SERVER_PREFIX">
+            <summary>
+            Used to prefix evidence that is obtained from the server
+            that the Pipeline is running on.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Constants.EVIDENCE_SESSION_PREFIX">
+            <summary>
+            Used to prefix evidence that is obtained relating to the user's
+            session.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Constants.EVIDENCE_USERAGENT">
+            <summary>
+            The suffix used when the User-Agent is passed as evidence.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Constants.EVIDENCE_CLIENTIP_KEY">
+            <summary>
+            The complete key to be used when the client IP address is
+            passed as evidence
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Constants.EVIDENCE_QUERY_USERAGENT_KEY">
+            <summary>
+            The complete key to be used when the User-Agent is
+            passed as evidence in the query string or is set from
+            a data store for off-line processing.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Constants.EVIDENCE_HEADER_USERAGENT_KEY">
+            <summary>
+            The complete key to be used when the User-Agent is
+            passed as evidence in the HTTP headers.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Constants.EVIDENCE_SESSION_KEY">
+            <summary>
+            Used by the Pipeline to store the session object if one 
+            is available.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Constants.EVIDENCE_PROTOCOL">
+            <summary>
+            The complete key to be used when the 'Protocol' HTTP header is
+            passed as evidence
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Data.LicencedProducts">
+            <summary>
+            Used by the CloudRequestEngine to store details of accessible 
+            products and properties based on the currently configured 
+            resource key.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.LicencedProducts.Products">
+            <summary>
+            A collection of accessible products.
+            Key is product name, value contains a list of the 
+            accessible properties.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.LicencedProducts.Errors">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Data.ProductMetaData">
+            <summary>
+            Licensed properties class used to deserialize accessible property
+            information from cloud services.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.ProductMetaData.DataTier">
+            <summary>
+            Accessible data tiers
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.ProductMetaData.Properties">
+            <summary>
+            Accessible Properties
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Data.PropertyMetaData">
+            <summary>
+            Standalone instance of ElementPropertyMetaData, used to serialize 
+            element or aspect properties.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.PropertyMetaData.Name">
+            <summary>
+            Name of the property
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.PropertyMetaData.Type">
+            <summary>
+            The property type name.
+            Note that this is the JSON type, not the c# type.
+            For example, any list types will just have the type name 'Array'.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.PropertyMetaData.Category">
+            <summary>
+            The property category
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.PropertyMetaData.ItemProperties">
+            <summary>
+            Properties of sub-items
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.PropertyMetaData.DelayExecution">
+            <summary>
+            Delay execution flag
+            </summary>
+            <seealso cref="P:FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData.DelayExecution"/>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.PropertyMetaData.EvidenceProperties">
+            <summary>
+            Evidence properties
+            </summary>
+            <seealso cref="P:FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData.EvidenceProperties"/>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.PropertyMetaData.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.PropertyMetaData.#ctor(FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="property"></param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.PropertyMetaData.GetTypeName(System.Type)">
+            <summary>
+            Translate the type name from the c# type to the JSON type.
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Data.DataBase">
+            <summary>
+            This class stores data values as key/value pairs where
+            the key is a string and the value can be any type.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Data.DataBase._data">
+            <summary>
+            The data
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Data.DataBase._logger">
+            <summary>
+            Logger
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.DataBase.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Core.Data.DataBase})">
+            <summary>
+            Constructor
+            Creates a <see cref="T:FiftyOne.Pipeline.Core.Data.DataBase"/> instance with a 
+            non-thread-safe, case-insensitive dictionary.
+            </summary>
+            <param name="logger">
+            Used for logging
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.DataBase.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Core.Data.DataBase},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="dictionary">
+            The dictionary instance to use internally when storing data values.
+            </param>
+            <param name="logger">
+            Used for logging
+            </param>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.DataBase.Item(System.String)">
+            <summary>
+            Get or set a data value
+            </summary>
+            <param name="key">
+            The name of the property
+            </param>
+            <returns>
+            The property value
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.DataBase.AsDictionary">
+            <summary>
+            Get the data contained in this instance as an 
+            <see cref="T:System.Collections.Generic.IReadOnlyDictionary`2"/>.
+            </summary>
+            <returns>
+            The data
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.DataBase.PopulateFromDictionary(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Use the values in the specified dictionary to populate
+            this data instance.
+            </summary>
+            <remarks>
+            The data will not be cleared before the new values are added.
+            The new values will overwrite old values if any exist with the
+            same keys.
+            </remarks>
+            <param name="values">
+            The values to transfer to this data instance.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the supplied dictionary is null
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.DataBase.GetAs``1(System.String)">
+            <summary>
+            Get the value associated with the specified key as the 
+            specified type.
+            </summary>
+            <typeparam name="T">
+            The type to return
+            </typeparam>
+            <param name="key">
+            The key to get the value for.
+            </param>
+            <returns>
+            The value associated with the specified key cast to type 'T'.
+            If there is no value for the given key then the default value 
+            for the type is returned.
+            </returns>
+            <exception cref="T:System.InvalidCastException">
+            Thrown if the value associated with the specified key cannot be 
+            cast to type 'T'
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the specified key is null
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.DataBase.AsTruncatedString(System.Object)">
+            <summary>
+            Get the string representation of the specified object.
+            If the string is longer than 50 characters then truncate it.
+            </summary>
+            <param name="value">
+            The object to return as a string.
+            </param>
+            <returns>
+            The string representation of the specified object.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Data.DataKey">
+            <summary>
+            A DataKey is a multi-field key intended for use in caching and 
+            similar scenarios.
+            The key fields are stored in a list within the class.
+            Create a new instance using a <see cref="T:FiftyOne.Pipeline.Core.Data.DataKeyBuilder"/>.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.DataKey.KeyValues">
+            <summary>
+            Key field values, stored in order of precedence with the most
+            likely to be different between instances coming first.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Data.DataKey._hashCode">
+            <summary>
+            The calculated hash code for this key.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.DataKey.#ctor(System.Collections.Generic.IList{System.Object})">
+            <summary>
+            Create a new DataKey instance
+            </summary>
+            <param name="keyValues">
+            The values of the keys that make up this instance.
+            Must be in order of precedence with the most
+            likely to be different between instances coming first.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.DataKey.Equals(System.Object)">
+            <summary>
+            Check if this instance is equal to another.
+            </summary>
+            <param name="obj">
+            The other object to check for equality.
+            </param>
+            <returns>
+            True if obj is a <see cref="T:FiftyOne.Pipeline.Core.Data.DataKey"/> that contains the same 
+            key fields, in the same order and with the same values as this 
+            instance. False otherwise.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.DataKey.GetHashCode">
+            <summary>
+            Get the hash code for this instance.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Data.DataKeyBuilder">
+            <summary>
+            Class to assist with the creation of <see cref="T:FiftyOne.Pipeline.Core.Data.DataKey"/> instances
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Data.DataKeyBuilder._keys">
+            <summary>
+            A collection used to store the keys that have been added.
+            The first key is the order of precedence for the key with lower 
+            values indicating that a key is more likely to provide 
+            differentiation between instances.
+            The second is the keyName. This is used to order keys when
+            they have the same order of precedence.
+            The value is the key value for this instance.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.DataKeyBuilder.Add(System.Int32,System.String,System.Object)">
+            <summary>
+            Add a key
+            </summary>
+            <param name="order">
+            The order of precedence with lower values indicating that a 
+            key is more likely to provide differentiation between instances.
+            </param>
+            <param name="keyName">
+            The name of the key. This is used to order keys when they have
+            the same order of precedence.
+            </param>
+            <param name="keyValue">
+            The value of the key.
+            </param>
+            <returns>
+            This instance of the <see cref="T:FiftyOne.Pipeline.Core.Data.DataKeyBuilder"/>.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.DataKeyBuilder.Build">
+            <summary>
+            Create and return a new DataKey based on the keys that 
+            have been added.
+            </summary>
+            <returns>
+            A new <see cref="T:FiftyOne.Pipeline.Core.Data.DataKey"/> instance that can be used as a key 
+            combining the values that have been supplied to this builder.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Data.ElementDataBase">
+            <summary>
+            This class stores property values that have be determined by a 
+            specific FlowElement based on the supplied evidence.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.ElementDataBase.Pipeline">
+            <summary>
+            The <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IPipeline"/> instance this element data will
+            be associated with.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.ElementDataBase.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Core.Data.ElementDataBase},FiftyOne.Pipeline.Core.FlowElements.IPipeline)">
+            <summary>
+            Constructor
+            Creates an <see cref="T:FiftyOne.Pipeline.Core.Data.ElementDataBase"/> instance with a 
+            non-thread-safe, case-insensitive dictionary.
+            </summary>
+            <param name="logger">
+            Used for logging
+            </param>
+            <param name="pipeline">
+            The <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IPipeline"/> instance this element data will
+            be associated with.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.ElementDataBase.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Core.Data.ElementDataBase},FiftyOne.Pipeline.Core.FlowElements.IPipeline,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger">
+            Used for logging
+            </param>
+            <param name="pipeline">
+            The <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IPipeline"/> instance this element data will
+            be associated with.
+            </param>
+            <param name="dictionary">
+            The dictionary instance to use internally when storing data values.
+            </param>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Data.ElementPropertyMetaData">
+            <summary>
+            Meta-data relating to properties that are populated by Flow Elements.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.ElementPropertyMetaData.Name">
+            <inheritdoc/>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.ElementPropertyMetaData.Element">
+            <inheritdoc/>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.ElementPropertyMetaData.Category">
+            <inheritdoc/>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.ElementPropertyMetaData.Type">
+            <inheritdoc/>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.ElementPropertyMetaData.Available">
+            <inheritdoc/>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.ElementPropertyMetaData.ItemProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.ElementPropertyMetaData.ItemPropertyDictionary">
+            <inheritdoc/>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.ElementPropertyMetaData.DelayExecution">
+            <inheritdoc/>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.ElementPropertyMetaData.EvidenceProperties">
+            <inheritdoc/>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.ElementPropertyMetaData.#ctor(FiftyOne.Pipeline.Core.FlowElements.IFlowElement,System.String,System.Type,System.Boolean,System.String,System.Collections.Generic.IReadOnlyList{FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData},System.Boolean,System.Collections.Generic.IReadOnlyList{System.String})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="element">
+            The <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> that this property is associated 
+            with.
+            </param>
+            <param name="name">
+            The name of the property. Must match the string key used to
+            store the property value in the <see cref="T:FiftyOne.Pipeline.Core.Data.IElementData"/> instance.
+            </param>
+            <param name="type">
+            The type of the property values.
+            </param>
+            <param name="category">
+            The category the property belongs to.
+            </param>
+            <param name="available">
+            True if the property is available.
+            </param>
+            <param name="itemProperties">
+            Where this meta-data instance relates to a list of complex objects, 
+            this parameter can contain a list of the property meta-data 
+            for items in that list.
+            </param>
+            <param name="delayExecution">
+            Only relevant if <see cref="P:FiftyOne.Pipeline.Core.Data.ElementPropertyMetaData.Type"/> is <see cref="T:FiftyOne.Pipeline.Core.Data.Types.JavaScript"/>.
+            Defaults to false.
+            If set to true then the JavaScript in this property will
+            not be executed automatically on the client device.
+            </param>
+            <param name="evidenceProperties">
+            The names of any <see cref="T:FiftyOne.Pipeline.Core.Data.Types.JavaScript"/> properties that,
+            when executed, will obtain additional evidence that can help
+            in determining the value of this property.
+            Note that these names should include any parts after the 
+            element data key.
+            I.e. if the complete property name is 
+            'devices.profiles.screenwidthpixelsjavascript' then the
+            name in this list must be 'profiles.screenwidthpixelsjavascript'
+            </param>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Data.Evidence">
+            <summary>
+            This class contains the evidence that is passed in to a Pipeline
+            as part of a <see cref="T:FiftyOne.Pipeline.Core.Data.FlowData"/> object
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.Evidence.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Core.Data.Evidence})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger">
+            The logger to be used by this instance
+            </param>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Data.EvidenceKeyFilterAggregator">
+            <summary>
+            This implementation of <see cref="T:FiftyOne.Pipeline.Core.Data.IEvidenceKeyFilter"/>
+            aggregates multiple other filters using a logical OR approach.
+            I.e. if any one of the child filters would allow the inclusion
+            of an evidence key then this aggregator will allow it as well, even
+            if none of the other child filters do.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.EvidenceKeyFilterAggregator.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.EvidenceKeyFilterAggregator.AddFilter(FiftyOne.Pipeline.Core.Data.IEvidenceKeyFilter)">
+            <summary>
+            Add a child filter to this aggregator.
+            </summary>
+            <param name="filter">
+            The filter to add.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.EvidenceKeyFilterAggregator.Include(System.String)">
+            <summary>
+            Check if the specified evidence key is included by this filter.
+            </summary>
+            <param name="key">
+            The evidence key to check.
+            </param>
+            <returns>
+            True if the key is included and false if not.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.EvidenceKeyFilterAggregator.Order(System.String)">
+            <summary>
+            Get the order of precedence of the specified key
+            </summary>
+            <param name="key">
+            The key to check
+            </param>
+            <returns>
+            The order, where lower values indicate a higher order of 
+            precedence. 
+            Null if the key is not included by the filter.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Data.EvidenceKeyFilterWhitelist">
+            <summary>
+            This evidence filter will only include keys that are in a list
+            that is specified at construction time.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Data.EvidenceKeyFilterWhitelist._inclusionList">
+            <summary>
+            The dictionary containing all keys to be included by the filter
+            and the order of precedence.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Data.EvidenceKeyFilterWhitelist._comparer">
+            <summary>
+            The equality comparer that is used to determine if a supplied
+            string key is in the inclusion list or not.
+            By default, a case insensitive comparison is used.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.EvidenceKeyFilterWhitelist.Whitelist">
+            <summary>
+            Get the keys in the inclusion list as a read only dictionary.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.EvidenceKeyFilterWhitelist.Comparer">
+            <summary>
+            Get the equality comparer that is used to determine if a supplied
+            string key is in the inclusion list or not.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.EvidenceKeyFilterWhitelist.#ctor(System.Collections.Generic.List{System.String})">
+            <summary>
+            Constructor
+            The filter will be case-insensitive. For a case-sensitive filter
+            use the overload that takes an <see cref="T:System.Collections.Generic.IEqualityComparer`1"/>.
+            </summary>
+            <param name="inclusionList">
+            The list of evidence keys that is filter will include.
+            By default, all keys will have the same order of precedence.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.EvidenceKeyFilterWhitelist.#ctor(System.Collections.Generic.List{System.String},System.Collections.Generic.IEqualityComparer{System.String})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="inclusionList">
+            The list of evidence keys that is filter will include.
+            By default, all keys will have the same order of precedence.
+            </param>
+            <param name="comparer">
+            Comparator to use when comparing the keys.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.EvidenceKeyFilterWhitelist.#ctor(System.Collections.Generic.Dictionary{System.String,System.Int32})">
+            <summary>
+            Constructor
+            The filter will be case-insensitive. For a case-sensitive filter
+            use the overload that takes an <see cref="T:System.Collections.Generic.IEqualityComparer`1"/>.
+            </summary>
+            <param name="inclusionList">
+            The dictionary of evidence keys that is filter will include.
+            The order of precedence of each key is given by the value of
+            the key/value pair.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.EvidenceKeyFilterWhitelist.#ctor(System.Collections.Generic.Dictionary{System.String,System.Int32},System.Collections.Generic.IEqualityComparer{System.String})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="inclusionList">
+            The dictionary of evidence keys that is filter will include.
+            The order of precedence of each key is given by the value of
+            the key/value pair.
+            </param>
+            <param name="comparer">
+            Comparator to use when comparing the keys.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.EvidenceKeyFilterWhitelist.Include(System.String)">
+            <summary>
+            Check if the specified evidence key is included by this filter.
+            </summary>
+            <param name="key">
+            The key to check
+            </param>
+            <returns>
+            True if the key is included and false if not.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.EvidenceKeyFilterWhitelist.Order(System.String)">
+            <summary>
+            Get the order of precedence of the specified key
+            </summary>
+            <param name="key">
+            The key to check
+            </param>
+            <returns>
+            The order, where lower values indicate a higher order of 
+            precedence. 
+            Null if the key is not in the inclusion list.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Data.FlowData">
+            <summary>
+            The FlowData class contains the data that is used within a pipeline.
+            The input data is referred to as 'evidence'.
+            The output data is split into groups of related properties called 
+            'aspects'.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Data.FlowData._evidence">
+            <summary>
+            The input data
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Data.FlowData._data">
+            <summary>
+            The output data
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Data.FlowData._errors">
+            <summary>
+            The errors that have occurred during processing
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Data.FlowData._processed">
+            <summary>
+            True if this instance has been processed
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Data.FlowData._logger">
+            <summary>
+            Logger.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Data.FlowData._dataLock">
+            <summary>
+            Lock to use when adding element data.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.FlowData.Errors">
+            <summary>
+            The errors that have occurred during processing
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Data.FlowData._errorsLock">
+            <summary>
+            Lock to use when adding errors.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.FlowData.PipelineInternal">
+            <summary>
+            The pipeline that was used to create this FlowData instance
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.FlowData.Pipeline">
+            <summary>
+            The pipeline that was used to create this FlowData instance
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.FlowData.Stop">
+            <summary>
+            A boolean flag that can be used to stop further elements
+            from executing.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.FlowData.EvidenceKeyFilter">
+            <summary>
+            Get a filter that will only include the evidence keys that can 
+            be used by the elements within the pipeline that created this
+            flow element.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Core.Data.FlowData},FiftyOne.Pipeline.Core.FlowElements.IPipelineInternal,FiftyOne.Pipeline.Core.Data.Evidence)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger">
+            The logger to use when events occur. Can be null.
+            </param>
+            <param name="pipeline">
+            The pipeline that created this FlowData instance.
+            </param>
+            <param name="evidence">
+            The initial evidence.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.AddError(System.Exception,FiftyOne.Pipeline.Core.FlowElements.IFlowElement)">
+            <summary>
+            Register an error that occurred while working with this 
+            instance.
+            </summary>
+            <param name="ex">
+            The exception that occurred.
+            </param>
+            <param name="flowElement">
+            The flow element that the exception occurred in.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.AddError(System.Exception,FiftyOne.Pipeline.Core.FlowElements.IFlowElement,System.Boolean,System.Boolean)">
+            <summary>
+            Register an error that occurred while working with this 
+            instance.
+            </summary>
+            <param name="ex">
+            The exception that occurred.
+            </param>
+            <param name="flowElement">
+            The flow element that the exception occurred in.
+            </param>
+            <param name="shouldThrow">
+            Set whether the pipeline should throw the exception.
+            </param>
+            <param name="shouldLog">
+            Set whether the pipeline should log the exception as an error.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.GetEvidence">
+            <summary>
+            Get the <see cref="T:FiftyOne.Pipeline.Core.Data.IEvidence"/> object that contains the 
+            input data for this instance.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.TryGetEvidence``1(System.String,``0@)">
+            <summary>
+            Try to get the data value from evidence.
+            </summary>
+            <param name="key">The evidence key.</param>
+            <param name="value">The value from evidence.</param>
+            <returns>True if a value for a given key is found or false if the 
+            key is not found or if the method cannot cast the value to the 
+            requested type.</returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.GetDataKeys">
+            <summary>
+            Get the string keys to the aspects that are contained within
+            the output data.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.GetWhere(System.Func{FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData,System.Boolean})">
+            <summary>
+            Get all element data AspectPropertyValues that match the specified predicate
+            </summary>
+            <param name="predicate">
+            If a property passed to this function returns true then it will
+            be included in the results
+            </param>
+            <returns>
+            All the element data AspectPropertyValues that match the predicate
+            </returns>
+            <exception cref="T:FiftyOne.Pipeline.Core.Exceptions.PipelineException">
+            Thrown if this FlowData instance has not been processed yet.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.Process">
+            <summary>
+            Use the pipeline to process this FlowData instance and 
+            populate the aspect data values.
+            </summary>
+            <exception cref="T:FiftyOne.Pipeline.Core.Exceptions.PipelineException">
+            Thrown if this flow data object has already been processed.
+            </exception>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown if the Pipeline has already been disposed.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.AddEvidence(System.String,System.Object)">
+            <summary>
+            Add the specified evidence to the FlowData
+            </summary>
+            <param name="key">
+            The evidence key
+            </param>
+            <param name="value">
+            The evidence value
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if parameters are null
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.AddEvidence(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Add the specified evidence to the FlowData
+            </summary>
+            <param name="evidence">
+            The evidence to add
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if evidence is null
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.Get(System.String)">
+            <summary>
+            Get the <see cref="T:FiftyOne.Pipeline.Core.Data.IElementData"/> instance containing data
+            populated by the specified element.
+            </summary>
+            <param name="elementDataKey">
+            The name of the element to get data from.
+            </param>
+            <returns>
+            An <see cref="T:FiftyOne.Pipeline.Core.Data.IElementData"/> instance containing the data.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the supplied data key is null
+            </exception>
+            <exception cref="T:FiftyOne.Pipeline.Core.Exceptions.PipelineException">
+            Thrown if this FlowData instance has not been processed yet.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.Get``1(FiftyOne.Pipeline.Core.TypedMap.ITypedKey{``0})">
+            <summary>
+            Get the <see cref="T:FiftyOne.Pipeline.Core.Data.IElementData"/> instance containing data
+            populated by the specified element.
+            </summary>
+            <typeparam name="T">
+            The expected type of the data to be returned.
+            </typeparam>
+            <param name="key">
+            An <see cref="T:FiftyOne.Pipeline.Core.TypedMap.ITypedKey`1"/> indicating the element 
+            to get data from.
+            </param>
+            <returns>
+            An instance of type T containing the data.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the supplied key is null
+            </exception>
+            <exception cref="T:FiftyOne.Pipeline.Core.Exceptions.PipelineException">
+            Thrown if this FlowData instance has not been processed yet.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.TryGetValue``1(FiftyOne.Pipeline.Core.TypedMap.ITypedKey{``0},``0@)">
+            <summary>
+            Check if the flow data contains an item with the specified
+            key name and type. If it does exist, retrieve it.
+            </summary>
+            <param name="key">
+            The key to check for.
+            </param>
+            <param name="value">
+            The value associated with the key.
+            </param>
+            <returns>
+            True if an entry matching the key exists, false otherwise.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.Get``1">
+            <summary>
+            Get the <see cref="T:FiftyOne.Pipeline.Core.Data.IElementData"/> instance containing data
+            of the specified type. If multiple instances of the type
+            exist then an exception is thrown.
+            </summary>
+            <typeparam name="T">
+            The type of the data to look for and return.
+            </typeparam>
+            <returns>
+            The data instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.GetFromElement``2(FiftyOne.Pipeline.Core.FlowElements.IFlowElement{``0,``1})">
+            <summary>
+            Get the <see cref="T:FiftyOne.Pipeline.Core.Data.IElementData"/> instance containing data
+            populated by the specified element.
+            </summary>
+            <typeparam name="T">
+            The expected type of the data to be returned.
+            </typeparam>    
+            <typeparam name="TMeta">
+            The type of meta data that the flow element will supply 
+            about the properties it populates.
+            </typeparam>
+            <param name="flowElement">
+            The <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement`2"/> that populated the
+            desired data. 
+            </param>
+            <returns>
+            An instance of type T containing the data.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the supplied flow element is null
+            </exception>
+            <exception cref="T:FiftyOne.Pipeline.Core.Exceptions.PipelineException">
+            Thrown if this FlowData instance has not been processed yet.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.GetAs``1(System.String)">
+            <summary>
+            Get the specified property as the specified type.
+            </summary>
+            <typeparam name="T">
+            The type to return the property value as
+            </typeparam>
+            <param name="propertyName">
+            The name of the property to get
+            </param>
+            <returns>
+            The property value
+            </returns>
+            <exception cref="T:FiftyOne.Pipeline.Core.Exceptions.PipelineException">
+            Thrown if this FlowData instance has not been processed yet.
+            </exception>
+            <exception cref="T:FiftyOne.Pipeline.Core.Exceptions.PipelineDataException">
+            Thrown if the requested property cannot be found or if multiple
+            flow elements use the same property name.
+            </exception>
+            <exception cref="T:System.InvalidCastException">
+            Thrown if property value cannot be cast to the requested type.
+            </exception>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">
+            Thrown if property value is expected to be present but was not
+            found.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.GetAsBool(System.String)">
+            <summary>
+            Get the specified property as a boolean.
+            </summary>
+            <param name="propertyName">
+            The name of the property to get
+            </param>
+            <returns>
+            The property value
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.GetAsString(System.String)">
+            <summary>
+            Get the specified property as a string.
+            </summary>
+            <param name="propertyName">
+            The name of the property to get
+            </param>
+            <returns>
+            The property value
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.GetAsInt(System.String)">
+            <summary>
+            Get the specified property as a int.
+            </summary>
+            <param name="propertyName">
+            The name of the property to get
+            </param>
+            <returns>
+            The property value
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.GetAsLong(System.String)">
+            <summary>
+            Get the specified property as a long.
+            </summary>
+            <param name="propertyName">
+            The name of the property to get
+            </param>
+            <returns>
+            The property value
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.GetAsFloat(System.String)">
+            <summary>
+            Get the specified property as a float.
+            </summary>
+            <param name="propertyName">
+            The name of the property to get
+            </param>
+            <returns>
+            The property value
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.GetAsDouble(System.String)">
+            <summary>
+            Get the specified property as a double.
+            </summary>
+            <param name="propertyName">
+            The name of the property to get
+            </param>
+            <returns>
+            The property value
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.GetOrAdd``1(System.String,System.Func{FiftyOne.Pipeline.Core.FlowElements.IPipeline,``0})">
+            <summary>
+            Get or add the specified element data to the internal map.
+            </summary>
+            <param name="elementDataKey">
+            The name of the element to store the data under.
+            </param>
+            <param name="dataFactory">
+            The method to use to create a new data to store if one does not
+            already exist.
+            </param>
+            <returns>
+            Existing data matching the key, or newly added data.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the supplied data factory is null
+            </exception>
+            <exception cref="T:System.InvalidCastException">
+            Thrown if the <see cref="T:FiftyOne.Pipeline.Core.Data.IElementData"/> retrieved for the 
+            supplied data key cannot be cast to the type T
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.GetOrAdd``1(FiftyOne.Pipeline.Core.TypedMap.ITypedKey{``0},System.Func{FiftyOne.Pipeline.Core.FlowElements.IPipeline,``0})">
+            <summary>
+            Add the specified element data to the internal map.
+            </summary>
+            <typeparam name="T">
+            The type of the data being stored.
+            </typeparam>
+            <param name="key">
+            The key to use when storing the data.
+            </param>
+            <param name="dataFactory">
+            The method to use to create a new data to store if one does not
+            already exist.
+            </param>
+            <returns>
+            Existing data matching the key, or newly added data.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the supplied data factory is null
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.ElementDataAsDictionary">
+            <summary>
+            Get the element data for this instance as a dictionary.
+            </summary>
+            <returns>
+            A dictionary containing the element data.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.ElementDataAsEnumerable">
+            <summary>
+            Get the element data for this instance as an enumerable.
+            </summary>
+            <returns>
+            An enumerable containing the element data.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.GenerateKey(FiftyOne.Pipeline.Core.Data.IEvidenceKeyFilter)">
+            <summary>
+            Generate a <see cref="T:FiftyOne.Pipeline.Core.Data.DataKey"/> that contains the evidence 
+            data from this instance that matches the specified filter.
+            </summary>
+            <param name="filter">
+            An <see cref="T:FiftyOne.Pipeline.Core.Data.IEvidenceKeyFilter"/> instance that defines the 
+            values to include in the generated key.
+            </param>
+            <returns>
+            A new <see cref="T:FiftyOne.Pipeline.Core.Data.DataKey"/> instance.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the supplied filter is null
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.Dispose(System.Boolean)">
+            <summary>
+            Dispose
+            </summary>
+            <param name="disposing">
+            False if called from finalizer
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowData.Dispose">
+            <summary>
+            Dispose
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Data.FlowError">
+            <summary>
+            This class contains details about errors that occur during 
+            processing
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.FlowError.#ctor(System.Exception,FiftyOne.Pipeline.Core.FlowElements.IFlowElement,System.Boolean)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="ex">
+            The exception
+            </param>
+            <param name="flowElement">
+            The flow element that the exception occurred in or is related to.
+            </param>
+            <param name="shouldThrow">
+            Set whether the pipeline should throw this exception.
+            </param>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.FlowError.ExceptionData">
+            <summary>
+            The details of the exception.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.FlowError.FlowElement">
+            <summary>
+            The flow element that the exception occurred in or is related to.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.FlowError.ShouldThrow">
+            <summary>
+            Flag for if the pipeline should throw the exception.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Data.IData">
+            <summary>
+            Represents property values
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IData.AsDictionary">
+            <summary>
+            Get the data contained in this instance as an 
+            <see cref="T:System.Collections.Generic.IReadOnlyDictionary`2"/>
+            </summary>
+            <returns>
+            The data
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IData.PopulateFromDictionary(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Use the values in the specified dictionary to populate
+            this data instance.
+            </summary>
+            <remarks>
+            The data will not be cleared before the new values are added.
+            The new values will overwrite old values if any exist with the
+            same keys.
+            </remarks>
+            <param name="values">
+            The values to transfer to this data instance.
+            </param>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.IData.Item(System.String)">
+            <summary>
+            Get or set a data value
+            </summary>
+            <param name="key">
+            The name of the property
+            </param>
+            <returns>
+            The property value
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Data.IDataKeyBuilder">
+            <summary>
+            Represents a class that can create new <see cref="T:FiftyOne.Pipeline.Core.Data.DataKey"/> 
+            instances.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IDataKeyBuilder.Add(System.Int32,System.String,System.Object)">
+            <summary>
+            Add a key
+            </summary>
+            <param name="order">
+            The order of precedence with lower values indicating that a 
+            key is more likely to provide differentiation between instances.
+            </param>
+            <param name="keyName">
+            The name of the key. This is used to order keys when they have
+            the same order of precedence.
+            </param>
+            <param name="keyValue">
+            The value of the key.
+            </param>
+            <returns>
+            This instance of the <see cref="T:FiftyOne.Pipeline.Core.Data.IDataKeyBuilder"/>.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IDataKeyBuilder.Build">
+            <summary>
+            Create and return a new DataKey based on the keys that 
+            have been added.
+            </summary>
+            <returns>
+            A new <see cref="T:FiftyOne.Pipeline.Core.Data.DataKey"/> instance that can be used as a key 
+            combining the values that have been supplied to this builder.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Data.IElementData">
+            <summary>
+            Represents property values that have be determined by a 
+            specific FlowElement based on the supplied evidence.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.IElementData.Pipeline">
+            <summary>
+            The <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IPipeline"/> that this instance was created by
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData">
+            <summary>
+            Represents meta-data relating to a property that is populated 
+            by a <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> instance.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData.Name">
+            <summary>
+            The name of the property. Must match the string key used to
+            store the property value in the <see cref="T:FiftyOne.Pipeline.Core.Data.IElementData"/> instance.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData.Element">
+            <summary>
+            The <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> that this property is associated 
+            with.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData.Category">
+            <summary>
+            The category the property belongs to.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData.Type">
+            <summary>
+            The type of the property values
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData.Available">
+            <summary>
+            True if the property is available in the results for the
+            associated <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/>, false otherwise.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData.ItemProperties">
+            <summary>
+            This is only relevant where Type is a collection of complex 
+            objects. 
+            It contains a list of the property meta-data for the
+            items in the value for this property.
+            For example, if this meta-data instance represents a list of 
+            hardware devices, ItemProperties will contain a list of the 
+            meta-data for properties available on each hardware device
+            element within that list.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData.ItemPropertyDictionary">
+            <summary>
+            Get the <see cref="P:FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData.ItemProperties"/> as a dictionary keyed
+            on property name.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData.DelayExecution">
+            <summary>
+            Only relevant if <see cref="P:FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData.Type"/> is <see cref="T:FiftyOne.Pipeline.Core.Data.Types.JavaScript"/>.
+            Defaults to false.
+            If set to true then the JavaScript in this property will
+            not be executed automatically on the client device.
+            This is used where executing the JavaScript would result in  
+            undesirable behavior. 
+            For example, attempting to access the location of the device 
+            will cause the browser to show a pop-up confirming if the 
+            user is happy too allow the website access to their location.
+            In general, we don't want this to happen immediately when a
+            user enters a website, but when they try to use a feature that
+            requires location data (e.g. show restaurants near me).
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData.EvidenceProperties">
+            <summary>
+            Get the names of any <see cref="T:FiftyOne.Pipeline.Core.Data.Types.JavaScript"/> properties that,
+            when executed, will obtain additional evidence that can help
+            in determining the value of this property.
+            For example, the ScreenPixelsWidthJavascript property will
+            get the pixel width of the client-device's screen.
+            This is used to update the ScreenPixelsWidth property.
+            As such, ScreenPixelsWidth will have ScreenPixelWidthJavascript 
+            in its list of evidence properties.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Data.IEvidence">
+            <summary>
+            Interface to the evidence that is passed in to a Pipeline as part
+            of a <see cref="T:FiftyOne.Pipeline.Core.Data.FlowData"/> object
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.IEvidence.Item(System.String)">
+            <summary>
+            Get or set a data value
+            </summary>
+            <param name="key">
+            The name of the property
+            </param>
+            <returns>
+            The property value
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Data.IEvidenceKeyFilter">
+            <summary>
+            Represents an object that filters evidence key names based on some
+            criteria.
+            For example, a filter that only included evidence items relating to
+            HTTP headers might use key.StartsWith("header.")
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IEvidenceKeyFilter.Include(System.String)">
+            <summary>
+            Check if the specified evidence key is included by this filter.
+            </summary>
+            <param name="key">
+            The key to check
+            </param>
+            <returns>
+            True if the key is included and false if not.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IEvidenceKeyFilter.Order(System.String)">
+            <summary>
+            Get the order of precedence of the specified key
+            </summary>
+            <param name="key">
+            The key to check
+            </param>
+            <returns>
+            The order, where lower values indicate a higher order of 
+            precedence. 
+            Null if the key is not recognized.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Data.IFlowData">
+            <summary>
+            The IFlowData represents the data that is used within a pipeline.
+            The input data is referred to as 'evidence'.
+            The output data is split into groups of related properties called 
+            'aspects'.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.IFlowData.Stop">
+            <summary>
+            A boolean flag that can be used to stop further elements
+            from executing.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.IFlowData.Errors">
+            <summary>
+            The errors that have occurred during processing
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.IFlowData.Pipeline">
+            <summary>
+            The pipeline used to create this flow data.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.AddError(System.Exception,FiftyOne.Pipeline.Core.FlowElements.IFlowElement)">
+            <summary>
+            Register an error that occurred while working with this 
+            instance.
+            </summary>
+            <param name="ex">
+            The exception that occurred.
+            </param>
+            <param name="flowElement">
+            The flow element that the exception occurred in.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.AddError(System.Exception,FiftyOne.Pipeline.Core.FlowElements.IFlowElement,System.Boolean,System.Boolean)">
+            <summary>
+            Register an error that occurred while working with this 
+            instance.
+            </summary>
+            <param name="ex">
+            The exception that occurred.
+            </param>
+            <param name="flowElement">
+            The flow element that the exception occurred in.
+            </param>
+            <param name="shouldThrow">
+            Set whether the pipeline should throw this exception.
+            </param>
+            <param name="shouldLog">
+            Set whether the pipeline should log the exception as an error.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.GetEvidence">
+            <summary>
+            Get the <see cref="T:FiftyOne.Pipeline.Core.Data.IEvidence"/> object that contains the 
+            input data for this instance.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.TryGetEvidence``1(System.String,``0@)">
+            <summary>
+            Try to get the data value from evidence.
+            </summary>
+            <param name="key">The evidence key.</param>
+            <param name="value">The value from evidence.</param>
+            <returns>True if a value for a given key is found or False if the 
+            key is not found or if the method cannot cast the value to the 
+            requested type.</returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.GetDataKeys">
+            <summary>
+            Get the string keys to the aspects that are contained within
+            the output data.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.GetWhere(System.Func{FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData,System.Boolean})">
+            <summary>
+            Get all element data values that match the specified predicate
+            </summary>
+            <param name="predicate">
+            If a property passed to this function returns true then it will
+            be included in the results
+            </param>
+            <returns>
+            All the element data values that match the predicate
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.Process">
+            <summary>
+            Use the pipeline to process this FlowData instance and 
+            populate the aspect data values.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.AddEvidence(System.String,System.Object)">
+            <summary>
+            Add the specified evidence to the FlowData
+            </summary>
+            <param name="key">
+            The evidence key
+            </param>
+            <param name="value">
+            The evidence value
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.AddEvidence(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Add the specified evidence to the FlowData
+            </summary>
+            <param name="evidence">
+            The evidence to add
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.Get(System.String)">
+            <summary>
+            Get the <see cref="T:FiftyOne.Pipeline.Core.Data.IData"/> instance containing data
+            populated by the specified element.
+            </summary>
+            <param name="elementDataKey">
+            The name of the element to get data from.
+            </param>
+            <returns>
+            An <see cref="T:FiftyOne.Pipeline.Core.Data.IElementData"/> instance containing the data.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.Get``1(FiftyOne.Pipeline.Core.TypedMap.ITypedKey{``0})">
+            <summary>
+            Get the <see cref="T:FiftyOne.Pipeline.Core.Data.IElementData"/> instance containing data
+            populated by the specified element.
+            </summary>
+            <typeparam name="T">
+            The expected type of the data to be returned.
+            </typeparam>
+            <param name="key">
+            An <see cref="T:FiftyOne.Pipeline.Core.TypedMap.ITypedKey`1"/> indicating the element 
+            to get data from.
+            </param>
+            <returns>
+            An instance of type T containing the data.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.TryGetValue``1(FiftyOne.Pipeline.Core.TypedMap.ITypedKey{``0},``0@)">
+            <summary>
+            Check if the flow data contains an item with the specified
+            key name and type. If it does exist, retrieve it.
+            </summary>
+            <param name="key">
+            The key to check for.
+            </param>
+            <param name="value">
+            The value associated with the key.
+            </param>
+            <returns>
+            True if an entry matching the key exists, false otherwise.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.Get``1">
+            <summary>
+            Get the <see cref="T:FiftyOne.Pipeline.Core.Data.IData"/> instance containing data
+            of the specified type. If multiple instances of the type
+            exist then an exception is thrown.
+            </summary>
+            <typeparam name="T">
+            The type of the data to look for and return.
+            </typeparam>
+            <returns>
+            The data instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.GetFromElement``2(FiftyOne.Pipeline.Core.FlowElements.IFlowElement{``0,``1})">
+            <summary>
+            Get the <see cref="T:FiftyOne.Pipeline.Core.Data.IElementData"/> instance containing data
+            populated by the specified element.
+            </summary>
+            <typeparam name="T">
+            The expected type of the data to be returned.
+            </typeparam>
+            <typeparam name="TMeta">
+            The type of meta data that the flow element will supply 
+            about the properties it populates.
+            </typeparam>
+            <param name="flowElement">
+            The <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement`2"/> that populated the desired data. 
+            </param>
+            <returns>
+            An instance of type T containing the data.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.GetAs``1(System.String)">
+            <summary>
+            Get the specified property as the specified type.
+            </summary>
+            <typeparam name="T">
+            The type to return the property value as
+            </typeparam>
+            <param name="propertyName">
+            The name of the property to get
+            </param>
+            <returns>
+            The property value
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.GetAsBool(System.String)">
+            <summary>
+            Get the specified property as a boolean.
+            </summary>
+            <param name="propertyName">
+            The name of the property to get
+            </param>
+            <returns>
+            The property value
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.GetAsString(System.String)">
+            <summary>
+            Get the specified property as a string.
+            </summary>
+            <param name="propertyName">
+            The name of the property to get
+            </param>
+            <returns>
+            The property value
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.GetAsInt(System.String)">
+            <summary>
+            Get the specified property as a int.
+            </summary>
+            <param name="propertyName">
+            The name of the property to get
+            </param>
+            <returns>
+            The property value
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.GetAsLong(System.String)">
+            <summary>
+            Get the specified property as a long.
+            </summary>
+            <param name="propertyName">
+            The name of the property to get
+            </param>
+            <returns>
+            The property value
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.GetAsFloat(System.String)">
+            <summary>
+            Get the specified property as a float.
+            </summary>
+            <param name="propertyName">
+            The name of the property to get
+            </param>
+            <returns>
+            The property value
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.GetAsDouble(System.String)">
+            <summary>
+            Get the specified property as a double.
+            </summary>
+            <param name="propertyName">
+            The name of the property to get
+            </param>
+            <returns>
+            The property value
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.GetOrAdd``1(System.String,System.Func{FiftyOne.Pipeline.Core.FlowElements.IPipeline,``0})">
+            <summary>
+            Get or add the specified element data to the internal map.
+            </summary>
+            <typeparam name="T">
+            The type of the data being stored.
+            </typeparam>
+            <param name="elementDataKey">
+            The name of the element to store the data under.
+            </param>
+            <param name="createData">
+            The method to use to create a new data to store if one does not
+            already exist.
+            </param>
+            <returns>
+            Existing data matching the key, or newly added data.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.GetOrAdd``1(FiftyOne.Pipeline.Core.TypedMap.ITypedKey{``0},System.Func{FiftyOne.Pipeline.Core.FlowElements.IPipeline,``0})">
+            <summary>
+            Add the specified element data to the internal map.
+            </summary>
+            <typeparam name="T">
+            The type of the data being stored.
+            </typeparam>
+            <param name="key">
+            The key to use when storing the data.
+            </param>
+            <param name="createData">
+            The method to use to create a new data to store if one does not
+            already exist.
+            </param>
+            <returns>
+            Existing data matching the key, or newly added data.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.ElementDataAsDictionary">
+            <summary>
+            Get the element data for this instance as a dictionary.
+            </summary>
+            <returns>
+            A dictionary containing the element data.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.ElementDataAsEnumerable">
+            <summary>
+            Get the element data for this instance as an enumerable.
+            </summary>
+            <returns>
+            An enumerable containing the element data.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.IFlowData.GenerateKey(FiftyOne.Pipeline.Core.Data.IEvidenceKeyFilter)">
+            <summary>
+            Generate a <see cref="T:FiftyOne.Pipeline.Core.Data.DataKey"/> that contains the evidence 
+            data from this instance that matches the specified filter.
+            </summary>
+            <param name="filter">
+            An <see cref="T:FiftyOne.Pipeline.Core.Data.IEvidenceKeyFilter"/> instance that defines the 
+            values to include in the generated key.
+            </param>
+            <returns>
+            A new <see cref="T:FiftyOne.Pipeline.Core.Data.DataKey"/> instance.
+            </returns>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.IFlowData.EvidenceKeyFilter">
+            <summary>
+            Get a filter that will only include the evidence keys that can 
+            be used by the elements within the pipeline that created this
+            flow element.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Data.IFlowError">
+            <summary>
+            Represents an error that occurred during processing
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.IFlowError.ExceptionData">
+            <summary>
+            The details of the exception.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.IFlowError.FlowElement">
+            <summary>
+            The flow element that the exception occurred in or is related to.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Data.IFlowError.ShouldThrow">
+            <summary>
+            Flag for if the pipeline should throw the exception.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Data.Types.JavaScript">
+            <summary>
+            JavaScript type which can be returned as a value by an ElementData.
+            A value being of type JavaScript indicates that it is intended to be
+            run on a client browser.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.Data.Types.JavaScript._value">
+            <summary>
+            String value of the JavaScript.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.Types.JavaScript.#ctor(System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="value">String value containing the JavaScript</param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.Types.JavaScript.CompareTo(System.String)">
+            <summary>
+            Compare the specified value to this instance.
+            </summary>
+            <param name="other">
+            The value to compare with
+            </param>
+            <returns>
+            0 if the instances have the same value
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.Types.JavaScript.Equals(System.String)">
+            <summary>
+            Check if the specified value is equal to this instance.
+            </summary>
+            <param name="other">
+            The value to check for equality
+            </param>
+            <returns>
+            True if the values are equal, false otherwise
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.Types.JavaScript.Equals(System.Object)">
+            <summary>
+            Check if the current instance is equal to the specified
+            object.
+            </summary>
+            <param name="obj">
+            The object to check for equality
+            </param>
+            <returns>
+            True if the values are equal, false otherwise
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.Types.JavaScript.GetHashCode">
+            <summary>
+            Get a hash code for this instance
+            </summary>
+            <remarks>
+            The hash code is taken directly from the string representation
+            of this instance.
+            </remarks>
+            <returns>
+            The hash code for this instance
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Data.Types.JavaScript.ToString">
+            <summary>
+            Get the string representation of this instance.
+            </summary>
+            <returns>
+            The string representation of this instance.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Exceptions.PipelineConfigurationException">
+            <summary>
+            Exception that is thrown when the configuration options provided 
+            to <see cref="T:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilder"/> are invalid
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Exceptions.PipelineConfigurationException.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Exceptions.PipelineConfigurationException.#ctor(System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message">
+            The exception message
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Exceptions.PipelineConfigurationException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message">
+            The exception message
+            </param>
+            <param name="innerException">
+            The inner exception that triggered this exception.
+            </param>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Exceptions.PipelineDataException">
+            <summary>
+            Exception that can be thrown when the available data does not 
+            match that which is expected.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Exceptions.PipelineDataException.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Exceptions.PipelineDataException.#ctor(System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message">
+            The exception message
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Exceptions.PipelineDataException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message">
+            The exception message
+            </param>
+            <param name="innerException">
+            The inner exception that triggered this exception.
+            </param>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Exceptions.PipelineException">
+            <summary>
+            Base class for all exceptions thrown by Pipeline API components
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Exceptions.PipelineException.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Exceptions.PipelineException.#ctor(System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message">
+            The exception message
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Exceptions.PipelineException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message">
+            The exception message
+            </param>
+            <param name="innerException">
+            The inner exception that triggered this exception.
+            </param>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2">
+            <summary>
+            Abstract base class for Flow Elements.
+            Contains common functionality such as checking the 'Stop' flag
+            on <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> and getting the <see cref="T:FiftyOne.Pipeline.Core.TypedMap.ITypedKey`1"/>
+            for this instance.
+            </summary>
+            <remarks>
+            It is not a requirement for all FlowElements to extend 
+            <see cref="T:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2"/> but it is recommended.
+            They must implement <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> though.
+            </remarks>
+            <typeparam name="T">
+            The type of element data that the flow element will write to 
+            <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/>.
+            </typeparam>
+            <typeparam name="TMeta">
+            The type of meta data that the flow element will supply 
+            about the properties it populates.
+            </typeparam>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2._disposed">
+            <summary>
+            True if the instance has been disposed.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2._typedKey">
+            <summary>
+            The key used to access the data populated by this element
+            in the <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/>.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2._pipelines">
+            <summary>
+            The pipelines that this element has been added to
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2._elementDataFactory">
+            <summary>
+            A factory function used to create the element data instances
+            that are populated by this flow element.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2.Logger">
+            <summary>
+            The logger for this instance
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2.Pipelines">
+            <summary>
+            Get a read only list of the pipelines that this element has
+            been added to.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2.ElementDataKey">
+            <summary>
+            The string name of the key used to access the data populated 
+            by this element in the <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/>.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2.EvidenceKeyFilter">
+            <summary>
+            A list of all the evidence keys that this Flow Element can
+            make use of.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2.Properties">
+            <summary>
+            Details of the properties that this engine can populate 
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2.FiftyOne#Pipeline#Core#FlowElements#IFlowElement#Properties">
+            <summary>
+            Provide an implementation for the non-generic version
+            of the meta-data property.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2.Asynchronous">
+            <summary>
+            True if the element can be run totally asynchronously,
+            false otherwise.
+            This should only return true if the FlowElement does not
+            modify the IFlowData or it's values are lazily loaded.
+            Otherwise the process method may return before the element 
+            has completed processing.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2.IsConcurrent">
+            <summary>
+            True if the element starts multiple threads. False otherwise.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2.IsDisposed">
+            <summary>
+            True if the element has been disposed
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2.ElementDataKeyTyped">
+            <summary>
+            Get the key used to access the data populated by this element
+            in the <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/>.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Core.FlowElements.FlowElementBase{`0,`1}})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger">
+            Used for logging.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Core.FlowElements.FlowElementBase{`0,`1}},System.Func{FiftyOne.Pipeline.Core.FlowElements.IPipeline,FiftyOne.Pipeline.Core.FlowElements.FlowElementBase{`0,`1},`0})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger">
+            Used for logging.
+            </param>
+            <param name="elementDataFactory">
+            The factory function to use when creating a 
+            <see cref="T:FiftyOne.Pipeline.Core.Data.ElementDataBase"/> instance.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2.Process(FiftyOne.Pipeline.Core.Data.IFlowData)">
+            <summary>
+            Process the given <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> with this FlowElement.
+            </summary>
+            <param name="data">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instance that provides input evidence
+            and carries the output data to the user.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the supplied data parameter is null.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2.ProcessInternal(FiftyOne.Pipeline.Core.Data.IFlowData)">
+            <summary>
+            Abstract method called by <see cref="M:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2.Process(FiftyOne.Pipeline.Core.Data.IFlowData)"/>.
+            Extending classes should perform their processing in this method. 
+            </summary>
+            <param name="data">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instance that provides input evidence
+            and carries the output data to the user.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2.AddPipeline(FiftyOne.Pipeline.Core.FlowElements.IPipeline)">
+            <summary>
+            Called when this element is added to a pipeline.
+            </summary>
+            <param name="pipeline">
+            The pipeline that the element has been added to
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2.CreateElementData(FiftyOne.Pipeline.Core.FlowElements.IPipeline)">
+            <summary>
+            Method used to create element data instances that are populated
+            by this flow element
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2.ManagedResourcesCleanup">
+            <summary>
+            Cleanup any managed resources that the element is using
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2.UnmanagedResourcesCleanup">
+            <summary>
+            Cleanup any unmanaged resources that the element is using
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2.Dispose(System.Boolean)">
+            <summary>
+            Dispose of any resources.
+            </summary>
+            <param name="disposing">
+            True if Dispose is being called 'correctly' from the Dispose
+            method.
+            False if Dispose is being called by the finalizer.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2.Finalize">
+            <summary>
+            Finalizer
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2.Dispose">
+            <summary>
+            Dispose
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement">
+            <summary>
+            <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> is the basic building block of a pipeline.
+            All FlowElements must implement it.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.IFlowElement.Process(FiftyOne.Pipeline.Core.Data.IFlowData)">
+            <summary>
+            Process the given <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> with this FlowElement.
+            </summary>
+            <param name="data">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instance that provides input evidence
+            and carries the output data to the user.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.IFlowElement.AddPipeline(FiftyOne.Pipeline.Core.FlowElements.IPipeline)">
+            <summary>
+            Called when this element is added to a pipeline.
+            </summary>
+            <param name="pipeline">
+            The pipeline that the element has been added to
+            </param>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.IFlowElement.EvidenceKeyFilter">
+            <summary>
+            A filter that will only include the evidence keys that this 
+            Flow Element can make use of.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.IFlowElement.ElementDataKey">
+            <summary>
+            The string name of the key used to access the data populated 
+            by this element in the <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/>.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.IFlowElement.IsConcurrent">
+            <summary>
+            True if the element starts multiple threads. False otherwise.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.IFlowElement.IsDisposed">
+            <summary>
+            True if the element has been disposed
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.IFlowElement.Properties">
+            <summary>
+            Details of the properties that this element can populate 
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement`2">
+            <summary>
+            Generic interface that extends <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/>
+            with the ability to return a <see cref="T:FiftyOne.Pipeline.Core.TypedMap.ITypedKey`1"/> that
+            will allow type-safe access to the data that this element
+            populates in <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/>.
+            </summary>
+            <typeparam name="T">
+            The type of element data that the flow element will write to 
+            <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/>.
+            </typeparam>
+            <typeparam name="TMeta">
+            The type of meta data that the flow element will supply 
+            about the properties it populates.
+            </typeparam>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.IFlowElement`2.ElementDataKeyTyped">
+            <summary>
+            Typed data key used for retrieving strongly typed element data.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.IFlowElement`2.Properties">
+            <summary>
+            Details of the properties that this element can populate 
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.FlowElements.IPipeline">
+            <summary>
+            The public interface for a Pipeline.
+            A pipeline is used to create <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instances
+            which then automatically use the pipeline when their Process 
+            method is called.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.IPipeline.CreateFlowData">
+            <summary>
+            Create a new <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instance.
+            </summary>
+            <returns>
+            A new <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instance.
+            </returns>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.IPipeline.EvidenceKeyFilter">
+            <summary>
+            Get a filter that will only include the evidence keys that can 
+            be used by at least one <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> within 
+            this pipeline.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.IPipeline.IsConcurrent">
+            <summary>
+            True if any of the <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/>s in this pipeline
+            will create multiple threads and execute in parallel.
+            False otherwise.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.IPipeline.IsDisposed">
+            <summary>
+            True if the pipeline has been disposed
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.IPipeline.GetElement``1">
+            <summary>
+            Get the specified element from the pipeline.
+            </summary>
+            <remarks>
+            If the pipeline contains multiple elements of the requested type,
+            this method will return null.
+            </remarks>
+            <typeparam name="TElement">
+            The type of the <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> to get
+            </typeparam>
+            <returns>
+            An instance of the specified <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> if the 
+            pipeline contains one. 
+            Null is returned if there is no such instance or there are 
+            multiple instances of that type.
+            </returns>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.IPipeline.FlowElements">
+            <summary>
+            Get a read only list of the flow elements that are part of this 
+            pipeline.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.IPipeline.ElementAvailableProperties">
+            <summary>
+            Get the dictionary of available properties for an
+            <see cref="P:FiftyOne.Pipeline.Core.FlowElements.IFlowElement.ElementDataKey"/>. The dictionary returned
+            contains the <see cref="T:FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData"/>s keyed on the
+            name field.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.FlowElements.IPipelineInternal">
+            <summary>
+            Internal interface for a pipeline.
+            Allows <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> to call the pipeline's Process method.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.IPipelineInternal.Process(FiftyOne.Pipeline.Core.Data.IFlowData)">
+            <summary>
+            Process the given <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> using the 
+            <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/>s in the pipeline.
+            </summary>
+            <param name="data">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> that contains the evidence and will
+            allow the user to access the results.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.IPipelineInternal.GetMetaDataForProperty(System.String)">
+            <summary>
+            Get the meta data for the specified property name.
+            If there are no properties with that name or multiple 
+            properties on different elements then an exception will 
+            be thrown.
+            </summary>
+            <param name="propertyName">
+            The property name to find the meta data for
+            </param>
+            <returns>
+            The meta data associated with the specified property name
+            </returns>
+            <exception cref="T:FiftyOne.Pipeline.Core.Exceptions.PipelineDataException">
+            Thrown if the property name is associated with zero or 
+            multiple elements.
+            </exception>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.FlowElements.IPipelineBuilderFromConfiguration">
+            <summary>
+            Pipeline builders implementing this interface are capable of
+            building a <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IPipeline"/> based on a supplied 
+            <see cref="T:FiftyOne.Pipeline.Core.Configuration.PipelineOptions"/> instance.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.IPipelineBuilderFromConfiguration.BuildFromConfiguration(FiftyOne.Pipeline.Core.Configuration.PipelineOptions)">
+            <summary>
+            Build the pipeline using the specified configuration options.
+            </summary>
+            <param name="options">
+            A <see cref="T:FiftyOne.Pipeline.Core.Configuration.PipelineOptions"/> instance describing how to build
+            the pipeline.
+            </param>
+            <returns>
+            A new <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IPipeline"/> instance containing the configured
+            <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> instances.
+            </returns>
+            <exception cref="T:FiftyOne.Pipeline.Core.Exceptions.PipelineConfigurationException"></exception>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.FlowElements.ParallelElements">
+            <summary>
+            ParallelElements executes it's child <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> 
+            objects in parallel.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.ParallelElements.FlowElements">
+            <summary>
+            Get a read only list of the child <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> 
+            instances.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.FlowElements.ParallelElements._evidenceKeyFilter">
+            <summary>
+            A filter that will only include the evidence keys that can 
+            be used by at least one <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> within 
+            this pipeline.
+            (Will only be populated after the <see cref="P:FiftyOne.Pipeline.Core.FlowElements.ParallelElements.EvidenceKeyFilter"/>
+            property is used.)
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.ParallelElements.EvidenceKeyFilter">
+            <summary>
+            Get a filter that will only include the evidence keys that can 
+            be used by at least one <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> within 
+            this pipeline.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.ParallelElements.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Core.FlowElements.ParallelElements},FiftyOne.Pipeline.Core.FlowElements.IFlowElement[])">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger">
+            The logger to be used by this instance.
+            </param>
+            <param name="flowElements">
+            The list of <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> instances to execute
+            when Process is called.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.ParallelElements.ProcessInternal(FiftyOne.Pipeline.Core.Data.IFlowData)">
+            <summary>
+            Called by the Process method on the 
+            <see cref="T:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2"/> base class.
+            Executes all child elements in parallel.
+            </summary>
+            <param name="data">
+            The data to use when executing the flow elements.
+            </param>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.FlowElements.Pipeline">
+            <summary>
+            A pipeline is used to create <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instances
+            which then automatically use the pipeline when their Process 
+            method is called.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.FlowElements.Pipeline._elementsByType">
+            <summary>
+            The pipeline maintains a dictionary of the elements it contains 
+            indexed by type. This is used by the GetElement method.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.FlowElements.Pipeline._metaDataByPropertyName">
+            <summary>
+            The pipeline maintains a dictionary of property meta data
+            indexed by property name. This is used by the
+            GetElementDataKeyForProperty method.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.FlowElements.Pipeline._flowDataFactory">
+            <summary>
+            A factory method that is used to create new 
+            <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instances.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.FlowElements.Pipeline._flowElements">
+            <summary>
+            The <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/>s that make up this pipeline.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.FlowElements.Pipeline._evidenceKeyFilter">
+            <summary>
+            A filter that will only include the evidence keys that can 
+            be used by at least one <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> within 
+            this pipeline.
+            (Will only be populated after the <see cref="P:FiftyOne.Pipeline.Core.FlowElements.Pipeline.EvidenceKeyFilter"/>
+            property is used.)
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.FlowElements.Pipeline._evidenceKeyFilterLock">
+            <summary>
+            Provides an object to lock on when populating the 
+            evidence key filter.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.FlowElements.Pipeline._disposed">
+            <summary>
+            True if the instance is disposed. False otherwise.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.FlowElements.Pipeline._concurrent">
+            <summary>
+            True if multiple <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> instances will run 
+            concurrently within this pipeline. False otherwise.
+            (Will be null until the <see cref="P:FiftyOne.Pipeline.Core.FlowElements.Pipeline.IsConcurrent"/> property
+            is used.)
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.FlowElements.Pipeline._autoDisposeElements">
+            <summary>
+            Control field that indicates if the Pipeline will automatically
+            call Dispose on child elements when it is disposed or not.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.FlowElements.Pipeline._suppressProcessExceptions">
+            <summary>
+            Control field that indicates if the Pipeline will throw an
+            aggregate exception during processing or suppress it and ignore the
+            exceptions added to <see cref="P:FiftyOne.Pipeline.Core.Data.IFlowData.Errors"/>.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.FlowElements.Pipeline._logger">
+            <summary>
+            Logger
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.Pipeline.EvidenceKeyFilter">
+            <summary>
+            Get a filter that will only include the evidence keys that can 
+            be used by at least one <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> within 
+            this pipeline.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.Pipeline.IsConcurrent">
+            <summary>
+            True if multiple <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> instances will run 
+            concurrently within this pipeline. False otherwise.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.Pipeline.IsDisposed">
+            <summary>
+            True if the pipeline has been disposed
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.Pipeline.FlowElements">
+            <summary>
+            Get a read only list of the flow elements that are part of this 
+            pipeline.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.Pipeline.ElementAvailableProperties">
+            <summary>
+            Get the dictionary of available properties for an
+            <see cref="P:FiftyOne.Pipeline.Core.FlowElements.IFlowElement.ElementDataKey"/>. The dictionary returned
+            contains the <see cref="T:FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData"/>s keyed on the
+            name field.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.Pipeline.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Core.FlowElements.Pipeline},System.Func{FiftyOne.Pipeline.Core.FlowElements.IPipelineInternal,FiftyOne.Pipeline.Core.Data.IFlowData},System.Collections.Generic.List{FiftyOne.Pipeline.Core.FlowElements.IFlowElement},System.Boolean,System.Boolean)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger">
+            Used for logging.
+            </param>
+            <param name="flowDataFactory">
+            Factory method used to create new <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/>
+            instances.
+            </param>
+            <param name="flowElements">
+            The <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> instances that make up this 
+            pipeline.
+            </param>
+            <param name="autoDisposeElements">
+            If true then Pipeline will call Dispose on it's child elements
+            when it is disposed.
+            </param>
+            <param name="suppressProcessExceptions">
+            If true then Pipeline will suppress exceptions added to
+            <see cref="P:FiftyOne.Pipeline.Core.Data.IFlowData.Errors"/>.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.Pipeline.CreateFlowData">
+            <summary>
+            Create a new <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instance that will use this
+            pipeline when processing.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.Pipeline.Process(FiftyOne.Pipeline.Core.Data.IFlowData)">
+            <summary>
+            Process the given <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> using the 
+            <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/>s in the pipeline.
+            </summary>
+            <param name="data">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> that contains the evidence and will
+            allow the user to access the results.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.Pipeline.GetElement``1">
+            <summary>
+            Get the specified element from the pipeline.
+            </summary>
+            <remarks>
+            If the pipeline contains multiple elements of the requested type,
+            this method will return null.
+            </remarks>
+            <typeparam name="TElement">
+            The type of the <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> to get
+            </typeparam>
+            <returns>
+            An instance of the specified <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> if the 
+            pipeline contains one. 
+            Null is returned if there is no such instance or there are 
+            multiple instances of that type.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.Pipeline.AddElementsByType(System.Collections.Generic.IReadOnlyList{FiftyOne.Pipeline.Core.FlowElements.IFlowElement})">
+            <summary>
+            Add the specified flow elements to the 
+            <see cref="F:FiftyOne.Pipeline.Core.FlowElements.Pipeline._elementsByType"/> dictionary, which contains a list
+            of all the elements in the pipeline indexed by type.
+            </summary>
+            <param name="elements">
+            The <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/>s to add.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.Pipeline.GetElementAvailableProperties(System.Collections.Generic.IReadOnlyList{FiftyOne.Pipeline.Core.FlowElements.IFlowElement})">
+            <summary>
+            Construct the dictionary of available properties for the elements
+            in the pipeline.
+            </summary>
+            <param name="elements">
+            Elements to get the available properties from
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.Pipeline.GetMetaDataForProperty(System.String)">
+            <summary>
+            Get the meta data for the specified property name.
+            If there are no properties with that name or multiple 
+            properties on different elements then an exception will 
+            be thrown.
+            </summary>
+            <param name="propertyName">
+            The property name to find the meta data for
+            </param>
+            <returns>
+            The meta data associated with the specified property name
+            </returns>
+            <exception cref="T:FiftyOne.Pipeline.Core.Exceptions.PipelineDataException">
+            Thrown if the property name is associated with zero or 
+            multiple elements.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.Pipeline.Dispose(System.Boolean)">
+            <summary>
+            Dispose of any resources.
+            </summary>
+            <param name="disposing">
+            True if Dispose is being called 'correctly' from the Dispose
+            method.
+            False if Dispose is being called by the finalizer.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.Pipeline.Finalize">
+            <summary>
+            Finalizer
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.Pipeline.Dispose">
+            <summary>
+            Dispose
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilder">
+            <summary>
+            Default pipeline builder.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilder._elementBuilders">
+            <summary>
+            A list of all the types that are element builders.
+            I.e. they have build method (with or without parameters) 
+            that returns an IFlowElement.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilder._services">
+            <summary>
+            Service collection which contains builder instances.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilder.#ctor(Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            Create a new <see cref="T:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilder"/> instance.
+            </summary>
+            <param name="loggerFactory">
+            The <see cref="T:Microsoft.Extensions.Logging.ILoggerFactory"/> to use when creating logger
+            instances.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilder.#ctor(Microsoft.Extensions.Logging.ILoggerFactory,System.IServiceProvider)">
+            <summary>
+            Create a new <see cref="T:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilder"/> instance.
+            </summary>
+            <param name="loggerFactory">
+            The <see cref="T:Microsoft.Extensions.Logging.ILoggerFactory"/> to use when creating logger
+            instances.
+            </param>
+            <param name="services">
+            Collection of services which contain builder instances for the
+            required elements.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilder.BuildFromConfiguration(FiftyOne.Pipeline.Core.Configuration.PipelineOptions)">
+            <summary>
+            Build the pipeline using the specified configuration options.
+            </summary>
+            <param name="options">
+            A <see cref="T:FiftyOne.Pipeline.Core.Configuration.PipelineOptions"/> instance describing how to build
+            the pipeline.
+            </param>
+            <returns>
+            A new <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IPipeline"/> instance containing the configured
+            <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> instances.
+            </returns>
+            <exception cref="T:FiftyOne.Pipeline.Core.Exceptions.PipelineConfigurationException"></exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilder.GetAvailableElementBuilders">
+            <summary>
+            Use reflection to get all element builders.
+            These are defined as any type that has a Build method 
+            where the return type is or implements IFlowElement.
+            These will be used when building a pipeline from configuration.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilder.AddElementToList(System.Collections.Generic.List{FiftyOne.Pipeline.Core.FlowElements.IFlowElement},FiftyOne.Pipeline.Core.Configuration.ElementOptions,System.String)">
+            <summary>
+            Create a new <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> using the specified
+            <see cref="T:FiftyOne.Pipeline.Core.Configuration.ElementOptions"/> and add it to the supplied list
+            of elements.
+            </summary>
+            <param name="elements">
+            The list to add the new <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> to.
+            </param>
+            <param name="elementOptions">
+            The <see cref="T:FiftyOne.Pipeline.Core.Configuration.ElementOptions"/> instance to use when creating
+            the <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/>.
+            </param>
+            <param name="elementLocation">
+            The string description of the element's location within the 
+            <see cref="T:FiftyOne.Pipeline.Core.Configuration.PipelineOptions"/> instance.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilder.AddParallelElementsToList(System.Collections.Generic.List{FiftyOne.Pipeline.Core.FlowElements.IFlowElement},FiftyOne.Pipeline.Core.Configuration.ElementOptions,System.Int32)">
+            <summary>
+            Create a <see cref="T:FiftyOne.Pipeline.Core.FlowElements.ParallelElements"/> from the specified 
+            configuration and add it to the _flowElements list.
+            </summary>
+            <param name="elements">
+            The list to add the new <see cref="T:FiftyOne.Pipeline.Core.FlowElements.ParallelElements"/> to.
+            </param>
+            <param name="elementOptions">
+            The <see cref="T:FiftyOne.Pipeline.Core.Configuration.ElementOptions"/> instance to use when creating
+            the <see cref="T:FiftyOne.Pipeline.Core.FlowElements.ParallelElements"/>.
+            </param>
+            <param name="elementIndex">
+            The index of the element within the <see cref="T:FiftyOne.Pipeline.Core.Configuration.PipelineOptions"/>.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilder.CallConstructorWithServicesForAssemblies(System.Reflection.ConstructorInfo)">
+            <summary>
+            Get the services required for the constructor, and call it with them.
+            </summary>
+            <param name="constructor">
+            The constructor to call.
+            </param>
+            <returns>
+            Instance returned by the constructor.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilder.GetBestConstructorForAssemblies(System.Collections.Generic.IEnumerable{System.Reflection.ConstructorInfo})">
+            <summary>
+            Get the best constructor for the list of constructors. Best meaning
+            the constructor with the most parameters which can be fulfilled.
+            </summary>
+            <param name="constructors">
+            Constructors to get the best of.
+            </param>
+            <returns>
+            Best constructor or null if none have parameters that can be
+            fulfilled.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilder.GetBuilderFromAssemlies(System.Type)">
+            <summary>
+            Instantiate a new builder instance from the assemblies which are
+            currently loaded.
+            </summary>
+            <param name="builderType">The type of builder to get</param>
+            <returns></returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilder.ProcessBuildParameters(System.Collections.Generic.IDictionary{System.String,System.Object},System.Type,System.Object,System.String)">
+            <summary>
+            Call the non-build methods on the builder that configuration
+            options have been supplied for.
+            </summary>
+            <remarks>
+            Each method must take only one parameter and the parameter type
+            must either be a string or have a 'TryParse' method available.
+            </remarks>
+            <param name="buildParameters">
+            A dictionary containing the names of the methods to call and 
+            the value to pass as a parameters.
+            </param>
+            <param name="builderType">
+            The <see cref="T:System.Type"/> of the builder that is being used to
+            create the <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/>.
+            </param>
+            <param name="builderInstance">
+            The instance of the builder that is being used to create the
+            <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/>.
+            </param>
+            <param name="elementConfigLocation">
+            A string containing a description of the location of the 
+            configuration for this element.
+            This will be added to error messages to help the user identify
+            any problems.
+            </param>
+            <returns>
+            A list of the names of the entries from buildParameters that 
+            are to be used as mandatory parameters to the Build method 
+            rather than optional builder methods.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilder.TryParseAndCallMethod(System.Object,System.Reflection.MethodInfo,System.Type,System.Object,System.String)">
+            <summary>
+            Attempt to call a method on the builder using the parameter value
+            provided. The value can be parsed to basic types (e.g. string or
+            int) but complex types are not supported.
+            </summary>
+            <param name="paramValue">
+            Value of the parameter to call the method with
+            </param>
+            <param name="method">Method to attempt to call</param>
+            <param name="builderType">
+            The <see cref="T:System.Type"/> of the builder that is being used to
+            create the <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/>.
+            </param>
+            <param name="builderInstance">
+            The instance of the builder that is being used to create the
+            <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/>.
+            </param>
+            <param name="elementConfigLocation">
+            A string containing a description of the location of the 
+            configuration for this element.
+            This will be added to error messages to help the user identify
+            any problems.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilder.GetMethods(System.String,System.Collections.Generic.IEnumerable{System.Reflection.MethodInfo})">
+            <summary>
+            Get the method associated with the given name.
+            </summary>
+            <param name="methodName">
+            The name of the method to get.
+            This is case insensitive and can be:
+            1. The exact method name
+            2. The method name with the text 'set' removed from the start.
+            3. An alternate name, as defined by an 
+            <see cref="T:FiftyOne.Pipeline.Core.Attributes.AlternateNameAttribute"/>
+            </param>
+            <param name="methods">
+            The list of methods to try and find a match in.
+            </param>
+            <returns>
+            The <see cref="T:System.Reflection.MethodInfo"/> of the matching method or null if no
+            match could be found.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilder.GetBuilderType(System.String)">
+            <summary>
+            Get the element builder associated with the given name.
+            </summary>
+            <param name="builderName">
+            The name of the builder to get.
+            This is case insensitive and can be:
+            1. The builder type name
+            2. The builder type name with the text 'builder' removed 
+            from the end.
+            3. An alternate name, as defined by an 
+            <see cref="T:FiftyOne.Pipeline.Core.Attributes.AlternateNameAttribute"/>
+            </param>
+            <returns>
+            The <see cref="T:System.Type"/> of the element builder or null if no
+            match could be found.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilderBase`1">
+            <summary>
+            Abstract pipeline builder base class
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilderBase`1.FlowElements">
+            <summary>
+            The elements to be added to the pipeline
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilderBase`1.Logger">
+            <summary>
+            Logger
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilderBase`1.LoggerFactory">
+            <summary>
+            A factory used to create logger instances.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilderBase`1._autoDisposeElements">
+            <summary>
+            If true then Pipeline will call Dispose on its child elements
+            when it is disposed.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilderBase`1._suppressProcessExceptions">
+            <summary>
+            If true then Pipeline will suppress exceptions added to
+            <see cref="P:FiftyOne.Pipeline.Core.Data.IFlowData.Errors"/>.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilderBase`1.#ctor(Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            Create a new <see cref="T:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilderBase`1"/> instance.
+            </summary>
+            <param name="loggerFactory">
+            The <see cref="T:Microsoft.Extensions.Logging.ILoggerFactory"/> to use when creating logger
+            instances.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilderBase`1.Build">
+            <summary>
+            Build the pipeline
+            </summary>
+            <returns>
+            A new <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IPipeline"/> instance containing the configured
+            <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> instances.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilderBase`1.AddFlowElement(FiftyOne.Pipeline.Core.FlowElements.IFlowElement)">
+            <summary>
+            Add the specified <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> to the pipeline.
+            Elements are typically executed sequentially in the order 
+            they are added.
+            </summary>
+            <param name="element">
+            The <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> to add
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown if the element has already been disposed.
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the supplied element is null.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilderBase`1.AddFlowElementsParallel(FiftyOne.Pipeline.Core.FlowElements.IFlowElement[])">
+            <summary>
+            Add the specified <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> array to the pipeline.
+            These elements will all be started at the same time and executed
+            in parallel using one thread for each element.
+            </summary>
+            <param name="elements">
+            The <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> array to add
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown if any of the elements have already been disposed.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilderBase`1.SetAutoDisposeElements(System.Boolean)">
+            <summary>
+            Configure the Pipeline to either call dispose on it's child
+            FlowElements when it is disposed or not.
+            </summary>
+            <param name="autoDispose">
+            If true then Pipeline will call dispose on it's child elements
+            when it is disposed.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilderBase`1.SetSuppressProcessException(System.Boolean)">
+            <summary>
+            Configure the Pipeline to either suppress exceptions added to
+            <see cref="P:FiftyOne.Pipeline.Core.Data.IFlowData.Errors"/> during processing or to throw them
+            as an aggregate exception once processing is complete.
+            </summary>
+            <param name="suppressExceptions">
+            If true then Pipeline will suppress exceptions added to
+            <see cref="P:FiftyOne.Pipeline.Core.Data.IFlowData.Errors"/>.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilderBase`1.OnPreBuild">
+            <summary>
+            Called just before a pipeline is built.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.FlowElements.PipelineBuilderBase`1.NewFlowData(FiftyOne.Pipeline.Core.FlowElements.IPipelineInternal)">
+            <summary>
+            Factory method that will be used by the created 
+            <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IPipeline"/> to create new <see cref="T:FiftyOne.Pipeline.Core.Data.FlowData"/> 
+            instances.
+            </summary>
+            <param name="pipeline">
+            The pipeline that is being used to create the flow data instance.
+            </param>
+            <returns>
+            A new <see cref="T:FiftyOne.Pipeline.Core.Data.FlowData"/> that is linked to the given pipeline.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Messages">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Messages.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Messages.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Messages.ExceptionCannotFindProperty">
+            <summary>
+              Looks up a localized string similar to Could not find property &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Messages.ExceptionFlowDataAlreadyProcessed">
+            <summary>
+              Looks up a localized string similar to FlowData has already been processed.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Messages.ExceptionFlowDataNotYetProcessed">
+            <summary>
+              Looks up a localized string similar to This instance has not yet been processed.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Messages.ExceptionKeyNameNull">
+            <summary>
+              Looks up a localized string similar to Key name cannot be null.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Messages.ExceptionMultipleProperties">
+            <summary>
+              Looks up a localized string similar to Multiple matches for property &apos;{0}&apos;. Flow elements that populate this property are: {1}.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Messages.ExceptionParallelElementsNoDataKey">
+            <summary>
+              Looks up a localized string similar to ParallelElements instances do not have an element data key.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.Messages.MessagePipelineCreationFailed">
+            <summary>
+              Looks up a localized string similar to Problem with pipeline configuration, failed to create pipeline.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Services.FiftyOneServiceProvider">
+            <summary>
+            Basic implementation of <see cref="T:System.IServiceProvider"/>.
+            An instance contains a list of services which can be added
+            to.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Services.FiftyOneServiceProvider.AddService(System.Object)">
+            <summary>
+            Add a service instance to the provider. This builds the
+            collection used to return services from the GetService
+            method.
+            </summary>
+            <param name="service">
+            Service instance to add.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Services.FiftyOneServiceProvider.GetService(System.Type)">
+            <summary>
+            Get the service from the service collection if it exists, otherwise
+            return null.
+            Note that if more than one instance implementing the same service
+            is added to the services, the first will be returned.
+            </summary>
+            <param name="serviceType">
+            The service type to be returned.
+            </param>
+            <returns>
+            Service or null.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.TypedMap.ITypedKey`1">
+            <summary>
+            Represents a key to a <see cref="T:FiftyOne.Pipeline.Core.TypedMap.ITypedKeyMap"/> data store.
+            </summary>
+            <typeparam name="T">
+            The type of the data that is associated with this key.
+            </typeparam>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.TypedMap.ITypedKey`1.Name">
+            <summary>
+            The name of the key, used to identify and access the
+            data in the store.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.TypedMap.ITypedKeyMap">
+            <summary>
+            Represents a collection that stores data of multiple different
+            types.
+            Data is accessed using an <see cref="T:FiftyOne.Pipeline.Core.TypedMap.ITypedKey`1"/> that specifies
+            the unique 'name' to store the data under and the type of the data
+            being stored.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.TypedMap.ITypedKeyMap.Add``1(FiftyOne.Pipeline.Core.TypedMap.ITypedKey{``0},``0)">
+            <summary>
+            Add the specified data to the collection using the specified key.
+            </summary>
+            <typeparam name="T">
+            The type of the data being stored.
+            </typeparam>
+            <param name="key">
+            The key used to identify the data.
+            </param>
+            <param name="data">
+            The data to store.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.TypedMap.ITypedKeyMap.Get``1(FiftyOne.Pipeline.Core.TypedMap.ITypedKey{``0})">
+            <summary>
+            Get the data associated with the specified key.
+            </summary>
+            <typeparam name="T">
+            The type of the data to return.
+            </typeparam>
+            <param name="key">
+            The key used to access the data.
+            </param>
+            <returns>
+            The data.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.TypedMap.ITypedKeyMap.Get``1">
+            <summary>
+            Get the data associated with the specified type.
+            </summary>
+            <typeparam name="T">
+            The type of the data to return.
+            </typeparam>
+            <returns>
+            The data.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.TypedMap.ITypedKeyMap.GetKeys">
+            <summary>
+            Return string values of the keys in the map.
+            </summary>
+            <returns>
+            Key strings.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.TypedMap.ITypedKeyMap.AsStringKeyDictionary">
+            <summary>
+            Return the entire collection as a
+            <see cref="T:System.Collections.Generic.IDictionary`2"/> object.
+            Note that this is the actual internal dictionary instance so any 
+            changes to it will be reflected in the ITypedKeyMap object. 
+            </summary>
+            <returns>
+            The data as a <see cref="T:System.Collections.Generic.IDictionary`2"/>.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.TypedMap.ITypedKeyMap.TryGetValue``1(FiftyOne.Pipeline.Core.TypedMap.ITypedKey{``0},``0@)">
+            <summary>
+            Check if the map contains an item with the specified
+            key name and type. If it does exist, retrieve it.
+            </summary>
+            <param name="key">
+            The key to check for.
+            </param>
+            <param name="value">
+            The value associated with the key.
+            </param>
+            <returns>
+            True if an entry matching the key exists in the map. 
+            False otherwise.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.TypedMap.TypedKey`1">
+            <summary>
+            A key to a <see cref="T:FiftyOne.Pipeline.Core.TypedMap.ITypedKeyMap"/> data store.
+            </summary>
+            <typeparam name="T">
+            The type of the data that is associated with this key.
+            </typeparam>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Core.TypedMap.TypedKey`1.Name">
+            <summary>
+            The name of the key, used to identify and access the
+            data in the store.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.TypedMap.TypedKey`1.#ctor(System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="name">
+            The name of the key, used to identify and access the
+            data in the store.
+            </param>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.TypedMap.TypedKeyMap">
+            <summary>
+            A collection that stores data of multiple different types.
+            Data is accessed using an <see cref="T:FiftyOne.Pipeline.Core.TypedMap.ITypedKey`1"/> that specifies
+            the unique 'name' to store the data under and the type of the data
+            being stored.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Core.TypedMap.TypedKeyMap._data">
+            <summary>
+            The internal data store.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.TypedMap.TypedKeyMap.#ctor">
+            <summary>
+            Default constructor.
+            Creates a non-thread safe <see cref="T:FiftyOne.Pipeline.Core.TypedMap.TypedKeyMap"/>
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.TypedMap.TypedKeyMap.#ctor(System.Boolean)">
+            <summary>
+            Constructor.
+            Creates a thread-safe or non-thread safe <see cref="T:FiftyOne.Pipeline.Core.TypedMap.TypedKeyMap"/>
+            </summary>
+            <param name="threadSafe">
+            If true then the internal collection is thread-safe. If false
+            then it is not.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.TypedMap.TypedKeyMap.Add``1(FiftyOne.Pipeline.Core.TypedMap.ITypedKey{``0},``0)">
+            <summary>
+            Add the specified data to the collection using the specified key.
+            </summary>
+            <typeparam name="T">
+            The type of the data being stored.
+            </typeparam>
+            <param name="key">
+            The key used to identify the data.
+            </param>
+            <param name="data">
+            The data to store.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.TypedMap.TypedKeyMap.Get``1(FiftyOne.Pipeline.Core.TypedMap.ITypedKey{``0})">
+            <summary>
+            Get the data associated with the specified key.
+            If the key is not present or the data value is null then the 
+            return value will be <code>default(T)</code>.
+            </summary>
+            <typeparam name="T">
+            The type of the data to return.
+            </typeparam>
+            <param name="key">
+            The key used to access the data.
+            </param>
+            <returns>
+            The data.
+            </returns>
+            <exception cref="T:System.InvalidCastException">
+            Thrown if the data object stored under the name of the key 
+            cannot be cast to the expected type T.
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the key argument is null
+            </exception>
+            <exception cref="T:System.ArgumentException">
+            Thrown if the Name property of the key argument is null
+            </exception>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">
+            Thrown if the map does not contain an entry for the key
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.TypedMap.TypedKeyMap.GetKeys">
+            <summary>
+            Return string values of the keys in the map.
+            </summary>
+            <returns>
+            Key strings
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.TypedMap.TypedKeyMap.AsStringKeyDictionary">
+            <summary>
+            Return the entire collection as a
+            <see cref="T:System.Collections.Generic.IDictionary`2"/> object.
+            Note that this is the actual internal dictionary instance so any 
+            changes to it will be reflected in the TypedKeyMap object. 
+            </summary>
+            <returns>
+            The data as a <see cref="T:System.Collections.Generic.IDictionary`2"/>.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.TypedMap.TypedKeyMap.TryGetValue``1(FiftyOne.Pipeline.Core.TypedMap.ITypedKey{``0},``0@)">
+            <summary>
+            Check if the map contains an item with the specified
+            key name and type. If it does exist, retrieve it.
+            </summary>
+            <param name="key">
+            The key to check for.
+            </param>
+            <param name="value">
+            The value associated with the key.
+            </param>
+            <returns>
+            True if an entry matching the key exists in the map. 
+            False otherwise.
+            </returns>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,32 @@
+﻿@using Sitecore.XA.Feature.Search
+@using Sitecore.XA.Foundation.SitecoreExtensions.Extensions
+
+@model Sitecore.XA.Feature.Search.Models.FacetRenderingModel
+
+@if (!String.IsNullOrWhiteSpace(Model.RemoveFilterText))
+{
+    <div class="bottom-remove-filter">
+        <button type="button">
+            @if (Html.Sxa().IsEdit)
+            {
+                @Html.Sxa().Field(Templates.FacetSelector.Fields.RemoveFilterText, Model.DataSourceItem, !Model.IsControlEditable)
+
+            }
+            else
+            {
+                @Model.RemoveFilterText
+            }
+        </button>
+    </div>
+}
+else
+{
+    if (Html.Sxa().IsEdit)
+    {
+        <div class="bottom-remove-filter">
+            <button type="button">
+                @Html.Sxa().Field(Templates.FacetSelector.Fields.RemoveFilterText, Model.DataSourceItem, !Model.IsControlEditable)
+            </button>
+        </div>
+    }
+}

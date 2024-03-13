@@ -1,0 +1,492 @@
+﻿@using System.Web.Mvc.Html
+@using Sitecore.Mvc
+@using Sitecore.XA.Foundation.MarkupDecorator.Extensions
+@using Sitecore.XA.Foundation.SitecoreExtensions.Extensions
+@using Sitecore.XA.Foundation.Grid.Extensions
+@using Sitecore.XA.Foundation.Theming.Bundler
+@using Sitecore.XA.Foundation.Theming.Models
+@using Sitecore.XA.Foundation.Theming.Services
+@using Microsoft.Extensions.DependencyInjection
+@using Sitecore.DependencyInjection
+@using Sitecore.Mvc.Analytics.Extensions
+
+@model Sitecore.Mvc.Presentation.RenderingModel
+
+@{
+    AssetLinks assetLinks = AssetLinksGenerator.GenerateLinks(new ThemesProvider());
+    HTMLIncludes includes = ServiceLocator.ServiceProvider.GetService<IHTMLIncludesService>().GetHTMLIncludes();
+}
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="@Model.Item.Language.Name">
+<!--<![endif]-->
+<head>
+ @Html.Sxa().VisitorIdentification()
+    @Html.Sxa().Placeholder("head")
+ 
+    <meta http-equiv="content-language" content="@Model.Item.Language.Name">
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">   
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" type="image/png" sizes="32x32" href="/-/media/Project/AFI/afi/FavIcon/favicon-32x32.png">
+    <link href="~/asset/Fonts/afi-fonts.css" rel="stylesheet" />
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+
+    <link href="~/asset/css/cssLibrary/swiper-bundle.min.css" rel="stylesheet" />
+
+
+    <!-- AFI CSS -->
+    @foreach (string style in assetLinks.Styles)
+    {
+        @Html.Raw(style)
+    }
+
+    @foreach (var include in includes.Head)
+    {
+        @Html.Raw(include.HTML)
+    }
+
+    <!-- Favicon -->
+
+<!-- ******************* Import CSS files ******************* -->
+    <link href="~/asset/css/common.css" rel="stylesheet" />
+    <link href="~/asset/css/hero.css" rel="stylesheet" />
+    <link href="~/asset/css/footer.css" rel="stylesheet" />
+    <link href="~/asset/css/content_page.css" rel="stylesheet" />
+    <link href="~/asset/css/header_sxa.css" rel="stylesheet" />
+
+    <link href="~/asset/css/page-article.css" rel="stylesheet" />
+    <link href="~/asset/css/account-pods.css" rel="stylesheet" />
+    <link href="~/asset/css/bg-card.css" rel="stylesheet" />
+    <link href="~/asset/css/blue-card.css" rel="stylesheet" />
+    <link href="~/asset/css/card-group.css" rel="stylesheet" />
+    <link href="~/asset/css/download-app.css" rel="stylesheet" />
+    <link href="~/asset/css/our-mission.css" rel="stylesheet" />
+    <link href="~/asset/css/IsAfi.css" rel="stylesheet" />
+    <link href="~/asset/css/mission-text.css" rel="stylesheet" />
+    <link href="~/asset/css/blue-pods.css" rel="stylesheet" />
+    <link href="~/asset/css/insurance_hero.css" rel="stylesheet" />
+
+    <link href="~/asset/css/main-text-content.css" rel="stylesheet" />
+    <link href="~/asset/css/embed-video.css" rel="stylesheet" />
+    <link href="~/asset/css/eligible-blue-card.css" rel="stylesheet" />
+    <link href="~/asset/css/policy-cover-tiles.css" rel="stylesheet" />
+    <link href="~/asset/css/make-sound.css" rel="stylesheet" />
+    <link href="~/asset/css/auto-insurance-policy.css" rel="stylesheet" />
+    <link href="~/asset/css/insurance-explained-img.css" rel="stylesheet" />
+    <link href="~/asset/css/insurance-explained-text.css" rel="stylesheet" />
+    <link href="~/asset/css/red-quote-cta-card.css" rel="stylesheet" />
+    <link href="~/asset/css/review-customers.css" rel="stylesheet" />
+    <link href="~/asset/css/related-articles.css" rel="stylesheet" />
+    <link href="~/asset/css/additional_coverages.css" rel="stylesheet" />
+    <link href="~/asset/css/flood-questions.css" rel="stylesheet" />
+    <link href="~/asset/css/newsletter.css" rel="stylesheet" />
+    <link href="~/asset/css/article-page.css" rel="stylesheet" />
+
+    <link href="~/asset/css/resources-and-tools.css" rel="stylesheet" />
+    <link href="~/asset/css/frontier___hero.css" rel="stylesheet" />
+
+    <link href="~/asset/css/about-afi.css" rel="stylesheet" />
+
+    <link href="~/asset/css/image-card-section.css" rel="stylesheet" />
+    <link href="~/asset/css/related-article-cshtml.css" rel="stylesheet" />
+
+    <link href="~/asset/css/search-page-new.css" rel="stylesheet" />
+
+    <link href="~/asset/css/forms/form.css" rel="stylesheet" />
+    <link href="~/asset/css/forms/form-page.css" rel="stylesheet" />
+
+    <link href="~/asset/css/forms/contact-form.css" rel="stylesheet" />
+    <link href="~/asset/css/forms/referral-form.css" rel="stylesheet" />
+    <link href="~/asset/css/forms/short-form.css" rel="stylesheet" />
+    <link href="~/asset/css/article-slider.css" rel="stylesheet" />
+    <link href="~/asset/css/webchat.css" rel="stylesheet" />
+
+         <!--sitecore-form Start -->
+       <link href="~/asset/css/sitecore-form.css" rel="stylesheet" />
+
+    @if (Sitecore.Context.PageMode.IsExperienceEditor)
+    {
+        <link href="~/asset/css/ExperienceEditor/ExperienceEditor.css" rel="stylesheet" />
+    }
+<!--sitecore-form End -->
+
+<!--Pingdom Start -->
+ <script src="//rum-static.pingdom.net/pa-611dc3dc067854001100020a.js" async></script> 
+ <!--Pingdom End -->
+
+<!-- ********************************************************
+*                  Global Tag afi.org
+******************************************************** -->
+   
+<!-- EmoryDay Analytics Please Remove if No Longer Using EmoryDay -->
+<script src="https://cdn.emoryday-analytics.com/js/VO9MGO_a2PbbO.js" defer></script>
+<!-- End EmoryDay Analytics -->
+
+
+  <!-- Start SiteRawScripts -->
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-P5CH8V4');</script>
+<!-- End Google Tag Manager -->  
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-10840241649"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+ 
+  gtag('config', 'AW-10840241649');
+</script>
+<!-- Google tag (gtag.js) -->
+
+    <!-- End SiteRawScripts -->
+
+
+   
+</head>
+<body @Html.Sxa().Body().Decorate()> 
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P5CH8V4"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+    @Html.Sitecore().ViewRendering("~/Views/AFI/Banner/CommunicationBanner.cshtml", new { Cacheable = true, Cache_VaryByData = true })
+  @{
+        Sitecore.Data.Items.Item item = Sitecore.Context.Database.GetItem(RenderingContext.Current.Rendering.Item.ID);
+        var page_css = item["CSS"];
+        @Html.Raw(page_css)
+    }
+
+    @Html.Sitecore().Placeholder("body-top")
+    @foreach (var include in includes.BodyTop)
+    {
+        @Html.Raw(include.HTML)
+    }
+    @Html.Sxa().GridBody()
+
+    @Html.Sitecore().Placeholder("body-bottom")
+    @foreach (var include in includes.BodyBottom)
+    {
+        @Html.Raw(include.HTML)
+    }
+
+
+    @Html.Partial("~/Views/AFI/CookieBanner/CookieBanner.cshtml")
+
+    @foreach (string include in assetLinks.Scripts)
+    {
+        @Html.Raw(include)
+    }
+
+<script async src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Element.prototype.classList,Object.assign,fetch,Array.from,Array.prototype.find,Array.prototype.includes,String.prototype.startsWith,IntersectionObserver,IntersectionObserverEntry,Element.prototype.matches,Element.prototype.closest,Set,navigator.sendBeacon,Symbol.hasInstance,Symbol.isConcatSpreadable,Symbol.iterator,Symbol.match,Symbol.replace,Symbol.search,Symbol.species,Symbol.split,Symbol.toPrimitive,Symbol.toStringTag,Symbol.unscopables,Symbol,URL"></script>
+<script async src="https://www.google.com/recaptcha/api.js?render=6LfR7R4gAAAAAJhdtt4xLoULHMVubpGhEYCN6SYR"></script>
+
+    <!-- ********************* Import JS Plugins ********************* -->
+    <!--
+     <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    -->
+
+     <script src="~/asset/js/jsLibrary/jquery.min.js"></script>
+
+<!--
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script src="https://momentjs.com/downloads/moment-timezone-with-data.js"></script>
+    <script src="https://apps.mypurecloud.com/widgets/9.0/cxbus.min.js"></script>
+
+ -->
+
+    <script src="~/asset/js/jsLibrary/moment.js"></script>
+    <script src="~/asset/js/jsLibrary/moment-timezone-with-data.js"></script>
+    <script src="~/asset/js/jsLibrary/cxbus.min.js"></script>
+
+
+    <script src="~/asset/js/webchat.js"></script>
+     <script src="~/asset/js/webchat.config.js"></script>
+
+    <!-- ********************* Import JS files ********************* -->
+    <!--
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.min.js" integrity="sha512-0N/5ZOjfsh3niel+5dRD40HQkFOWaxoVzqMVAHnmAO2DC3nY/TFB7OYTaPRAFJ571IRS/XRsXGb2XyiFLFeu1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+     -->
+
+    <script src="~/asset/js/jsLibrary/swiper-bundle.min.js"></script>
+
+    <script src="~/asset/js/style_helper.js"></script>
+    <script src="~/asset/js/main.js"></script>
+    <script src="~/asset/js/forms/formCommon.js"></script>
+    <script src="~/asset/js/forms/business-form.js"></script>
+    <script src="~/asset/js/forms/flood-form.js"></script>
+    <script src="~/asset/js/forms/collector-vehicle-form.js"></script>
+    <script src="~/asset/js/forms/condo-form.js"></script>
+    <script src="~/asset/js/forms/mobile-home-form.js"></script>
+    <script src="~/asset/js/forms/motorcycle-form.js"></script>
+    <script src="~/asset/js/forms/motorhome-form.js"></script>
+    <script src="~/asset/js/forms/watercraft-form.js"></script>
+    <script src="~/asset/js/forms/contact-form.js"></script>
+    <script src="~/asset/js/forms/hill-afb.js"></script>
+     <script src="~/asset/js/referral-form.js"></script>
+    <script src="~/asset/js/forms/quote-lead-form.js"></script>
+    <script src="~/asset/js/forms/short-form.js"></script>
+
+    <!-- Military Rank options data -->
+    <script>
+        $.ajax({
+            type: "GET",
+            url: "/api/sitecore/QuoteForm/GetStatelist",
+            dataType: 'json',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            data: {},
+            success: function (data) {
+                var jsonData = JSON.parse(data);
+
+                $("select#state").append('<option value>Select State</option>');
+                $("select#policyHolderState").append('<option value>------</option>');
+                $("select#propertyState").append('<option value>---</option>');
+                $("select#addressToBeQuotedState").append('<option value>---</option>');
+                $("select#vehicle0State").append('<option value>---</option>');
+
+                $("select#policyHolderPrimaryResidenceState").append('<option value>Choose One</option>');
+
+                for (var i = 0; i < jsonData.length; i++) {
+                    var option = $('<option></option>');
+                    option.text(jsonData[i].label);
+                    option.val(jsonData[i].value);
+                    $("select#state").append(option.clone());
+                    $("select#policyHolderState").append(option.clone());
+                    $("select#propertyState").append(option.clone());
+                    $("select#addressToBeQuotedState").append(option.clone());
+                    $("select#vehicle0State").append(option.clone());
+
+                    $("select#policyHolderPrimaryResidenceState").append(option.clone());
+                }
+            }
+        });
+
+        $.ajax({
+            type: "GET",
+            url: "/api/sitecore/QuoteForm/GetLeadStatelist",
+            dataType: 'json',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            data: {},
+            success: function (data) {
+                var jsonData = JSON.parse(data);
+
+                $("select#policyHolderState").append('<option value>Select State</option>');
+
+
+                for (var i = 0; i < jsonData.length; i++) {
+                    var option = $('<option></option>');
+                    option.text(jsonData[i].label);
+                    option.val(jsonData[i].value);
+                    $("select#policyHolderState").append(option.clone());
+
+                }
+            }
+        });
+
+
+    </script>
+
+    <!-- ******************* ID+JSON --- PAID MEDIA & COOKIE ******************* -->
+    <script type="application/ld+json">
+    {
+        "@@context": "http://schema.org",
+        "@@type": "Corporation",
+        "legalName": "Armed Forces Insurance",
+        "telephone": "+18002556792",
+        "email": "service@afi.org",
+        "department": [
+        {
+            "@@type": "LocalBusiness",
+            "name": "Armed Forces Insurance",
+            "image": "/images/logo.png",
+            "telephone": "+18002556792",
+            "priceRange": "$0 - $0",
+            "address": {
+            "@@type": "PostalAddress",
+            "streetAddress": "550 Eisenhower Rd.",
+            "addressLocality": "Leavenworth",
+            "addressRegion": "KS",
+            "postalCode": "66048"
+            },
+            "openingHours": ["Mo-Fr 08:00-17:00"]
+        }
+        ],
+        "address": {
+        "@@type": "PostalAddress",
+        "streetAddress": "550 Eisenhower Rd.",
+        "addressLocality": "Leavenworth",
+        "addressRegion": "KS",
+        "postalCode": "66048"
+        }
+    }
+    </script>
+
+    <script type="text/javascript" async>
+        function deleteAllCookies() {
+            var cookies = document.cookie.split(";");
+
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i];
+                var eqPos = cookie.indexOf("=");
+                var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            }
+        }
+
+        function getUrlParameters() {
+            var search = window.location.search.substring(1).replace(/&&/g, '&');
+            var fields = {};
+
+            if (search) {
+                fields = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
+            }
+
+            var parameters = {};
+            for (var key in fields) {
+                parameters[key.toLowerCase().trim()] = fields[key];
+            }
+            return parameters;
+        };
+        function accessCookie(cookieName) {
+            var name = cookieName + "=";
+            var allCookieArray = document.cookie.split(';');
+            for (var i = 0; i < allCookieArray.length; i++) {
+                var temp = allCookieArray[i].trim();
+                if (temp.indexOf(name) == 0)
+                    return temp.substring(name.length, temp.length);
+            }
+            return "";
+        }
+        function PaidMedia() {
+            var ParameterVals = getUrlParameters();
+            if (!(typeof ParameterVals === "undefined")) {
+                //var domainName = window.location.hostname;
+                var domainName = "afi.org";
+                if (!(typeof ParameterVals.responsetype === "undefined")) {
+                    document.cookie = "responsetype =" + ParameterVals.responsetype + ";domain=" + domainName + ";";
+                }
+                if (!(typeof ParameterVals.responsedescription === "undefined")) {
+                    document.cookie = "responsedescription =" + ParameterVals.responsedescription + ";domain=" + domainName + ";";
+                }
+                if (!(typeof ParameterVals.utm_campaign === "undefined")) {
+                    document.cookie = "utm_campaign=" + ParameterVals.utm_campaign + ";domain=" + domainName + ";";
+                }
+                if (!(typeof ParameterVals.utm_content === "undefined")) {
+                    document.cookie = "utm_content=" + ParameterVals.utm_content + ";domain=" + domainName + ";";
+                }
+                if (!(typeof ParameterVals.utm_medium === "undefined")) {
+                    document.cookie = "utm_medium=" + ParameterVals.utm_medium + ";domain=" + domainName + ";";
+                }
+                if (!(typeof ParameterVals.utm_source === "undefined")) {
+                    document.cookie = "utm_source=" + ParameterVals.utm_source + ";domain=" + domainName + ";";
+                }
+                if (!(typeof ParameterVals.utm_term === "undefined")) {
+                    document.cookie = "utm_term=" + ParameterVals.utm_term + ";domain=" + domainName + ";";
+                }
+                if (!(typeof ParameterVals.gclid === "undefined")) {
+                    document.cookie = "gclid=" + ParameterVals.gclid + ";domain=" + domainName + ";";
+                }
+                if (!(typeof ParameterVals.msclkid === "undefined")) {
+                    document.cookie = "msclkid=" + ParameterVals.msclkid + ";domain=" + domainName + ";";
+                }
+                if (!(typeof ParameterVals.fbclid === "undefined")) {
+                    document.cookie = "fbclid=" + ParameterVals.fbclid + ";domain=" + domainName + ";";
+                }
+
+            }
+
+        }
+        var isCookieModalShown = accessCookie("cookieConsetShown");
+        if (isCookieModalShown == "") {
+            //document.getElementById("cookieboxID").style.visibility = "visible";
+        }
+		
+		function getQueryParam(param) {
+			var rx = new RegExp("[?&]" + param + "=([^&]+).*$");
+			var returnVal = window.location.search.toLowerCase().match(rx);
+			return returnVal === null ? "" : decodeURIComponent(returnVal[1].replace(/\+/g, " "));
+		}
+		
+		 function PaidMediaNew() {
+            var domainName = "afi.org";
+			
+			if (getQueryParam("responsetype") != "") {
+			document.cookie = "responsetype =" + getQueryParam("responsetype") + ";domain=" + domainName + ";";
+			}
+			if (getQueryParam("responsedescription") != "") {
+			document.cookie = "responsedescription =" + getQueryParam("responsedescription") + ";domain=" + domainName + ";";
+			}
+			if (getQueryParam("utm_campaign") != "") {
+			document.cookie = "utm_campaign=" + getQueryParam("utm_campaign") + ";domain=" + domainName + ";";
+			}
+			if (getQueryParam("utm_content") != "") {
+			document.cookie = "utm_content=" + getQueryParam("utm_content") + ";domain=" + domainName + ";";
+			}
+			if (getQueryParam("utm_medium") != "") {
+			document.cookie = "utm_medium=" + getQueryParam("utm_medium") + ";domain=" + domainName + ";";
+			}
+			if (getQueryParam("utm_source") != "") {
+			document.cookie = "utm_source=" + getQueryParam("utm_source") + ";domain=" + domainName + ";";
+			}
+			if (getQueryParam("utm_term") != "") {
+			document.cookie = "utm_term=" + getQueryParam("utm_term") + ";domain=" + domainName + ";";
+			}
+			if (getQueryParam("gclid") != "") {
+			document.cookie = "gclid=" + getQueryParam("gclid") + ";domain=" + domainName + ";";
+			}
+			if (getQueryParam("msclkid") != "") {
+			document.cookie = "msclkid=" + getQueryParam("msclkid") + ";domain=" + domainName + ";";
+			}
+			if (getQueryParam("fbclid") != "") {
+			document.cookie = "fbclid=" + getQueryParam("fbclid") + ";domain=" + domainName + ";";
+			}
+			
+			
+			//IE check
+			var user_agent = navigator.userAgent;
+			var is_it_ie = user_agent.indexOf("MSIE ") > -1 || user_agent.indexOf("Trident/") > -1;
+            if(is_it_ie){
+					var strBrwser = window.location.href;
+					if(strBrwser.indexOf("BrowserSupport")== -1){
+			             window.location.href("https://afi.org/BrowserSupport");
+					}
+             }
+			
+			var isCookieModalShown = accessCookie("cookieConsetShown");
+            if (isCookieModalShown == "") {
+                document.getElementById("cookieboxID").style.visibility = "visible";
+                }
+				
+				//MVPLogoChange
+				if(accessCookie("responsedescriptionq")=="8942"){
+				console.log('From accessCookie');
+					document.getElementsByClassName('img_right')[0].style.display = 'block';
+				}
+            		
+          }
+
+        //window.onload = PaidMedia;
+		window.onload = PaidMediaNew;
+        //window.unload = deleteAllCookies;
+
+    </script>
+</body>
+</html>
+

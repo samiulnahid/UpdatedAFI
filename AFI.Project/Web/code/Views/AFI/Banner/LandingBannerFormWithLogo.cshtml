@@ -1,0 +1,138 @@
+﻿
+@using Sitecore.Mvc
+@using Sitecore.Data.Fields
+@using Sitecore.Resources.Media
+@using Sitecore.Data.Items
+@using AFI.Foundation.Helper
+@using Sitecore.Rules.Conditions
+@using Sitecore.Mvc.Presentation
+@{
+    var rendering = RenderingContext.Current.Rendering.Item;
+   
+
+    var _CTAcolor = RenderingContext.Current.Rendering.Parameters["DropDownCTAcolor"];
+    var _colorbtn = "";
+
+    var type = "";
+    var iconUrl = "";
+    if (SitecoreHelper.FieldHasValue(rendering, FeatureTemplate.LandingBannerPageWithLogo.Fields.InsuranceTypeList))
+    {
+
+        var insuranceItem = SitecoreHelper.GetLinkedItem(rendering, FeatureTemplate.LandingBannerPageWithLogo.Fields.InsuranceTypeList.ToString());
+        if (insuranceItem != null)
+        {
+            iconUrl = SitecoreHelper.GetImageUrl(insuranceItem, FeatureTemplate.InsuranceType.Fields.BannerIcon);
+            // type = insuranceItem[FeatureTemplate.InsuranceType.Fields.InsuranceType];
+            type = insuranceItem.ID.ToString();
+
+        }
+    }
+    var _position = RenderingContext.Current.Rendering.Parameters["DropDownPosition"];
+    var _margin_position = "";
+    if (_position == "Left")
+    {
+        _margin_position = "quote-start_lft";
+
+    }
+    else if (_position == "Center")
+    {
+        _margin_position = "quote-start_ctn";
+
+    }
+    else
+    {
+        _margin_position = " ";
+    }
+    if (_CTAcolor == "Yollow")
+    {
+        _colorbtn = "yellow__btn";
+    }
+    else
+    {
+        _colorbtn = " ";
+    }
+
+}
+
+
+<section class="insurance__hero @_margin_position">
+
+
+    @if (Sitecore.Context.PageMode.IsExperienceEditor)
+    {
+        <div class="backround_image">
+
+            @Html.Sitecore().Field(FeatureTemplate.LandingBannerPageWithLogo.Fields.BackgroundImage.ToString())
+
+
+        </div>
+    }
+    else
+    {
+        var bgimg = SitecoreHelper.GetImageUrl(Model.Item, FeatureTemplate.LandingBannerPageWithLogo.Fields.BackgroundImage);
+       
+            <div class="backround_image">
+
+                <img src="@bgimg">
+            </div>
+        
+    }
+
+
+    <div class="container">
+        <!-- Video Box -->
+        <div class="row align-items-center">
+            
+                <section class="Logo__section">
+                    <a class="logo__link" href="/">
+                        @Html.Sitecore().Field(FeatureTemplate.LandingBannerPageWithLogo.Fields.Logo.ToString(), new { @class = "logo" })
+                    </a>
+                </section>
+            
+
+
+            <!-- Quote Box -->
+            <section class="quote-start col-lg-4 ">
+                @using (Html.BeginRouteForm(Sitecore.Mvc.Configuration.MvcSettings.SitecoreRouteName, FormMethod.Post, htmlAttributes: new { @class = "quote-start__form", @id = "quote-selector__form" }))
+                {
+                    @Html.Sitecore().FormHandler("QuoteForm", "HomepageQuoteFormSubmit")
+                    <fieldset>
+                        <input class="quote-start__type-input is-vishidden" id="quote-type-@type" name="type" type="hidden" value="@type" alt="@type">
+                        <div class="quote-start__controls">
+                            <div class="quote-start__upper-wrapper">
+
+                                @if (!string.IsNullOrEmpty(iconUrl))
+                                {
+                                    <img class="quote-start__type-image"
+                                         src="@iconUrl"
+                                         alt="afi" />
+                                }
+
+                                <h1 class="quote-start__heading"> @Html.Sitecore().Field(FeatureTemplate.LandingBannerPageWithLogo.Fields.Title.ToString())</h1>
+                                <p class="quote-start__heading">
+                                    @Html.Sitecore().Field(FeatureTemplate.LandingBannerPageWithLogo.Fields.ShortDescription.ToString())
+                                </p>
+                            </div>
+                            <div class="quote-start__lower-wrapper">
+
+                                <button id="submit-quote" class="button button--large-text Click-here @_colorbtn"
+                                        type="submit">
+                                    @Html.Sitecore().Field(FeatureTemplate.LandingBannerPageWithLogo.Fields.LinkText.ToString())
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+                }
+            </section>
+        </div>
+    </div>
+</section>
+
+<script>
+    var submitButton = document.getElementById("submit-quote");
+    if (submitButton) {
+        submitButton.addEventListener("click", function () {
+            document.getElementById("quote-selector__form").submit();
+        });
+    }
+</script>

@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Sitecore.Framework.Messaging.Rebus.Azure</name>
+    </assembly>
+    <members>
+        <member name="T:Sitecore.Framework.Messaging.Rebus.Azure.Configuration.AzureServiceBusTransportOptions">
+            <summary>
+            Represents the configuration options for the Azure Service Bus transport.
+            </summary>
+        </member>
+        <member name="P:Sitecore.Framework.Messaging.Rebus.Azure.Configuration.AzureServiceBusTransportOptions.OneWay">
+            <summary>
+            Gets or sets whether to use Azure Service Bus oneway client.
+            </summary>
+        </member>
+        <member name="P:Sitecore.Framework.Messaging.Rebus.Azure.Configuration.AzureServiceBusTransportOptions.ConnectionStringOrName">
+            <summary>
+            Gets or sets connection string or connection string name.
+            </summary>
+        </member>
+        <member name="P:Sitecore.Framework.Messaging.Rebus.Azure.Configuration.AzureServiceBusTransportOptions.InputQueueName">
+            <summary>
+            Gets or sets name for the input queue.
+            </summary>
+        </member>
+        <member name="P:Sitecore.Framework.Messaging.Rebus.Azure.Configuration.AzureServiceBusTransportOptions.DoNotCreateQueues">
+            <summary>
+            Gets or sets whether to skip creating queues.
+            </summary>
+        </member>
+        <member name="P:Sitecore.Framework.Messaging.Rebus.Azure.Configuration.AzureServiceBusTransportOptions.DoNotCheckQueueConfiguration">
+            <summary>
+            Gets or sets whether to skip checking queues configuration.
+            </summary>
+        </member>
+        <member name="T:Sitecore.Framework.Messaging.Rebus.Azure.Configuration.ConfigurationExtensions">
+            <summary>
+            Extension methods to support the <see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/>.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Framework.Messaging.Rebus.Azure.Configuration.ConfigurationExtensions.Bind(Microsoft.Extensions.Configuration.IConfiguration,Sitecore.Framework.Messaging.Rebus.Azure.Configuration.AzureServiceBusTransportOptions)">
+            <summary>
+            Binds configuration values to the instance of the <see cref="T:Sitecore.Framework.Messaging.Rebus.Azure.Configuration.AzureServiceBusTransportOptions"/> class.
+            </summary>
+            <param name="config">The <see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/> to get values from.</param>
+            <param name="options">The <see cref="T:Sitecore.Framework.Messaging.Rebus.Azure.Configuration.AzureServiceBusTransportOptions"/> instance.</param>
+        </member>
+        <member name="T:Sitecore.Framework.Messaging.Rebus.Azure.Transport.SchemaInstaller">
+            <summary>
+            Provides simple utility methods for installing Rebus Azure Transport artefacts.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Framework.Messaging.Rebus.Azure.Transport.SchemaInstaller.EnsureInstalled(System.String,System.String)">
+            <summary>
+            Ensures the Azure Transport queue is created via the connection string.
+            </summary>
+            <param name="connectionString">The connection string.</param>
+            <param name="queueName">The queue name</param>
+        </member>
+        <member name="M:Sitecore.Framework.Messaging.Rebus.Azure.Transport.SchemaInstaller.EnsureInstalled(System.String,System.String,Rebus.Logging.LogLevel)">
+            <summary>
+            Ensures the Azure Transport table is created via the connection string.
+            </summary>
+            <param name="connectionString">The connection string.</param>
+            <param name="queueName">The queue name.</param>
+            <param name="logLevel">The minimum application log level.</param>
+        </member>
+        <member name="M:Sitecore.Framework.Messaging.Rebus.Configuration.RebusConfigurationServicesExtensions.AddAzureConfigurators(Sitecore.Framework.Messaging.Rebus.Configuration.RebusConfigurationServices)">
+            <summary>
+            Registers support for reading configuration for Azure specific implementations (i.e. Azure Service Bus transport).
+            </summary>
+            <param name="rebusConfigServices"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

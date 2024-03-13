@@ -1,0 +1,6 @@
+{
+  "CHECKOUT_API_SERVICE_URL": "https://sbapico.billerpayments.com/app/opco/v3/service",
+	"CHECKOUT_PUBLIC_KEY_LOCATION": "~/Content/coserver_pub.pem",
+	"CLIENT_PRIVATE_KEY_LOCATION": "~/Content/4983998325.pem",
+	"CLIENT_PRIVATE_KEY_PASSWORD": "AlacClient4983998325"
+}

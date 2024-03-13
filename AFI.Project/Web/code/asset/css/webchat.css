@@ -1,0 +1,201 @@
+.cx-webchat.cx-theme-dark .cx-transcript {
+    color: #222529 !important;
+}
+
+/* START Widget Theme */
+.cx-widget.cx-theme-dark .cx-btn-primary {
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+    background: #004976 !important;
+}
+
+.cx-webchat .cx-transcript .cx-message .cx-message-text {
+    color: #222529 !important;
+    font-weight: 400;
+}
+
+/* AFI Starts*/
+
+.cx-common-container .cx-titlebar {
+    background: #881B26 !important;
+    padding: 5px !important;
+}
+
+.cx-widget button {
+    min-width: 0.25rem !important;
+}
+
+/* AFI */
+
+.cx-widget.cx-theme-dark .cx-btn-default {
+    color: #fff !important;
+    background-color: #898D8D !important;
+}
+
+.cx-widget.cx-theme-dark .cx-btn-default {
+    border-radius: 30px;
+    font-size: 1.1em;
+    font-weight: 400;
+    color: #fff;
+    background-color: #9c9c9c !important;
+    font-family: Arial, Helvetica, sans-serif;
+    border: 0;
+}
+
+.cx-widget.cx-theme-dark .cx-btn-primary {
+    border-radius: 30px;
+    font-size: 1.1em;
+    font-weight: 400;
+    color: #fff;
+    background-color: #0570c5 !important;
+    font-family: Arial, Helvetica, sans-serif;
+    border: 0;
+
+}
+
+.cx-form-horizontal {
+    background: #fff;
+}
+
+.cx-widget.cx-theme-dark,
+.cx-widget .cx-container {
+
+    color: #FDFDFD;
+    background: #fff;
+}
+
+.cx-widget.cx-theme-dark * {
+
+    border-color: #7DB9E8;
+}
+
+.cx-widget.cx-theme-dark.cx-webchat,
+.cx-widget.cx-theme-dark .cx-webchat {
+
+    background: #fff;
+}
+
+.cx-svg-icon-tone1 {
+    fill: #fff !important;
+}
+
+
+/* END Widget Theme */
+
+.hidden {
+    display: none;
+}
+
+.cx-form-inputs {
+    margin-bottom: 30px;
+}
+
+.cx-widget.cx-theme-dark .cx-form-control {
+    background: #fff !important;
+    color: #242424 !important;
+}
+
+.cx-widget .cx-form-control {
+    font-size: 1.1em !important;
+    height: auto !important;
+    border-radius: 5px !important;
+    border: 1px solid #ced4da !important;
+}
+
+.cx-form-control {
+    font-size: 1.1em !important;
+    margin-bottom: 20px !important;
+}
+
+#cx_webchat_form_member_type,
+#cx_webchat_form_need_type,
+#cx_webchat_form_billing_type {
+    padding: 10px;
+}
+
+#welcome-message,
+.cx-widget.cx-theme-dark a,
+.cx-widget.cx-theme-dark a:hover,
+.cx-widget.cx-theme-dark label {
+    font-weight: 400;
+    color: #060606 !important;
+    font-size: 1.2em !important;
+    line-height: 1.2em !important;
+}
+
+.form-group .label {
+    margin: 5px 0;
+}
+
+.form-group .chat-input {
+    margin: 10px 0;
+}
+
+.ml-30 {
+    margin-left: 30px;
+}
+
+.mt-30 {
+    margin-top: 30px;
+}
+
+#welcome-message {
+    margin-bottom: 15px;
+}
+
+.cx-widget.cx-window-manager.cx-theme-dark .cx-webchat.cx-theme-dark .cx-transcript .cx-time,
+.cx-widget.cx-window-manager.cx-theme-dark .cx-webchat.cx-theme-dark .cx-transcript .cx-filename,
+.cx-widget.cx-window-manager.cx-theme-dark .cx-webchat.cx-theme-dark .cx-transcript .cx-filesize,
+.cx-widget.cx-window-manager.cx-theme-dark .cx-webchat.cx-theme-dark .cx-transcript .cx-message-text,
+.cx-widget.cx-window-manager.cx-theme-dark .cx-webchat.cx-theme-dark .cx-transcript .cx-name {
+    color: #060606 !important;
+    font-size: 1.2em !important;
+    line-height: 1.2em !important;
+}
+
+.cx-webchat.cx-theme-dark .cx-transcript .cx-message.cx-you .cx-bubble {
+    background-color: #dbdfe3 !important;
+}
+
+.cx-webchat.cx-theme-dark .cx-transcript .cx-message.cx-them .cx-bubble {
+    background-color: #acc4f3 !important;
+}
+
+/*Dropdown arrow fix AFI*/
+.cx-form-inputs select {
+    appearance: auto;
+}
+
+/*Webchat popup AFI */
+.cx-widget.cx-theme-dark.cx-webchat {
+    height: 95%;
+    overflow: auto;
+}
+
+.cx-side-button-group .cx-side-button {
+    display: block !important;
+}
+
+.cx-side-button-group .cx-side-button {
+    padding: 10px !important;
+    /* display: flex !important; */
+}
+
+.cx-side-button-group {
+    z-index: 555 !important;
+}
+
+
+/* remove -- Z index for chat */
+.frontier___hero,
+.hero_section,
+.insurance__hero,
+.interior__title,
+.auto_section__container {
+    z-index: 0;
+}
+
+/* 21 Dec - To remove blank gap bottom of footer */
+.cx-widget.cx-window-manager .cx-widget-status {
+    overflow: hidden;
+}

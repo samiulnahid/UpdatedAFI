@@ -1,0 +1,96 @@
+.page__mission {
+  background-color: #f6f6f6;
+  background-color: var(--color-gray-10);
+  padding: 2.5rem 1.5rem !important;
+  text-align: center;
+  padding-top: 2.75rem !important;
+  padding-bottom: 2.75rem !important;
+
+  /* 02 Aug */
+  /* margin-bottom: 2rem !important; */
+}
+
+.page__mission.mobile__white {
+  background-color: #fff;
+}
+
+.page__mission.no__mb {
+  margin-bottom: 0 !important;
+}
+
+.page__mission.mb__2rem {
+  margin-bottom: 2rem !important;
+}
+
+.page__mission>* {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 55.875rem;
+}
+
+.page__mission h1 {
+  color: #003864;
+  color: var(--color-blue-40);
+  font-size: 1.75rem !important;
+  font-weight: 400 !important;
+  border-bottom: none !important;
+  /* margin-bottom: 15px; */
+}
+
+.page__mission p {
+  /* color: #898d8d; */
+  /* font-weight: 200; */
+  line-height: 1.625 !important;
+  /* Updated Later */
+  color: #545959 !important;
+  font-weight: normal !important;
+}
+
+.page__mission .arrow__link {
+  display: inline-block;
+  font-size: 1.125rem !important;
+  color: #0570c5 !important;
+  border: none !important;
+}
+
+@media screen and (min-width: 48em) {
+  .page__mission {
+    background-color: #fff;
+    background-color: var(--color-white);
+
+    /* 02 Aug */
+    margin-bottom: 0 !important;
+  }
+
+  .page__mission.gray__10 {
+    background-color: #f6f6f6;
+    background-color: var(--color-gray-10);
+  }
+
+
+
+  .page__mission h1 {
+    font-size: 2rem !important;
+    border: none;
+    cursor: auto;
+  }
+
+  .page__mission h1:hover {
+    color: var(--color-blue-40);
+  }
+
+  .page__mission p {
+    font-size: 1.25rem !important;
+  }
+
+  .page__mission.small__paragraph p {
+    font-size: 1rem !important;
+  }
+}
+
+/* 02 May */
+.page__mission i {
+  font-size: 1.125rem !important;
+  color: #0570c5 !important;
+  margin-left: 5px;
+}

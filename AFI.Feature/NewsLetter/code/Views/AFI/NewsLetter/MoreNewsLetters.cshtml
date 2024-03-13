@@ -1,0 +1,31 @@
+﻿@using AFI.Foundation.Helper
+@model AFI.Feature.NewsLetter.Models.ReleatedNewsletter
+@if (Model == null)
+{
+    <p>No news letters available.</p>
+}
+else
+{
+
+    <section class="more-articles">
+        <div class="wrapper">
+            <h1 class="more-articles__heading">@RenderingContext.Current.Rendering.Parameters["Left Side Text"]</h1>
+            <ul class="more-articles__list">
+                @foreach (var item in Model.newsLetters)
+                {
+                    <li class="more-articles__item">
+                        <h2 class="more-articles__item-heading">@item.Title</h2>
+                        <div class="more-articles__paragraph"> 
+                        <p class="more-articles__item-description">@Html.Raw(item.ShortDescription)</p>
+                        </div>
+                        <div class="more-articles__link"> 
+                         <a class="arrow-link" href="@item.Link">@RenderingContext.Current.Rendering.Parameters["Read More Text"]</a>
+                         <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </section>
+
+}

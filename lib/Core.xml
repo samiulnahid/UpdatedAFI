@@ -1,0 +1,902 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>HotChocolate.Core</name>
+    </assembly>
+    <members>
+        <member name="T:HotChocolate.Execution.Configuration.IErrorHandlerOptionsAccessor">
+            <summary>
+            Represents a dedicated options accessor to read the error handler
+            configuration.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.Configuration.IErrorHandlerOptionsAccessor.IncludeExceptionDetails">
+            <summary>
+            Gets a value indicating whether the <c>GraphQL</c> errors should be
+            extended with exception details. The default value is
+            <see cref="P:System.Diagnostics.Debugger.IsAttached"/>.
+            </summary>
+        </member>
+        <member name="T:HotChocolate.Execution.Configuration.IExecutionStrategyOptionsAccessor">
+            <summary>
+            Represents a dedicated options accessor to read the execution strategy options
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.Configuration.IExecutionStrategyOptionsAccessor.ForceSerialExecution">
+            <summary>
+            Defines that the query graph shall be traversed and execution serially.
+            </summary>
+        </member>
+        <member name="T:HotChocolate.Execution.Configuration.IQueryCacheSizeOptionsAccessor">
+            <summary>
+            Represents a dedicated options accessor to read the configured query
+            cache size.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.Configuration.IQueryCacheSizeOptionsAccessor.QueryCacheSize">
+            <summary>
+            Gets maximum amount of queries that can be cached. The default
+            value is <c>100</c>. The minimum allowed value is <c>10</c>.
+            </summary>
+        </member>
+        <member name="T:HotChocolate.Execution.Configuration.IQueryExecutionOptionsAccessor">
+            <summary>
+            Represents the entirety of options accessors which are used to provide
+            components of the query execution engine access to settings, which were
+            provided from the outside, to influence the behavior of the query
+            execution engine itself.
+            </summary>
+        </member>
+        <member name="T:HotChocolate.Execution.Configuration.IRequestTimeoutOptionsAccessor">
+            <summary>
+            Represents a dedicated options accessor to read the configured query
+            execution timeout.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.Configuration.IRequestTimeoutOptionsAccessor.ExecutionTimeout">
+            <summary>
+            Gets maximum allowed execution time of a query. The default value
+            is <c>30</c> seconds. The minimum allowed value is <c>100</c>
+            milliseconds.
+            </summary>
+        </member>
+        <member name="T:HotChocolate.Execution.Configuration.IInstrumentationOptionsAccessor">
+            <summary>
+            Represents a dedicated options accessor to read the instrumentation
+            configuration.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.Configuration.IInstrumentationOptionsAccessor.TracingPreference">
+            <summary>
+            Gets a value indicating whether tracing for performance measurement
+            of query requests is enabled. The default value is
+            <see cref="F:HotChocolate.Execution.Configuration.TracingPreference.Never"/>.
+            </summary>
+        </member>
+        <member name="T:HotChocolate.Execution.Configuration.IValidateQueryOptionsAccessor">
+            <summary>
+            Represents a dedicated options accessor to read the validation query
+            configuration.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.Configuration.IValidateQueryOptionsAccessor.MaxExecutionDepth">
+            <summary>
+            Gets the maximum allowed depth of a query. The default value is
+            <see langword="null"/>. The minimum allowed value is <c>1</c>.
+            </summary>
+        </member>
+        <member name="T:HotChocolate.Execution.Configuration.QueryExecutionOptions">
+            <summary>
+            Represents the entirety of settings to configure the behavior of the
+            query execution engine.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.Configuration.QueryExecutionOptions.ExecutionTimeout">
+            <summary>
+            Gets or sets maximum allowed execution time of a query. The default
+            value is <c>30</c> seconds. The minimum allowed value is <c>100</c>
+            milliseconds.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.Configuration.QueryExecutionOptions.IncludeExceptionDetails">
+            <summary>
+            Gets or sets a value indicating whether the <c>GraphQL</c> errors
+            should be extended with exception details. The default value is
+            <see cref="P:System.Diagnostics.Debugger.IsAttached"/>.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.Configuration.QueryExecutionOptions.MaxExecutionDepth">
+            <summary>
+            Gets or sets the maximum allowed depth of a query. The default
+            value is <see langword="null"/>. The minimum allowed value is
+            <c>1</c>.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.Configuration.QueryExecutionOptions.QueryCacheSize">
+            <summary>
+            Gets or sets the maximum amount of queries that can be cached. The
+            default value is <c>100</c>. The minimum allowed value is
+            <c>10</c>.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.Configuration.QueryExecutionOptions.TracingPreference">
+            <summary>
+            Gets or sets a value indicating whether tracing for performance
+            measurement of query requests is enabled. The default value is
+            <see cref="F:HotChocolate.Execution.Configuration.TracingPreference.Never"/>.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.Configuration.QueryExecutionOptions.ForceSerialExecution">
+            <summary>
+            Defines that the query graph shall be traversed and execution serially.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IExecutionContext.Schema">
+            <summary>
+            Gets the schema on which the query is being executed.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IExecutionContext.ServiceScope">
+            <summary>
+            Gets the request service scope.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IExecutionContext.Services">
+            <summary>
+            Gets the request scope services
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IExecutionContext.ErrorHandler">
+            <summary>
+            Gets the error handler which adds additional context
+            data to errors and exceptions.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IExecutionContext.Operation">
+            <summary>
+            Gets the operation that is being executed.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:HotChocolate.Execution.IExecutionContext.Variables">
+            <summary>
+            Gets the coerced variables.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:HotChocolate.Execution.IExecutionContext.Result">
+            <summary>
+            Gets the query result.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:HotChocolate.Execution.IExecutionContext.ContextData">
+            <summary>
+            The context data dictionary can be used by middlewares and
+            resolvers to store and retrieve data during execution.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IExecutionContext.RequestAborted">
+            <summary>
+            Gets a cancellation token is used to signal
+            if the request has be aborted.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IExecutionContext.Activator">
+            <summary>
+            Gets the activator helper class.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IExecutionContext.Diagnostics">
+            <summary>
+            Gets the diagnostics writer for query execution.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IExecutionContext.Converter">
+            <summary>
+            Gets the type conversion service.
+            </summary>
+            <value></value>
+        </member>
+        <member name="M:HotChocolate.Execution.IExecutionContext.AddError(HotChocolate.IError)">
+            <summary>
+            Adds an error thread-safe to the result object.
+            </summary>
+            <param name="error">The error that shall be added.</param>
+        </member>
+        <member name="M:HotChocolate.Execution.IExecutionContext.Clone">
+            <summary>
+            Creates a copy of this execution context
+            where the copy of this object has new instances
+            of <see cref="P:HotChocolate.Execution.IExecutionContext.ContextData" /> and <see cref="!:Response" />.
+            <see cref="P:HotChocolate.Execution.IExecutionContext.ContextData" /> will have all values inserted
+            from the original context.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IOperation.Document">
+            <summary>
+            Gets the parsed query document that contains the
+            operation-<see cref="P:HotChocolate.Execution.IOperation.Definition" />.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:HotChocolate.Execution.IOperation.Definition">
+            <summary>
+            Gets the syntax node representing the operation definition.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IOperation.RootValue">
+            <summary>
+            Gets the value representing the instance of the
+            <see cref="P:HotChocolate.Execution.IOperation.RootType" />
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IOperation.RootType">
+            <summary>
+            Gets the root type on which the operation is executed.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IOperation.Name">
+            <summary>
+            Gets the name of the operation.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IOperation.Type">
+            <summary>
+            Gets the operation type (Query, Mutation, Subscription).
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IOperation.Variables">
+            <summary>
+            Gets the variable values for this operation.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:HotChocolate.Execution.IQueryContext.Schema">
+            <summary>
+            Gets the GraphQL schema on which the query is executed.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IQueryContext.Request">
+            <summary>
+            Gets or sets the initial query request.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IQueryContext.QueryKey">
+            <summary>
+            Gets or sets a unique query key that can be used for caching.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:HotChocolate.Execution.IQueryContext.ServiceScope">
+            <summary>
+            Gets the request service scope.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IQueryContext.Services">
+            <summary>
+            Gets or sets the scoped request services.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IQueryContext.Document">
+            <summary>
+            Gets or sets the parsed query document.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IQueryContext.CachedQuery">
+            <summary>
+            Gets or sets the cached query.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IQueryContext.Operation">
+            <summary>
+            Gets or sets the operation that shall be executed.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IQueryContext.ValidationResult">
+            <summary>
+            Gets or sets the query validation results.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:HotChocolate.Execution.IQueryContext.Result">
+            <summary>
+            Gets or sets the query execution result.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IQueryContext.RequestAborted">
+            <summary>
+            Notifies when the connection underlying this request is aborted
+            and thus request operations should be cancelled.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IQueryContext.Exception">
+            <summary>
+            Gets or sets an unexpected execution exception.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IQueryContext.MiddlewareResolver">
+            <summary>
+            Gets or sets the execution bound field middleware resolver.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Execution.IRequestServiceScope.IsLifetimeHandled">
+            <summary>
+            <c>true</c>, if the execution request is handling the
+            lifetime of this scope; otherwise, <c>false</c> if the
+            scope shall be handled by the executor.
+            </summary>
+        </member>
+        <member name="M:HotChocolate.Execution.IRequestServiceScope.HandleLifetime">
+            <summary>
+            Signals that the lifetime is being handled by the request.
+            </summary>
+        </member>
+        <member name="T:HotChocolate.Execution.SerialExecutionStrategy">
+            <summary>
+            This execution strategy executes the full query graph serailly.
+            This execution strategy is used to help with entity framework and
+            will be removed with version 11.
+            </summary>
+        </member>
+        <member name="M:HotChocolate.Execution.VariableValueBuilder.CreateValues(System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object})">
+            <summary>
+            Creates the concrete variable values
+            from the variables passed in by the user
+            and the defaults defined in the query.
+            </summary>
+            <param name="variableValues">
+            The variable values that were passed in by the user.
+            </param>
+            <returns>
+            Returns the coerced variable values converted
+            to their .net counterparts.
+            </returns>/
+        </member>
+        <member name="T:HotChocolate.Properties.CoreResources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.BatchColVars_NoCompatibleType">
+            <summary>
+              Looks up a localized string similar to Unable to find a compatible input type for the exported object type..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.BatchQueryExec_CannotSerialize">
+            <summary>
+              Looks up a localized string similar to Could not serialize the specified variable..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.CachedQuery_Key_Is_Null">
+            <summary>
+              Looks up a localized string similar to The query key mustn&apos;t be null or empty..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.CompleteCompositeType_UnknownSchemaType">
+            <summary>
+              Looks up a localized string similar to Could not resolve the actual object type from `{0}` for the abstract type `{1}`..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.CompleteLeadType_UndefinedError">
+            <summary>
+              Looks up a localized string similar to Undefined scalar field serialization error..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.CompleteLeafType_CannotConvertValue">
+            <summary>
+              Looks up a localized string similar to The internal resolver value could not be converted to a valid value of `{0}`..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.CompleteList_ListTypeInvalid">
+            <summary>
+              Looks up a localized string similar to A list values must implement `{0}` in order to be completed..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.DirectiveCollectionExtensions_IfNotBoolean">
+            <summary>
+              Looks up a localized string similar to The {0} if-argument value has to be a &apos;Boolean&apos;..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.DirectiveCollectionExtensions_NotValid">
+            <summary>
+              Looks up a localized string similar to The {0}-directive is missing the if-argument..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.ErrorHandler_ErrorIsNull">
+            <summary>
+              Looks up a localized string similar to Unexpected Execution Error.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.ErrorHandler_UnexpectedError">
+            <summary>
+              Looks up a localized string similar to Unexpected Execution Error.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.ExecuteOperationMiddleware_InComplete">
+            <summary>
+              Looks up a localized string similar to The execute operation middleware expects the query document to be parsed and the operation to be resolved..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.ExecutionStrategyResolver_NotSupported">
+            <summary>
+              Looks up a localized string similar to Operation not supported..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.FieldCollector_FieldNotFound">
+            <summary>
+              Looks up a localized string similar to Could not resolve the specified field..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.GetOperation_InvalidOperationName">
+            <summary>
+              Looks up a localized string similar to The specified operation `{0}` does not exist..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.GetOperation_MultipleOperations">
+            <summary>
+              Looks up a localized string similar to Only queries that contain one operation can be executed without specifying the opartion name..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.HandleNonNullViolation_Message">
+            <summary>
+              Looks up a localized string similar to Cannot return null for non-nullable field..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.MaxComplexityMiddleware_NotAllowed">
+             <summary>
+               Looks up a localized string similar to The operation that shall be executed has a complexity of {0}.
+            The maximum allowed query complexity is {1}..
+             </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.MaxComplexityMiddleware_Prerequisite">
+            <summary>
+              Looks up a localized string similar to The max complexity middleware expects the query document to be parsed and the operation to be resolved..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.ParseQuery_Middleware_QueryTypeNotSupported">
+            <summary>
+              Looks up a localized string similar to The specified query type is not supported..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.ParseQueryMiddleware_InComplete">
+            <summary>
+              Looks up a localized string similar to The parse query middleware expects a valid query request..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.QueryError_ArgumentIsNull">
+            <summary>
+              Looks up a localized string similar to The argument name mustn&apos;t be null or empty..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.QueryError_MessageIsNull">
+            <summary>
+              Looks up a localized string similar to The error message mustn&apos;t be null or empty..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.QueryError_VariableIsNull">
+            <summary>
+              Looks up a localized string similar to The variable name mustn&apos;t be null or empty..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.QueryExecutor_NoResult">
+            <summary>
+              Looks up a localized string similar to The execution pipeline yielded no query result..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.QueryExecutorExtensions_QueryIsNullOrEmpty">
+            <summary>
+              Looks up a localized string similar to The query mustn&apos;t be null or empty..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.Read_PQ_Middleware_Incomplete">
+            <summary>
+              Looks up a localized string similar to The read persisted query middleware expects a valid query request..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.Read_PQ_Middleware_QueryNotFound">
+            <summary>
+              Looks up a localized string similar to PersistedQueryNotFound.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.Read_PQ_Middleware_QueryTypeNotSupported">
+            <summary>
+              Looks up a localized string similar to The specified query type is not supported..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.RequestTimeoutMiddleware_Timeout">
+            <summary>
+              Looks up a localized string similar to Execution timeout has been exceeded..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.ResolveObjectType_TypeNotSupported">
+            <summary>
+              Looks up a localized string similar to The specified type is not supported..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.ResolverContext_ArgumentConversion">
+            <summary>
+              Looks up a localized string similar to Could not convert argument `{0}` from `{1}` to `{2}`..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.ResolverContext_CustomPropertyNotExists">
+            <summary>
+              Looks up a localized string similar to The specified property does not exist..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.ResolverContext_Parent_InvalidCast">
+            <summary>
+              Looks up a localized string similar to Could not cast the source object to `{0}`..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.ResolveRootType_DoesNotExist">
+            <summary>
+              Looks up a localized string similar to The specified root type `{0}` does not exist..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.ResolverTask_ErrorMessageIsNull">
+            <summary>
+              Looks up a localized string similar to The error message cannot be null or empty..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.SubscriptionExecutionStrategy_NoEventRegistry">
+            <summary>
+              Looks up a localized string similar to Register a event registry as service in order to use subsciptions..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.Subscriptions_SingleRootField">
+            <summary>
+              Looks up a localized string similar to Subscriptions must have one and only one root field..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.ToJson_OnlyQueryResultsSupported">
+            <summary>
+              Looks up a localized string similar to Only query results are supported..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.ValidateQueryMiddleware_NoDocument">
+            <summary>
+              Looks up a localized string similar to The validation middleware expects the query document to be parsed..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.VariableCollection_VariableNotDeclared">
+            <summary>
+              Looks up a localized string similar to The specified variable was not declared..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.VarRewriter_CannotConvert">
+            <summary>
+              Looks up a localized string similar to Unable to convert the specified variable value..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.VarRewriter_UnknownField">
+            <summary>
+              Looks up a localized string similar to Unknown field..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.CoreResources.Write_PQ_Middleware_Incomplete">
+            <summary>
+              Looks up a localized string similar to The write persisted query middleware expects a valid query request..
+            </summary>
+        </member>
+        <member name="T:HotChocolate.Properties.ValidationResources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.ValidationResources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.ValidationResources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.ValidationResources.UnknownType">
+            <summary>
+              Looks up a localized string similar to Unknown type `{0}`..
+            </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.AllVariablesUsedRule">
+             <summary>
+             All variables defined by an operation must be used in that operation
+             or a fragment transitively included by that operation.
+            
+             Unused variables cause a validation error.
+            
+             http://facebook.github.io/graphql/June2018/#sec-All-Variables-Used
+            
+             AND
+            
+             Variables are scoped on a per‐operation basis. That means that
+             any variable used within the context of an operation must be defined
+             at the top level of that operation
+            
+             https://facebook.github.io/graphql/June2018/#sec-All-Variable-Uses-Defined
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.AllVariableUsagesAreAllowedRule">
+             <summary>
+             Variable usages must be compatible with the arguments
+             they are passed to.
+            
+             Validation failures occur when variables are used in the context
+             of types that are complete mismatches, or if a nullable type in a
+              variable is passed to a non‐null argument type.
+            
+             http://facebook.github.io/graphql/June2018/#sec-All-Variable-Usages-are-Allowed
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.ArgumentNamesRule">
+            <summary>
+            Every argument provided to a field or directive must be defined 
+            in the set of possible arguments of that field or directive.
+            
+            http://facebook.github.io/graphql/June2018/#sec-Argument-Names
+            </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.ArgumentUniquenessRule">
+             <summary>
+             Fields and directives treat arguments as a mapping of argument name
+             to value.
+            
+             More than one argument with the same name in an argument set
+             is ambiguous and invalid.
+            
+             http://facebook.github.io/graphql/June2018/#sec-Argument-Uniqueness
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.DirectivesAreDefinedRule">
+             <summary>
+             GraphQL servers define what directives they support.
+             For each usage of a directive, the directive must be available
+             on that server.
+            
+             http://facebook.github.io/graphql/June2018/#sec-Directives-Are-Defined
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.DirectivesAreInValidLocationsRule">
+             <summary>
+            GraphQL servers define what directives they support and where they
+             support them.
+            
+             For each usage of a directive, the directive must be used in a
+             location that the server has declared support for.
+            
+             http://facebook.github.io/graphql/June2018/#sec-Directives-Are-In-Valid-Locations
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.DirectivesAreUniquePerLocationRule">
+             <summary>
+             Directives are used to describe some metadata or behavioral change on
+             the definition they apply to.
+            
+             When more than one directive of the
+             same name is used, the expected metadata or behavior becomes ambiguous,
+             therefore only one of each directive is allowed per location.
+            
+             http://facebook.github.io/graphql/draft/#sec-Directives-Are-Unique-Per-Location
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.ExecutableDefinitionsRule">
+             <summary>
+             GraphQL execution will only consider the executable definitions
+             Operation and Fragment.
+            
+             Type system definitions and extensions are not executable,
+             and are not considered during execution.
+            
+             To avoid ambiguity, a document containing TypeSystemDefinition
+             is invalid for execution.
+            
+             GraphQL documents not intended to be directly executed may
+             include TypeSystemDefinition.
+            
+             http://facebook.github.io/graphql/June2018/#sec-Executable-Definitions
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.FieldMustBeDefinedRule">
+             <summary>
+             The target field of a field selection must be defined on the scoped
+             type of the selection set. There are no limitations on alias names.
+            
+             http://facebook.github.io/graphql/June2018/#sec-Field-Selections-on-Objects-Interfaces-and-Unions-Types
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.FieldSelectionMergingRule">
+             <summary>
+             If multiple field selections with the same response names are
+             encountered during execution, the field and arguments to execute and
+             the resulting value should be unambiguous.
+            
+             Therefore any two field selections which might both be encountered
+             for the same object are only valid if they are equivalent.
+            
+             During execution, the simultaneous execution of fields with the same
+             response name is accomplished by MergeSelectionSets() and
+             CollectFields().
+            
+             http://facebook.github.io/graphql/June2018/#sec-Field-Selection-Merging
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.FragmentNameUniquenessRule">
+             <summary>
+             Fragment definitions are referenced in fragment spreads by name.
+             To avoid ambiguity, each fragment’s name must be unique within a
+             document.
+            
+             http://facebook.github.io/graphql/June2018/#sec-Fragment-Name-Uniqueness
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.FragmentsMustBeUsedRule">
+            <summary>
+            Defined fragments must be used within a document.
+            
+            http://facebook.github.io/graphql/June2018/#sec-Fragments-Must-Be-Used
+            </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.FragmentsOnCompositeTypesRule">
+             <summary>
+             Fragments can only be declared on unions, interfaces, and objects.
+             They are invalid on scalars.
+             They can only be applied on non‐leaf fields.
+             This rule applies to both inline and named fragments.
+            
+             http://facebook.github.io/graphql/June2018/#sec-Fragments-On-Composite-Types
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.FragmentSpreadIsPossibleRule">
+             <summary>
+             Fragments are declared on a type and will only apply when the
+             runtime object type matches the type condition.
+            
+             They also are spread within the context of a parent type.
+            
+             A fragment spread is only valid if its type condition could ever
+             apply within the parent type.
+            
+             http://facebook.github.io/graphql/June2018/#sec-Fragment-spread-is-possible
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.FragmentSpreadsMustNotFormCyclesRule">
+             <summary>
+             The graph of fragment spreads must not form any cycles including
+             spreading itself. Otherwise an operation could infinitely spread or
+             infinitely execute on cycles in the underlying data.
+            
+             http://facebook.github.io/graphql/June2018/#sec-Fragment-spreads-must-not-form-cycles
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.FragmentSpreadTargetDefinedRule">
+             <summary>
+             Named fragment spreads must refer to fragments defined within the
+             document.
+            
+             It is a validation error if the target of a spread is not defined.
+            
+             http://facebook.github.io/graphql/June2018/#sec-Fragment-spread-target-defined
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.FragmentSpreadTypeExistenceRule">
+             <summary>
+             Fragments must be specified on types that exist in the schema.
+             This applies for both named and inline fragments.
+             If they are not defined in the schema, the query does not validate.
+            
+             http://facebook.github.io/graphql/June2018/#sec-Fragment-Spread-Type-Existence
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.InputObjectFieldNamesRule">
+             <summary>
+             Every input field provided in an input object value must be defined in
+             the set of possible fields of that input object’s expected type.
+            
+             http://facebook.github.io/graphql/June2018/#sec-Input-Object-Field-Names
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.InputObjectFieldUniquenessRule">
+             <summary>
+             Input objects must not contain more than one field of the same name,
+             otherwise an ambiguity would exist which includes an ignored portion
+             of syntax.
+            
+             http://facebook.github.io/graphql/June2018/#sec-Input-Object-Field-Uniqueness
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.InputObjectRequiredFieldsRule">
+             <summary>
+             Input object fields may be required. Much like a field may have
+             required arguments, an input object may have required fields.
+            
+             An input field is required if it has a non‐null type and does not have
+             a default value. Otherwise, the input object field is optional.
+            
+             http://facebook.github.io/graphql/June2018/#sec-Input-Object-Required-Fields
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.LeafFieldSelectionsRule">
+             <summary>
+             Field selections on scalars or enums are never allowed,
+             because they are the leaf nodes of any GraphQL query.
+            
+             Conversely the leaf field selections of GraphQL queries
+             must be of type scalar or enum. Leaf selections on objects,
+             interfaces, and unions without subfields are disallowed.
+            
+             http://facebook.github.io/graphql/June2018/#sec-Leaf-Field-Selections
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.LoneAnonymousOperationRule">
+             <summary>
+             GraphQL allows a short‐hand form for defining query operations
+             when only that one operation exists in the document.
+            
+             http://facebook.github.io/graphql/June2018/#sec-Lone-Anonymous-Operation
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.OperationNameUniquenessRule">
+             <summary>
+             Each named operation definition must be unique within a document
+             when referred to by its name.
+            
+             http://facebook.github.io/graphql/June2018/#sec-Operation-Name-Uniqueness
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.RequiredArgumentRule">
+             <summary>
+             Arguments can be required. An argument is required if the argument
+             type is non‐null and does not have a default value. Otherwise,
+             the argument is optional.
+            
+             http://facebook.github.io/graphql/June2018/#sec-Required-Arguments
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.SubscriptionSingleRootFieldRule">
+             <summary>
+             Subscription operations must have exactly one root field.
+            
+             http://facebook.github.io/graphql/June2018/#sec-Single-root-field
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.ValuesOfCorrectTypeRule">
+             <summary>
+             Literal values must be compatible with the type expected in the position
+             they are found as per the coercion rules defined in the Type System
+             chapter.
+            
+             http://facebook.github.io/graphql/June2018/#sec-Values-of-Correct-Type
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.VariablesAreInputTypesRule">
+             <summary>
+             Variables can only be input types. Objects,
+             unions, and interfaces cannot be used as inputs.
+            
+             http://facebook.github.io/graphql/June2018/#sec-Variables-Are-Input-Types
+             </summary>
+        </member>
+        <member name="T:HotChocolate.Validation.VariableUniquenessRule">
+             <summary>
+             If any operation defines more than one variable with the same name,
+             it is ambiguous and invalid. It is invalid even if the type of the
+             duplicate variable is the same.
+            
+             http://facebook.github.io/graphql/June2018/#sec-Validation.Variables
+             </summary>
+        </member>
+    </members>
+</doc>

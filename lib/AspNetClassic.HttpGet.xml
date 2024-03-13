@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>HotChocolate.AspNetClassic.HttpGet</name>
+    </assembly>
+    <members>
+        <member name="M:HotChocolate.AspNetClassic.HttpGetMiddleware.CanHandleRequest(Microsoft.Owin.IOwinContext)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>HotChocolate.Utilities</name>
+    </assembly>
+    <members>
+        <member name="T:HotChocolate.Utilities.CacheEntryEventArgs`1">
+            <summary>
+            Represents cache entry event args.
+            </summary>
+        </member>
+        <member name="M:HotChocolate.Utilities.CacheEntryEventArgs`1.#ctor(System.String,`0)">
+            <summary>
+            Initializes a new instance of the
+            <see cref="T:HotChocolate.Utilities.CacheEntryEventArgs`1"/> class.
+            </summary>
+            <param name="key">The cache entry key.</param>
+            <param name="value">The cache entry value.</param>
+        </member>
+        <member name="P:HotChocolate.Utilities.CacheEntryEventArgs`1.Key">
+            <summary>
+            Gets the cache entry key.
+            </summary>
+            <value>The key.</value>
+        </member>
+        <member name="P:HotChocolate.Utilities.CacheEntryEventArgs`1.Value">
+            <summary>
+            Gets the cache entry value.
+            </summary>
+            <value>The value.</value>
+        </member>
+        <member name="T:HotChocolate.Utilities.Properties.UtilityResources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Utilities.Properties.UtilityResources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Utilities.Properties.UtilityResources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Utilities.Properties.UtilityResources.MiddlewareActivator_NoInvokeMethod">
+            <summary>
+              Looks up a localized string similar to The provided middleware type must contain an invoke method..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Utilities.Properties.UtilityResources.MiddlewareActivator_OneConstructor">
+            <summary>
+              Looks up a localized string similar to Middleware classes must have exactly one public constructor..
+            </summary>
+        </member>
+    </members>
+</doc>

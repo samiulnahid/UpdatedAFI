@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Sitecore.XConnect.DataPurge.Tasks.Options</name>
+    </assembly>
+    <members>
+        <member name="T:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptions">
+            <summary>
+            Options to use with delete contacts worker.
+            </summary>
+            <seealso cref="T:Sitecore.Processing.Engine.Model.Options.Workers.WorkerOptions" />
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptions.#ctor">
+            <summary>
+            Creates an instance of <see cref="T:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptions"/>.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptions.#ctor(System.Collections.Generic.IReadOnlyList{System.String})">
+            <summary>
+            Creates an instance of <see cref="T:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptions" />.
+            </summary>
+            <param name="conditionIds">IDs of conditions to check contacts with.</param>
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptions.#ctor(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptions"/> class.
+            </summary>
+            <param name="dictionary"><see cref="T:System.Collections.Generic.Dictionary`2" /> containing options.</param>
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptions.ConditionIds">
+            <summary>
+            Gets IDs of conditions to check contacts with.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptions.Parse(System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})">
+            <summary>
+                Converts the <paramref name="options"/> into <see cref="T:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptions"/> instance.
+            </summary>
+            <param name="options">A list of keys and mapped values to create <see cref="T:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptions"/>.</param>
+            <returns>A fully functional instance of <see cref="T:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptions"/>.</returns>
+        </member>
+        <member name="T:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptionsDictionary">
+            <summary>
+            Options to use with delete contacts worker.
+            </summary>
+            <seealso cref="T:Sitecore.Processing.Engine.Abstractions.DistributedWorkerOptionsDictionary" />
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptionsDictionary.#ctor">
+            <summary>
+            Creates an instance of <see cref="T:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptionsDictionary"/>.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptionsDictionary.#ctor(System.Collections.Generic.IReadOnlyList{System.String})">
+            <summary>
+            Creates an instance of <see cref="T:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptionsDictionary" />.
+            </summary>
+            <param name="conditionIds">IDs of conditions to check contacts with.</param>
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptionsDictionary.#ctor(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptionsDictionary"/> class.
+            </summary>
+            <param name="dictionary"><see cref="T:System.Collections.Generic.Dictionary`2" /> containing options.</param>
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptionsDictionary.ConditionIds">
+            <summary>
+            Gets IDs of conditions to check contacts with.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptionsDictionary.Parse(System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})">
+            <summary>
+                Converts the <paramref name="options"/> into <see cref="T:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptionsDictionary"/> instance.
+            </summary>
+            <param name="options">A list of keys and mapped values to create <see cref="T:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptionsDictionary"/>.</param>
+            <returns>A fully functional instance of <see cref="T:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptionsDictionary"/>.</returns>
+        </member>
+        <member name="T:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions">
+            <summary>
+            Options to use with delete interactions worker.
+            </summary>
+            <seealso cref="T:Sitecore.Processing.Engine.Model.Options.Workers.WorkerOptions" />
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions.#ctor">
+            <summary>
+            Creates an instance of <see cref="T:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions"/>.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions.#ctor(System.Collections.Generic.IReadOnlyList{System.String})">
+            <summary>
+            Creates an instance of <see cref="T:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions" />.
+            </summary>
+            <param name="conditionIds">The interaction condition ids.</param>
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions.#ctor(System.Collections.Generic.IReadOnlyList{System.String},System.Collections.Generic.IReadOnlyList{System.Guid},System.Collections.Generic.IReadOnlyList{System.Guid},System.Collections.Generic.IReadOnlyList{System.Guid},System.Collections.Generic.IReadOnlyList{System.Guid})">
+            <summary>
+            Creates an instance of <see cref="T:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions" />.
+            </summary>
+            <param name="conditionIds">The condition ids.</param>
+            <param name="deleteEventIds">The event ids that should mark interaction as obsolete.</param>
+            <param name="skipEventIds">The event ids that should mark interaction as not to delete.</param>
+            <param name="deleteChannelIds">The channel ids that should filter interactions for delete.</param>
+            <param name="skipChannelIds">The channel ids that should filter interactions for skip.</param>
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions.#ctor(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions"/> class.
+            </summary>
+            <param name="dictionary"><see cref="T:System.Collections.Generic.Dictionary`2" /> containing options.</param>
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions.ConditionIds">
+            <summary>
+            Gets IDs of conditions to check interactions with.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions.DeleteEventIds">
+            <summary>
+            Gets the event ids. All interactions with at least one id should be deleted.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions.SkipEventIds">
+            <summary>
+            Gets the skip event ids. All interactions with at least one id should not be deleted.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions.DeleteChannelIds">
+            <summary>
+            Gets the channel ids. All interactions interacted through any channel from the list should be deleted.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions.SkipChannelIds">
+            <summary>
+            Gets the skip channel ids. All interacted through any channel from the list should not be deleted.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions.Parse(System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})">
+            <summary>
+            Converts the <paramref name="options"/> into <see cref="T:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions"/> instance.
+            </summary>
+            <param name="options">A list of keys and mapped values to create <see cref="T:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions"/>.</param>
+            <returns>A fully functional instance of <see cref="T:Sitecore.XConnect.DataPurge.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions"/>.</returns>
+        </member>
+    </members>
+</doc>

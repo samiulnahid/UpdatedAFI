@@ -1,0 +1,393 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Sitecore.GraphQL.Services.Abstractions</name>
+    </assembly>
+    <members>
+        <member name="T:Sitecore.GraphQL.Services.Abstractions.Exceptions.FieldNotFoundException">
+            <summary>
+            The item is not found exception
+            </summary>
+        </member>
+        <member name="T:Sitecore.GraphQL.Services.Abstractions.Exceptions.InvalidInputException">
+            <summary>
+            The invalid input exception 
+            </summary>
+        </member>
+        <member name="T:Sitecore.GraphQL.Services.Abstractions.Exceptions.ItemNotFoundException">
+            <summary>
+            The item is not found exception
+            </summary>
+        </member>
+        <member name="T:Sitecore.GraphQL.Services.Abstractions.Exceptions.ItemNotInWorkflowException">
+            <summary>
+            The item is not in a workflow exception
+            </summary>
+        </member>
+        <member name="T:Sitecore.GraphQL.Services.Abstractions.Exceptions.WorkflowNotFoundException">
+            <summary>
+            The workflow is not found exception
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.Archives.IArchivedItem.ArchivalId">
+            <summary>Gets the archival id.</summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.Archives.IArchivedItem.ArchiveDate">
+            <summary>Gets the archive date in UTC time.</summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.Archives.IArchivedItem.ArchivedBy">
+            <summary>Gets the archived by.</summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.Archives.IArchivedItem.ArchiveName">
+            <summary>Gets the name of the archive.</summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.Archives.IArchivedItem.Database">
+            <summary>Gets the database.</summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.Archives.IArchivedItem.ItemId">
+            <summary>Gets the item id.</summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.Archives.IArchivedItem.Name">
+            <summary>Gets the name.</summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.Archives.IArchivedItem.OriginalLocation">
+            <summary>Gets the original location.</summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.Archives.IArchivedItem.ParentId">
+            <summary>Gets the parent id.</summary>
+        </member>
+        <member name="T:Sitecore.GraphQL.Services.Abstractions.Model.IItem">
+            <summary>
+            Represents an item within Sitecore
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.IItem.Id">
+            <summary>
+            The unique identifier of the item
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.IItem.Name">
+            <summary>
+            A short textual description of the item
+            </summary>
+            <remarks>
+            The name is not localized
+            </remarks>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.IItem.DisplayName">
+            <summary>
+            Localized item name
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.IItem.Path">
+            <summary>
+            The full path of the item from the root
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.IItem.Parent">
+            <summary>
+            Provides access to the parent for this item
+            </summary>
+            <remarks>
+            The value will be null for the root item
+            </remarks>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.IItem.TemplateId">
+            <summary>
+            ID of the template.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.IItem.Database">
+            <summary>
+            Name of database where item resides
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.IItem.Language">
+            <summary>
+            Language of the item
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.IItem.Languages">
+            <summary>
+            Provide access for all languages in which the item has a content
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.IItem.ItemUri">
+            <summary>
+            The Uri of the item
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.IItem.HasChildren">
+            <summary>
+            Indicates whether the item has sub items or not
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.IItem.Children">
+            <summary>
+            Provide access to children of the item
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.IItem.Fields">
+            <summary>
+            Provide access to the fields of the item
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.IItem.Version">
+            <summary>
+            The version of the item
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.IItem.VersionName">
+            <summary>
+            The version name of the item
+            </summary>
+        </member>
+        <member name="M:Sitecore.GraphQL.Services.Abstractions.Model.IItem.GetVersions(System.Boolean)">
+            <summary>
+            Gets all item versions
+            </summary>
+            <param name="allLanguages">Set to true to retrieve versions in other languages as well (if any.)</param>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.IItem.InsertOptions">
+            <summary>
+            Provides access to the insert options defined for the item
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.IItemWorkflow.Workflow">
+            <summary>
+            Gets the workflow item
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.IItemWorkflow.WorkflowState">
+            <summary>
+            Gets the workflow state
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.IItemWorkflow.CanEdit">
+            <summary>
+            Determines whether the source item can be edited
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.IItemWorkflow.CanSave">
+            <summary>
+            Determines whether the source item can be saved
+            </summary>
+        </member>
+        <member name="T:Sitecore.GraphQL.Services.Abstractions.Model.ISite">
+            <summary>
+            Represents a managed website within Sitecore
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.AllowDebug">
+            <summary>
+            Indicates whether to allow debug.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.BrowserTitle">
+            <summary>
+            The browser title.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.CacheHtml">
+            <summary>
+            The flag indicating whether to use cache HTML.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.CacheMedia">
+            <summary>
+            The flag indicating whether to use cache media.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.ContentDatabaseName">
+            <summary>
+            The content database.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.ContentLanguage">
+            <summary>
+            The content language.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.ContentStartItem">
+            <summary>
+            The content start item.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.ContentStartPath">
+            <summary>
+            The content start path.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.DatabaseName">
+            <summary>
+            The database.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.DefaultDevice">
+            <summary>
+            The default device.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.Device">
+            <summary>
+            The device.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.DictionaryDomain">
+            <summary>
+            The dictionary domain.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.DisableBrowserCaching">
+            <summary>
+            Indicates whether browser caching is disabled for the site.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.DisableClientData">
+            <summary>
+            Indicates whether client data is disabled for the site.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.DisableFiltering">
+            <summary>
+            Indicates whether the SiteContext disables the filtering.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.DisableWebEditEditing">
+            <summary>
+            Indicates whether the WebEdit mode is editable.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.DisableXmlControls">
+            <summary>
+            Indicates whether XML controls are disabled for this site.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.DisplayDate">
+            <summary>
+            The display date.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.DisplayMode">
+            <summary>
+            The display mode.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.Domain">
+            <summary>
+            The domain.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.EnableDebugger">
+            <summary>
+            Indicates whether the SiteContext enables the debugger.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.EnablePreview">
+            <summary>
+            Indicates whether the SiteContext enables previewing.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.EnableWebEdit">
+            <summary>
+            Indicates whether the SiteContext enables web editing.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.EnableWorkflow">
+            <summary>
+            Indicates whether the SiteContext enables workflow.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.FilterItems">
+            <summary>
+            Indicates whether the SiteContext filters the items.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.HostName">
+            <summary>
+            The host name.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.TargetHostName">
+            <summary>
+            The name of the target host.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.Backend">
+            <summary>
+            Indicates whether this instance is a backend site.
+            E.g.: shell, modules_shell and login are backed sites, while the website is not a backend site.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.Language">
+            <summary>
+            The language.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.LoginPage">
+            <summary>
+            The login page.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.Name">
+            <summary>
+            The name of the Site
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.PreviewUnpublishableItems">
+            <summary>
+            Indicates whether to allow preview items that cannot be published yet.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.Properties">
+            <summary>
+            The properties.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.RequireLogin">
+            <summary>
+            Indicates whether the SiteContext requires login.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.RootPath">
+            <summary>
+            The root path.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.RootItemPath">
+            <summary>
+            The root item.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.StartItem">
+            <summary>
+            The start path.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.ISite.StartItemPath">
+            <summary>
+            The start item.
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.Workflows.IWorkflowState.StateId">
+            <summary>
+            Gets the workflow state id
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.Workflows.IWorkflowState.DisplayName">
+            <summary>
+            Gets the name of the workflow state
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.Workflows.IWorkflowState.Icon">
+            <summary>
+            Gets the icon of the workflow state
+            </summary>
+        </member>
+        <member name="P:Sitecore.GraphQL.Services.Abstractions.Model.Workflows.IWorkflowState.IsFinal">
+            <summary>
+            Gets a value indicates whether the state is the final state in the workflow
+            </summary>
+        </member>
+    </members>
+</doc>

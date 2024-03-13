@@ -1,0 +1,661 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\..\..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FCCC2605-08F9-4EF5-9AC4-852B5C68F2DB}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AFI.Feature.QuoteForm</RootNamespace>
+    <AssemblyName>AFI.Feature.QuoteForm</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44310</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.5.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\..\..\packages\BouncyCastle.1.8.5\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="co-dotnet-sdk-v4.1.1.1">
+      <HintPath>..\..\..\lib\co-dotnet-sdk-v4.1.1.1.dll</HintPath>
+    </Reference>
+    <Reference Include="CommonServiceLocator.SolrNet">
+      <HintPath>..\..\..\packages\SolrNet.1.0.19\lib\net46\CommonServiceLocator.SolrNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper, Version=1.50.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Dapper.1.50.4\lib\net451\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="DEG.ServiceCore">
+      <HintPath>..\..\..\packages\DEG.ServiceCore.1.2.5\lib\net40\DEG.ServiceCore.dll</HintPath>
+    </Reference>
+    <Reference Include="EcmaScript.NET">
+      <HintPath>..\..\..\packages\EcmaScript.NET.2.0.0\lib\net45\EcmaScript.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="Elision.Foundation.Kernel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\Elision.Foundation.Kernel.dll</HintPath>
+    </Reference>
+    <Reference Include="Highcharts, Version=11.0.1.1, Culture=neutral, PublicKeyToken=90b74bd27a557bd3, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Highsoft.Highcharts.11.0.1.1\lib\netstandard2.0\Highcharts.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.11.49.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\HtmlAgilityPack.1.11.49\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=1.3.2.10, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\SharpZipLib.1.3.2\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Iesi.Collections.4.0.5\lib\net461\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.barcodes, Version=8.0.3.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\itext.8.0.3\lib\net461\itext.barcodes.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.bouncy-castle-connector, Version=8.0.3.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\itext.8.0.3\lib\net461\itext.bouncy-castle-connector.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.commons, Version=8.0.3.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\itext.commons.8.0.3\lib\net461\itext.commons.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.forms, Version=8.0.3.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\itext.8.0.3\lib\net461\itext.forms.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.io, Version=8.0.3.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\itext.8.0.3\lib\net461\itext.io.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.kernel, Version=8.0.3.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\itext.8.0.3\lib\net461\itext.kernel.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.layout, Version=8.0.3.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\itext.8.0.3\lib\net461\itext.layout.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.pdfa, Version=8.0.3.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\itext.8.0.3\lib\net461\itext.pdfa.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.pdfua, Version=8.0.3.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\itext.8.0.3\lib\net461\itext.pdfua.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.sign, Version=8.0.3.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\itext.8.0.3\lib\net461\itext.sign.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.styledxmlparser, Version=8.0.3.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\itext.8.0.3\lib\net461\itext.styledxmlparser.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.svg, Version=8.0.3.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\itext.8.0.3\lib\net461\itext.svg.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.CommandLineUtils, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Extensions.CommandLineUtils.1.1.1\lib\net451\Microsoft.Extensions.CommandLineUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.CommandLine, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Extensions.Configuration.CommandLine.7.0.0\lib\net462\Microsoft.Extensions.Configuration.CommandLine.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Extensions.DependencyInjection.6.0.0\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.6.0.0\lib\net461\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Extensions.Logging.6.0.0\lib\net461\Microsoft.Extensions.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=6.0.0.1, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.1\lib\net461\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Extensions.Options.6.0.0\lib\net461\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Extensions.Primitives.7.0.0\lib\net462\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.Caching, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\EnterpriseLibrary.TransientFaultHandling.Caching.NetCore.6.0.1312\lib\netstandard2.0\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.Data, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.ServiceBus">
+      <HintPath>..\..\..\packages\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.ServiceBus.6.0.1304.0\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.ServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.WindowsAzure.Storage, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\EnterpriseLibrary.TransientFaultHandling.WindowsAzure.Storage.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Win32.Primitives" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.Analytics, Version=18.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sitecore.Analytics.10.3.0\lib\net48\Sitecore.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.ExperienceForms, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sitecore.ExperienceForms.10.3.0\lib\net48\Sitecore.ExperienceForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.ExperienceForms.Client, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sitecore.ExperienceForms.Client.10.3.0\lib\net48\Sitecore.ExperienceForms.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.ExperienceForms.Data.SqlServer, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sitecore.ExperienceForms.Data.SqlServer.10.3.0\lib\net48\Sitecore.ExperienceForms.Data.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.ExperienceForms.Mvc, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sitecore.ExperienceForms.Mvc.10.3.0\lib\net48\Sitecore.ExperienceForms.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.ExperienceForms.SubmitActions, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sitecore.ExperienceForms.SubmitActions.10.3.0\lib\net48\Sitecore.ExperienceForms.SubmitActions.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.Kernel, Version=18.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sitecore.Kernel.10.3.0\lib\net48\Sitecore.Kernel.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.Mvc, Version=9.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sitecore.Mvc.10.3.0\lib\net48\Sitecore.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="sysglobl" />
+    <Reference Include="System" />
+    <Reference Include="System.AppContext" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Console" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Diagnostics.DiagnosticSource.6.0.0\lib\net461\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Tracing" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Globalization.Calendars" />
+    <Reference Include="System.IO" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.IO.Compression.ZipFile" />
+    <Reference Include="System.IO.FileSystem" />
+    <Reference Include="System.IO.FileSystem.Primitives" />
+    <Reference Include="System.Linq" />
+    <Reference Include="System.Linq.Expressions" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Sockets" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection" />
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Extensions" />
+    <Reference Include="System.Runtime.InteropServices" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.Cryptography.Algorithms" />
+    <Reference Include="System.Security.Cryptography.Encoding" />
+    <Reference Include="System.Security.Cryptography.Primitives" />
+    <Reference Include="System.Security.Cryptography.X509Certificates" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Text.RegularExpressions" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Thread" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http">
+      <HintPath>..\..\..\lib\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\..\packages\Microsoft.Web.Infrastructure.2.0.1\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\..\packages\Microsoft.AspNet.Razor.3.2.9\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\..\..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.ReaderWriter" />
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\..\..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\..\..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Areas\AFIQuoteForm\AFIQuoteFormAreaRegistration.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Controllers\APIRoutes.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Controllers\FormAPIController.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Controllers\FormsValidationController.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Extensions\FormExtensions.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\AFIWebServicesSaveHandler.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\AutoFormHandler.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\AutoFormSaveHandler.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\BusinessFormSaveHandler.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\CollectorVehicleFormSaveHandler.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\CondoFormSaveHandler.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\FloodFormSaveHandler.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\FormActions.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\FormEmailHandler.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\HillAFBFormSaveHandler.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\HomeNonOwnerFormSaveHandler.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\HomeOwnerFormSaveHandler.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\IFormSaveHandler.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\LeadGenerationFormSaveHandler.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\MobileHomeFormSaveHandler.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\MotorcycleFormSaveHandler.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\MotorhomeFormSaveHandler.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\ProductFormHandler.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\QuoteLeadFormSaveHandler.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\RenterFormSaveHandler.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\UmbrellaFormSaveHandler.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\Validators\CountyValidator.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\Validators\FormTypeId.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\Validators\StateValidator.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\Validators\ZipCodeValidator.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Handlers\WatercraftFormSaveHandler.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Helpers\Constants.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Helpers\Enums.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Helpers\Links.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Helpers\Strings.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Helpers\Template.cs" />
+    <Compile Include="Areas\AFIQuoteForm\JsonConverters\YesNoBooleanConverter.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Mappers\AutoFormDbMapper.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Mappers\BusinessFormDbMapper.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Mappers\CollectorVehicleFormDbMapper.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Mappers\CommonFormDbMapper.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Mappers\CondoFormDbMapper.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Mappers\FloodFormDbMapper.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Mappers\Helpers\MapperHelper.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Mappers\HillAFBFormDbMapper.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Mappers\HomenonownerFormDbMapper.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Mappers\HomeownerFormDbMapper.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Mappers\LeadGenerationFormDbMapper.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Mappers\MobilehomeFormDbMapper.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Mappers\MotorcycleFormDbMapper.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Mappers\MotorhomeFormDbMapper.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Mappers\QuoteLeadFormDbMapper.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Mappers\RenterFormDbMapper.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Mappers\UmbrellaFromDbMapper.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Mappers\WatercraftFormDbMapper.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Mappers\WebQuoteMappers\CommonFormWebQuoteMapper.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Mappers\WebQuoteMappers\WebQuoteMapperEnums.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\AutoForm\AutoForm.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\AutoForm\AutoFormData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\AutoForm\AutoFormSaveModel.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\AutoForm\OverallCoverageAuto.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\AutoForm\PipAmount.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\AutoForm\UniqueCarData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\AutoForm\VinLookup\AutoPostModels.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\AutoForm\VinLookup\VehicleBodyTypeInformation.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\AutoForm\VinLookup\VehicleMakeInformation.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\AutoForm\VinLookup\VehicleModelInformation.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\AutoForm\VinLookup\VehicleVinInformation.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\BusinessForm\BusinessForm.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\BusinessForm\BusinessFormData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\BusinessForm\BusinessFormSaveModel.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\CareersFrameViewModel.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\CollectorVehicleForm\CollectorVehicleForm.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\CollectorVehicleForm\CollectorVehicleFormData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\CollectorVehicleForm\CollectorVehicleFormSaveModel.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\CollectorVehicleForm\UniqueCollectorVehicleData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Common\CommonData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Common\CommonFormSaveModel.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Common\CommonFormSaveResponseModel.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Common\DependentOptions.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Common\ErrorMessages.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Common\FormBlob.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Common\FormData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Common\Heading.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Common\Labels.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Common\Options.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Common\OverallCoveragesSidebars.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Common\ProductAvailabilityResponse.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Common\Ranks.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Common\Section.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Common\SideBar.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Common\SideBarContent.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Common\SimpleField.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Common\Step.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Common\SubHeadings.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Common\Vehicle\UniqueVehicleData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Common\Wayfinder.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\CondoForm\CondoForm.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\CondoForm\CondoFormData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\CondoForm\CondoFormSaveModel.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\CondoForm\UniqueCondoFormData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\FloodForm\FloodForm.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\FloodForm\FloodFormData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\FloodForm\FloodFormSaveModel.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\FloodForm\UniqueFloodData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\HillAFBForm\HillAFBForm.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\HillAFBForm\HillAFBFormData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\HillAFBForm\HillAFBFormSaveModel.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\HomenonownerForm\HomenonownerForm.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\HomenonownerForm\HomenonownerFormData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\HomenonownerForm\HomeownerFormSaveModel.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\HomenonownerForm\UniqueHomenonownerFormData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\HomeownerForm\HomeownerForm.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\HomeownerForm\HomeownerFormData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\HomeownerForm\HomeownerFormSaveModel.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\HomeownerForm\UniqueHomeownerFormData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\IQuoteForm.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\LeadGenerationForm\LeadGenerationForm.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\LeadGenerationForm\LeadGenerationFormData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\LeadGenerationForm\LeadGenerationFormSaveModel.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\MobilehomeForm\MobilehomeForm.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\MobilehomeForm\MobilehomeFormData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\MobilehomeForm\MobilehomeFormSaveModel.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\MobilehomeForm\UniqueMobilehomeFormData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\MotorcycleForm\MotorcycleForm.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\MotorcycleForm\MotorcycleFormData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\MotorcycleForm\MotorcycleFormSaveModel.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\MotorcycleForm\UniqueMotorcycleData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Motorhome\MotorhomeForm.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Motorhome\MotorhomeFormData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Motorhome\MotorhomeFormSaveModel.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\Motorhome\UniqueMotorhomeFormData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\QuoteLeadForm\QuoteLeadForm.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\QuoteLeadForm\QuoteLeadFormData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\QuoteLeadForm\QuoteLeadFormSaveModel.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\RenterForm\RenterForm.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\RenterForm\RenterFormData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\RenterForm\RenterFormSaveModel.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\UmbrellaForm\UmbrellaForm.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\UmbrellaForm\UmbrellaFormData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\UmbrellaForm\UmbrellaFormSaveModel.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\UmbrellaForm\UniqueUmbrellaData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\WatercraftForm\UniqueWatercraftData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\WatercraftForm\WatercraftForm.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\WatercraftForm\WatercraftFormData.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Models\WatercraftForm\WatercraftFormSaveModel.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Repository\APIRepository.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Repository\AutoQuoteFormRepository.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Repository\BusinessQuoteFormRepository.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Repository\CollectorVehicleQuoteFormRepository.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Repository\CommonRepository.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Repository\CondoQuoteFormRepository.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Repository\CoverageTypes.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Repository\FloodQuoteFormRepository.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Repository\HillAFBQuoteFormRepository.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Repository\HomenonownerQuoteFormRepository.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Repository\HomeownerQuoteFormRepository.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Repository\LeadGenerationFormRepository.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Repository\MobilehomeQuoteFormRepository.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Repository\MotorcycleQuoteFormRepository.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Repository\MotorhomeQuoteFormRepository.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Repository\QuoteFormRepository.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Repository\QuoteLeadQuoteFormRepository.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Repository\RenterQuoteFormRepository.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Repository\SessionRepository.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Repository\UmbrellaQuoteFormRepository.cs" />
+    <Compile Include="Areas\AFIQuoteForm\Repository\WatercraftQuoteFormRepository.cs" />
+    <Compile Include="Areas\AFIWEB\AFIWEBAreaRegistration.cs" />
+    <Compile Include="Areas\AFIWEB\Controllers\AFIReportController.cs" />
+    <Compile Include="Areas\AFIWEB\Controllers\AFIWEBAPIController.cs" />
+    <Compile Include="Areas\AFIWEB\Controllers\AFIWEBRoutes.cs" />
+    <Compile Include="Areas\AFIWEB\Controllers\FormsController.cs" />
+    <Compile Include="Areas\AFIWEB\Controllers\NewsLetterController.cs" />
+    <Compile Include="Areas\AFIWEB\Controllers\PressReleaseController.cs" />
+    <Compile Include="Areas\AFIWEB\Controllers\ReCaptchaApiController.cs" />
+    <Compile Include="Areas\AFIWEB\Controllers\SiteframeController.cs" />
+    <Compile Include="Areas\AFIWEB\Enums\InsuranceTypes.cs" />
+    <Compile Include="Areas\AFIWEB\Helpers\Configurations.cs" />
+    <Compile Include="Areas\AFIWEB\Helpers\CryptoService.cs" />
+    <Compile Include="Areas\AFIWEB\Helpers\Strings.cs" />
+    <Compile Include="Areas\AFIWEB\Job\SurveyClaimMail.cs" />
+    <Compile Include="Areas\AFIWEB\ModelBuilders\ContactUsEmailBuilder.cs" />
+    <Compile Include="Areas\AFIWEB\ModelBuilders\ContactUsFormViewModelBuilder.cs" />
+    <Compile Include="Areas\AFIWEB\Models\AddressBook.cs" />
+    <Compile Include="Areas\AFIWEB\Models\AFIReportView.cs" />
+    <Compile Include="Areas\AFIWEB\Models\ArchivedNewsLetters.cs" />
+    <Compile Include="Areas\AFIWEB\Models\Article.cs" />
+    <Compile Include="Areas\AFIWEB\Models\ArticleSpotlight.cs" />
+    <Compile Include="Areas\AFIWEB\Models\ContactUsFormViewModel.cs" />
+    <Compile Include="Areas\AFIWEB\Models\ContactUsPostModel.cs" />
+    <Compile Include="Areas\AFIWEB\Models\ContactUsResponse.cs" />
+    <Compile Include="Areas\AFIWEB\Models\CorviasModel.cs" />
+    <Compile Include="Areas\AFIWEB\Models\CustomSubmit.cs" />
+    <Compile Include="Areas\AFIWEB\Models\Email.cs" />
+    <Compile Include="Areas\AFIWEB\Models\EXMUnSubscription.cs" />
+    <Compile Include="Areas\AFIWEB\Models\HomePageAdvisorQuoteViewModel.cs" />
+    <Compile Include="Areas\AFIWEB\Models\HomePageQuoteViewModel.cs" />
+    <Compile Include="Areas\AFIWEB\Models\InsuranceApplication.cs" />
+    <Compile Include="Areas\AFIWEB\Models\InsuranceType.cs" />
+    <Compile Include="Areas\AFIWEB\Models\IPaginated.cs" />
+    <Compile Include="Areas\AFIWEB\Models\MosendMailing.cs" />
+    <Compile Include="Areas\AFIWEB\Models\NewsLetter.cs" />
+    <Compile Include="Areas\AFIWEB\Models\NewsLetterList.cs" />
+    <Compile Include="Areas\AFIWEB\Models\PaginationViewModel.cs" />
+    <Compile Include="Areas\AFIWEB\Models\PressRelease.cs" />
+    <Compile Include="Areas\AFIWEB\Models\PressReleaseList.cs" />
+    <Compile Include="Areas\AFIWEB\Models\ProcessorResponseModel.cs" />
+    <Compile Include="Areas\AFIWEB\Models\ProxyVoteCandidate.cs" />
+    <Compile Include="Areas\AFIWEB\Models\ProxyVoteMember.cs" />
+    <Compile Include="Areas\AFIWEB\Models\ProxyVoteMemberCandidateBallot.cs" />
+    <Compile Include="Areas\AFIWEB\Models\ProxyVoteVotingPeriod.cs" />
+    <Compile Include="Areas\AFIWEB\Models\QHCSVReport.cs" />
+    <Compile Include="Areas\AFIWEB\Models\QHReport.cs" />
+    <Compile Include="Areas\AFIWEB\Models\ReCaptchaVerifyResponse.cs" />
+    <Compile Include="Areas\AFIWEB\Models\ReferralFormView.cs" />
+    <Compile Include="Areas\AFIWEB\Models\ReportView.cs" />
+    <Compile Include="Areas\AFIWEB\Models\SurveyForm.cs" />
+    <Compile Include="Areas\AFIWEB\Models\UtilityManager.cs" />
+    <Compile Include="Areas\AFIWEB\Models\VotingPeriod.cs" />
+    <Compile Include="Areas\AFIWEB\Models\VoteCandidate.cs" />
+    <Compile Include="Areas\AFIWEB\Models\VoteReport.cs" />
+    <Compile Include="Areas\AFIWEB\Processors\ContactUsFormProcessor.cs" />
+    <Compile Include="Areas\AFIWEB\Repository\AFIReportRepository.cs" />
+    <Compile Include="Areas\AFIWEB\Repository\CorviasFormRepository.cs" />
+    <Compile Include="Areas\AFIWEB\Repository\FormRepository.cs" />
+    <Compile Include="Areas\AFIWEB\Repository\GlobalSettingRepository.cs" />
+    <Compile Include="Areas\AFIWEB\Repository\HillAFBFormRepository.cs" />
+    <Compile Include="Areas\AFIWEB\Repository\NewsLetterRepository.cs" />
+    <Compile Include="Areas\AFIWEB\Repository\PressReleaseRepository.cs" />
+    <Compile Include="Areas\AFIWEB\Repository\UCFormRepository.cs" />
+    <Compile Include="Areas\AFIWEB\Repository\VoteRepository.cs" />
+    <Compile Include="Areas\AFIWEB\Services\EmailService.cs" />
+    <Compile Include="Areas\AFIWEB\Services\RecaptchaService.cs" />
+    <Compile Include="Areas\ShortForms\Controllers\ShortFormController.cs" />
+    <Compile Include="Areas\ShortForms\Models\ShortFormModel.cs" />
+    <Compile Include="Areas\ShortForms\Models\ShortFormViewModel.cs" />
+    <Compile Include="Areas\ShortForms\Repository\ShortFormRepository.cs" />
+    <Compile Include="Areas\ShortForms\ShortFormsAreaRegistration.cs" />
+    <Compile Include="Models\ProxyVoteCandidate.cs" />
+    <Compile Include="Models\ProxyVoteMember.cs" />
+    <Compile Include="Models\ProxyVoteMemberCandidateBallot.cs" />
+    <Compile Include="Models\ProxyVoteVotingPeriod.cs" />
+    <Compile Include="Models\VoteReport.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Areas\AFIQuoteForm\JsonFiles\AutoForm.json" />
+    <Content Include="Areas\AFIQuoteForm\JsonFiles\BusinessForm.json" />
+    <Content Include="Areas\AFIQuoteForm\JsonFiles\CollectorForm.json" />
+    <Content Include="Areas\AFIQuoteForm\JsonFiles\FloodForm.json" />
+    <Content Include="Areas\AFIQuoteForm\JsonFiles\MotorcycleForm.json" />
+    <Content Include="Areas\AFIQuoteForm\JsonFiles\UmbrellaForm.json" />
+    <Content Include="Areas\AFIQuoteForm\JsonFiles\WatercraftForm.json" />
+    <Content Include="App_Code\Include\Feature\AFI.Feature.QuoteForm.config" />
+    <Content Include="App_Code\Include\Feature\Unicorn.AFI.Serialization.config" />
+    <None Include="packages.config" />
+    <Content Include="Views\AFI\Forms\AfiEmailLog.cshtml" />
+    <Content Include="Views\AFI\Forms\ClaimSurveyForm.cshtml" />
+    <Content Include="Views\AFI\Forms\LeadGen.cshtml" />
+    <Content Include="Views\AFI\Forms\ShortForms.cshtml" />
+    <Content Include="Views\AFI\Forms\UnSubscription.cshtml" />
+    <Content Include="Views\AFI\Common\vote.cshtml" />
+    <Content Include="Views\AFI\Common\SubmitAction.cshtml.disabled" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\AFI.Feature\Identifiers\code\Identifiers.csproj">
+      <Project>{f0f1891b-5d7c-4d01-8ae1-c16610fae462}</Project>
+      <Name>Identifiers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\AFI.Feature\VinLookup\code\VinLookup.csproj">
+      <Project>{d22c4ce8-dc45-4eae-85c0-f05e415b8468}</Project>
+      <Name>VinLookup</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\AFI.Feature\WebQuoteService\code\WebQuoteService.csproj">
+      <Project>{cd49bc2d-dab8-4c1c-8baf-12c06138bb97}</Project>
+      <Name>WebQuoteService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\AFI.Feature\ZipLookup\code\ZipLookup.csproj">
+      <Project>{b9425e2c-bb6e-4d6b-bc35-ad6d615bb6c0}</Project>
+      <Name>ZipLookup</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\AFI.Foundation\Helper\code\Helper.csproj">
+      <Project>{41e4239a-c9eb-47e1-835d-c2273e3b4658}</Project>
+      <Name>Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\code\Data.csproj">
+      <Project>{40420442-b258-4b2d-bae3-fb4e223d69c0}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>13066</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44310/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.1\build\Microsoft.Extensions.Logging.Abstractions.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.1\build\Microsoft.Extensions.Logging.Abstractions.targets'))" />
+  </Target>
+  <Import Project="..\..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.1\build\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('..\..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.1\build\Microsoft.Extensions.Logging.Abstractions.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

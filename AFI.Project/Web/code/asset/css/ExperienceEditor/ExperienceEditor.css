@@ -1,0 +1,20 @@
+/* KNOWLEDGE ON DEMAND */
+.row {
+    position: unset;
+}
+
+.image_link__wrapper {
+    height: 500px;
+}
+
+.image_link__wrapper .link_image img {
+    position: absolute;
+}
+
+.hero-and-quote-selector-wrapper .quote-selector {
+    text-align: center !important;
+}
+
+.article__page .share-badges {
+    height: 50px;
+}

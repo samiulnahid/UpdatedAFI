@@ -1,0 +1,2070 @@
+﻿{
+  "wayfinder": {
+    "steps": [
+      {
+        "id": "policyHolderInfo",
+        "label": "Policy Holder Information"
+      },
+      {
+        "id": "businessInfo",
+        "label": "Business Information"
+      },
+      {
+        "id": "coverages",
+        "label": "Coverages"
+      },
+      {
+        "id": "quote",
+        "label": "Quote"
+      }
+    ]
+  },
+  "form": {
+    "id": "business",
+    "backButtonText": "Back",
+    "preSaveButtonText": "Save and Exit",
+    "saveButtonText": "Save and Exit",
+    "nextButtonText": "Next",
+    "submitButtonText": "Submit Request for Quote",
+    "selectMenuDefaultText": "--Choose One--",
+    "saveSuccessRedirect": "",
+    "submitSuccessRedirect": "",
+    "common": {
+      "genders": [
+        {
+          "label": "Male",
+          "value": "Male"
+        },
+        {
+          "label": "Female",
+          "value": "Female"
+        }
+      ],
+      "suffixes": [
+        {
+          "label": "Jr.",
+          "value": "Jr."
+        },
+        {
+          "label": "Sr.",
+          "value": "Sr."
+        },
+        {
+          "label": "III",
+          "value": "III"
+        },
+        {
+          "label": "IV",
+          "value": "IV"
+        }
+      ],
+      "maritalStatuses": [
+        {
+          "label": "Married",
+          "value": "Married"
+        },
+        {
+          "label": "Single",
+          "value": "Single"
+        },
+        {
+          "label": "Divorced",
+          "value": "Divorced"
+        },
+        {
+          "label": "Widowed",
+          "value": "Widowed"
+        },
+        {
+          "label": "Cohabitant",
+          "value": "Cohabitant"
+        }
+      ],
+      "phoneTypes": [
+        {
+          "label": "Home",
+          "value": "Home"
+        },
+        {
+          "label": "Business",
+          "value": "Business"
+        },
+        {
+          "label": "Cell",
+          "value": "Cell"
+        }
+      ],
+      "educationLevels": [
+        {
+          "label": "Military Training/Vocational",
+          "value": "Military Training/Vocational"
+        },
+        {
+          "label": "High School",
+          "value": "High School"
+        },
+        {
+          "label": "Completed Some College",
+          "value": "Completed Some College"
+        },
+        {
+          "label": "College Degree",
+          "value": "College Degree"
+        }
+      ],
+      "states": [
+        {
+          "label": "Alabama",
+          "value": "AL"
+        },
+        {
+          "label": "Alaska",
+          "value": "AK"
+        },
+        {
+          "label": "Arizona",
+          "value": "AZ"
+        },
+        {
+          "label": "Arkansas",
+          "value": "AR"
+        },
+        {
+          "label": "California",
+          "value": "CA"
+        },
+        {
+          "label": "Colorado",
+          "value": "CO"
+        },
+        {
+          "label": "Connecticut",
+          "value": "CT"
+        },
+        {
+          "label": "Delaware",
+          "value": "DE"
+        },
+        {
+          "label": "District of Columbia",
+          "value": "DC"
+        },
+        {
+          "label": "Florida",
+          "value": "FL"
+        },
+        {
+          "label": "Georgia",
+          "value": "GA"
+        },
+        {
+          "label": "Hawaii",
+          "value": "HI"
+        },
+        {
+          "label": "Idaho",
+          "value": "ID"
+        },
+        {
+          "label": "Illinois",
+          "value": "IL"
+        },
+        {
+          "label": "Indiana",
+          "value": "IN"
+        },
+        {
+          "label": "Iowa",
+          "value": "IA"
+        },
+        {
+          "label": "Kansas",
+          "value": "KS"
+        },
+        {
+          "label": "Kentucky",
+          "value": "KY"
+        },
+        {
+          "label": "Louisiana",
+          "value": "LA"
+        },
+        {
+          "label": "Maine",
+          "value": "ME"
+        },
+        {
+          "label": "Maryland",
+          "value": "MD"
+        },
+        {
+          "label": "Massachusetts",
+          "value": "MA"
+        },
+        {
+          "label": "Michigan",
+          "value": "MI"
+        },
+        {
+          "label": "Minnesota",
+          "value": "MN"
+        },
+        {
+          "label": "Mississippi",
+          "value": "MS"
+        },
+        {
+          "label": "Missouri",
+          "value": "MO"
+        },
+        {
+          "label": "Montana",
+          "value": "MT"
+        },
+        {
+          "label": "Nebraska",
+          "value": "NE"
+        },
+        {
+          "label": "Nevada",
+          "value": "NV"
+        },
+        {
+          "label": "New Hampshire",
+          "value": "NH"
+        },
+        {
+          "label": "New Jersey",
+          "value": "NJ"
+        },
+        {
+          "label": "New Mexico",
+          "value": "NM"
+        },
+        {
+          "label": "New York",
+          "value": "NY"
+        },
+        {
+          "label": "North Carolina",
+          "value": "NC"
+        },
+        {
+          "label": "North Dakota",
+          "value": "ND"
+        },
+        {
+          "label": "Ohio",
+          "value": "OH"
+        },
+        {
+          "label": "Oklahoma",
+          "value": "OK"
+        },
+        {
+          "label": "Oregon",
+          "value": "OR"
+        },
+        {
+          "label": "Pennsylvania",
+          "value": "PA"
+        },
+        {
+          "label": "Rhode Island",
+          "value": "RI"
+        },
+        {
+          "label": "South Carolina",
+          "value": "SC"
+        },
+        {
+          "label": "South Dakota",
+          "value": "SD"
+        },
+        {
+          "label": "Tennessee",
+          "value": "TN"
+        },
+        {
+          "label": "Texas",
+          "value": "TX"
+        },
+        {
+          "label": "Utah",
+          "value": "UT"
+        },
+        {
+          "label": "Vermont",
+          "value": "VT"
+        },
+        {
+          "label": "Virginia",
+          "value": "VA"
+        },
+        {
+          "label": "Washington",
+          "value": "WA"
+        },
+        {
+          "label": "West Virginia",
+          "value": "WV"
+        },
+        {
+          "label": "Wisconsin",
+          "value": "WI"
+        },
+        {
+          "label": "Wyoming",
+          "value": "WY"
+        },
+        {
+          "label": "American Samoa",
+          "value": "AS"
+        },
+        {
+          "label": "Federated States of Micronesia",
+          "value": "FM"
+        },
+        {
+          "label": "Guam",
+          "value": "GU"
+        },
+        {
+          "label": "Marshall Islands",
+          "value": "MH"
+        },
+        {
+          "label": "Northern Mariana Islands",
+          "value": "MP"
+        },
+        {
+          "label": "Palau",
+          "value": "PW"
+        },
+        {
+          "label": "Puerto Rico",
+          "value": "PR"
+        },
+        {
+          "label": "Virgin Islands",
+          "value": "VI"
+        },
+        {
+          "label": "Armed Forces Africa",
+          "value": "AE"
+        },
+        {
+          "label": "Armed Forces Americas",
+          "value": "AA"
+        },
+        {
+          "label": "Armed Forces Canada",
+          "value": "AE"
+        },
+        {
+          "label": "Armed Forces Europe",
+          "value": "AE"
+        },
+        {
+          "label": "Armed Forces Middle East",
+          "value": "AE"
+        },
+        {
+          "label": "Armed Forces Pacific",
+          "value": "AP"
+        }
+      ],
+      "eligibilityDetailsSubheadings": {
+        "military": "Military(active duty, former / separated / retired / disabled, surviving spouse)",
+        "spouse": "Current Military Spouse",
+        "child": "Child of current or former Armed Forces Insurance member"
+      },
+      "eligibilityDetailsFirstNameLabels": {
+        "military": "First Name",
+        "spouse": "First Name of Spouse in military",
+        "child": "First Name of parent that is current or former AFI member"
+      },
+      "eligibilityDetailsLastNameLabels": {
+        "military": "Last Name",
+        "spouse": "Last Name of Spouse in military",
+        "child": "Last Name of parent that is current or former AFI member"
+      },
+      "militaryRanksArmy": [
+        {
+          "label": "E-1 Private",
+          "value": "E-1 Private"
+        },
+        {
+          "label": "E-2 Private",
+          "value": "E-2 Private"
+        },
+        {
+          "label": "E-3 Private First Class",
+          "value": "E-3 Private First Class"
+        },
+        {
+          "label": "E-4 Specialist 4",
+          "value": "E-4 Specialist 4"
+        },
+        {
+          "label": "E-4 Corporal",
+          "value": "E-4 Corporal"
+        },
+        {
+          "label": "E-5 Sergeant",
+          "value": "E-5 Sergeant"
+        },
+        {
+          "label": "E-6 Staff Sergeant",
+          "value": "E-6 Staff Sergeant"
+        },
+        {
+          "label": "E-7 Platoon Sergeant",
+          "value": "E-7 Platoon Sergeant"
+        },
+        {
+          "label": "E-7 Sergeant First Class",
+          "value": "E-7 Sergeant First Class"
+        },
+        {
+          "label": "E-8 First Sergeant",
+          "value": "E-8 First Sergeant"
+        },
+        {
+          "label": "E-8 Master Sergeant",
+          "value": "E-8 Master Sergeant"
+        },
+        {
+          "label": "E-9 Sergeant Major of the Army",
+          "value": "E-9 Sergeant Major of the Army"
+        },
+        {
+          "label": "E-9 Command Sergeant Major",
+          "value": "E-9 Command Sergeant Major"
+        },
+        {
+          "label": "E-9 Sergeant Major",
+          "value": "E-9 Sergeant Major"
+        },
+        {
+          "label": "O-1 Second Lieutenant",
+          "value": "O-1 Second Lieutenant"
+        },
+        {
+          "label": "O-2 First Lieutenant",
+          "value": "O-2 First Lieutenant"
+        },
+        {
+          "label": "O-3 Captain",
+          "value": "O-3 Captain"
+        },
+        {
+          "label": "O-4 Major",
+          "value": "O-4 Major"
+        },
+        {
+          "label": "O-5 Lieutenant Colonel",
+          "value": "O-5 Lieutenant Colonel"
+        },
+        {
+          "label": "O-6 Colonel",
+          "value": "O-6 Colonel"
+        },
+        {
+          "label": "O-7 Brigadier General",
+          "value": "O-7 Brigadier General"
+        },
+        {
+          "label": "O-8 Major General",
+          "value": "O-8 Major General"
+        },
+        {
+          "label": "O-9 Lieutenant General",
+          "value": "O-9 Lieutenant General"
+        },
+        {
+          "label": "O-10 General",
+          "value": "O-10 General"
+        },
+        {
+          "label": "O-11 General of the Army",
+          "value": "O-11 General of the Army"
+        },
+        {
+          "label": "W-1 Warrant Officer",
+          "value": "W-1 Warrant Officer"
+        },
+        {
+          "label": "W-2 Chief Warrant Officer",
+          "value": "W-2 Chief Warrant Officer"
+        },
+        {
+          "label": "W-3 Chief Warrant Officer",
+          "value": "W-3 Chief Warrant Officer"
+        },
+        {
+          "label": "W-4 Chief Warrant Officer",
+          "value": "W-4 Chief Warrant Officer"
+        },
+        {
+          "label": "W-5 Master Warrant Officer",
+          "value": "W-5 Master Warrant Officer"
+        }
+      ],
+      "militaryRanksNationalGuard": [
+        {
+          "label": "E-1 Private",
+          "value": "E-1 Private"
+        },
+        {
+          "label": "E-2 Private",
+          "value": "E-2 Private"
+        },
+        {
+          "label": "E-3 Private First Class",
+          "value": "E-3 Private First Class"
+        },
+        {
+          "label": "E-4 Specialist 4",
+          "value": "E-4 Specialist 4"
+        },
+        {
+          "label": "E-4 Corporal",
+          "value": "E-4 Corporal"
+        },
+        {
+          "label": "E-5 Sergeant",
+          "value": "E-5 Sergeant"
+        },
+        {
+          "label": "E-6 Staff Sergeant",
+          "value": "E-6 Staff Sergeant"
+        },
+        {
+          "label": "E-7 Platoon Sergeant",
+          "value": "E-7 Platoon Sergeant"
+        },
+        {
+          "label": "E-7 Sergeant First Class",
+          "value": "E-7 Sergeant First Class"
+        },
+        {
+          "label": "E-8 First Sergeant",
+          "value": "E-8 First Sergeant"
+        },
+        {
+          "label": "E-8 Master Sergeant",
+          "value": "E-8 Master Sergeant"
+        },
+        {
+          "label": "E-9 Sergeant Major of the Army",
+          "value": "E-9 Sergeant Major of the Army"
+        },
+        {
+          "label": "E-9 Command Sergeant Major",
+          "value": "E-9 Command Sergeant Major"
+        },
+        {
+          "label": "E-9 Sergeant Major",
+          "value": "E-9 Sergeant Major"
+        },
+        {
+          "label": "O-1 Second Lieutenant",
+          "value": "O-1 Second Lieutenant"
+        },
+        {
+          "label": "O-2 First Lieutenant",
+          "value": "O-2 First Lieutenant"
+        },
+        {
+          "label": "O-3 Captain",
+          "value": "O-3 Captain"
+        },
+        {
+          "label": "O-4 Major",
+          "value": "O-4 Major"
+        },
+        {
+          "label": "O-5 Lieutenant Colonel",
+          "value": "O-5 Lieutenant Colonel"
+        },
+        {
+          "label": "O-6 Colonel",
+          "value": "O-6 Colonel"
+        },
+        {
+          "label": "O-7 Brigadier General",
+          "value": "O-7 Brigadier General"
+        },
+        {
+          "label": "O-8 Major General",
+          "value": "O-8 Major General"
+        },
+        {
+          "label": "O-9 Lieutenant General",
+          "value": "O-9 Lieutenant General"
+        },
+        {
+          "label": "O-10 General",
+          "value": "O-10 General"
+        },
+        {
+          "label": "O-11 General of the Army",
+          "value": "O-11 General of the Army"
+        },
+        {
+          "label": "W-1 Warrant Officer",
+          "value": "W-1 Warrant Officer"
+        },
+        {
+          "label": "W-2 Chief Warrant Officer",
+          "value": "W-2 Chief Warrant Officer"
+        },
+        {
+          "label": "W-3 Chief Warrant Officer",
+          "value": "W-3 Chief Warrant Officer"
+        },
+        {
+          "label": "W-4 Chief Warrant Officer",
+          "value": "W-4 Chief Warrant Officer"
+        },
+        {
+          "label": "W-5 Master Warrant Officer",
+          "value": "W-5 Master Warrant Officer"
+        }
+      ],
+      "militaryRanksAirForce": [
+        {
+          "label": "E-1 Airman Basic",
+          "value": "E-1 Airman Basic"
+        },
+        {
+          "label": "E-2 Airman",
+          "value": "E-2 Airman"
+        },
+        {
+          "label": "E-3 Airman First Class",
+          "value": "E-3 Airman First Class"
+        },
+        {
+          "label": "E-4 Sergeant",
+          "value": "E-4 Sergeant"
+        },
+        {
+          "label": "E-4 Senior Airman",
+          "value": "E-4 Senior Airman"
+        },
+        {
+          "label": "E-5 Staff Sergeant",
+          "value": "E-5 Staff Sergeant"
+        },
+        {
+          "label": "E-6 Technical Sergeant",
+          "value": "E-6 Technical Sergeant"
+        },
+        {
+          "label": "E-7 Master Sergeant",
+          "value": "E-7 Master Sergeant"
+        },
+        {
+          "label": "E-8 First Sergeant",
+          "value": "E-8 First Sergeant"
+        },
+        {
+          "label": "E-8 Senior Master Sergeant",
+          "value": "E-8 Senior Master Sergeant"
+        },
+        {
+          "label": "E-9 Chief Master Sergeant",
+          "value": "E-9 Chief Master Sergeant"
+        },
+        {
+          "label": "E-9 Command Chief Master Sergeant",
+          "value": "E-9 Command Chief Master Sergeant"
+        },
+        {
+          "label": "E-9 Chief Master Sergeant of the Air Force",
+          "value": "E-9 Chief Master Sergeant of the Air Force"
+        },
+        {
+          "label": "O-1 Second Lieutenant",
+          "value": "O-1 Second Lieutenant"
+        },
+        {
+          "label": "O-2 First Lieutenant",
+          "value": "O-2 First Lieutenant"
+        },
+        {
+          "label": "O-3 Captain",
+          "value": "O-3 Captain"
+        },
+        {
+          "label": "O-4 Major",
+          "value": "O-4 Major"
+        },
+        {
+          "label": "O-5 Lieutenant Colonel",
+          "value": "O-5 Lieutenant Colonel"
+        },
+        {
+          "label": "O-6 Colonel",
+          "value": "O-6 Colonel"
+        },
+        {
+          "label": "O-7 Brigadier General",
+          "value": "O-7 Brigadier General"
+        },
+        {
+          "label": "O-8 Major General",
+          "value": "O-8 Major General"
+        },
+        {
+          "label": "O-9 Lieutenant General",
+          "value": "O-9 Lieutenant General"
+        },
+        {
+          "label": "O-10 General",
+          "value": "O-10 General"
+        },
+        {
+          "label": "O-11 General of the Air Force",
+          "value": "O-11 General of the Air Force"
+        },
+        {
+          "label": "W-1 Warrant Officer",
+          "value": "W-1 Warrant Officer"
+        },
+        {
+          "label": "W-2 Chief Warrant Officer",
+          "value": "W-2 Chief Warrant Officer"
+        },
+        {
+          "label": "W-3 Chief Warrant Officer",
+          "value": "W-3 Chief Warrant Officer"
+        },
+        {
+          "label": "W-4 Chief Warrant Officer",
+          "value": "W-4 Chief Warrant Officer"
+        }
+      ],
+      "militaryRanksAirNationalGuard": [
+        {
+          "label": "E-1 Airman Basic",
+          "value": "E-1 Airman Basic"
+        },
+        {
+          "label": "E-2 Airman",
+          "value": "E-2 Airman"
+        },
+        {
+          "label": "E-3 Airman First Class",
+          "value": "E-3 Airman First Class"
+        },
+        {
+          "label": "E-4 Sergeant",
+          "value": "E-4 Sergeant"
+        },
+        {
+          "label": "E-4 Senior Airman",
+          "value": "E-4 Senior Airman"
+        },
+        {
+          "label": "E-5 Staff Sergeant",
+          "value": "E-5 Staff Sergeant"
+        },
+        {
+          "label": "E-6 Technical Sergeant",
+          "value": "E-6 Technical Sergeant"
+        },
+        {
+          "label": "E-7 Master Sergeant",
+          "value": "E-7 Master Sergeant"
+        },
+        {
+          "label": "E-8 First Sergeant",
+          "value": "E-8 First Sergeant"
+        },
+        {
+          "label": "E-8 Senior Master Sergeant",
+          "value": "E-8 Senior Master Sergeant"
+        },
+        {
+          "label": "E-9 Chief Master Sergeant",
+          "value": "E-9 Chief Master Sergeant"
+        },
+        {
+          "label": "E-9 Command Chief Master Sergeant",
+          "value": "E-9 Command Chief Master Sergeant"
+        },
+        {
+          "label": "E-9 Chief Master Sergeant of the Air Force",
+          "value": "E-9 Chief Master Sergeant of the Air Force"
+        },
+        {
+          "label": "O-1 Second Lieutenant",
+          "value": "O-1 Second Lieutenant"
+        },
+        {
+          "label": "O-2 First Lieutenant",
+          "value": "O-2 First Lieutenant"
+        },
+        {
+          "label": "O-3 Captain",
+          "value": "O-3 Captain"
+        },
+        {
+          "label": "O-4 Major",
+          "value": "O-4 Major"
+        },
+        {
+          "label": "O-5 Lieutenant Colonel",
+          "value": "O-5 Lieutenant Colonel"
+        },
+        {
+          "label": "O-6 Colonel",
+          "value": "O-6 Colonel"
+        },
+        {
+          "label": "O-7 Brigadier General",
+          "value": "O-7 Brigadier General"
+        },
+        {
+          "label": "O-8 Major General",
+          "value": "O-8 Major General"
+        },
+        {
+          "label": "O-9 Lieutenant General",
+          "value": "O-9 Lieutenant General"
+        },
+        {
+          "label": "O-10 General",
+          "value": "O-10 General"
+        },
+        {
+          "label": "O-11 General of the Air Force",
+          "value": "O-11 General of the Air Force"
+        },
+        {
+          "label": "W-1 Warrant Officer",
+          "value": "W-1 Warrant Officer"
+        },
+        {
+          "label": "W-2 Chief Warrant Officer",
+          "value": "W-2 Chief Warrant Officer"
+        },
+        {
+          "label": "W-3 Chief Warrant Officer",
+          "value": "W-3 Chief Warrant Officer"
+        },
+        {
+          "label": "W-4 Chief Warrant Officer",
+          "value": "W-4 Chief Warrant Officer"
+        }
+      ],
+      "militaryRanksCoastGuard": [
+        {
+          "label": "E-1 Seaman Recruit",
+          "value": "E-1 Seaman Recruit"
+        },
+        {
+          "label": "E-2 Seaman Apprentice",
+          "value": "E-2 Seaman Apprentice"
+        },
+        {
+          "label": "E-3 Seaman",
+          "value": "E-3 Seaman"
+        },
+        {
+          "label": "E-4 Petty Officer 3rd Class",
+          "value": "E-4 Petty Officer 3rd Class"
+        },
+        {
+          "label": "E-5 Petty Officer 2nd Class",
+          "value": "E-5 Petty Officer 2nd Class"
+        },
+        {
+          "label": "E-6 Petty Officer 1st Class",
+          "value": "E-6 Petty Officer 1st Class"
+        },
+        {
+          "label": "E-7 Chief Petty Officer",
+          "value": "E-7 Chief Petty Officer"
+        },
+        {
+          "label": "E-8 Senior Chief Petty Officer",
+          "value": "E-8 Senior Chief Petty Officer"
+        },
+        {
+          "label": "E-9 Master Chief Petty Officer",
+          "value": "E-9 Master Chief Petty Officer"
+        },
+        {
+          "label": "O-1 Ensign",
+          "value": "O-1 Ensign"
+        },
+        {
+          "label": "O-2 Lieutenant Junior Grade",
+          "value": "O-2 Lieutenant Junior Grade"
+        },
+        {
+          "label": "O-3 Lieutenant",
+          "value": "O-3 Lieutenant"
+        },
+        {
+          "label": "O-4 Lieutenant Commander",
+          "value": "O-4 Lieutenant Commander"
+        },
+        {
+          "label": "O-5 Commander",
+          "value": "O-5 Commander"
+        },
+        {
+          "label": "O-6 Captain",
+          "value": "O-6 Captain"
+        },
+        {
+          "label": "O-7 Rear Admiral",
+          "value": "O-7 Rear Admiral"
+        },
+        {
+          "label": "O-7 Commodore",
+          "value": "O-7 Commodore"
+        },
+        {
+          "label": "O-8 Rear Admiral",
+          "value": "O-8 Rear Admiral"
+        },
+        {
+          "label": "O-9 Vice Admiral",
+          "value": "O-9 Vice Admiral"
+        },
+        {
+          "label": "O-10 Admiral",
+          "value": "O-10 Admiral"
+        },
+        {
+          "label": "O-11 Fleet Admiral",
+          "value": "O-11 Fleet Admiral"
+        },
+        {
+          "label": "W-1 Warrant Officer",
+          "value": "W-1 Warrant Officer"
+        },
+        {
+          "label": "W-2 Chief Warrant Officer",
+          "value": "W-2 Chief Warrant Officer"
+        },
+        {
+          "label": "W-3 Chief Warrant Officer",
+          "value": "W-3 Chief Warrant Officer"
+        },
+        {
+          "label": "W-4 Chief Warrant Officer",
+          "value": "W-4 Chief Warrant Officer"
+        }
+      ],
+      "militaryRanksMarines": [
+        {
+          "label": "E-1 Private",
+          "value": "E-1 Private"
+        },
+        {
+          "label": "E-2 Private First Class",
+          "value": "E-2 Private First Class"
+        },
+        {
+          "label": "E-3 Lance Corporal",
+          "value": "E-3 Lance Corporal"
+        },
+        {
+          "label": "E-4 Corporal",
+          "value": "E-4 Corporal"
+        },
+        {
+          "label": "E-5 Sergeant",
+          "value": "E-5 Sergeant"
+        },
+        {
+          "label": "E-6 Staff Sergeant",
+          "value": "E-6 Staff Sergeant"
+        },
+        {
+          "label": "E-7 Gunnery Sergeant",
+          "value": "E-7 Gunnery Sergeant"
+        },
+        {
+          "label": "E-8 First Sergeant",
+          "value": "E-8 First Sergeant"
+        },
+        {
+          "label": "E-8 Master Sergeant",
+          "value": "E-8 Master Sergeant"
+        },
+        {
+          "label": "E-9 Sergeant Major of the Marine Corps",
+          "value": "E-9 Sergeant Major of the Marine Corps"
+        },
+        {
+          "label": "E-9 Sergeant Major",
+          "value": "E-9 Sergeant Major"
+        },
+        {
+          "label": "E-9 Master Gunnery Sergeant",
+          "value": "E-9 Master Gunnery Sergeant"
+        },
+        {
+          "label": "O-1 Second Lieutenant",
+          "value": "O-1 Second Lieutenant"
+        },
+        {
+          "label": "O-2 First Lieutenant",
+          "value": "O-2 First Lieutenant"
+        },
+        {
+          "label": "O-3 Captain",
+          "value": "O-3 Captain"
+        },
+        {
+          "label": "O-4 Major",
+          "value": "O-4 Major"
+        },
+        {
+          "label": "O-5 Lieutenant Colonel",
+          "value": "O-5 Lieutenant Colonel"
+        },
+        {
+          "label": "O-6 Colonel",
+          "value": "O-6 Colonel"
+        },
+        {
+          "label": "O-7 Brigadier General",
+          "value": "O-7 Brigadier General"
+        },
+        {
+          "label": "O-8 Major General",
+          "value": "O-8 Major General"
+        },
+        {
+          "label": "O-9 Lieutenant General",
+          "value": "O-9 Lieutenant General"
+        },
+        {
+          "label": "O-10 General",
+          "value": "O-10 General"
+        },
+        {
+          "label": "W-1 Warrant Officer",
+          "value": "W-1 Warrant Officer"
+        },
+        {
+          "label": "W-2 Chief Warrant Officer",
+          "value": "W-2 Chief Warrant Officer"
+        },
+        {
+          "label": "W-3 Chief Warrant Officer",
+          "value": "W-3 Chief Warrant Officer"
+        },
+        {
+          "label": "W-4 Chief Warrant Officer",
+          "value": "W-4 Chief Warrant Officer"
+        },
+        {
+          "label": "W-5 Master Warrant Officer",
+          "value": "W-5 Master Warrant Officer"
+        }
+      ],
+      "militaryRanksNavy": [
+        {
+          "label": "E-1 Seaman Recruit",
+          "value": "E-1 Seaman Recruit"
+        },
+        {
+          "label": "E-2 Seaman Apprentice",
+          "value": "E-2 Seaman Apprentice"
+        },
+        {
+          "label": "E-3 Seaman",
+          "value": "E-3 Seaman"
+        },
+        {
+          "label": "E-4 Petty Officer 3rd Class",
+          "value": "E-4 Petty Officer 3rd Class"
+        },
+        {
+          "label": "E-5 Petty Officer 2nd Class",
+          "value": "E-5 Petty Officer 2nd Class"
+        },
+        {
+          "label": "E-6 Petty Officer 1st Class",
+          "value": "E-6 Petty Officer 1st Class"
+        },
+        {
+          "label": "E-7 Chief Petty Officer",
+          "value": "E-7 Chief Petty Officer"
+        },
+        {
+          "label": "E-8 Senior Chief Petty Officer",
+          "value": "E-8 Senior Chief Petty Officer"
+        },
+        {
+          "label": "E-9 Master Chief Petty Officer of the Navy",
+          "value": "E-9 Master Chief Petty Officer of the Navy"
+        },
+        {
+          "label": "E-9 Master Chief Petty Officer",
+          "value": "E-9 Master Chief Petty Officer"
+        },
+        {
+          "label": "O-1 Ensign",
+          "value": "O-1 Ensign"
+        },
+        {
+          "label": "O-2 Lieutenant Junior Grade",
+          "value": "O-2 Lieutenant Junior Grade"
+        },
+        {
+          "label": "O-3 Lieutenant",
+          "value": "O-3 Lieutenant"
+        },
+        {
+          "label": "O-4 Lieutenant Commander",
+          "value": "O-4 Lieutenant Commander"
+        },
+        {
+          "label": "O-5 Commander",
+          "value": "O-5 Commander"
+        },
+        {
+          "label": "O-6 Captain",
+          "value": "O-6 Captain"
+        },
+        {
+          "label": "O-7 Rear Admiral",
+          "value": "O-7 Rear Admiral"
+        },
+        {
+          "label": "O-7 Rear Admiral (Lower Half)",
+          "value": "O-7 Rear Admiral (Lower Half)"
+        },
+        {
+          "label": "O-8 Rear Admiral (Upper Half)",
+          "value": "O-8 Rear Admiral (Upper Half)"
+        },
+        {
+          "label": "O-9 Vice Admiral",
+          "value": "O-9 Vice Admiral"
+        },
+        {
+          "label": "O-10 Admiral",
+          "value": "O-10 Admiral"
+        },
+        {
+          "label": "O-11 Fleet Admiral",
+          "value": "O-11 Fleet Admiral"
+        },
+        {
+          "label": "W-1 Warrant Officer",
+          "value": "W-1 Warrant Officer"
+        },
+        {
+          "label": "W-2 Chief Warrant Officer",
+          "value": "W-2 Chief Warrant Officer"
+        },
+        {
+          "label": "W-3 Chief Warrant Officer",
+          "value": "W-3 Chief Warrant Officer"
+        },
+        {
+          "label": "W-4 Chief Warrant Officer",
+          "value": "W-4 Chief Warrant Officer"
+        }
+      ],
+      "militaryRanksNoaa": [
+        {
+          "label": "E-1 Seaman Recruit",
+          "value": "E-1 Seaman Recruit"
+        },
+        {
+          "label": "E-2 Seaman Apprentice",
+          "value": "E-2 Seaman Apprentice"
+        },
+        {
+          "label": "E-3 Seaman",
+          "value": "E-3 Seaman"
+        },
+        {
+          "label": "E-4 Petty Officer 3rd Class",
+          "value": "E-4 Petty Officer 3rd Class"
+        },
+        {
+          "label": "E-5 Petty Officer 2nd Class",
+          "value": "E-5 Petty Officer 2nd Class"
+        },
+        {
+          "label": "E-6 Petty Officer 1st Class",
+          "value": "E-6 Petty Officer 1st Class"
+        },
+        {
+          "label": "E-7 Chief Petty Officer",
+          "value": "E-7 Chief Petty Officer"
+        },
+        {
+          "label": "E-8 Senior Chief Petty Officer",
+          "value": "E-8 Senior Chief Petty Officer"
+        },
+        {
+          "label": "E-9 Master Chief Petty Officer",
+          "value": "E-9 Master Chief Petty Officer"
+        },
+        {
+          "label": "O-1 Ensign",
+          "value": "O-1 Ensign"
+        },
+        {
+          "label": "O-2 Lieutenant Junior Grade",
+          "value": "O-2 Lieutenant Junior Grade"
+        },
+        {
+          "label": "O-3 Lieutenant",
+          "value": "O-3 Lieutenant"
+        },
+        {
+          "label": "O-4 Lieutenant Commander",
+          "value": "O-4 Lieutenant Commander"
+        },
+        {
+          "label": "O-5 Commander",
+          "value": "O-5 Commander"
+        },
+        {
+          "label": "O-6 Captain",
+          "value": "O-6 Captain"
+        },
+        {
+          "label": "O-7 Rear Admiral",
+          "value": "O-7 Rear Admiral"
+        },
+        {
+          "label": "O-7 Commodore",
+          "value": "O-7 Commodore"
+        },
+        {
+          "label": "O-8 Rear Admiral",
+          "value": "O-8 Rear Admiral"
+        },
+        {
+          "label": "O-9 Vice Admiral",
+          "value": "O-9 Vice Admiral"
+        },
+        {
+          "label": "O-10 Admiral",
+          "value": "O-10 Admiral"
+        },
+        {
+          "label": "O-11 Fleet Admiral",
+          "value": "O-11 Fleet Admiral"
+        },
+        {
+          "label": "W-1 Warrant Officer",
+          "value": "W-1 Warrant Officer"
+        },
+        {
+          "label": "W-2 Chief Warrant Officer",
+          "value": "W-2 Chief Warrant Officer"
+        },
+        {
+          "label": "W-3 Chief Warrant Officer",
+          "value": "W-3 Chief Warrant Officer"
+        },
+        {
+          "label": "W-4 Chief Warrant Officer",
+          "value": "W-4 Chief Warrant Officer"
+        }
+      ],
+      "militaryRanksPhs": [
+        {
+          "label": "O-1 Ensign",
+          "value": "O-1 Ensign"
+        },
+        {
+          "label": "O-1 JRA",
+          "value": "O-1 JRA"
+        },
+        {
+          "label": "O-2 Lieutenant Junior Grade",
+          "value": "O-2 Lieutenant Junior Grade"
+        },
+        {
+          "label": "O-2 ASST",
+          "value": "O-2 ASST"
+        },
+        {
+          "label": "O-3 Lieutenant",
+          "value": "O-3 Lieutenant"
+        },
+        {
+          "label": "O-3 SRA",
+          "value": "O-3 SRA"
+        },
+        {
+          "label": "O-4 Full",
+          "value": "O-4 Full"
+        },
+        {
+          "label": "O-4 Lieutenant Commander",
+          "value": "O-4 Lieutenant Commander"
+        },
+        {
+          "label": "O-5 SR",
+          "value": "O-5 SR"
+        },
+        {
+          "label": "O-6 DIR",
+          "value": "O-6 DIR"
+        },
+        {
+          "label": "O-6 Captain",
+          "value": "O-6 Captain"
+        },
+        {
+          "label": "O-7 Rear Admiral",
+          "value": "O-7 Rear Admiral"
+        },
+        {
+          "label": "O-7 Commodore",
+          "value": "O-7 Commodore"
+        },
+        {
+          "label": "O-7 AST",
+          "value": "O-7 AST"
+        },
+        {
+          "label": "O-8 Rear Admiral",
+          "value": "O-8 Rear Admiral"
+        },
+        {
+          "label": "O-8 ASG",
+          "value": "O-8 ASG"
+        }
+      ],
+      "militaryRanksSpaceForce": [
+        {
+          "label": "E-1 Specialist 1",
+          "value": "E-1 Specialist 1"
+        },
+        {
+          "label": "E-2 Specialist 2",
+          "value": "E-2 Specialist 2"
+        },
+        {
+          "label": "E-3 Specialist 3",
+          "value": "E-3 Specialist 3"
+        },
+        {
+          "label": "E-4 Specialist 4",
+          "value": "E-4 Specialist 4"
+        },
+        {
+          "label": "E-5 Sergeant",
+          "value": "E-5 Sergeant"
+        },
+        {
+          "label": "E-6 Technical Sergeant",
+          "value": "E-6 Technical Sergeant"
+        },
+        {
+          "label": "E-7 Master Sergeant",
+          "value": "E-7 Master Sergeant"
+        },
+        {
+          "label": "E-8 Senior Master Sergeant",
+          "value": "E-8 Senior Master Sergeant"
+        },
+        {
+          "label": "E-9 Chief Master Sergeant",
+          "value": "E-9 Chief Master Sergeant"
+        },
+        {
+          "label": "E-9 Chief Master Sergeant of the Space Force",
+          "value": "E-9 Chief Master Sergeant of the Space Force"
+        },        
+        {
+          "label": "O-1 Second Lieutenant",
+          "value": "O-1 Second Lieutenant"
+        },
+        {
+          "label": "O-2 First Lieutenant",
+          "value": "O-2 First Lieutenant"
+        },
+        {
+          "label": "O-3 Captain",
+          "value": "O-3 Captain"
+        },
+        {
+          "label": "O-4 Major",
+          "value": "O-4 Major"
+        },
+        {
+          "label": "O-5 Lieutenant Colonel",
+          "value": "O-5 Lieutenant Colonel"
+        },
+        {
+          "label": "O-6 Colonel",
+          "value": "O-6 Colonel"
+        },
+        {
+          "label": "O-7 Brigadier General",
+          "value": "O-7 Brigadier General"
+        },
+        {
+          "label": "O-8 Major General",
+          "value": "O-8 Major General"
+        },
+        {
+          "label": "O-9 Lieutenant General",
+          "value": "O-9 Lieutenant General"
+        },
+        {
+          "label": "O-10 General",
+          "value": "O-10 General"
+        }
+       
+      ],
+      "insuranceCompanies": [
+        {
+          "label": "None",
+          "value": "None"
+        },
+        {
+          "label": "AIG",
+          "value": "AIG"
+        },
+        {
+          "label": "Allied",
+          "value": "Allied"
+        },
+        {
+          "label": "Allstate",
+          "value": "Allstate"
+        },
+        {
+          "label": "American Family",
+          "value": "American Family"
+        },
+        {
+          "label": "Chubb",
+          "value": "Chubb"
+        },
+        {
+          "label": "Farmers",
+          "value": "Farmers"
+        },
+        {
+          "label": "Geico",
+          "value": "Geico"
+        },
+        {
+          "label": "Hartford",
+          "value": "Hartford"
+        },
+        {
+          "label": "Liberty Mutual",
+          "value": "Liberty Mutual"
+        },
+        {
+          "label": "Nationwide",
+          "value": "Nationwide"
+        },
+        {
+          "label": "Progressive",
+          "value": "Progressive"
+        },
+        {
+          "label": "Safeco",
+          "value": "Safeco"
+        },
+        {
+          "label": "State Farm",
+          "value": "State Farm"
+        },
+        {
+          "label": "Travelers",
+          "value": "Travelers"
+        },
+        {
+          "label": "USAA",
+          "value": "USAA"
+        },
+        {
+          "label": "Other",
+          "value": "Other"
+        }
+      ],
+      "residenceStatuses": [
+        {
+          "label": "Homeowner",
+          "value": "Homeowner"
+        },
+        {
+          "label": "Renter",
+          "value": "Renter"
+        },
+        {
+          "label": "Government Housing",
+          "value": "Government Housing"
+        },
+        {
+          "label": "Own Mobile Home",
+          "value": "Own Mobile Home"
+        },
+        {
+          "label": "Other",
+          "value": "Other"
+        }
+      ]
+    },
+    "sections": [
+      {
+        "id": "elegibility",
+        "wayfinderId": "",
+        "heading": "Eligibility for insurance",
+        "subheading": "",
+        "description": [
+          "We specialize in providing insurance to current, former and retired military members, their spouses, current and retired. Department of Defense employees and children of current or former AFI members.",
+          "However, we can still be your agent and provide you with quotes from our partners if you do not fall into one of these categories."
+        ],
+        "disclaimer": "",
+        "sidebar": null,
+        "fields": [
+          {
+            "id": "eligibilityStatus",
+            "label": "Select your status below:",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "Military (active duty, former / separated / retired / disabled, surviving spouse)",
+                "value": "military"
+              },
+              {
+                "label": "Current Military Spouse",
+                "value": "spouse"
+              },
+              {
+                "label": "Current or Retired Department of Defense Employee",
+                "value": "dod"
+              },
+              {
+                "label": "Child of current or former Armed Forces Insurance member",
+                "value": "child"
+              },
+              {
+                "label": "Non-military (We can provide you with quotes from our partners)",
+                "value": "nonMilitary"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "eligibilityDetails",
+        "wayfinderId": "",
+        "heading": "Eligibility for insurance",
+        "subheading": "",
+        "description": [
+          ""
+        ],
+        "disclaimer": "",
+        "sidebar": {
+          "heading": "Tips",
+          "content": [
+            {
+              "heading": "heading 1",
+              "content": "content 1"
+            },
+            {
+              "heading": "heading 2",
+              "content": "content 2"
+            }
+          ]
+        },
+        "fields": [
+          {
+            "id": "eligibilityFirstName",
+            "label": "",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "eligibilityLastName",
+            "label": "",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "branchOfService",
+            "label": "Branch Of Service",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "Army",
+                "value": "Army"
+              },
+              {
+                "label": "Army National Guard",
+                "value": "Army National Guard"
+              },
+              {
+                "label": "Air Force",
+                "value": "Air Force"
+              },
+              {
+                "label": "Air National Guard",
+                "value": "Air National Guard"
+              },
+              {
+                "label": "Coast Guard",
+                "value": "Coast Guard"
+              },
+              {
+                "label": "Marine Corps",
+                "value": "Marine Corps"
+              },
+              {
+                "label": "Navy",
+                "value": "Navy"
+              },
+              {
+                "label": "NOAA",
+                "value": "NOAA"
+              },
+              {
+                "label": "PHS",
+                "value": "PHS"
+              }
+            ]
+          },
+          {
+            "id": "militaryStatus",
+            "label": "Military Status",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "Active Duty",
+                "value": "Active Duty"
+              },
+              {
+                "label": "Reserved",
+                "value": "Reserved"
+              },
+              {
+                "label": "Separated",
+                "value": "Separated"
+              },
+              {
+                "label": "Retired",
+                "value": "Retired"
+              }
+            ]
+          },
+          {
+            "id": "militaryRank",
+            "label": "Rank",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          }
+        ]
+      },
+      {
+        "id": "saveQuote",
+        "wayfinderId": "",
+        "heading": "Save Your Quote",
+        "subheading": "",
+        "description": [
+          "This email will be used to send you a link to finish your quote at a later time."
+        ],
+        "disclaimer": "",
+        "sidebar": null,
+        "fields": [
+          {
+            "id": "saveQuoteEmailAddress",
+            "label": "Provide us with your email address.",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          }
+        ]
+      },
+      {
+        "id": "productUnavailable",
+        "wayfinderId": "",
+        "heading": "Product Unvailable",
+        "subheading": "",
+        "description": [
+          "We don't currently offer insurance in your area.",
+          "If you have questions about our coverage areas and would like to talk with an agent please call 1-800-495-8234."
+        ],
+        "disclaimer": "",
+        "sidebar": null,
+        "fields": []
+      },
+      {
+        "id": "policyHolder",
+        "wayfinderId": "policyHolderInfo",
+        "heading": "Policy Holder Information",
+        "subheading": "",
+        "description": [
+          ""
+        ],
+        "disclaimer": "",
+        "sidebar": {
+          "heading": "Tips",
+          "content": [
+            {
+              "heading": "heading 1",
+              "content": "content 1"
+            },
+            {
+              "heading": "heading 2",
+              "content": "content 2"
+            }
+          ]
+        },
+        "fields": [
+          {
+            "id": "policyHolderFirstName",
+            "label": "First Name",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "policyHolderLastName",
+            "label": "Last Name",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "policyHolderEmail",
+            "label": "Email Address",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "policyHolderPhoneType",
+            "label": "Phone Type",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "policyHolderPhoneNumber",
+            "label": "Phone Number",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          }
+        ]
+      },
+      {
+        "id": "businessInformation",
+        "wayfinderId": "businessInfo",
+        "heading": "Business Information",
+        "subheading": "",
+        "description": [
+          ""
+        ],
+        "disclaimer": "",
+        "sidebar": {
+          "heading": "Tips",
+          "content": [
+            {
+              "heading": "heading 1",
+              "content": "content 1"
+            },
+            {
+              "heading": "heading 2",
+              "content": "content 2"
+            }
+          ]
+        },
+        "fields": [
+          {
+            "id": "businessName",
+            "label": "Name of Business",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "businessWebsite",
+            "label": "Business Website",
+            "note": "Optional",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "businessType",
+            "label": "Type of Business",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "businessTaxId",
+            "label": "Business Tax ID",
+            "note": "Optional",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "businessAddress",
+            "label": "Business Physical Address",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "businessCity",
+            "label": "City",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "businessState",
+            "label": "State",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "businessZip",
+            "label": "Zip",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          }
+        ]
+      },
+      {
+        "id": "policyCoverage",
+        "wayfinderId": "coverages",
+        "heading": "Policy Coverage for",
+        "subheading": "",
+        "description": [
+          ""
+        ],
+        "disclaimer": "",
+        "sidebar": null,
+        "fields": [
+          {
+            "id": "insuranceType",
+            "label": "Type of Insurance",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "Business Property",
+                "value": "Business Property"
+              },
+              {
+                "label": "Business Owner (BOP)",
+                "value": "Business Owner (BOP)"
+              },
+              {
+                "label": "General, Professional, or Product Liability",
+                "value": "General, Professional, or Product Liability"
+              },
+              {
+                "label": "Business Vehicles",
+                "value": "Business Vehicles"
+              },
+              {
+                "label": "Event Coverage",
+                "value": "Event Coverage"
+              },
+              {
+                "label": "Builder's Risk",
+                "value": "Builder's Risk"
+              },
+              {
+                "label": "Veteran Organizations (American Legion, VFW, etc.)",
+                "value": "Veteran Organizations (American Legion, VFW, etc.)"
+              },
+              {
+                "label": "Other",
+                "value": "Other"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "coverageHistory",
+        "wayfinderId": "coverages",
+        "heading": "Coverage History",
+        "subheading": "",
+        "description": [
+          ""
+        ],
+        "disclaimer": "",
+        "sidebar": {
+          "heading": "Tips",
+          "content": [
+            {
+              "heading": "heading 1",
+              "content": "content 1"
+            },
+            {
+              "heading": "heading 2",
+              "content": "content 2"
+            }
+          ]
+        },
+        "fields": [
+          {
+            "id": "currentInsuranceCompany",
+            "label": "Current Insurance Company",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "otherInsuranceCompany",
+            "label": "Insurance Company Name",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "policyRenewalDate",
+            "label": "Policy Renewal Date",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "policyRenewalType",
+            "label": "Policy Renewal Type",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "Expires",
+                "value": "Expires"
+              },
+              {
+                "label": "Renews",
+                "value": "Renews"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "submitQuote",
+        "wayfinderId": "quote",
+        "heading": "We will contact you as soon as we have your quote ready",
+        "subheading": "How should we contact you?",
+        "description": [
+          ""
+        ],
+        "disclaimer": "To offer you an accurate quote and/or policy, we (AFI and AFI affiliates) may collect information from consumer reporting agencies, such as credit history. Future reports may be used to update or renew your insurance. By completing this quote, you agree to receive marketing materials from Armed Forces Insurance. You can request removal at any time. Please review our Privacy Policy - Information Gathering.",
+        "sidebar": null,
+        "fields": [
+          {
+            "id": "submitQuoteContactMethod",
+            "label": "How should we contact you?",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "Email",
+                "value": "Email"
+              },
+              {
+                "label": "Phone",
+                "value": "Phone"
+              }
+            ]
+          },
+          {
+            "id": "submitQuoteEditPolicyHolder",
+            "label": "Edit Policy Holder Information",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "submitQuoteEditBusiness",
+            "label": "Edit business information",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "submitQuoteEditCoverage",
+            "label": "Edit Coverage Information",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "submitQuoteMoreInfo",
+            "label": "Yes, I am interested in learning more about saving money and other insurance with AFI.",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "Y",
+                "value": "Y"
+              },
+              {
+                "label": "N",
+                "value": "N"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

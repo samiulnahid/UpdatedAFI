@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://sapashq02.afi.local/AgentPortal/Services/WebQuoteService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WebConsole.DatabaseConnector.Entities" />
+  <xs:import schemaLocation="http://sapashq02.afi.local/AgentPortal/Services/WebQuoteService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/WebConsole.Root.Services.DTO" />
+  <xs:import schemaLocation="http://sapashq02.afi.local/AgentPortal/Services/WebQuoteService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:element name="SendQuoteToMFAndReturnPremimum">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="QuoteInfo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ContactInfo" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendQuoteToMFAndReturnPremimumResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SendQuoteToMFAndReturnPremimumResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendQuoteContactToClientAndMF">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ContactInfo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="QuoteKey" type="xs:int" />
+        <xs:element minOccurs="0" name="PushMainframe" type="xs:boolean" />
+        <xs:element minOccurs="0" name="IsTest" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendQuoteContactToClientAndMFResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SendQuoteContactToClientAndMFResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateMktgSource">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="memberNumber" type="xs:int" />
+        <xs:element minOccurs="0" name="MarketingSource" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="QuoteKey" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateMktgSourceResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RepushToMF">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="MemberNumber" type="xs:int" />
+        <xs:element minOccurs="0" name="QuoteKey" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RepushToMFResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="RepushToMFResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PushToIssueMF">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="MemberNumber" type="xs:int" />
+        <xs:element minOccurs="0" name="QuoteKey" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PushToIssueMFResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PushToIssueMFResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendQuoteInfoByFileName">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendQuoteInfoByFileNameResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendQuoteContactByFileName">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendQuoteContactByFileNameResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendQuoteToEpic">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="QuoteId" type="xs:int" />
+        <xs:element minOccurs="0" name="CoverageType" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="memberNumber" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendQuoteToEpicResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendQuoteHubToEpic">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="LOB" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="FullQuoteNumber" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="memberNumber" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendQuoteHubToEpicResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SendQuoteHubToEpicResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ResendQuoteHubToEpic">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="LOB" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="FullQuoteNumber" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="memberNumber" type="xs:int" />
+        <xs:element minOccurs="0" name="epicPolId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ResendQuoteHubToEpicResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ResendQuoteHubToEpicResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateMemberForQuote">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="QuoteId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateMemberForQuoteResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendQuoteInfoLogId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="quoteid" type="xs:int" />
+        <xs:element minOccurs="0" name="contid" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendQuoteInfoLogIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SendQuoteInfoLogIdResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendQuoteContactByLogId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="id" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendQuoteContactByLogIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SendQuoteContactByLogIdResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendQuoteActivityToEpic">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="State" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="LOB" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="memberNumber" type="xs:int" />
+        <xs:element minOccurs="0" name="IsComplete" type="xs:boolean" />
+        <xs:element minOccurs="0" name="StartedDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="FinishedDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="IsPossibleDup" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendQuoteActivityToEpicResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendMiscActivityToEpic">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="memberNumber" type="xs:int" />
+        <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ActivityCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Note" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="StartedDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="FinishedDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="IsPossibleDup" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendMiscActivityToEpicResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreatePayor">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="memebrNumber" type="xs:int" />
+        <xs:element minOccurs="0" name="PaymentDay" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreatePayorResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CreatePayorResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SearchForDuplicatesByLogId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="id" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SearchForDuplicatesByLogIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/WebConsole.DatabaseConnector.Entities" minOccurs="0" name="SearchForDuplicatesByLogIdResult" nillable="true" type="q1:ArrayOfPROC_CNTC_DUPLICATE_SEL_NEW_Result" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SearchForDuplicates">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ContactInfo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="QuoteKey" type="xs:int" />
+        <xs:element minOccurs="0" name="PushMainframe" type="xs:boolean" />
+        <xs:element minOccurs="0" name="IsTest" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SearchForDuplicatesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/WebConsole.DatabaseConnector.Entities" minOccurs="0" name="SearchForDuplicatesResult" nillable="true" type="q2:ArrayOfPROC_CNTC_DUPLICATE_SEL_NEW_Result" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateProofOfInsurance">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/WebConsole.Root.Services.DTO" minOccurs="0" name="CertInfo" nillable="true" type="q3:CertificateInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateProofOfInsuranceResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/WebConsole.Root.Services.DTO" minOccurs="0" name="CreateProofOfInsuranceResult" nillable="true" type="q4:CertificateReturn" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateIndividualContactInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/WebConsole.Root.Services.DTO" minOccurs="0" name="type" type="q5:UpdateType" />
+        <xs:element minOccurs="0" name="data" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="CntcGroupId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateIndividualContactInfoResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPartnerEmployeeList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="partnerId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPartnerEmployeeListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/WebConsole.DatabaseConnector.Entities" minOccurs="0" name="GetPartnerEmployeeListResult" nillable="true" type="q6:ArrayOfPROC_GET_PARTNER_EMPLOYEES_FOR_WEB_Result" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CalculateRentersPremium">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="state" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="eligibility" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="PersonalProperty" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="DeductibleRequested" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="responseCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="CoverageState" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ComprehensiveCoverage" type="xs:boolean" />
+        <xs:element minOccurs="0" name="ReplacementCostCoverage" type="xs:boolean" />
+        <xs:element minOccurs="0" name="IdentityFraudExpenseCoverage" type="xs:boolean" />
+        <xs:element minOccurs="0" name="AdditionalCoverage" type="xs:boolean" />
+        <xs:element minOccurs="0" name="BusinessPropertyCoverage" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CalculateRentersPremiumResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="CalculateRentersPremiumResult" nillable="true" type="q7:ArrayOfKeyValueOfstringstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="QuoteIsDuplicate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="key" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="QuoteIsDuplicateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="QuoteIsDuplicateResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertAfiForm">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CNTCGroupID" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="QuoteID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Priority" type="xs:int" />
+        <xs:element minOccurs="0" name="StateAbbrv" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Expidite" type="xs:boolean" />
+        <xs:element minOccurs="0" name="DisplayInformation" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="CreatedDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="UpdatedDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="creationUser" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="UpdateUser" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Eligibility" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="CallForReview" type="xs:boolean" />
+        <xs:element minOccurs="0" name="CurrentlyAutoInsured" type="xs:boolean" />
+        <xs:element minOccurs="0" name="IsFirstCommand" type="xs:boolean" />
+        <xs:element minOccurs="0" name="RecievedPremium" type="xs:boolean" />
+        <xs:element minOccurs="0" name="IsFinished" type="xs:boolean" />
+        <xs:element minOccurs="0" name="IsMobileManufactured" type="xs:boolean" />
+        <xs:element minOccurs="0" name="IsSlt" type="xs:boolean" />
+        <xs:element minOccurs="0" name="IsRental" type="xs:boolean" />
+        <xs:element minOccurs="0" name="IsBusinessTest" type="xs:boolean" />
+        <xs:element minOccurs="0" name="IsTest" type="xs:boolean" />
+        <xs:element minOccurs="0" name="NeedsUnderwriting" type="xs:boolean" />
+        <xs:element minOccurs="0" name="IssuedOnline" type="xs:boolean" />
+        <xs:element minOccurs="0" name="ApplicationCompleted" type="xs:boolean" />
+        <xs:element minOccurs="0" name="IsInterested" type="xs:boolean" />
+        <xs:element minOccurs="0" name="IsCondo" type="xs:boolean" />
+        <xs:element minOccurs="0" name="IsVacant" type="xs:boolean" />
+        <xs:element minOccurs="0" name="FormTypeID" type="xs:int" />
+        <xs:element minOccurs="0" name="CoverageTypeID" type="xs:int" />
+        <xs:element minOccurs="0" name="address1" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="City" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="IsPossibleDup" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertAfiFormResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

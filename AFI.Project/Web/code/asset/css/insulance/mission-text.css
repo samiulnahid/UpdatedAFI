@@ -1,0 +1,46 @@
+.page__mission {
+  background-color: #f6f6f6;
+  background-color: var(--color-gray-10);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+}
+
+.page__mission > * {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 55.875rem;
+}
+.page__mission h1 {
+  color: #003864;
+  color: var(--color-blue-40);
+  font-size: 1.75rem;
+  margin-bottom: 15px;
+}
+
+.page__mission p {
+  color: #898d8d;
+  color: var(--color-gray-20) !important;
+  font-weight: 200;
+  line-height: 1.625;
+}
+
+.arrow__link {
+  display: inline-block;
+  font-size: 1.125rem !important;
+  color: #0570c5 !important;
+}
+
+@media screen and (min-width: 48em) {
+  .page__mission {
+    background-color: #fff;
+    background-color: var(--color-white);
+    padding: 2.75rem 0;
+  }
+  .page__mission h1 {
+    font-size: 2rem !important;
+  }
+
+  .page__mission p {
+    font-size: 1.25rem !important;
+  }
+}

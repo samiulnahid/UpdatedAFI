@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Sitecore.XConnect.DataTools.Tasks.Options</name>
+    </assembly>
+    <members>
+        <member name="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptions">
+            <summary>
+            Options to use with delete contacts worker.
+            </summary>
+            <seealso cref="T:Sitecore.Processing.Engine.Model.Options.Workers.WorkerOptions" />
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptions.#ctor">
+            <summary>
+            Creates an instance of <see cref="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptions"/>.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptions.#ctor(System.Collections.Generic.IReadOnlyList{System.String})">
+            <summary>
+            Creates an instance of <see cref="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptions" />.
+            </summary>
+            <param name="conditionIds">IDs of conditions to check contacts with.</param>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptions.#ctor(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptions"/> class.
+            </summary>
+            <param name="dictionary"><see cref="T:System.Collections.Generic.Dictionary`2" /> containing options.</param>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptions.ConditionIds">
+            <summary>
+            Gets IDs of conditions to check contacts with.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptions.Parse(System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})">
+            <summary>
+                Converts the <paramref name="options"/> into <see cref="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptions"/> instance.
+            </summary>
+            <param name="options">A list of keys and mapped values to create <see cref="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptions"/>.</param>
+            <returns>A fully functional instance of <see cref="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteContactsDistributedWorkerOptions"/>.</returns>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions">
+            <summary>
+            Options to use with delete interactions worker.
+            </summary>
+            <seealso cref="T:Sitecore.Processing.Engine.Model.Options.Workers.WorkerOptions" />
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions.#ctor">
+            <summary>
+            Creates an instance of <see cref="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions"/>.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions.#ctor(System.Collections.Generic.IReadOnlyList{System.String})">
+            <summary>
+            Creates an instance of <see cref="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions" />.
+            </summary>
+            <param name="conditionIds">The interaction condition ids.</param>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions.#ctor(System.Collections.Generic.IReadOnlyList{System.String},System.Collections.Generic.IReadOnlyList{System.Guid},System.Collections.Generic.IReadOnlyList{System.Guid},System.Collections.Generic.IReadOnlyList{System.Guid},System.Collections.Generic.IReadOnlyList{System.Guid})">
+            <summary>
+            Creates an instance of <see cref="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions" />.
+            </summary>
+            <param name="conditionIds">The condition ids.</param>
+            <param name="deleteEventIds">The event ids that should mark interaction as obsolete.</param>
+            <param name="skipEventIds">The event ids that should mark interaction as not to delete.</param>
+            <param name="deleteChannelIds">The channel ids that should filter interactions for delete.</param>
+            <param name="skipChannelIds">The channel ids that should filter interactions for skip.</param>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions.#ctor(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions"/> class.
+            </summary>
+            <param name="dictionary"><see cref="T:System.Collections.Generic.Dictionary`2" /> containing options.</param>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions.ConditionIds">
+            <summary>
+            Gets IDs of conditions to check interactions with.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions.DeleteEventIds">
+            <summary>
+            Gets the event ids. All interactions with at least one id should be deleted.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions.SkipEventIds">
+            <summary>
+            Gets the skip event ids. All interactions with at least one id should not be deleted.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions.DeleteChannelIds">
+            <summary>
+            Gets the channel ids. All interactions interacted through any channel from the list should be deleted.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions.SkipChannelIds">
+            <summary>
+            Gets the skip channel ids. All interacted through any channel from the list should not be deleted.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions.Parse(System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})">
+            <summary>
+            Converts the <paramref name="options"/> into <see cref="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions"/> instance.
+            </summary>
+            <param name="options">A list of keys and mapped values to create <see cref="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions"/>.</param>
+            <returns>A fully functional instance of <see cref="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.DeleteInteractionsDistributedWorkerOptions"/>.</returns>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.ExportContactsDistributedWorkerOptions">
+            <summary>
+            Defines options for contacts data export worker.
+            </summary>
+            <seealso cref="T:Sitecore.Processing.Engine.Model.Options.Workers.WorkerOptions" />
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Tasks.Options.Workers.ExportContactsDistributedWorkerOptions.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.ExportContactsDistributedWorkerOptions"/> class.
+            </summary>
+            <param name="profileName">The name of the profile.</param>
+            <param name="exportId">The worker identifier.</param>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Tasks.Options.Workers.ExportContactsDistributedWorkerOptions.#ctor(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.ExportContactsDistributedWorkerOptions"/> class.
+            </summary>
+            <param name="dictionary"><see cref="T:System.Collections.Generic.Dictionary`2" /> containing options.</param>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Tasks.Options.Workers.ExportContactsDistributedWorkerOptions.ProfileName">
+            <summary>
+            Gets the storage profile name to be used to export data to.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Tasks.Options.Workers.ExportContactsDistributedWorkerOptions.ExportId">
+            <summary>
+            Gets the worker identifier.
+            </summary>
+            <value>
+            The worker identifier.
+            </value>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Tasks.Options.Workers.ExportContactsDistributedWorkerOptions.Parse(System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})">
+            <summary>
+            Converts the <paramref name="options"/> into <see cref="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.ExportContactsDistributedWorkerOptions"/> instance.
+            </summary>
+            <param name="options">A list of keys and mapped values to create <see cref="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.ExportContactsDistributedWorkerOptions"/>.</param>
+            <returns>A fully functional instance of <see cref="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.ExportContactsDistributedWorkerOptions"/>.</returns>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.ExportInteractionsDistributedWorkerOptions">
+            <summary>
+            Defines options for interactions data export worker.
+            </summary>
+            <seealso cref="T:Sitecore.Processing.Engine.Model.Options.Workers.WorkerOptions" />
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Tasks.Options.Workers.ExportInteractionsDistributedWorkerOptions.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.ExportInteractionsDistributedWorkerOptions"/> class.
+            </summary>
+            <param name="profileName">The name of the profile.</param>
+            <param name="exportId">The worker identifier.</param>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Tasks.Options.Workers.ExportInteractionsDistributedWorkerOptions.#ctor(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.ExportInteractionsDistributedWorkerOptions"/> class.
+            </summary>
+            <param name="dictionary"><see cref="T:System.Collections.Generic.Dictionary`2" /> containing options.</param>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Tasks.Options.Workers.ExportInteractionsDistributedWorkerOptions.ProfileName">
+            <summary>
+            Gets the storage profile name to be used to export data to.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Tasks.Options.Workers.ExportInteractionsDistributedWorkerOptions.ExportId">
+            <summary>
+            Gets the worker identifier.
+            </summary>
+            <value>
+            The worker identifier.
+            </value>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Tasks.Options.Workers.ExportInteractionsDistributedWorkerOptions.Parse(System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})">
+            <summary>
+            Converts the <paramref name="options"/> into <see cref="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.ExportInteractionsDistributedWorkerOptions"/> instance.
+            </summary>
+            <param name="options">A list of keys and mapped values to create <see cref="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.ExportInteractionsDistributedWorkerOptions"/>.</param>
+            <returns>A fully functional instance of <see cref="T:Sitecore.XConnect.DataTools.Tasks.Options.Workers.ExportInteractionsDistributedWorkerOptions"/>.</returns>
+        </member>
+    </members>
+</doc>

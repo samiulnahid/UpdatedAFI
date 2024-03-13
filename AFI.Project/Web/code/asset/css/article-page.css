@@ -1,0 +1,230 @@
+.article__page {
+    margin: 30px auto 0;
+}
+
+.article__page.no__margin {
+    margin: 0 auto !important;
+}
+
+.article__page .heading-blue.field-title {
+    color: #004976 !important;
+    color: var(--color-blue-30) !important;
+    border: 0 !important;
+    padding: 0 !important;
+}
+
+.article__page .article_page_share {
+    margin-top: 10px;
+}
+
+.article__page .article_page_share i,
+.article__page .article_page_share a {
+    color: #000 !important;
+    opacity: .5;
+    border: 0 !important;
+    font-size: 1rem !important;
+}
+
+.article__page .article_page_share:hover i,
+.article__page .article_page_share:hover a {
+    opacity: 1;
+}
+
+.article__page p,
+.article__page li,
+.article__page a,
+.more__articles .articles__list a {
+    font-size: 18px !important;
+}
+
+.article__page h1,
+.article__page h2,
+.article__page h3,
+.article__page h4,
+.article__page h5 {
+    font-weight: 700 !important;
+    margin-bottom: 1rem !important;
+}
+
+.article__page .article__image {
+    margin-bottom: 2rem;
+}
+
+.more__articles {
+    /* padding: 30px 0 !important; */
+    padding: 30px 0;
+}
+
+
+
+.more-articles .wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+}
+
+.more-articles__heading {
+    font-size: 2.375rem !important;
+    text-align: left;
+}
+
+@media screen and (min-width:991px) {
+    .more-articles {
+        padding: 50px auto;
+    }
+
+    .more-articles .wrapper {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    .more-articles__heading {
+        text-align: center;
+    }
+}
+
+.more-articles__list {
+    display: grid;
+    gap: 2rem;
+}
+
+.more-articles__item-heading {
+    font-family: Roboto, sans-serif;
+    font-family: var(--font-family-primary) !important;
+    font-size: 1.625rem !important;
+    margin-bottom: 0.5rem !important;
+    color: #000 !important;
+}
+
+.more-articles__item-description,
+.more-articles__item p {
+    margin-bottom: 0 !important;
+}
+
+.more-articles__paragraph {
+    margin-bottom: 12px !important;
+}
+
+.more__articles .more-articles__list a:hover {
+    text-decoration: underline !important;
+}
+
+.more-articles__link {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.more-articles__link a:hover {
+    color: var(--color-blue-10) !important;
+}
+
+.more-articles__item .arrow-link {
+    font-size: 18px !important;
+}
+
+.more__articles .more-articles__list i {
+    color: #0570c5 !important;
+    color: var(--color-blue-10) !important;
+    font-size: 18px !important;
+    padding-left: 5px !important;
+}
+
+
+.page-list .item,
+.page-list a {
+    border: none !important;
+}
+
+
+.article__page .share-badges__container .row .component-content,
+.article__page .share-badges__container .row {
+    height: 60px;
+}
+
+.article__page .share-badges {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+}
+
+.article__page .share-badges button {
+    background: none !important;
+    transition: .3s;
+    opacity: .5;
+    margin-top: 10px;
+}
+
+.article__page .share-badges ul {
+    display: flex;
+    transition: .3s;
+    position: absolute;
+    bottom: -30px;
+    gap: 10px;
+    padding-bottom: 6px;
+}
+
+.article__page .share-badges ul li {
+    margin: 0 !important;
+}
+
+.article__page .share-badges ul li a {
+    font-size: 21px !important;
+}
+
+.article__page .share-badges ul li a i {
+    color: #000;
+    opacity: .5;
+    transition: .3s;
+    margin-top: 3px;
+}
+
+.article__page .share-badges ul li a i:hover {
+    color: unset;
+    opacity: 1;
+}
+
+.article__page .share-badges.triggered ul {
+    bottom: 5px;
+}
+
+.article__page .share-badges.triggered button {
+    margin-top: 0;
+    font-size: 14px;
+}
+
+.article__page .share-badges.triggered .icon-share {
+    opacity: 0;
+    transition: .3s;
+}
+
+.share-badges__items li {
+    list-style: none !important;
+}
+
+/* .article__page .share-badges ul li a:hover {
+    color: unset !important;
+} */
+
+@media screen and (max-width:500px) {
+    .logo-item {
+        display: block;
+        text-align: center;
+    }
+}
+
+
+/* 26 Sept */
+.article_resources .row.component.column-splitter {
+    align-items: center;
+}
+
+/* 16 Nov */
+@media screen and (max-width:380px) {
+    .article__page .share-badges.triggered button {
+        margin-top: -22px;
+    }
+}

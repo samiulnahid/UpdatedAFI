@@ -1,0 +1,124 @@
+﻿@using Sitecore.Mvc.Extensions
+@using AFI.Foundation.Helper
+@model AFI.Foundation.Helper.Models.IPaginated
+
+@{
+    Layout = null;
+    var currentItem = Sitecore.Context.Item;
+    string pageQueryParameter = "page";
+    var queryStringKeyValues = Context.Request.QueryString.ToKeyValues();
+    var totalPages = (Model.TotalCount % Model.PageSize == 0) ? Model.TotalCount / Model.PageSize : (Model.TotalCount / Model.PageSize) + 1;
+}
+@if (Model.TotalCount > Model.PageSize)
+{
+    <nav class="pagination">
+        <ul class="pagination__list">
+            @if (Model.CurrentPage == 1)
+            {
+                <li class="pagination__list-item">
+                    <a class="pagination__link is-active is-disabled" href="#">1</a>
+                </li>
+            }
+            else
+            {
+                <li class="pagination__list-item">
+                    <a class="pagination__link pagination__link--previous" href="@(SitecoreHelper.PaginationUrlBuilder.Build(currentItem, queryStringKeyValues, pageQueryParameter, (Model.CurrentPage-1).ToString()))">Previous</a>
+                </li>
+                <li class="pagination__list-item">
+                    <a class="pagination__link" href="@(SitecoreHelper.PaginationUrlBuilder.Build(currentItem, queryStringKeyValues, pageQueryParameter, "1"))">1</a>
+                </li>
+            }
+
+            @if (totalPages > 2)
+            {
+                if (Model.CurrentPage > 3 && totalPages != 4)
+                {
+                    <li class="pagination__list-item pagination__list-item--static">...</li>
+                }
+                else if (Model.CurrentPage == 2)
+                {
+                    <li class="pagination__list-item">
+                        <a class="pagination__link is-disabled is-active" href="@(SitecoreHelper.PaginationUrlBuilder.Build(currentItem, queryStringKeyValues, pageQueryParameter, "2"))">2</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="pagination__list-item">
+                        <a class="pagination__link" href="@(SitecoreHelper.PaginationUrlBuilder.Build(currentItem, queryStringKeyValues, pageQueryParameter, "2"))">2</a>
+                    </li>
+                }
+            }
+
+            @if (totalPages > 4)
+            {
+                if (Model.CurrentPage <= 2)
+                {
+                    <li class="pagination__list-item">
+                        <a class="pagination__link" href="@(SitecoreHelper.PaginationUrlBuilder.Build(currentItem, queryStringKeyValues, pageQueryParameter, "3"))">3</a>
+                    </li>
+                }
+                else if (Model.CurrentPage >= totalPages - 1)
+                {
+                    <li class="pagination__list-item">
+                        <a class="pagination__link" href="@(SitecoreHelper.PaginationUrlBuilder.Build(currentItem, queryStringKeyValues, pageQueryParameter, (totalPages - 2).ToString()))">@(totalPages - 2)</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="pagination__list-item">
+                        <a class="pagination__link is-disabled is-active" href="#">@Model.CurrentPage</a>
+                    </li>
+                }
+            }
+
+            @if (totalPages > 3)
+            {
+                if (totalPages == 4 && Model.CurrentPage != 3)
+                {
+                    <li class="pagination__list-item">
+                        <a class="pagination__link" href="@(SitecoreHelper.PaginationUrlBuilder.Build(currentItem, queryStringKeyValues, pageQueryParameter, "3"))">3</a>
+                    </li>
+                }
+                else if (totalPages == 4 && Model.CurrentPage == 3)
+                {
+                    <li class="pagination__list-item">
+                        <a class="pagination__link is-disabled is-active" href="@(SitecoreHelper.PaginationUrlBuilder.Build(currentItem, queryStringKeyValues, pageQueryParameter, "3"))">3</a>
+                    </li>
+                }
+                else if (Model.CurrentPage < (totalPages - 2))
+                {
+                    <li class="pagination__list-item pagination__list-item--static">...</li>
+                }
+                else if (Model.CurrentPage == (totalPages - 1))
+                {
+                    <li class="pagination__list-item">
+                        <a class="pagination__link is-disabled is-active" href="@(SitecoreHelper.PaginationUrlBuilder.Build(currentItem, queryStringKeyValues, pageQueryParameter, (totalPages - 1).ToString()))">@(totalPages - 1)</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="pagination__list-item">
+                        <a class="pagination__link" href="@(SitecoreHelper.PaginationUrlBuilder.Build(currentItem, queryStringKeyValues, pageQueryParameter, (totalPages - 1).ToString()))">@(totalPages - 1)</a>
+                    </li>
+                }
+            }
+
+            @if (Model.CurrentPage == totalPages)
+            {
+                <li class="pagination__list-item">
+                    <a class="pagination__link is-disabled is-active" href="#">@totalPages</a>
+                </li>
+            }
+            else
+            {
+                <li class="pagination__list-item">
+                    <a class="pagination__link" href="@(SitecoreHelper.PaginationUrlBuilder.Build(currentItem, queryStringKeyValues, pageQueryParameter, (totalPages).ToString()))">@totalPages</a>
+                </li>
+
+                <li class="pagination__list-item">
+                    <a class="pagination__link pagination__link--next" href="@(SitecoreHelper.PaginationUrlBuilder.Build(currentItem, queryStringKeyValues, pageQueryParameter, (Model.CurrentPage+1).ToString()))">Next</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

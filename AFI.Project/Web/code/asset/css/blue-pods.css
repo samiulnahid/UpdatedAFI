@@ -1,0 +1,32 @@
+.blue_pods {
+  background-color: #003864;
+  background-color: var(--color-blue-40);
+  color: #fff;
+  color: var(--color-white);
+}
+
+/* Newly Added */
+.blue_pods .blue_pods_container {
+  display: flex;
+  /* justify-content: center; */
+  flex-wrap: wrap;
+  /* gap: 3rem; */
+  justify-content: space-around;
+}
+.blue_pods .blue_pod_item {
+  flex-basis: 21rem;
+  padding: 2.25rem 1rem !important;
+  text-align: center;
+}
+
+.blue_pod_item__heading,
+.blue_pods .blue_pod_item h1 {
+  font-size: 1.875rem !important;
+  margin-bottom: 1rem !important;
+  color: #fff !important;
+}
+@media screen and (min-width: 48em) {
+  .blue_pods .blue_pod_item {
+    padding: 4.5rem 1rem !important;
+  }
+}

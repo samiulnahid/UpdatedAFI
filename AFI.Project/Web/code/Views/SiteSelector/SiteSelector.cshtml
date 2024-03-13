@@ -1,0 +1,35 @@
+@using Sitecore.Mvc
+@using Sitecore.XA.Foundation.MarkupDecorator.Extensions
+@using Sitecore.XA.Foundation.SitecoreExtensions.Extensions
+
+@model Sitecore.XA.Feature.Context.Models.SiteSelectorRenderingModel
+
+@{
+    var uid = System.Guid.NewGuid();
+    var formSelector = @Html.Raw("'#" + uid + " form'");
+}
+
+<div @Html.Sxa().Component(Model.Rendering.RenderingCssClass ?? "market-selector", Model.Attributes)>
+    <div class="market-selector-inner">
+        <div class="market-selector-content">
+            <div class="styled-select market" id="@uid">
+                @using (Html.BeginForm())
+                {
+                    @Html.Sitecore().FormHandler("SiteSelector", "ChangeSite")
+                    @Html.DropDownList("ddlMarketSelection", Model.SelectListItems, new { onchange = "setValueAndCallAction(" + @formSelector + ");" })
+                    @Html.Hidden("TargetSiteId", "")
+                    @Html.Hidden("CurrentItemId", Model.Item.ID)
+                    <script>
+                        function setValueAndCallAction(formSelector) {
+                            var selectedValue = jQuery(formSelector + ' #ddlMarketSelection :selected').val();
+                            jQuery(formSelector + ' #TargetSiteId').val(selectedValue);
+                            jQuery(formSelector).submit();
+                        }
+                    </script>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+

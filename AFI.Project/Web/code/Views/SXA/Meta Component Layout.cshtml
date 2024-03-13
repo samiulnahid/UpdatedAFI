@@ -1,0 +1,10 @@
+﻿@if (@Sitecore.Context.PageMode.IsExperienceEditorEditing)
+{
+    <div class="meta-component-wrapper">
+        @RenderBody()
+    </div>
+}
+else
+{
+    @RenderBody()
+}

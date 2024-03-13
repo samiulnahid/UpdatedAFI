@@ -1,0 +1,145 @@
+﻿@using Sitecore.Mvc
+@using Sitecore.ExperienceForms.Mvc.Html
+@using AFI.Feature.Identifiers
+@model RenderingModel
+
+@Html.RenderFormStyles()
+@Html.RenderFormScripts()
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style type="text/css">
+    .leadgenform {
+        padding: 4rem 1rem;
+    }
+
+        /* Themes */
+        .leadgenform.grey {
+            background-color: #f6f6f6;
+        }
+
+        .leadgenform.blue {
+            background: rgb(0, 102, 157);
+            background: linear-gradient( 120deg, rgba(0, 102, 157, 1) 7%, rgba(0, 56, 100, 1) 51% );
+            color: #fff;
+        }
+
+        .leadgenform.red {
+            background: rgba(203, 44, 48, 0.9);
+            background: linear-gradient( 120deg, rgba(203, 44, 48, 0.9), rgba(136, 27, 38, 0.9) );
+            color: #fff;
+        }
+
+            .leadgenform.red .field-validation-error {
+                font-size: 0.8rem;
+                color: white;
+            }
+
+        .leadgenform form {
+            display: grid;
+            grid-template-columns: 1fr;
+            max-width: 700px;
+            margin: 1rem auto;
+        }
+
+        .leadgenform .form-group {
+            margin-bottom: 16px;
+        }
+
+        .leadgenform label {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .leadgenform input:not(.button),
+        .leadgenform select {
+            width: 100%;
+            min-height: 38px;
+        }
+
+    @@media screen and (min-width: 748px) {
+
+        .leadgen-column__col1 {
+            width: 43%;
+            float: left;
+            margin-right: 14%;
+        }
+
+        .leadgen-column__col2 {
+            width: 43%;
+            float: right;
+        }
+
+        .leadgen-column__col3 {
+            justify-self: center;
+            height: auto;
+            clear: both;
+            text-align: center;
+        }
+    }
+
+    /* Utility Classes */
+    .center {
+        text-align: center;
+    }
+
+    .field-validation-error {
+        font-size: 0.8rem;
+        color: red;
+    }
+
+    .form-group.state,
+    .form-group.zip {
+        width: 6rem;
+        display: inline-block;
+        margin-right: 1rem;
+    }
+
+    #dv_msg {
+        display: none;
+    }
+
+    .button {
+        cursor: pointer;
+    }
+</style>
+<section class="main offscreen__darken" role="main" id="main-content">
+    @{
+        var bg = RenderingContext.Current.Rendering.Item.Fields["Background color"].Value.ToLower();
+    }
+    <div class="wrapper leadgenform @bg" id="leadgen-wrapper">
+        <div id="dv_form">
+            @Html.Sitecore().Placeholder("leadgen")
+        </div>
+        <div id="dv_msg">
+            @Html.Sitecore().Field("Message")
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        var c_bg = '@bg';
+        if ('@bg'== 'blue') {
+        $('.header-title').css('color', '#fff');
+        $('.quote-request__section-columns .quote-request__fields-heading').css('color', '#fff');
+            $('.field__label').css('color', '#fff');
+            $('.quote-request__section-columns .quote-request__fields-heading').css('color', '#fff');
+            $('.leadgenform label').css('color', '#fff');
+         $('.button').addClass('button--large-text button--reversed-alt');
+        }
+         if ('@bg'== 'red') {
+        $('.header-title').css('color', '#fff');
+        $('.quote-request__section-columns .quote-request__fields-heading').css('color', '#fff');
+        $('.field__label').css('color', '#fff');
+        $('.button').addClass('button--large-text button--reversed-alt');
+             $('.field__error-message').css('color', '#fff')
+             $('.quote-request__section-columns .quote-request__fields-heading').css('color', '#fff');
+             $('.leadgenform label').css('color', '#fff');
+        }
+
+  $('.maskphone').keyup(function () {
+            $(this).val($(this).val().replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3"));
+        });
+
+    </script>
+
+</section>

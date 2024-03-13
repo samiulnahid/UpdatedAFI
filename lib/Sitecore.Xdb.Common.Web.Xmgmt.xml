@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Sitecore.Xdb.Common.Web.Xmgmt</name>
+    </assembly>
+    <members>
+        <member name="T:Sitecore.Xdb.Common.Web.Xmgmt.HealthCheckServicesConfigurator`2">
+            <summary>
+            Configurator used to register a health check for <see cref="T:Sitecore.Xdb.Common.Web.CommonWebApiClient`1"/> implementations.
+            </summary>
+            <typeparam name="TClient">The type of the client that is based on <see cref="T:Sitecore.Xdb.Common.Web.CommonWebApiClient`1"/>.</typeparam>
+            <typeparam name="TRoutes">The type of the routes.</typeparam>
+            <seealso cref="T:Sitecore.DependencyInjection.IServicesConfigurator" />
+        </member>
+        <member name="F:Sitecore.Xdb.Common.Web.Xmgmt.HealthCheckServicesConfigurator`2.ReadinessTag">
+            <summary>
+            The readiness tag.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.Web.Xmgmt.HealthCheckServicesConfigurator`2.Configure(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <inheritdoc />
+        </member>
+        <member name="M:Sitecore.Xdb.Common.Web.Xmgmt.HealthCheckServicesConfigurator`2.AddCommonWebClientHealthCheck(Sitecore.HealthCheck.DependencyInjection.IHealthChecksBuilder)">
+            <summary>
+            Adds the common web client health check.
+            </summary>
+            <param name="builder">The builder used to add health check registrations.</param>
+        </member>
+        <member name="M:Sitecore.Xdb.Common.Web.Xmgmt.HealthCheckServicesConfigurator`2.CreateCommonWebApiHealthCheck(System.IServiceProvider)">
+            <summary>
+            Creates the health check for common web API client.
+            </summary>
+            <param name="provider">The provider to resolve services from.</param>
+            <returns><see cref="T:Microsoft.Extensions.Diagnostics.HealthChecks.IHealthCheck"/>.</returns>
+        </member>
+        <member name="T:Sitecore.Xdb.Common.Web.Xmgmt.NotConfiguredCommonWebApiClientHealthCheck`2">
+            <summary>
+            Health check implementation for non-configured common web API clients,
+            which is the case when xDB is disabled.
+            </summary>
+            <typeparam name="TClient">The type of the client that is based on <see cref="T:Sitecore.Xdb.Common.Web.CommonWebApiClient`1"/>.</typeparam>
+            <typeparam name="TRoutes">The type of the routes.</typeparam>
+            <seealso cref="T:Microsoft.Extensions.Diagnostics.HealthChecks.IHealthCheck" />
+        </member>
+        <member name="M:Sitecore.Xdb.Common.Web.Xmgmt.NotConfiguredCommonWebApiClientHealthCheck`2.CheckHealthAsync(Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckContext,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:Sitecore.Xdb.Common.Web.Xmgmt.XdbEnabledHealthCheckServicesConfigurator`2">
+            <summary>
+            Configurator used to register a health check for <see cref="T:Sitecore.Xdb.Common.Web.CommonWebApiClient`1"/> implementations.
+            Configurator takes into account whether xDB is enabled.
+            </summary>
+            <typeparam name="TClient">The type of the client that is based on <see cref="T:Sitecore.Xdb.Common.Web.CommonWebApiClient`1"/>.</typeparam>
+            <typeparam name="TRoutes">The type of the routes.</typeparam>
+            <seealso cref="T:Sitecore.DependencyInjection.IServicesConfigurator" />
+        </member>
+        <member name="M:Sitecore.Xdb.Common.Web.Xmgmt.XdbEnabledHealthCheckServicesConfigurator`2.CreateCommonWebApiHealthCheck(System.IServiceProvider)">
+            <inheritdoc />
+        </member>
+        <member name="T:Sitecore.Xdb.Common.Web.Xmgmt.XdbSettings">
+            <summary>
+            Experience database settings.
+            </summary>
+        </member>
+        <member name="P:Sitecore.Xdb.Common.Web.Xmgmt.XdbSettings.Enabled">
+            <summary>
+            Gets a value indicating whether the xDB is enabled.
+            </summary>
+            <value>
+              <c>true</c> if xDB license is valid and xDB is enabled; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Sitecore.Xdb.Common.Web.Xmgmt.XdbSettings.HasValidLicense">
+            <summary>
+            Gets a value indicating whether the license is valid.
+            </summary>
+            <value>
+            <c>true</c> if the license is valid; otherwise, <c>false</c>.
+            </value>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,209 @@
+﻿@model AFI.Feature.QuoteForm.Areas.AFIQuoteForm.Models.Motorhome.MotorhomeForm
+@using AFI.Feature.QuoteForm.Areas.AFIWEB.Models.Form_Models
+
+@{
+    int i = 1;
+    int j = 1;
+    var stepsCount = Model.wayfinder.steps.Count;
+}
+
+<!-- ************************************************ -->
+<!---------------------- MULTI-STEP 2 ------------------>
+<!-- ************************************************ -->
+<!-- VEHICLE FORM -->
+@{
+    Section data = Model.form.sections.Where(x => x.id == "vehicle").SingleOrDefault();
+}
+
+<!-- VEHICLE FORM -->
+<section class="form_section multi__step_2 add_vehicle_form">
+    <div class="container">
+        <!-- ******** STEP ******** -->
+        <div class="step__container">
+            <ul class="steps__list">
+                @foreach (var step in Model.wayfinder.steps)
+                {
+                    <li class="step @(j <= 2 ? "active_step" : "")" data-text="@step.label">@j</li>
+                    @Html.Raw(j != stepsCount ? "<li class='line'></li>" : "")
+                    j++;
+                }
+            </ul>
+        </div>
+
+        <div class="quote_request__section_wrapper">
+            <!-- ******* FORM  *******-->
+            <div class="form_container">
+                <!--Updated By  25.7.23 Start-->
+                <button class="quote-request-sidebar__show-trigger" type="button">?</button>
+                <!--Updated By  25.7.23 End-->
+                <h2 class="quote_request_heading">@data.heading</h2>
+
+                <!-- Year, Make, Model -->
+                <div class="fields-row">
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="vehicleYear">@data.fields[0].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required year"
+                                   id="@data.fields[0].id"
+                                   name="@data.fields[0].id"
+                                   type="text"
+                                   maxlength="4"
+                                   data-field="Year" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Make, Model -->
+                <div class="fields-row">
+                    <div class="field field--xlarge">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="vehicleMake">@data.fields[1].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required"
+                                   id="@data.fields[1].id"
+                                   name="@data.fields[1].id"
+                                   type="text"
+                                   maxlength="50"
+                                   data-field="Make" />
+                        </div>
+                    </div>
+                    <div class="field field--xlarge">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="vehicleModel">@data.fields[2].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required"
+                                   id="@data.fields[2].id"
+                                   name="@data.fields[2].id"
+                                   type="text"
+                                   maxlength="50"
+                                   data-field="Model" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Type of Vehicle -->
+                <div class="fields-row">
+                    <div class="field field--xlarge">
+                        <div class="field__label-wrapper"><label class="field__label" for="vehicleType">@data.fields[3].label</label></div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input required" id="@data.fields[3].id"
+                                    name="@data.fields[3].id" type="select">
+                                <option value="">Choose One</option>
+                                @foreach (Options opt in Model.form.unique.vehicleTypes)
+                                {
+                                    <option value="@opt.value">@opt.label</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Length in feet, Number of Slide Outs  -->
+                <div class="fields-row">
+                    <div class="field">
+                        <div class="field__label-wrapper"><label class="field__label" for="vehicleLength">@data.fields[4].label</label></div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required numberOnly" id="@data.fields[4].id"
+                                   name="@data.fields[4].id" type="text" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="vehicleSlideOutCount">@data.fields[5].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required numberOnly"
+                                   id="@data.fields[5].id"
+                                   name="@data.fields[5].id"
+                                   type="text" />
+                        </div>
+                    </div>
+                </div>
+                <!-- Vehicle Use, Number of Slide Outs  -->
+
+                <div class="fields-row">
+                    <div class="field undefined">
+                        <div class="field__label-wrapper"><label class="field__label" for="vehicleUse">@data.fields[6].label</label></div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input required" id="@data.fields[6].id"
+                                    name="@data.fields[6].id" type="select">
+                                &gt;
+                                <option value="">Choose One</option>
+                                @foreach (Options opt in Model.form.unique.vehicleUses)
+                                {
+                                    <option value="@opt.value">@opt.label</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="vehiclePurchaseYear">@data.fields[7].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required numberOnly"
+                                   id="@data.fields[7].id"
+                                   name="@data.fields[7].id"
+                                   type="text"
+                                   maxlength="4" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vehicle Use, Purchase Year  -->
+                <div class="fields-row">
+                    <div class="field">
+                        <div class="field__label-wrapper"><label class="field__label" for="vehicleValue">@data.fields[8].label</label></div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required dollar"
+                                   id="@data.fields[8].id"
+                                   name="@data.fields[8].id"
+                                   type="text" />
+                            <p class="field__note">@data.fields[8].note</p>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="vehiclePersonalEffectsValue">@data.fields[9].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required dollar"
+                                   id="@data.fields[9].id"
+                                   name="@data.fields[9].id"
+                                   type="text" />
+                            <p class="field__note">@data.fields[9].note</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ******* ASIDE  *******-->
+            @if (data.sidebar != null && data.sidebar.content.Count > 0)
+            {
+        <aside class="quote_request_aside">
+            <h2 class="quote_request_sidebar__heading">@data.sidebar.heading</h2>
+            <div class="quote_request_sidebar__content">
+                @foreach (SideBarContent sideContent in data.sidebar.content)
+                {
+                    <div class="quote_request_sidebar__item">
+                        <h3 class="quote_request_sidebar__item_heading">
+                            @sideContent.heading
+                        </h3>
+                        <p class="quote_request_sidebar__item_description">
+                            @sideContent.content
+                        </p>
+                    </div>
+                }
+
+            </div>
+            <!--Updated By  25.7.23 Start-->
+            <button class="button button--reversed quote-request-sidebar__hide-trigger" type="button">Close</button>
+            <!--Updated By  25.7.23 End-->
+        </aside>
+            }
+        </div>
+    </div>
+</section>

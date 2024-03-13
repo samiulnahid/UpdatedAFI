@@ -1,0 +1,284 @@
+﻿@using AFI.Feature.QuoteForm.Areas.AFIWEB.Models.Form_Models
+@model AFI.Feature.QuoteForm.Areas.AFIQuoteForm.Models.HillAFBForm.HillAFBForm
+
+
+<!-- ************************************************ -->
+<!---------------------- MULTI-STEP 1 ------------------>
+<!-- ************************************************ -->
+@{
+    Section data = Model.form.sections.Where(x => x.id == "policyHolder").SingleOrDefault();
+}
+<section class="form_section about_yourself active_section">
+    <div class="container">
+        <div class="quote_request__section_wrapper">
+            <!-- ******* FORM  *******-->
+            <div class="form_container">
+
+                <button class="quote-request-sidebar__show-trigger" type="button">?</button>
+
+                <h2 class="quote_request_heading">@data.heading</h2>
+
+                <div class="fields-row name_suffix">
+                    <!-- First Name -->
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="policyHolderFirstName">@data.fields[0].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required"
+                                   id="@data.fields[0].id"
+                                   name="@data.fields[0].id"
+                                   data-name="policyHolderFirstName"
+                                   type="text"
+                                   pattern="^[a-zA-Z]+$"
+                                   maxlength="50"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+
+                    <!-- Last Name -->
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="policyHolderLastName">@data.fields[1].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required"
+                                   id="@data.fields[1].id"
+                                   name="@data.fields[1].id"
+                                   data-name="policyHolderLastName"
+                                   type="text"
+                                   pattern="^[a-zA-Z]+$"
+                                   maxlength="50"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+
+                    <!-- Suffix -->
+                    <div class="field field--small">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="policyHolderSuffix">@data.fields[2].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input"
+                                    id="@data.fields[2].id"
+                                    name="@data.fields[2].id"
+                                    data-name="policyHolderSuffix"
+                                    type="select">
+                                <option value="">--</option>
+                                @foreach (Options opt in data.fields[2].options)
+                                {
+                                    <option value="@opt.value">@opt.label</option>
+                                }
+                            </select>
+                            <p class="field__note">@data.fields[2].note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fields-row">
+                    <!-- Spouse First Name-->
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="policyHolderSpouseFirstName"> @data.fields[3].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input typeAlphabetic"
+                                   id="@data.fields[3].id"
+                                   name="@data.fields[3].id"
+                                   data-name="policyHolderSpouseFirstName"
+                                   type="text"
+                                   pattern="^[a-zA-Z]+$"
+                                   maxlength="50"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+
+                    <!-- Spouse Last Name -->
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="policyHolderSpouseLastName">@data.fields[4].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input typeAlphabetic"
+                                   id="@data.fields[4].id"
+                                   name="@data.fields[4].id"
+                                   data-name="policyHolderSpouseLastName"
+                                   type="text"
+                                   pattern="^[a-zA-Z]+$"
+                                   maxlength="50"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fields-row">
+                    <!-- Email -->
+                    <div class="field field--xlarge">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="policyHolderEmail">@data.fields[5].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required email"
+                                   id="@data.fields[5].id"
+                                   name="@data.fields[5].id"
+                                   data-name="policyHolderEmail"
+                                   type="email"
+                                   maxlength="100"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+
+                    <!-- Phone Type -->
+                    <div class="field field--medium">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="policyHolderPhoneType">@data.fields[6].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input required"
+                                    id="@data.fields[6].id"
+                                    name="@data.fields[6].id"
+                                    data-name="policyHolderPhoneType"
+                                    type="select">
+                                <option value="">--</option>
+                                @foreach (Options opt in data.fields[6].options)
+                                {
+                                    <option value="@opt.value">@opt.label</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Phone Number -->
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="policyHolderPhoneNumber">@data.fields[7].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required phone"
+                                   id="@data.fields[7].id"
+                                   name="@data.fields[7].id"
+                                   data-name="policyHolderPhoneNumber"
+                                   type="text"
+                                   pattern="\(\d\d\d\) \d\d\d-?\d\d\d\d"
+                                   maxlength="14"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fields-row">
+                    <!-- Mailing Address -->
+                    <div class="field field--xlarge">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="policyHolderMailingAddress1">@data.fields[8].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required"
+                                   id="@data.fields[8].id"
+                                   name="@data.fields[8].id"
+                                   data-name="policyHolderMailingAddress1"
+                                   type="text"
+                                   maxlength="100"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+
+                    <div class="field field--xlarge">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="policyHolderMailingAddress2">@data.fields[9].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input"
+                                   id="@data.fields[9].id"
+                                   name="@data.fields[9].id"
+                                   data-name="policyHolderMailingAddress2"
+                                   type="text"
+                                   maxlength="100"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+
+                    <!-- city -->
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="city">@data.fields[10].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required"
+                                   id="@data.fields[10].id"
+                                   name="@data.fields[10].id"
+                                   data-name="city"
+                                   type="text"
+                                   maxlength="100"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- State, Zip -->
+                <div class="fields-row">
+                    <div class="field field--xlarge">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="state">@data.fields[11].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input required"
+                                    id="@data.fields[11].id"
+                                    name="@data.fields[11].id"
+                                    type="select">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field field--medium">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="zip">@data.fields[12].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required zip numberOnly"
+                                   id="@data.fields[12].id"
+                                   name="@data.fields[12].id"
+                                   data-name="zip"
+                                   type="text"
+                                   maxlength="5"
+                                   pattern="[0-9]{5}"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+                </div>
+
+                <p class="note">
+                    @Html.Raw(data.disclaimer)
+                </p>
+            </div>
+            @if (data.sidebar != null && data.sidebar.content.Count > 0)
+            {
+                <!-- ******* ASIDE  *******-->
+                <aside class="quote_request_aside" style="max-width: 200px">
+                    <h2 class="quote_request_sidebar__heading"> @data.sidebar.heading</h2>
+                    @foreach (SideBarContent sideContent in data.sidebar.content)
+                    {
+                        <div class="quote_request_sidebar__item">
+                            <h3 class="quote_request_sidebar__item_heading">
+                                @sideContent.heading
+                            </h3>
+                            <p class="quote_request_sidebar__item_description">
+                                @sideContent.content
+                            </p>
+                        </div>
+                    }
+                    <button class="button button--reversed quote-request-sidebar__hide-trigger" type="button">Close</button>
+                </aside>
+            }
+        </div>
+    </div>
+</section>

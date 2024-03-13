@@ -1,0 +1,32 @@
+﻿
+@using Sitecore.Links
+@using Sitecore.Mvc
+@using Sitecore
+@using Sitecore.Data.Fields
+@using Sitecore.Resources.Media
+@using Sitecore.Data.Items
+
+@model Sitecore.Mvc.Presentation.RenderingModel
+@{
+    var options = LinkManager.GetDefaultUrlOptions();
+    options.AlwaysIncludeServerUrl = true;
+    var currentItemURL = LinkManager.GetItemUrl(Sitecore.Context.Item, options);
+    var facebooklink = "http://www.facebook.com/sharer.php?u=" + currentItemURL;
+    var twitterLink = "https://twitter.com/home?status=" + currentItemURL;
+}
+
+<div class="share-badges js-share-badges" data-module="shareBadges">
+    <button class="share-badges__trigger js-share-trigger"><span class="icon-share"><i class="fa-solid fa-share-from-square"></i></span> Share</button>
+    <ul class="share-badges__items js-share-links">
+        <li class="share-badges__item">
+            <a class="share-badges__link icon-facebook" href="@facebooklink" target="_blank"><span >
+                <i class="fa-brands fa-facebook"></i>
+            </span></a>
+        </li>
+        <li class="share-badges__item">
+            <a class="share-badges__link icon-twitter" href="@twitterLink" target="_blank"><span >
+                    <i class="fa-brands fa-twitter"></i>
+            </span></a>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,58 @@
+﻿@model  AFI.Feature.PressRelease.Models.PressReleaseList
+
+@{
+  string DefaultDateformat = "dd MMMM yyyy";
+}
+
+@if (Model == null)
+{
+    <p>No Press Releases available.</p>
+}
+else
+{
+    <section class="article-list">
+        <div class="wrapper">
+            <div class="article-list__heading-wrapper">
+                <h1>@RenderingContext.Current.Rendering.Parameters["Left Side Text"]</h1>
+                <form class="js-submitonchange" method="get">
+                    <div class="field  ">
+                        <label for="input" class="label is-vishidden ">Label</label>
+                        <select class="input" id="yearvalue" name="year">
+                            <option value="ALL YEARS">ALL YEARS</option>
+                            @foreach (var year in Model.YearList)
+                            {
+                                <option value="@year.yearvalue" @year.selected>@year.yearname</option>
+                            }
+                        </select>
+                        <button class="button is-vishidden" type="submit">Button</button>
+                    </div>
+                </form>
+            </div>
+            <div class="article-list__group">
+                @foreach (var pressrelease in Model.PressRelease)
+                {
+                    <div class="article-list-item">
+                        <h2 class="article-list-item__heading">@pressrelease.Title</h2>
+                        <p class="article-list-item__dateline">@pressrelease.PublishDate.ToString(DefaultDateformat)</p>
+                        <p class="article-list-item__description">@pressrelease.Description</p>
+                        <a class="arrow-link" href="@pressrelease.Link">@RenderingContext.Current.Rendering.Parameters["Read More Text"] <i class="fa-solid fa-chevron-right"></i></a>
+                    </div>
+                }
+            </div>
+            @if (Model.TotalCount > Model.PageSize)
+            {
+                @Html.Partial("/Views/AFI/Navigation/Pagination.cshtml", Model)
+            }
+        </div>
+    </section>
+}
+    <script>
+        let pageindex = 1;
+        const year = document.getElementById("yearvalue");
+        function setYearToHref() {
+            const splitted = window.location.href.split("?");
+            window.location.href = splitted[0] + "?year=" + year?.value;
+        }
+        year.addEventListener("change", setYearToHref);
+    </script>
+

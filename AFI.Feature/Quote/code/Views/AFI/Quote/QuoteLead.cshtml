@@ -1,0 +1,21 @@
+﻿@using AFI.Feature.QuoteForm.Areas.AFIWEB.Models.Form_Models
+@model AFI.Feature.QuoteForm.Areas.AFIQuoteForm.Models.QuoteLeadForm.QuoteLeadForm
+
+@foreach (var section in Model.form.sections)
+{
+    if (section.id == "policyHolder")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/QuoteLead/_StepOne.cshtml", Model)
+    }
+}
+<div class="quote_request__action_buttons">
+    <div class="container d-flex">
+        <button id="lead_back_btn" class="button button__back button__left hide" type="button"> @Model.form.backButtonText</button>
+        <button id="lead_next_btn" class="button button__next button__right" type="submit">@Model.form.nextButtonText</button>
+    </div>
+</div>
+
+<script>
+    var leadSuccessRedirection = "/Quote-Forms-Save-Success";
+</script>
+

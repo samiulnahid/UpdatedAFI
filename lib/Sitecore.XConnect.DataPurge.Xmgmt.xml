@@ -1,0 +1,309 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Sitecore.XConnect.DataPurge.Xmgmt</name>
+    </assembly>
+    <members>
+        <member name="T:Sitecore.XConnect.DataPurge.Xmgmt.DataPurgeController">
+            <summary>
+            Represents Web API for managing data purge process.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Xmgmt.DataPurgeController.#ctor(Sitecore.Processing.Engine.Client.ProcessingEngineClient,Sitecore.XConnect.DataPurge.Xmgmt.ValueGenerator,Sitecore.XConnect.DataPurge.Xmgmt.Mappers.IMarketingItemsMapperFactory)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.XConnect.DataPurge.Xmgmt.DataPurgeController" /> class.
+            </summary>
+            <param name="processingClient">The task manager.</param>
+            <param name="valueGenerator">The well known values generator.</param>
+            <param name="mapperFactory">The mapper factory, which creates mappers to map marketing items by monikers.</param>
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Xmgmt.DataPurgeController.#ctor(Sitecore.Processing.Engine.Abstractions.ITaskManager,Sitecore.XConnect.DataPurge.Xmgmt.ValueGenerator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.XConnect.DataPurge.Xmgmt.DataPurgeController"/> class.
+            </summary>
+            <param name="taskManager">The task manager.</param>
+            <param name="valueGenerator">The well known values generator.</param>
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Xmgmt.DataPurgeController.GetTaskProgress(System.Guid)">
+            <summary>
+            Gets the task status.
+            </summary>
+            <param name="taskId">The task id.</param>
+            <returns>The task status information.</returns>
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Xmgmt.DataPurgeController.RegisterDeleteContactsTask(Sitecore.XConnect.DataPurge.Xmgmt.Models.RegisterDeleteContactsTaskModel)">
+            <summary>
+            Registers the delete contacts task.
+            </summary>
+            <returns>The created task id.</returns>
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Xmgmt.DataPurgeController.RegisterDeleteInteractionsTask(Sitecore.XConnect.DataPurge.Xmgmt.Models.RegisterDeleteInteractionsTaskModel)">
+            <summary>
+            Registers the delete interaction task.
+            </summary>
+            <returns>The created task id.</returns>
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Xmgmt.DataPurgeController.CancelTask(System.Guid)">
+            <summary>
+            Cancels the delete contacts task.
+            </summary>
+            <returns>The canceled task id.</returns>
+        </member>
+        <member name="T:Sitecore.XConnect.DataPurge.Xmgmt.DataPurgeExceptionFilterAttribute">
+            <summary>
+            Attribute that is used to handle data purge exceptions.
+            </summary>
+            <seealso cref="T:System.Web.Http.Filters.ExceptionFilterAttribute" />
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Xmgmt.DataPurgeExceptionFilterAttribute.OnException(System.Web.Http.Filters.HttpActionExecutedContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Sitecore.XConnect.DataPurge.Xmgmt.DataPurgeServiceConfigurator">
+            <summary>
+            Configures Data purge tool WebAPI controllers and all their dependencies.
+            </summary>
+        </member>
+        <member name="T:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.IMarketingItemsLocator">
+            <summary>
+            Defines locator which locates marketing items.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.IMarketingItemsLocator.GetByAlias(System.String)">
+            <summary>
+            Gets the marketing item IDs by alias.
+            </summary>
+            <param name="alias">The alias to get by.</param>
+            <returns>The marketing item IDs.</returns>
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.IMarketingItemsLocator.Exists(System.Guid)">
+            <summary>
+            Checks whether a marketing item exists.
+            </summary>
+            <param name="itemId">The ID of the marketing item to check by.</param>
+            <returns>
+            <c>true</c> if the marketing item exists; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="T:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.IMarketingItemsMapper">
+            <summary>
+            Mapper which maps monikers to the definition item ids.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.IMarketingItemsMapper.Map(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Maps definition item ids by monikers.
+            </summary>
+            <param name="monikers">
+            The monikers to map definition item ids by.
+            Moniker is either a marketing definition item alias/name or GUID.
+            </param>
+            <returns><see cref="T:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MappingResult"/>.</returns>
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.IMarketingItemsMapper.ItemType">
+            <summary>
+            Gets the type of the item.
+            </summary>
+            <value>
+            The type of the item.
+            </value>
+        </member>
+        <member name="T:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.IMarketingItemsMapperFactory">
+            <summary>
+            Defines a factory to return marketing items mapper based on the item type.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.IMarketingItemsMapperFactory.GetMapper(Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MarketingItemType)">
+            <summary>
+            Gets the marketing items mapper by item type.
+            </summary>
+            <param name="itemType">The item type to get the mapper for.</param>
+            <returns>The marketing items mapper.</returns>
+        </member>
+        <member name="T:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MappingResult">
+            <summary>
+            Represents the result of the marketing definition items mapping.
+            </summary>
+            <seealso cref="M:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.IMarketingItemsMapper.Map(System.Collections.Generic.IEnumerable{System.String})"/>
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MappingResult.Success">
+            <summary>
+            Gets the value indicating whether the result is success.
+            </summary>
+            <value>
+              <c>true</c> if the result is success; otherwise, <c>false</c>.
+            </value>
+            <remarks>
+            Success result has empty <see cref="P:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MappingResult.NotMappedIds"/>, <see cref="P:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MappingResult.NotMappedAliases"/> and <see cref="P:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MappingResult.Conflicts"/>.
+            </remarks>
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MappingResult.MappedIds">
+            <summary>
+            Gets the IDs of the mapped definition items.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MappingResult.NotMappedIds">
+            <summary>
+            Gets the IDs which are not mapped.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MappingResult.NotMappedAliases">
+            <summary>
+            Gets the aliases which are not mapped.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MappingResult.Conflicts">
+            <summary>
+            Gets the dictionary, where the key is an alias, and the value is the list of IDs mapped by this alias.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MappingResultExtensions.ToErrorMessage(Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MappingResult)">
+            <summary>
+            Gets an error message.
+            </summary>
+            <returns>
+            The error message, which contains information about mapping failures, if <see cref="P:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MappingResult.Success"/> is <c>false</c>;
+            otherwise, an empty string.
+            </returns>
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MarketingChannelTaxonomyLocator.GetByAlias(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MarketingChannelTaxonomyMapper.#ctor(Sitecore.XConnect.DataPurge.Xmgmt.Mappers.IChannelsLocator)">
+            <inheritdoc />
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MarketingChannelTaxonomyMapper.ItemType">
+            <inheritdoc />
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MarketingEventDefinitionLocator.GetByAlias(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MarketingEventDefinitionLocator.Exists(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MarketingEventDefinitionMapper.#ctor(Sitecore.XConnect.DataPurge.Xmgmt.Mappers.IEventsLocator)">
+            <inheritdoc />
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MarketingEventDefinitionMapper.ItemType">
+            <inheritdoc />
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MarketingItemsMapper`1.ItemType">
+            <inheritdoc />
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MarketingItemsMapper`1.Map(System.Collections.Generic.IEnumerable{System.String})">
+            <inheritdoc />
+        </member>
+        <member name="T:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MarketingItemType">
+            <summary>
+            Defines the enum of marketing item types.
+            </summary>
+        </member>
+        <member name="F:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MarketingItemType.Event">
+            <summary>
+            Represents the marketing definition event type.
+            </summary>
+        </member>
+        <member name="F:Sitecore.XConnect.DataPurge.Xmgmt.Mappers.MarketingItemType.Channel">
+            <summary>
+            Represents the channel taxonomy type.
+            </summary>
+        </member>
+        <member name="T:Sitecore.XConnect.DataPurge.Xmgmt.Models.RegisterDeleteContactsTaskModel">
+            <summary>
+            Model for register delete contacts task.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Xmgmt.Models.RegisterDeleteContactsTaskModel.CutoffDays">
+            <summary>
+            Gets or sets the cutoff days.
+            </summary>
+        </member>
+        <member name="T:Sitecore.XConnect.DataPurge.Xmgmt.Models.RegisterDeleteInteractionsTaskModel">
+            <summary>
+            Model for register delete interactions task.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Xmgmt.Models.RegisterDeleteInteractionsTaskModel.StartedDaysCutoff">
+            <summary>
+            Gets or sets the number of days passed after interaction was started.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Xmgmt.Models.RegisterDeleteInteractionsTaskModel.DeleteIfHasEvents">
+            <summary>
+            Gets or sets event names. Interaction should be removed if it has at least one of this events.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Xmgmt.Models.RegisterDeleteInteractionsTaskModel.SkipIfHasEvents">
+            <summary>
+            Gets or sets event names. Interaction should not be removed if it has at least one of this events.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Xmgmt.Models.RegisterDeleteInteractionsTaskModel.DeleteIfHasChannels">
+            <summary>
+            Gets or sets channel names to delete.
+            Interaction should be removed if interaction's channel is in the list.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Xmgmt.Models.RegisterDeleteInteractionsTaskModel.SkipIfHasChannels">
+            <summary>
+            Gets or sets channel names to skip.
+            Interaction should not be removed if interaction's channel is in the list.
+            </summary>
+        </member>
+        <member name="T:Sitecore.XConnect.DataPurge.Xmgmt.Models.RegisterDeleteTaskModel">
+            <summary>
+            Abstract model for register processing task.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Xmgmt.Models.RegisterDeleteTaskModel.BatchSize">
+            <summary>
+            Gets or sets the size of the batch.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Xmgmt.Models.RegisterDeleteTaskModel.DefaultSplitItemCount">
+            <summary>
+            Gets or sets the default split item count.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Xmgmt.Models.RegisterDeleteTaskModel.ExpiresAfterHours">
+            <summary>
+            Gets or sets the expires after hours.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Xmgmt.Models.RegisterDeleteTaskModel.StartPercentile">
+            <inheritdoc />
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Xmgmt.Models.RegisterDeleteTaskModel.EndPercentile">
+            <inheritdoc />
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Xmgmt.Models.RegisterDeleteTaskModel.Conditions">
+            <summary>
+            Gets or sets the conditions.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Xmgmt.Models.RegisterDeleteTaskModel.Validate(System.ComponentModel.DataAnnotations.ValidationContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Sitecore.XConnect.DataPurge.Xmgmt.PostSteps.ComponentPostStep">
+            <summary>
+            Creates "sitecore\Sitecore XConnect Data Admin" role.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataPurge.Xmgmt.PostSteps.ComponentPostStep.Run(Sitecore.Install.Framework.ITaskOutput,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Runs the process of creating the role.
+            </summary>
+            <param name="output">The <see cref="T:Sitecore.Install.Framework.ITaskOutput"/>.</param>
+            <param name="metaData">The <see cref="T:System.Collections.Specialized.NameValueCollection"/>.</param>
+        </member>
+        <member name="T:Sitecore.XConnect.DataPurge.Xmgmt.ValueGenerator">
+            <summary>
+            Provides a wrapper over static value generating methods.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataPurge.Xmgmt.ValueGenerator.UtcNow">
+            <summary>
+            Gets the now date time UTC value.
+            </summary>
+        </member>
+    </members>
+</doc>

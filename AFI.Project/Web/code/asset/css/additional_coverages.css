@@ -1,0 +1,242 @@
+.additional_coverages_container {
+  max-width: 1114px;
+  margin: auto;
+  justify-content: space-between;
+}
+
+
+.additional_coverages_container .quote-cta {
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to bottom right, #cb2c30, #881b26);
+  color: #fff;
+  padding: 1rem 1.5rem !important;
+  /* display: flex; */
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.additional_coverages_container .text__content h2,
+.additional_coverages_container .left__text__content h2 {
+  color: #004976 !important;
+}
+
+.additional_coverages_container .quote-cta h2,
+.additional_coverages_container .quote-cta p {
+  margin: 0;
+  color: #fff;
+  /* text-align: center !important; */
+  /* margin-bottom: 10px !important; */
+  margin-bottom: 0 !important;
+}
+
+/* .additional_coverages_container .quote-cta h2 {
+  margin-bottom: 1.125rem;
+} */
+
+.quote-cta .quote-cta-inner {
+  flex-shrink: 0;
+  flex-grow: 1;
+}
+
+.quote-cta .start-btn {
+  padding: 12px 20px !important;
+  min-width: 148px !important;
+}
+
+.quote-cta .btn_container {
+  text-align: center;
+  width: 100%;
+}
+
+.quote-cta .align__center {
+  display: grid;
+  /* place-content: center; */
+  justify-content: end;
+  align-items: center;
+}
+
+.TypesOfBusiness {
+  max-width: 1114px;
+  margin: auto;
+}
+
+.TypesOfBusiness .article__explain h6 {
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  margin: 0 !important;
+}
+
+/* Verticle Image */
+.additional_coverages_container .vertical-image {
+  position: relative;
+  margin-top: 2rem;
+  /* margin-bottom: 2rem !important; */
+  aspect-ratio: 9/10;
+}
+
+
+.vertical-image img {
+  object-fit: cover;
+  object-position: center;
+  height: 100% !important;
+}
+
+/* icon_content_section */
+.icon_content_section {
+  background-color: var(--afi-blue-200);
+  text-align: center;
+  /* padding: 30px !important; */
+}
+
+.icon_content_section .content-column {
+  max-width: 800px;
+  margin: auto;
+  background: none !important;
+  padding: 40px !important;
+}
+
+.icon_content_section h2 {
+  font-size: 1.875rem !important;
+  line-height: 2.25rem !important;
+  color: var(--afi-blue-700);
+}
+
+.icon_content_section .icon_wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-content: center;
+}
+
+.icon_content_section .icon_wrapper .icon_item {
+  text-align: center;
+}
+
+.icon_content_section .icon_item img {
+  margin-bottom: 10px;
+}
+
+.icon_content_section .icon_item .component-content {
+  color: #004976 !important;
+}
+
+@media screen and (max-width: 450px) {
+  .icon_content_section .icon_wrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.TypesOfBusiness .article__explain p {
+  line-height: 1.3 !important;
+}
+
+
+
+
+.mt__70 {
+  margin-top: 70px !important;
+}
+
+@media screen and (max-width:991px) {
+  .mt__70 {
+    margin-top: 0 !important;
+  }
+
+  .mobile-youtube iframe {
+    width: 100%;
+    aspect-ratio: 16/9;
+  }
+
+  .additional_coverages_container .vertical-image {
+    margin-top: 0 !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .additional_coverages_container .vertical-image .mt__70 {
+    margin-top: 0 !important;
+  }
+
+  .additional_coverages_container .quote-cta {
+    text-align: center;
+  }
+
+  .additional_coverages_container .quote-cta p {
+    margin-bottom: 1rem !important;
+  }
+
+  .icon_content_section .content-column {
+    padding: 20px !important;
+  }
+
+  .vertical-image img {
+    width: 100%;
+  }
+}
+
+/********************************************************
+*              MAJOR CHANGES - 28 Nov 2023
+********************************************************/
+.auto_section__container {
+  max-width: 1114px;
+}
+
+.auto_section__container .main_section__container {
+  display: grid !important;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem 3rem;
+}
+
+.main_section__container .card__container,
+.main_section__container .main__text__content {
+  width: 100% !important;
+}
+
+.mobile-youtube iframe {
+  width: 100%;
+  padding: 0 10px;
+  /* aspect-ratio: 16/9; */
+}
+
+@media screen and (max-width:1300px) {
+  .auto_section__container .main_section__container {
+    gap: 2rem 3rem;
+  }
+}
+
+@media screen and (max-width:991px) {
+  .auto_section__container .main_section__container {
+    grid-template-columns: 1fr;
+  }
+
+  .mobile-youtube iframe {
+    padding: 0;
+  }
+}
+
+/* ***** /hill page ***** */
+.main_section__container.three__one__grid {
+  display: grid !important;
+  grid-template-columns: 3fr 1fr;
+  gap: 2rem 4rem;
+}
+
+/* .main_section__container.three__one__grid {
+  display: grid !important;
+  grid-template-columns: 74% 25%;
+  gap: 2rem 1%;
+} */
+
+.main_section__container.three__one__grid .video {
+  padding: 0 15px !important;
+}
+
+.auto_section__container.extra__max_width {
+  max-width: 1247px !important;
+}
+
+@media screen and (max-width:991px) {
+  .main_section__container.three__one__grid {
+    grid-template-columns: 1fr;
+  }
+}

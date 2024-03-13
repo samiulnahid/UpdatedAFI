@@ -1,0 +1,263 @@
+﻿@using Sitecore.Mvc
+@model AFI.Feature.QuoteForm.Areas.AFIWEB.Models.SurveyForm
+<style>
+
+    #tbl-survay {
+        margin: auto;
+        margin-top: 2%;
+        border-collapse: collapse;
+        border-spacing: 0 15px;
+    }
+
+        #tbl-survay th:first-child, td:first-child {
+            width: 40%;
+            text-align: left !important;
+        }
+
+        #tbl-survay th, td {
+            width: 80px;
+            text-align: center;
+            padding: 5px;
+            font-size: 16px;
+        }
+
+        #tbl-survay .br-white {
+            border-right: #ffffff;
+        }
+
+        #tbl-survay .bl-white {
+            border-left: #ffffff;
+        }
+
+        #tbl-survay .sub_header {
+            font-weight: 600;
+        }
+
+    #survey-form {
+        margin: auto;
+        margin-bottom: 1rem;
+        padding: 0rem 1.5rem;
+        position: relative;
+    }
+
+
+        #survey-form .form-group {
+            display: grid !important;
+            grid-template-columns: 40% 60%;
+            margin-top: 1%;
+            margin-bottom: 2%;
+        }
+
+    .box-area {
+        position: absolute;
+        bottom: 0px;
+        left: 0;
+        list-style: none;
+        width: 100%;
+        display: inline-flex;
+        justify-content: space-evenly;
+    }
+
+    .form-group-btn {
+        text-align: center;
+    }
+
+    .heading-blue {
+        padding: 1.75rem 0 0.5rem 0;
+        text-align: center;
+        background-color: var(--color-white);
+    }
+
+    #tbl-survay .c_bg {
+        background: #D9E1F2;
+    }
+
+    @@media (min-width:540px) {
+        #survey-form {
+            margin: auto;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+    }
+
+    #survey-ex {
+        text-align: center;
+        padding: 100px 0;
+    }
+
+    #survey-thanks {
+        display: none;
+        text-align: center;
+        padding: 100px 0;
+    }
+
+    .landing-page-hero__wrapper{
+        max-height: unset !important;
+        text-align: left;
+    }
+</style>
+<div class="wrapper">
+    <div class="container survey" style="text-align: left;">
+        @if (Model.IsSubmitted)
+        {
+            <div id="survey-ex">
+                <h2>@Sitecore.Globalization.Translate.Text("Claim_Submitted_Message")</h2>
+            </div>
+
+        }
+        else
+        {
+
+    <form id="survey-form">
+        <h1 class="heading-blue">@Sitecore.Globalization.Translate.Text("Claim_Title")</h1>
+        <p class="subheading">@Sitecore.Globalization.Translate.Text("Claim_SubTitle")</p>
+        <table id="tbl-survay">
+            <tr>
+                <th></th>
+                @for (int i = Model.MaxSelectionScale; i >= 0; --i)
+                {
+                    if (Model.Satisfactions.Count > 0)
+                    {
+                        var _scale = Model.Satisfactions.Where(x => x.ScaleTo == i).SingleOrDefault();
+                        if (_scale != null && _scale.ScaleTo == i)
+                        {
+                            <th>@_scale.Name</th>
+                        }
+                        else
+                        {
+                            <th></th>
+                        }
+                    }
+                    else
+                    {
+                        <th></th>
+                    }
+
+                }
+
+            </tr>
+
+            <tr class="sub_header">
+                <td></td>
+                @for (int i = Model.MaxSelectionScale; i >= 0; --i)
+                {
+                    <td>@i</td>
+                }
+            </tr>
+
+            @if (!string.IsNullOrEmpty(Model.Q_1))
+            {
+                <tr class="c_bg">
+                    <td>@Model.Q_1</td>
+                    @for (int i = Model.MaxSelectionScale; i >= 0; --i)
+                    {
+                        <td><input type="radio" class="radio_@i" name="Q_1" value="@i"></td>
+                    }
+                </tr>
+            }
+
+
+            @if (!string.IsNullOrEmpty(Model.Q_2))
+            {
+                <tr>
+                    <td>@Model.Q_2</td>
+                    @for (int i = Model.MaxSelectionScale; i >= 0; --i)
+                    {
+                        <td><input type="radio" class="radio_@i" name="Q_2" value="@i"></td>
+                    }
+                </tr>
+            }
+
+
+            @if (!string.IsNullOrEmpty(Model.Q_3))
+            {
+                <tr class="c_bg">
+                    <td>@Model.Q_3</td>
+                    @for (int i = Model.MaxSelectionScale; i >= 0; --i)
+                    {
+                        <td><input type="radio" class="radio_@i" name="Q_3" value="@i"></td>
+                    }
+                </tr>
+            }
+
+
+            @if (!string.IsNullOrEmpty(Model.Q_3))
+            {
+                <tr>
+                    <td>@Model.Q_4</td>
+                    @for (int i = Model.MaxSelectionScale; i >= 0; --i)
+                    {
+                        <td><input type="radio" class="radio_@i" name="Q_4" value="@i"></td>
+                    }
+                </tr>
+            }
+        </table>
+
+        @if (!string.IsNullOrEmpty(Model.CommentsLabel))
+        {
+            <div class="form-group">
+                <label for="">@Model.CommentsLabel</label>
+                <textarea name="Comments" id="textarea-work" cols="30" rows="10"></textarea>
+            </div>
+        }
+        <div class="form-group-btn">
+            <button id="PayButton" class="button button--large-text" type="submit">Submit</button>
+        </div>
+    </form>
+            <div id="survey-thanks">
+                <h2>@Sitecore.Globalization.Translate.Text("Claim_Thanks_Message")</h2>
+            </div>
+        }
+
+
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
+    <script>
+
+        var $surveyForm = $('#survey-form');
+        let searchParams = new URLSearchParams(window.location.search);
+        var _mn = searchParams.get('mn');
+        var _cn = searchParams.get('cn');
+
+        if ($surveyForm.length) {
+
+            $surveyForm.validate({
+               
+                submitHandler: function (form) {
+                    debugger;
+                    var valdata = $("#survey-form").serializeArray();
+                    valdata.push({ name: "ClaimNumber", value: _cn });
+                    valdata.push({ name: "MemberNumber", value: _mn });
+
+
+                    $.ajax({
+                        url: "/api/sitecore/Forms/ClaimSurveyFormSubmit",
+                        type: "POST",
+                        dataType: 'json',
+                        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                        data: valdata,
+                        success: function (response) {
+                            if (response > 0) {
+                                /* window.location = '/claim-survey-thanks';*/
+                                $('#survey-ex').css('display', 'none');
+                                $('#survey-form').css('display', 'none');
+                                $('#survey-thanks').css('display', 'block');
+                            }
+                            else {
+                                $('#survey-ex').css('display', 'block');
+                                $('#survey-form').css('display', 'none');
+                                $('#survey-thanks').css('display', 'none');
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+
+
+</div>

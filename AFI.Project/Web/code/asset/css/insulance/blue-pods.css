@@ -1,0 +1,30 @@
+.blue_pods {
+    background-color: #003864;
+    background-color: var(--color-blue-40);
+    color: #fff;
+    color: var(--color-white);
+}
+
+.blue_pods .blue_pods_container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 3rem;
+}
+
+.blue_pods .blue_pod_item {
+    flex-basis: 21rem;
+    padding: 2.25rem 1rem;
+    text-align: center;
+}
+
+.blue_pod_item__heading {
+    font-size: 1.875rem;
+    margin-bottom: 1rem;
+}
+
+@media screen and (min-width: 48em) {
+    .blue_pods .blue_pod_item {
+        padding: 4.5rem 3.3rem !important;
+    }
+}

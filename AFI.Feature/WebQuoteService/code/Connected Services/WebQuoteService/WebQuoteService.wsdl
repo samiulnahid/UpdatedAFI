@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="WebQuoteService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://sapashq02.afi.local/AgentPortal/Services/WebQuoteService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://sapashq02.afi.local/AgentPortal/Services/WebQuoteService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://sapashq02.afi.local/AgentPortal/Services/WebQuoteService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WebConsole.DatabaseConnector.Entities" />
+      <xsd:import schemaLocation="http://sapashq02.afi.local/AgentPortal/Services/WebQuoteService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/WebConsole.Root.Services.DTO" />
+      <xsd:import schemaLocation="http://sapashq02.afi.local/AgentPortal/Services/WebQuoteService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IWebQuoteService_SendQuoteToMFAndReturnPremimum_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendQuoteToMFAndReturnPremimum" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_SendQuoteToMFAndReturnPremimum_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendQuoteToMFAndReturnPremimumResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_SendQuoteContactToClientAndMF_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendQuoteContactToClientAndMF" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_SendQuoteContactToClientAndMF_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendQuoteContactToClientAndMFResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_UpdateMktgSource_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateMktgSource" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_UpdateMktgSource_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateMktgSourceResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_RepushToMF_InputMessage">
+    <wsdl:part name="parameters" element="tns:RepushToMF" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_RepushToMF_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RepushToMFResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_PushToIssueMF_InputMessage">
+    <wsdl:part name="parameters" element="tns:PushToIssueMF" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_PushToIssueMF_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PushToIssueMFResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_SendQuoteInfoByFileName_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendQuoteInfoByFileName" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_SendQuoteInfoByFileName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendQuoteInfoByFileNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_SendQuoteContactByFileName_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendQuoteContactByFileName" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_SendQuoteContactByFileName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendQuoteContactByFileNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_SendQuoteToEpic_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendQuoteToEpic" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_SendQuoteToEpic_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendQuoteToEpicResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_SendQuoteHubToEpic_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendQuoteHubToEpic" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_SendQuoteHubToEpic_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendQuoteHubToEpicResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_ResendQuoteHubToEpic_InputMessage">
+    <wsdl:part name="parameters" element="tns:ResendQuoteHubToEpic" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_ResendQuoteHubToEpic_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ResendQuoteHubToEpicResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_CreateMemberForQuote_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateMemberForQuote" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_CreateMemberForQuote_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateMemberForQuoteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_SendQuoteInfoLogId_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendQuoteInfoLogId" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_SendQuoteInfoLogId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendQuoteInfoLogIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_SendQuoteContactByLogId_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendQuoteContactByLogId" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_SendQuoteContactByLogId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendQuoteContactByLogIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_SendQuoteActivityToEpic_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendQuoteActivityToEpic" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_SendQuoteActivityToEpic_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendQuoteActivityToEpicResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_SendMiscActivityToEpic_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendMiscActivityToEpic" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_SendMiscActivityToEpic_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendMiscActivityToEpicResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_CreatePayor_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreatePayor" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_CreatePayor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreatePayorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_SearchForDuplicatesByLogId_InputMessage">
+    <wsdl:part name="parameters" element="tns:SearchForDuplicatesByLogId" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_SearchForDuplicatesByLogId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SearchForDuplicatesByLogIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_SearchForDuplicates_InputMessage">
+    <wsdl:part name="parameters" element="tns:SearchForDuplicates" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_SearchForDuplicates_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SearchForDuplicatesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_CreateProofOfInsurance_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateProofOfInsurance" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_CreateProofOfInsurance_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateProofOfInsuranceResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_UpdateIndividualContactInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateIndividualContactInfo" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_UpdateIndividualContactInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateIndividualContactInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_GetPartnerEmployeeList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPartnerEmployeeList" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_GetPartnerEmployeeList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPartnerEmployeeListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_CalculateRentersPremium_InputMessage">
+    <wsdl:part name="parameters" element="tns:CalculateRentersPremium" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_CalculateRentersPremium_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CalculateRentersPremiumResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_QuoteIsDuplicate_InputMessage">
+    <wsdl:part name="parameters" element="tns:QuoteIsDuplicate" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_QuoteIsDuplicate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:QuoteIsDuplicateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_InsertAfiForm_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertAfiForm" />
+  </wsdl:message>
+  <wsdl:message name="IWebQuoteService_InsertAfiForm_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertAfiFormResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IWebQuoteService">
+    <wsdl:operation name="SendQuoteToMFAndReturnPremimum">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebQuoteService/SendQuoteToMFAndReturnPremimum" message="tns:IWebQuoteService_SendQuoteToMFAndReturnPremimum_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebQuoteService/SendQuoteToMFAndReturnPremimumResponse" message="tns:IWebQuoteService_SendQuoteToMFAndReturnPremimum_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendQuoteContactToClientAndMF">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebQuoteService/SendQuoteContactToClientAndMF" message="tns:IWebQuoteService_SendQuoteContactToClientAndMF_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebQuoteService/SendQuoteContactToClientAndMFResponse" message="tns:IWebQuoteService_SendQuoteContactToClientAndMF_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateMktgSource">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebQuoteService/UpdateMktgSource" message="tns:IWebQuoteService_UpdateMktgSource_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebQuoteService/UpdateMktgSourceResponse" message="tns:IWebQuoteService_UpdateMktgSource_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RepushToMF">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebQuoteService/RepushToMF" message="tns:IWebQuoteService_RepushToMF_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebQuoteService/RepushToMFResponse" message="tns:IWebQuoteService_RepushToMF_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PushToIssueMF">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebQuoteService/PushToIssueMF" message="tns:IWebQuoteService_PushToIssueMF_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebQuoteService/PushToIssueMFResponse" message="tns:IWebQuoteService_PushToIssueMF_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendQuoteInfoByFileName">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebQuoteService/SendQuoteInfoByFileName" message="tns:IWebQuoteService_SendQuoteInfoByFileName_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebQuoteService/SendQuoteInfoByFileNameResponse" message="tns:IWebQuoteService_SendQuoteInfoByFileName_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendQuoteContactByFileName">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebQuoteService/SendQuoteContactByFileName" message="tns:IWebQuoteService_SendQuoteContactByFileName_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebQuoteService/SendQuoteContactByFileNameResponse" message="tns:IWebQuoteService_SendQuoteContactByFileName_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendQuoteToEpic">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebQuoteService/SendQuoteToEpic" message="tns:IWebQuoteService_SendQuoteToEpic_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebQuoteService/SendQuoteToEpicResponse" message="tns:IWebQuoteService_SendQuoteToEpic_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendQuoteHubToEpic">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebQuoteService/SendQuoteHubToEpic" message="tns:IWebQuoteService_SendQuoteHubToEpic_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebQuoteService/SendQuoteHubToEpicResponse" message="tns:IWebQuoteService_SendQuoteHubToEpic_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ResendQuoteHubToEpic">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebQuoteService/ResendQuoteHubToEpic" message="tns:IWebQuoteService_ResendQuoteHubToEpic_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebQuoteService/ResendQuoteHubToEpicResponse" message="tns:IWebQuoteService_ResendQuoteHubToEpic_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateMemberForQuote">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebQuoteService/CreateMemberForQuote" message="tns:IWebQuoteService_CreateMemberForQuote_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebQuoteService/CreateMemberForQuoteResponse" message="tns:IWebQuoteService_CreateMemberForQuote_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendQuoteInfoLogId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebQuoteService/SendQuoteInfoLogId" message="tns:IWebQuoteService_SendQuoteInfoLogId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebQuoteService/SendQuoteInfoLogIdResponse" message="tns:IWebQuoteService_SendQuoteInfoLogId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendQuoteContactByLogId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebQuoteService/SendQuoteContactByLogId" message="tns:IWebQuoteService_SendQuoteContactByLogId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebQuoteService/SendQuoteContactByLogIdResponse" message="tns:IWebQuoteService_SendQuoteContactByLogId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendQuoteActivityToEpic">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebQuoteService/SendQuoteActivityToEpic" message="tns:IWebQuoteService_SendQuoteActivityToEpic_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebQuoteService/SendQuoteActivityToEpicResponse" message="tns:IWebQuoteService_SendQuoteActivityToEpic_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendMiscActivityToEpic">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebQuoteService/SendMiscActivityToEpic" message="tns:IWebQuoteService_SendMiscActivityToEpic_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebQuoteService/SendMiscActivityToEpicResponse" message="tns:IWebQuoteService_SendMiscActivityToEpic_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreatePayor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebQuoteService/CreatePayor" message="tns:IWebQuoteService_CreatePayor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebQuoteService/CreatePayorResponse" message="tns:IWebQuoteService_CreatePayor_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchForDuplicatesByLogId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebQuoteService/SearchForDuplicatesByLogId" message="tns:IWebQuoteService_SearchForDuplicatesByLogId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebQuoteService/SearchForDuplicatesByLogIdResponse" message="tns:IWebQuoteService_SearchForDuplicatesByLogId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchForDuplicates">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebQuoteService/SearchForDuplicates" message="tns:IWebQuoteService_SearchForDuplicates_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebQuoteService/SearchForDuplicatesResponse" message="tns:IWebQuoteService_SearchForDuplicates_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateProofOfInsurance">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebQuoteService/CreateProofOfInsurance" message="tns:IWebQuoteService_CreateProofOfInsurance_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebQuoteService/CreateProofOfInsuranceResponse" message="tns:IWebQuoteService_CreateProofOfInsurance_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateIndividualContactInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebQuoteService/UpdateIndividualContactInfo" message="tns:IWebQuoteService_UpdateIndividualContactInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebQuoteService/UpdateIndividualContactInfoResponse" message="tns:IWebQuoteService_UpdateIndividualContactInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPartnerEmployeeList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebQuoteService/GetPartnerEmployeeList" message="tns:IWebQuoteService_GetPartnerEmployeeList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebQuoteService/GetPartnerEmployeeListResponse" message="tns:IWebQuoteService_GetPartnerEmployeeList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CalculateRentersPremium">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebQuoteService/CalculateRentersPremium" message="tns:IWebQuoteService_CalculateRentersPremium_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebQuoteService/CalculateRentersPremiumResponse" message="tns:IWebQuoteService_CalculateRentersPremium_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="QuoteIsDuplicate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebQuoteService/QuoteIsDuplicate" message="tns:IWebQuoteService_QuoteIsDuplicate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebQuoteService/QuoteIsDuplicateResponse" message="tns:IWebQuoteService_QuoteIsDuplicate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertAfiForm">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWebQuoteService/InsertAfiForm" message="tns:IWebQuoteService_InsertAfiForm_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWebQuoteService/InsertAfiFormResponse" message="tns:IWebQuoteService_InsertAfiForm_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IWebQuoteService" type="tns:IWebQuoteService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SendQuoteToMFAndReturnPremimum">
+      <soap:operation soapAction="http://tempuri.org/IWebQuoteService/SendQuoteToMFAndReturnPremimum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendQuoteContactToClientAndMF">
+      <soap:operation soapAction="http://tempuri.org/IWebQuoteService/SendQuoteContactToClientAndMF" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateMktgSource">
+      <soap:operation soapAction="http://tempuri.org/IWebQuoteService/UpdateMktgSource" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RepushToMF">
+      <soap:operation soapAction="http://tempuri.org/IWebQuoteService/RepushToMF" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PushToIssueMF">
+      <soap:operation soapAction="http://tempuri.org/IWebQuoteService/PushToIssueMF" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendQuoteInfoByFileName">
+      <soap:operation soapAction="http://tempuri.org/IWebQuoteService/SendQuoteInfoByFileName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendQuoteContactByFileName">
+      <soap:operation soapAction="http://tempuri.org/IWebQuoteService/SendQuoteContactByFileName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendQuoteToEpic">
+      <soap:operation soapAction="http://tempuri.org/IWebQuoteService/SendQuoteToEpic" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendQuoteHubToEpic">
+      <soap:operation soapAction="http://tempuri.org/IWebQuoteService/SendQuoteHubToEpic" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ResendQuoteHubToEpic">
+      <soap:operation soapAction="http://tempuri.org/IWebQuoteService/ResendQuoteHubToEpic" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateMemberForQuote">
+      <soap:operation soapAction="http://tempuri.org/IWebQuoteService/CreateMemberForQuote" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendQuoteInfoLogId">
+      <soap:operation soapAction="http://tempuri.org/IWebQuoteService/SendQuoteInfoLogId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendQuoteContactByLogId">
+      <soap:operation soapAction="http://tempuri.org/IWebQuoteService/SendQuoteContactByLogId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendQuoteActivityToEpic">
+      <soap:operation soapAction="http://tempuri.org/IWebQuoteService/SendQuoteActivityToEpic" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMiscActivityToEpic">
+      <soap:operation soapAction="http://tempuri.org/IWebQuoteService/SendMiscActivityToEpic" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreatePayor">
+      <soap:operation soapAction="http://tempuri.org/IWebQuoteService/CreatePayor" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchForDuplicatesByLogId">
+      <soap:operation soapAction="http://tempuri.org/IWebQuoteService/SearchForDuplicatesByLogId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchForDuplicates">
+      <soap:operation soapAction="http://tempuri.org/IWebQuoteService/SearchForDuplicates" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateProofOfInsurance">
+      <soap:operation soapAction="http://tempuri.org/IWebQuoteService/CreateProofOfInsurance" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateIndividualContactInfo">
+      <soap:operation soapAction="http://tempuri.org/IWebQuoteService/UpdateIndividualContactInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPartnerEmployeeList">
+      <soap:operation soapAction="http://tempuri.org/IWebQuoteService/GetPartnerEmployeeList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CalculateRentersPremium">
+      <soap:operation soapAction="http://tempuri.org/IWebQuoteService/CalculateRentersPremium" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QuoteIsDuplicate">
+      <soap:operation soapAction="http://tempuri.org/IWebQuoteService/QuoteIsDuplicate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertAfiForm">
+      <soap:operation soapAction="http://tempuri.org/IWebQuoteService/InsertAfiForm" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WebQuoteService">
+    <wsdl:port name="BasicHttpBinding_IWebQuoteService" binding="tns:BasicHttpBinding_IWebQuoteService">
+      <soap:address location="http://sapashq02.afi.local/AgentPortal/Services/WebQuoteService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

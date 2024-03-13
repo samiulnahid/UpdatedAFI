@@ -1,0 +1,563 @@
+﻿/********************************************************
+*              VOTE FORM 1 - red background
+********************************************************/
+.sitecore-form-red {
+    background: rgba(203, 44, 48, 0.9);
+    background: linear-gradient(120deg, rgba(203, 44, 48, 0.9), rgba(136, 27, 38, 0.9));
+    color: #fff;
+    padding: 4rem 1rem !important;
+}
+
+.sitecore-form-red h1,
+.sitecore-form-red p,
+.sitecore-form-red label {
+    color: #fff !important;
+    display: block;
+    width: 100%;
+    font-weight: normal !important;
+    font-size: 16px;
+}
+
+.sitecore-form-red h1,
+.sitecore-form-red p {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.sitecore-form-red input,
+.sitecore-form-red select {
+    display: block;
+    width: 100%;
+    border: 1px solid #898d8d;
+    border: 1px solid var(--color-gray-20);
+    border-radius: 0.375rem !important;
+    font-size: 1rem;
+    padding: 0.375rem 0.5rem;
+    min-height: 38px;
+}
+
+.sitecore-form-red h1 {
+    font-size: 32px !important;
+    text-align: center;
+}
+
+
+
+.sitecore-form-red form {
+    display: grid;
+    grid-template-columns: 1fr;
+    max-width: 700px;
+    margin: 1rem auto;
+}
+
+.sitecore-form-red .button.button--large-text {
+    text-align: center;
+    font-weight: 400;
+    min-width: 9.25rem;
+    opacity: 1;
+    display: block;
+    padding: 0.625rem 1rem;
+    background-color: transparent !important;
+    border: 2px solid #fff !important;
+    color: #fff !important;
+    font-size: 20px !important;
+    cursor: pointer;
+    max-width: 148px;
+    margin: auto !important;
+    border-radius: 50px !important;
+    margin-top: 20px !important;
+    transition: .25s;
+}
+
+.sitecore-form-red .button.button--large-text:hover {
+    background: #fff !important;
+    color: #000 !important;
+}
+
+
+.sitecore-form-red .leadgen-column__col2,
+.sitecore-form-red .leadgen-column__col1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 50px;
+}
+
+.sitecore-form-red .leadgen-column__col2 {
+    margin-top: 10px;
+}
+
+.sitecore-form-red .leadgen-column__col3 {
+    text-align: center;
+}
+
+.sitecore-form-red-bottom {
+    max-width: unset !important;
+    min-height: 400px;
+}
+
+.sitecore-form-red-bottom .col-md-6 {
+    position: relative;
+}
+
+.sitecore-form-red-bottom .container-gray-background {
+    padding: 35px !important;
+    background: #F6F6F6;
+    min-height: 400px;
+}
+
+.sitecore-form-red-bottom img {
+    min-height: 25rem;
+    -o-object-fit: cover;
+    object-fit: cover;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    width: 100%;
+    height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+
+    .sitecore-form-red .leadgen-column__col2,
+    .sitecore-form-red .leadgen-column__col1 {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/********************************************************
+*                  VOTE FORM 3
+********************************************************/
+.sitecore-form-three {
+    max-width: 800px !important;
+    margin: 50px auto !important;
+}
+
+.sitecore-form-three p {
+    width: 100% !important;
+    text-align: left !important;
+    color: #000000;
+    font-weight: 500;
+    font-size: 16px !important;
+}
+
+.sitecore-form-three .txtbody label {
+    display: flex;
+    width: 350px;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    color: #000;
+    margin: 10px;
+}
+
+/* .sitecore-form-three .contbtn {
+    text-align: center;
+} */
+
+.sitecore-form-three .contbtn input.continue {
+    background: #0070ab !important;
+    color: #fff;
+    border-radius: 40px !important;
+    border: none;
+    font-size: 16px;
+    padding: 9px 36px;
+    text-decoration: none;
+    width: auto;
+    margin: 20px 0 20px 5%;
+    cursor: pointer;
+}
+
+.sitecore-form form>div {
+    padding: 0 0;
+}
+
+
+/********************************************************
+*                  VOTE FORM 2
+********************************************************/
+.sitecore-form-two {
+    max-width: 750px !important;
+    margin: auto;
+    color: #000 !important;
+    background: #fff;
+}
+
+.sitecore-form-two .vote-header {
+    text-align: center;
+    font-weight: 600 !important;
+    color: #014d8a !important;
+    font-size: 24px !important;
+    margin-bottom: 5px !important;
+}
+
+.sitecore-form-two .txtbody {
+    margin-top: 40px;
+}
+
+.sitecore-form-two p {
+    color: #000 !important;
+    font-size: 16px !important;
+    margin-bottom: 1.5rem;
+}
+
+/* .sitecore-form-two .txt-dear {
+    margin-top: 30px;
+} */
+
+.sitecore-form-two .txt-no {
+    margin-bottom: 5px;
+}
+
+.sitecore-form-two .dv-content-vote-bottom {
+    background: #fafafa;
+    padding: 10px 20px 25px;
+    max-width: 650px;
+    margin: 20px auto 0;
+}
+
+.sitecore-form-two .txt-title {
+    font-weight: 600 !important;
+    color: #014d8a;
+    margin-top: 15px !important;
+    margin-bottom: 5px !important;
+}
+
+.sitecore-form-two h3.txt-title {
+    font-size: 19px !important;
+}
+
+.sitecore-form-two .rdo-lbl-st2 {
+    width: 60% !important;
+    text-align: left !important;
+    font-size: 15px;
+    display: inline-flex;
+    margin-bottom: 8px;
+}
+
+.sitecore-form-two label.rdo-css {
+    color: #000 !important;
+    font-size: 16px !important;
+}
+
+.sitecore-form-two label.rdo-css input {
+    margin-right: 5px;
+}
+
+.sitecore-form-two .contbtn {
+    text-align: center;
+}
+
+.sitecore-form-two .continue {
+    background: #0070ab !important;
+    color: #fff;
+    border-radius: 30px !important;
+    border: 2px solid #0070ab !important;
+    font-size: 16px !important;
+    padding: 8px 36px !important;
+    text-decoration: none;
+    width: auto;
+    margin: 20px 0 20px 5%;
+    cursor: pointer !important;
+}
+
+.sitecore-form-two .continue:hover {
+    background-color: #045494 !important;
+    border: 2px solid #045494 !important;
+    color: #000 !important;
+    text-decoration: none;
+}
+
+/********************************************************
+*                  Form /Request-Info
+********************************************************/
+
+.sitecore-form-request .form-control {
+    border: none !important;
+    padding: 0 !important;
+    margin-bottom: 1rem;
+}
+
+.sitecore-form-request input {
+    border-radius: 5px !important;
+    box-shadow: none !important;
+}
+
+.sitecore-form-request label {
+    display: block !important;
+    color: #000 !important;
+}
+
+.sitecore-form-request .ri_col2 .ri_products_label {
+    font-weight: bold;
+    font-size: 16px !important;
+}
+
+.sitecore-form-request .ri_col2 label {
+    color: #363636 !important;
+}
+
+.sitecore-form-request .ri_col2 label:not(.ri_products_label) {
+    /* margin-top: 4px; */
+    font-size: 16px !important;
+}
+
+.sitecore-form-request .ri_col2 label input[type=checkbox] {
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.sitecore-form-request .button {
+    background-color: #0570c5 !important;
+    border-color: #0570c5 !important;
+    color: #fff !important;
+    border-radius: 1.625rem !important;
+    border-style: solid !important;
+    cursor: pointer !important;
+    display: inline-block !important;
+    font-size: 1rem !important;
+    font-weight: 400 !important;
+    width: 9.25rem;
+    opacity: 1;
+    padding: 8px 20px;
+    padding: 12px 20px !important;
+    text-align: center !important;
+    transition: .25s !important;
+}
+
+.sitecore-form-request-title h1 {
+    color: #003864 !important;
+    color: var(--color-blue-40) !important;
+}
+
+.sitecore-form-request-title p {
+    max-width: none !important;
+    text-align: center !important;
+}
+
+.request-info-products .row.component.column-splitter {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    margin-bottom: 25px;
+    gap: 20px;
+}
+
+
+.request-info-products .afi-products-col {
+    width: 100% !important;
+    text-align: center;
+}
+
+.request-info-products .afi-products-col img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+}
+
+.request-info-products .afi-products-col a {
+    border: none !important;
+    line-height: 24px;
+}
+
+@media screen and (min-width: 576px) {
+    .request-info-products .row.component.column-splitter {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (min-width:991px) {
+    .sitecore-form-request form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 24px 48px;
+        max-width: 800px;
+        margin: unset;
+        margin-left: 160px;
+    }
+
+    .request-info-products .row.component.column-splitter {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+@media screen and (max-width:800px) {
+    .sitecore-form-request .button {
+        margin: auto;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        display: block !important;
+    }
+}
+
+.sitecore-form-request .validation-summary-errors {
+    display: none !important;
+}
+
+/* error message */
+span.field-validation-error {
+    color: #cb2c30 !important;
+}
+
+
+.sitecore-form-red span.field-validation-error {
+    color: #fff !important;
+}
+
+/********************************************************
+*                      Form /vote 
+********************************************************/
+/* .vote__page */
+.vote__page .dv-content {
+    width: 750px;
+    margin: 50px auto;
+}
+
+.vote__page .vote-header {
+    text-align: center;
+    font-weight: 600 !important;
+    color: #014d8a;
+    margin-bottom: 5px;
+}
+
+
+.vote__page .vote_subheader {
+    font-size: 17px !important;
+    text-align: center;
+    font-weight: 600 !important;
+    color: #014d8a !important;
+    margin: 20px auto !important;
+}
+
+.vote__page .form-field {
+    margin: auto;
+    width: 255px;
+}
+
+.vote__page .form-field label {
+    width: 100%;
+    text-align: left;
+    font-size: 15px;
+    display: block;
+    color: #000 !important;
+}
+
+.vote__page .txt-box-small {
+    width: 100%;
+    border: 1px solid #cfd0d0 !important;
+    border-radius: 5px !important;
+    margin-bottom: 10px;
+}
+
+
+.vote__page .m_pin {
+    width: 50%;
+    display: block;
+}
+
+.vote__page .lblhide {
+    display: none !important;
+}
+
+.vote__page .contbtn {
+    text-align: center;
+    margin-top: 1.25rem;
+}
+
+.vote__page .button {
+    background: #0070ab !important;
+    color: #fff;
+    border-radius: 23px !important;
+    border: none !important;
+    font-size: 16px;
+    padding: 9px 36px !important;
+    text-decoration: none;
+    width: auto;
+    /* margin: 20px 0 20px 5%; */
+    cursor: pointer;
+}
+
+
+.vote__page .field-validation-error {
+    color: red;
+    font-size: 12px;
+    display: block;
+    text-align: left !important;
+    margin-bottom: 10px;
+}
+
+.vote__page .validation-summary-errors {
+    color: red;
+    text-align: center;
+    padding-bottom: 5px;
+    font-size: 12px;
+}
+
+.vote__page .validation-summary-errors ul {
+    display: inline-table;
+}
+
+.vote__page .form-label label:not(:first-child) {
+    margin-top: 1.25rem;
+}
+
+.vote__page .form-field .info_id {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    float: left;
+}
+
+.vote__page .form-field .info_id:after {
+    content: "\f05a";
+    font-family: FontAwesome;
+}
+
+.vote__page .mid_info:before {
+    content: "\f05a";
+    font-family: FontAwesome;
+}
+
+/* .vote__page .form-field .info_pin {
+    display: contents;
+    float: left;
+} */
+
+.vote__page .pin_info:before {
+    content: "\f05a";
+    font-family: FontAwesome;
+}
+
+.vote__page .mid_info,
+.vote__page .pin_info {
+    margin-left: 7px;
+}
+
+.vote__page .txt_mno,
+.vote__page .txt_pin {
+    display: none;
+}
+
+@media(max-width: 991.98px) {
+    .vote__page .dv-content {
+        width: 100%;
+        margin: 50px auto;
+    }
+
+}
+
+
+/* id based button hover */
+.sitecore-form input[type=submit]:hover,
+#sitecoreSubmitButton:hover {
+    background-color: #025699;
+    background-color: var(--color-blue-20) !important;
+    border-color: #025699;
+    border-color: var(--color-blue-20) !important;
+    color: #fff;
+    color: var(--color-white) !important;
+    text-decoration: none !important;
+    border-radius: 1.625rem !important;
+}

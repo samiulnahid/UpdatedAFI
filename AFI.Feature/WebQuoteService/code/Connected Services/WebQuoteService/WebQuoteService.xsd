@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/WebConsole.Root.Services.DTO" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/WebConsole.Root.Services.DTO" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="CertificateInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AdditionalInsuredCity" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AdditionalInsuredName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AdditionalInsuredStateAbrev" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AdditionalInsuredStreet1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AdditionalInsuredStreet2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AdditionalInsuredZip" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CompOpAggAmount" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CompletionDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DamageToPremisesAmount" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DateOfIssue" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EachOccurrenceAmount" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EffectiveDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GenAggregateAmount" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MedExpAmount" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MemberNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PersAdvInjuryAmount" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PersonalPropertyLimit" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PolicyNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PrimaryCity" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PrimaryName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PrimaryStateAbrev" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PrimaryStreet1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PrimaryStreet2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PrimaryZip" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TermDate" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CertificateInfo" nillable="true" type="tns:CertificateInfo" />
+  <xs:complexType name="CertificateReturn">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FileData" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CertificateReturn" nillable="true" type="tns:CertificateReturn" />
+  <xs:simpleType name="UpdateType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SSN" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="UpdateType" nillable="true" type="tns:UpdateType" />
+</xs:schema>

@@ -1,0 +1,366 @@
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f2f2f2 !important;
+      }
+
+      .content__container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 40px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        margin-top: 0;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="password"],
+      textarea,
+      input[type="file"] {
+        width: calc(100% - 12px);
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 16px;
+      }
+
+      input[type="submit"],
+      input[type="button"] {
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 10px 40px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 20px;
+        display: block;
+        margin: auto;
+        font-weight: 500;
+      }
+
+      input[type="submit"]:hover,
+      input[type="button"]:hover {
+        background-color: #45a049;
+      }
+
+      .button__container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .button__container .form-button {
+        width: 120px;
+        padding: 5px;
+        background-color: #556b2f;
+        border: 1px solid #333;
+        border-radius: 3px;
+        color: #fff;
+        font-size: 20px;
+        cursor: pointer;
+      }
+
+      .form-container {
+        display: none;
+        margin-top: 30px;
+      }
+
+      .form-container.active {
+        display: block;
+      }
+
+      /* .form-container h2 {
+        text-align: center;
+      } */
+
+      .field__control {
+        margin-bottom: 10px;
+      }
+
+      .error-message {
+        color: red;
+        margin-top: 5px;
+      }
+    </style>
+ 
+    <div class="content__container">
+      <div class="button__container">
+        <button class="form-button" id="sqlBtn">SQL</button>
+        <button class="form-button" id="csvBtn">CSV</button>
+        <button class="form-button" id="xlsBtn">XLS</button>
+        <button class="form-button" id="xmlBtn">XML</button>
+      </div>
+
+      <div id="sqlForm" class="form-container active">
+        <h2>SQL Form</h2>
+        <form id="sqlForm">
+          <div class="field__control">
+            <label for="dataSource">Data Source:</label>
+            <input type="text" id="dataSource" name="dataSource" required />
+          </div>
+
+          <div class="field__control">
+            <label for="dbName">Database Name:</label>
+            <input type="text" id="dbName" name="dbName" required />
+          </div>
+
+          <div class="field__control">
+            <label for="userID">User ID:</label>
+            <input type="text" id="userID" name="userID" required />
+          </div>
+
+          <div class="field__control">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required />
+          </div>
+
+          <div class="field__control">
+            <label for="tableName">Table Name:</label>
+            <input type="text" id="tableName" name="tableName" required />
+          </div>
+
+          <div class="field__control">
+            <label for="query">Query:</label>
+            <textarea id="query" name="query" rows="4" cols="50">Select * from ----</textarea>
+          </div>
+
+          <div class="email__field field__control">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" />
+            <small
+              >Please enter your email address below if you would like to receive the success list for this data import. We'll
+              send it to you shortly after the import process completes successfully. Thank you!</small
+            >
+          </div>
+
+          <input type="submit" id="sql-submit-btn" value="Submit" />
+        </form>
+      </div>
+
+      <div id="csvForm" class="form-container">
+        <h2>CSV Form</h2>
+        <form id="csvForm">
+          <div class="field__control">
+            <label for="csvFile">Upload a CSV file</label>
+            <input type="file" id="csvFile" name="csvFile" required />
+          </div>
+
+          <div class="email__field field__control">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" />
+            <small
+              >Please enter your email address below if you would like to receive the success list for this data import. We'll
+              send it to you shortly after the import process completes successfully. Thank you!</small
+            >
+          </div>
+
+          <input type="submit" id="csv-submit-btn" value="Submit" />
+        </form>
+      </div>
+
+      <div id="xlsForm" class="form-container">
+        <h2>XLS Form</h2>
+        <form id="xlsForm">
+          <div class="field__control">
+            <label for="xlsFile">Upload a XLS file</label>
+            <input type="file" id="xlsFile" name="xlsFile" required />
+          </div>
+
+          <div class="email__field field__control">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" />
+            <small
+              >Please enter your email address below if you would like to receive the success list for this data import. We'll
+              send it to you shortly after the import process completes successfully. Thank you!</small
+            >
+          </div>
+
+          <input type="submit" id="xls-submit-btn" value="Submit" />
+        </form>
+      </div>
+
+      <div id="xmlForm" class="form-container">
+        <h2>XML Form</h2>
+        <form id="xmlForm">
+          <div class="field__control">
+            <label for="xmlFile">Upload a XML file</label>
+            <input type="file" id="xlsFile" name="xlsFile" required />
+          </div>
+
+          <div class="email__field field__control">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" />
+            <small
+              >Please enter your email address below if you would like to receive the success list for this data import. We'll
+              send it to you shortly after the import process completes successfully. Thank you!</small
+            >
+          </div>
+
+          <input type="submit" id="xml-submit-btn" value="Submit" />
+        </form>
+      </div>
+    </div>
+
+    <!-- ******************* UI Functionality Script ******************* -->
+    <script>
+      const sqlBtn = document.getElementById("sqlBtn");
+      const csvBtn = document.getElementById("csvBtn");
+      const xlsBtn = document.getElementById("xlsBtn");
+      const xmlBtn = document.getElementById("xmlBtn");
+
+      const forms = document.querySelectorAll(".form-container");
+
+      sqlBtn.addEventListener("click", () => {
+        showForm(document.getElementById("sqlForm"));
+      });
+
+      csvBtn.addEventListener("click", () => {
+        showForm(document.getElementById("csvForm"));
+      });
+
+      xlsBtn.addEventListener("click", () => {
+        showForm(document.getElementById("xlsForm"));
+      });
+
+      xmlBtn.addEventListener("click", () => {
+        showForm(document.getElementById("xmlForm"));
+      });
+
+      function showForm(form) {
+        forms.forEach((f) => f.classList.remove("active"));
+        form.classList.add("active");
+      }
+
+      // on change of tableName auto update query value
+      const tableNameField = document.getElementById("tableName");
+      const queryField = document.getElementById("query");
+
+      tableNameField.addEventListener("keyup", (e) => {
+        queryField.value = `Select * from ${e.target.value}`;
+      });
+    </script>
+
+    <!-- ******************* Form Submit ******************* -->
+    <script>
+      function sendData(url, formData, form) {
+        fetch(url, {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Response:", data);
+
+            const message = data?.Message || "Submitted successfully.";
+            alert(message);
+          })
+          .catch((error) => {
+            console.error("Error", error);
+            alert("Something went wrong.");
+          });
+      }
+
+      // ******************* SQL FORM *******************
+      const sqlForm = document.getElementById("sqlForm");
+      sqlForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        // Get form field values
+        const dataSource = sqlForm.querySelector("#dataSource").value;
+        const dbName = sqlForm.querySelector("#dbName").value;
+        const userID = sqlForm.querySelector("#userID").value;
+        const password = sqlForm.querySelector("#password").value;
+        const tableName = sqlForm.querySelector("#tableName").value;
+        const query = sqlForm.querySelector("#query").value;
+        const email = sqlForm.querySelector("#email").value;
+
+        // Create an object with form field values
+        const formData = new FormData();
+        formData.append("DataSource", dataSource);
+        formData.append("DbName", dbName);
+        formData.append("UserId", userID);
+        formData.append("Password", password);
+        // formData.append("tableName", tableName);
+        formData.append("Query", query);
+        formData.append("Email", email);
+
+        // api call
+        sendData("/api/sitecore/Prospect/SqlMarketingProspect", formData, sqlForm);
+      });
+
+      // ******************* CSV FORM *******************
+      const csvForm = document.getElementById("csvForm");
+      csvForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        // Get form field values
+        const csvFile = csvForm.querySelector("#csvFile").files[0];
+        const email = csvForm.querySelector("#email").value;
+
+        // Create an object with form field values
+        const formData = new FormData();
+        formData.append("file", csvFile);
+        formData.append("email", email);
+
+        // api call
+        sendData("/api/sitecore/Prospect/CsvMarketingProspect", formData, csvForm);
+      });
+
+      // ******************* XLS FORM *******************
+      const xlsForm = document.getElementById("xlsForm");
+      xlsForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        // Get form field values
+        const xlsFile = xlsForm.querySelector("#xlsFile").files[0];
+        const email = xlsForm.querySelector("#email").value;
+
+        // Create an object with form field values
+        const formData = new FormData();
+        formData.append("File", xlsFile);
+        formData.append("email", email);
+
+        // api call
+        sendData("/api/sitecore/Prospect/XlsMarketingProspect", formData, xlsForm);
+      });
+
+      // ******************* XLS FORM *******************
+      const xmlForm = document.getElementById("xmlForm");
+      xmlForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        // Get form field values
+        const xlsFile = xmlForm.querySelector("#xlsFile").files[0];
+        const email = xmlForm.querySelector("#email").value;
+
+        // Create an object with form field values
+        const formData = new FormData();
+        formData.append("File", xlsFile);
+        formData.append("email", email);
+
+        // api call
+        sendData("/api/sitecore/Prospect/XmlMarketingProspect", formData, xmlForm);
+      });
+    </script>
+  

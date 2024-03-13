@@ -1,0 +1,130 @@
+.committee__list a {
+    font-weight: 700;
+}
+
+.member_reviews p {
+    margin-bottom: 0 !important;
+}
+
+.member_reviews footer {
+    margin-bottom: 0 !important;
+}
+
+.member_reviews footer {
+    background: none !important;
+    padding: 0 !important;
+    padding-left: 40px !important;
+    margin: 0 !important;
+    color: #999 !important;
+    font-style: italic;
+    font-size: .9em !important;
+}
+
+.article-list__heading-wrapper {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.article-list__heading-wrapper h1 {
+    margin: 0 !important;
+}
+
+.article-detail__dateline {
+    color: #898d8d;
+    color: var(--color-gray-20);
+    font-size: .875rem;
+    font-weight: 700;
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+.faqs h4 {
+    margin-top: 40px !important;
+    margin-bottom: 8px !important;
+    font-weight: 700 !important;
+}
+
+.faqs summary {
+    margin-left: -18px;
+    color: #881b26;
+}
+
+.faqs details {
+    padding: 10px 20px;
+}
+
+/********************************************************
+*                       PCS
+********************************************************/
+.pcs_content_panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    background: #f6f6f6;
+    margin: 50px 0 !important;
+}
+
+.pcs_img_panel,
+.pcs_text_panel {
+    width: 100% !important;
+}
+
+.pcs_img_panel img {
+    width: 100% !important;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pcs_text_panel {
+    display: flex;
+    align-items: center;
+}
+
+.pcs_text_panel h1,
+.pcs_text_panel .position-left {
+    padding: 1fr 2fr !important;
+}
+
+@media screen and (max-width:768px) {
+    .pcs_content_panel {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+
+
+/********************************************************
+*                   CONTACT US
+********************************************************/
+.afi_carriers {
+    line-height: 20px;
+    display: block !important;
+}
+
+.customer-reviews__heading {
+    font-size: 24px !important;
+    font-family: 'Zilla Slab' !important;
+}
+
+.afi_carriers__heading {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    font-family: 'Roboto' !important;
+    margin: 0 !important;
+}
+
+.claim-headline .afi_carriers h1 {
+    font-weight: normal !important;
+}
+
+/********************************************************
+*                   Careers
+********************************************************/
+.career-benefits,
+.career-benefits h2 {
+    color: #1f497d;
+    font-size: 2rem !important;
+}

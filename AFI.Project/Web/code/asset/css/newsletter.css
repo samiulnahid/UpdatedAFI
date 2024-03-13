@@ -1,0 +1,210 @@
+.interior__title_h1 {
+    cursor: auto !important;
+}
+
+.news__letter {
+    margin: 10px auto 50px;
+}
+
+@media screen and (min-width:991px) {
+    .news__letter {
+        margin: 20px auto 50px;
+    }
+}
+
+.news__letter .news__article_item.promo.component {
+    padding: 0 14px 32px !important;
+    border: 0 !important;
+}
+
+.news__letter .button__container {
+    margin-top: 40px;
+}
+
+.news__letter .button {
+    font-size: 18px !important;
+    width: 255px;
+}
+
+
+.news__letter .news__article_item a,
+.news__letter .news__article_item i {
+    font-size: 18px;
+}
+
+.news__letter .news__article_item a:hover {
+    text-decoration: underline !important;
+}
+
+.news__letter .news__article_item i {
+    padding-left: 5px;
+    color: #0570c5 !important;
+    color: var(--color-blue-10) !important;
+}
+
+.news__letter .news__article_item p {
+    margin-bottom: 1rem !important;
+}
+
+.news__letter .news__article_item .article-grid-item__heading {
+    color: black !important;
+}
+
+/******************* More Newsletters *******************/
+.article-list {
+    margin-top: 20px;
+}
+
+.article-list__group-heading {
+    font-size: 2.5rem !important;
+    margin-bottom: 1rem !important;
+}
+
+/* .article-list__group {
+    margin-top: 2rem;
+} */
+
+.article-list-item {
+    margin-top: 2.5rem;
+}
+
+.article-list-item i {
+    color: #0570c5 !important;
+    color: var(--color-blue-10) !important;
+}
+
+.article-list-item a:hover {
+    color: #0570c5 !important;
+    color: var(--color-blue-10) !important;
+}
+
+.article-list-item p,
+.article-list-item__heading {
+    margin-bottom: .5rem !important;
+}
+
+.article-list-item__dateline {
+    font-weight: 600 !important;
+}
+
+/* .article-list-item__description {
+    display: none;
+} */
+
+.pagination {
+    margin: 2rem 0 4rem;
+}
+
+.pagination__list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin-left: auto;
+}
+
+.pagination__link.is-active {
+    color: #0570c5 !important;
+    color: var(--color-blue-10) !important;
+}
+
+.pagination__link,
+.pagination__list-item--static {
+    align-self: center;
+    background-color: #f6f6f6;
+    background-color: var(--color-gray-10);
+    border-radius: .5rem;
+    color: #000 !important;
+    color: var(--color-black) !important;
+    display: block;
+    font-size: .75rem !important;
+    margin: 0 .125rem;
+    min-width: 1.5rem;
+    padding: .25rem;
+    text-align: center;
+    transition: background-color .25s;
+    text-decoration: none !important;
+}
+
+.pagination__link:hover {
+    text-decoration: none !important;
+}
+
+.pagination__link.pagination__link--next,
+.pagination__link.pagination__link--previous {
+    background-color: #0570c5;
+    background-color: var(--color-blue-10);
+    border-radius: 2.5rem;
+    color: #fff !important;
+    color: var(--color-white) !important;
+    padding: .5rem .75rem;
+    margin-right: 0;
+    text-decoration: none !important;
+}
+
+@media screen and (min-width: 30em) {
+
+    .pagination__link,
+    .pagination__list-item--static {
+        font-size: 1.25rem !important;
+        margin: 0 .25rem;
+        min-width: 2.5rem;
+        padding: .5rem;
+    }
+
+    .pagination__link.pagination__link--next,
+    .pagination__link.pagination__link--previous,
+    .pagination__list-item--static.pagination__link--next,
+    .pagination__list-item--static.pagination__link--previous {
+        padding: .75rem 1rem;
+    }
+}
+
+/* Year Button broke the whole page layout */
+.js-submitonchange button.button.is-vishidden {
+    width: 0;
+}
+
+/* Updated 27 July */
+@media screen and (max-width:768px) {
+    .pagination {
+        display: block !important;
+    }
+}
+
+/* 16 Aug */
+.article-list__group {
+    margin-bottom: 40px;
+}
+
+.article-list__group:last-child {
+    margin-bottom: 0;
+}
+
+
+
+
+
+/* 30 Aug */
+.article-grid__items.grid.grid--with-gutters.grid--with-wrapping {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+/* .news__letter .article-grid-item h2, */
+.news__letter .article-grid-item__heading {
+    font-family: Roboto, sans-serif !important;
+    font-family: var(--font-family-primary) !important;
+    margin-bottom: .5rem !important;
+}
+
+@media screen and (max-width:991px) {
+    .news__letter .news__article_item.promo.component {
+        padding: 0 0 40px !important;
+    }
+
+    .article-grid__items.grid.grid--with-gutters.grid--with-wrapping {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 20px;
+    }
+}

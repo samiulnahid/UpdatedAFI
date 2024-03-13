@@ -1,0 +1,446 @@
+﻿<!--<link rel="stylesheet" href="../css/app99.css" />-->
+<style>
+
+    .justify-content-center {
+        justify-content: center !important;
+    }
+
+    .mt-5,
+    .my-5 {
+        margin-top: 3rem !important;
+    }
+
+    .order-md-1 {
+        order: 1;
+    }
+
+    .order-md-2 {
+        order: 2;
+    }
+
+    .text-white {
+        color: #fff !important;
+    }
+
+    .text-center {
+        text-align: center !important;
+    }
+
+
+
+
+    #checkoutform {
+        padding: 0 0 0 0 !important;
+    }
+
+    #checkout-modal-payment .checkout-form-one-css-content {
+        margin: 0 0 0 0 !important;
+    }
+
+    .modal-content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        pointer-events: auto;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 0.3rem;
+        outline: 0;
+        margin: 0 auto;
+    }
+
+    ul.Pay {
+        list-style: none !important;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 0px 0px;
+        width: 85%;
+    }
+
+        ul.Pay li {
+            padding: 12px 12px 12px 20px;
+        }
+
+        ul.Pay li {
+            border-bottom: 1px solid #ccc;
+            border-top: 1px solid #ccc;
+        }
+
+            ul.Pay li:last-child {
+                border-bottom: 0;
+            }
+
+    ul.Pay1 li:first-child {
+        border-top: 0;
+    }
+
+    ul.Pay {
+        margin-top: 0px;
+        margin-bottom: -40px;
+    }
+
+    ul.option-text {
+        margin-left: 2px;
+    }
+
+    .checkout-form-one-css-modal-payment .checkout-form-one-css-modal-body {
+        padding: 0 !important;
+    }
+
+    .modal-header {
+        padding: 12px 10px 10px 20px !important;
+    }
+
+    .modal-body {
+        padding: 1.25rem;
+    }
+
+    @@media (min-width: 768px) {
+        .collapse.dont-collapse-md {
+            display: block;
+            height: auto !important;
+            visibility: visible;
+        }
+    }
+    /*Ipad*/
+    @@media (min-width: 768px) and (max-width: 1024px) {
+        ul.Pay {
+            width: 78%;
+            margin: 0px auto 0px 30px;
+        }
+
+        .modal-content {
+            margin-bottom: 20px;
+        }
+    }
+    /*landscap mobile*/
+    @@media (min-width: 481px) and (max-width: 767px) {
+        ul.Pay {
+            width: 84%;
+            margin: 0px auto 0px 40px;
+        }
+
+        .modal-content {
+            margin-bottom: 20px;
+        }
+    }
+    /*vertical mobile*/
+    @@media (min-width: 320px) and (max-width: 480px) {
+        ul.Pay {
+            width: 78%;
+            margin: 0px auto 0px 34px;
+        }
+
+        .modal-content {
+            margin-bottom: 20px;
+        }
+    }
+    /*vertical mobile*/
+    @@media (min-width: 320px) and (max-width: 480px) {
+        ul.Pay1 {
+            width: 78%;
+            margin: 0px auto 0px 34px;
+        }
+
+        .modal-content {
+            margin-bottom: 20px;
+        }
+    }
+    /*landscap mobile*/
+    @@media (min-width: 481px) and (max-width: 767px) {
+        ul.Pay1 {
+            width: 84%;
+            margin: 0px auto 0px 40px;
+        }
+
+        .modal-content {
+            margin-bottom: 20px;
+        }
+    }
+
+    @@media (min-width: 768px) and (max-width: 1024px) {
+        ul.Pay1 {
+            width: 78%;
+            margin: 0px auto 0px 30px;
+        }
+
+        .modal-content {
+            margin-bottom: 20px;
+        }
+    }
+
+    ul.Pay1 {
+        list-style: none !important;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 0px 0px;
+        width: 85%;
+    }
+
+        ul.Pay1 li {
+            padding: 12px 12px 12px 20px;
+        }
+
+        ul.Pay1 li {
+            border-bottom: 1px solid #ccc;
+            border-top: 1px solid #ccc;
+        }
+
+    ul.Pay1 {
+        margin-top: 0px;
+        margin-left: 40px;
+        margin-bottom: -40px;
+    }
+
+
+    .error-PayBAM {
+        color: red !important;
+    }
+
+    /*.error {
+           color: red !important;
+            border: 1px solid red !important;
+        }*/
+
+    /*
+            ===========================================
+                            OUR CODE
+            ===========================================
+        }*/
+
+    @@media (min-width: 800px) {
+        .payment__option {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            margin: 40px 0 0;
+        }
+
+            .payment__option .rightSide {
+                order: 1;
+                margin-top: 0;
+            }
+    }
+
+    .payment__option .rightSide {
+        margin-top: 20px;
+    }
+
+    .title__area h1,
+    .title__area h2 {
+        margin: 0 !important;
+    }
+
+    .title__area h1 {
+        font-weight: bold;
+        margin-bottom: 10px !important;
+    }
+
+
+    .payment__option .rightSide .modal-header h5 {
+        margin: 0 !important;
+        padding: 5px 0;
+    }
+
+    .payment__option .leftSide h3 {
+        margin: 0 0 10px !important;
+    }
+
+    .payment__option ul.Pay1 {
+        margin-left: 0;
+        margin-bottom: 0;
+    }
+
+    .payment__option [type="radio"]:checked, [type="radio"]:not(:checked) {
+        position: static;
+        left: 20px;
+    }
+
+    .payment__option ul.option-text {
+        margin-left: 2px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 title__area">
+            <h1 class="text-center mt-5 mb-2">Payment</h1>
+            <h2 class="text-center mt-3">Pay Online Now</h2>
+        </div>
+    </div>
+
+    <div class="payment__option">
+
+        <div class="col rightSide">
+            <div class="modal-content" id="helpModal">
+                <div class="modal-header" style="background-color: #004976">
+                    <h5 class="text-white">
+                        Billing/Payment Options
+                        <a data-toggle="collapse"
+                           href="#cardCollapse"
+                           style="font-size: 32px; color: #fff; position: absolute; right: 15px; top: 5px; display: none;"
+                           class="d-inline-block d-md-none">+</a>
+                    </h5>
+                </div>
+                <div class="modal-body card-body collapse dont-collapse-md" id="cardCollapse">
+                    <ul class="option-text">
+                        <li>
+                            <strong>Full Pay</strong><br>
+                            <span>
+                                Pay your total premium in one installment.
+                            </span>
+                        </li>
+                        <li class="mt-3">
+                            <strong>Quaterly Pay</strong><br>
+                            <span>
+                                Pay your premium in installments every 3 months.
+                            </span>
+                        </li>
+					
+                        @*<li class="mt-3">
+            <strong>Extended Pay</strong><br>
+            <span>
+                Pay your premium in extended installments. Pay the first 2 installments now and be billed for your remaining installments<sup><small>*</small></sup>  each month.  <sup><small>*</small></sup> A service fee will be applied to each bill after the initial bill.
+            </span>
+        </li>*@
+                    </ul>
+					
+					 <p  style=" margin-top:24px;">  
+                          <i style="font-style:italic;"> ** Save time by setting up EZPay, AFI’s recurring ACH payment plan. </i>
+                    </p>
+                    <p>
+                        @*<br>Save time and service fees by setting up EZPay, AFI’s recurring ACH payment plan.Call us at <a href="tel:+1-800-495-8234">800-495-8234</a> and we will be happy to assist you. Our agents are available from 7:30am to 6:30pm CST, Monday through Friday.*@
+                        Having problems with payment, please call us at <a href="tel:+1-800-495-8234">800-495-8234</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col leftSide">
+
+            <h3>Choose a Payment Option</h3>
+            <ul class="Pay" id="">
+
+                <li>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="FullPay" name="Pay" class="custom-control-input">
+                        <label class="custom-control-label" id="FullPaylabel" for="FullPay">/Full Pay</label>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="QuaterlyPay" name="Pay" class="custom-control-input">
+                        <label class="custom-control-label" id="QuaterPaylabel" for="QuaterPay">/Quaterly Pay</label>
+                    </div>
+                </li>
+
+                <li style="display: none;">
+                    <div class="custom-control custom-radio custom-control-inline">
+
+                        <input type="radio" id="ExtendedPay" name="Pay" class="custom-control-input">
+                        <label class="custom-control-label " id="ExtendedPayPaylabel" for="ExtendedPay">/Extended Pay</label>
+                    </div>
+                </li>
+            </ul>
+            <label id="payError" class="payError" for="Pay" style="display: none; color: red;">This field is required.</label>
+
+            <br />
+            <br />
+            @*Please select the payment plan chosen in BAM--QHD-563*@
+            <label id="PaymentPlanBAM" style="margin-left:40px;display:none;">Please select the payment plan chosen in BAM.</label>
+            <label id="divPaymentDone" style="margin-left:40px;display:none;">The payment is already in process.</label>
+            @*<label id="divPaymentDoneBAM" style="margin-left:40px;display:none;">Transaction successful, policy sent to processing for issue.</label>*@
+            <label id="divPaymentDoneBAM" style="margin-left:40px;display:none;">Your payment has been submitted successfully!.</label>
+            <p class="text-center offset-md-2">
+                <input type="button" id="orbipay-checkout-button" class="btn btn-primary" align="Centre" style="display:none;" value="Pay here" />
+                <div id="orbipay-checkout-iframe-div"></div>
+            </p>
+            <div id="PayBAM" style="display: none;">
+                <form name="contentPayBAM" id="contentPayBAM" enctype="multipart/form-data" method="" action="" role="form" data-toggle="validator" novalidate="true">
+                    <input type="hidden" id="hdnPayBAM" name="hdnPayBAM" />
+                    <ul class="Pay1" style="display:none">
+                        <li>
+                            <div class="custom-control custom-radio custom-control-inline">
+
+                                <input type="radio" id="FullPayBAM" name="PayBAM" class="custom-control-input">
+                                <label class="custom-control-label" for="FullPayBAM"> Full Pay</label>
+                            </div>
+                        </li>
+                        <li>
+           <div class="custom-control custom-radio custom-control-inline">
+
+                <input type="radio" id="ExtendedPayBAM" name="PayBAM" class="custom-control-input">
+                <label class="custom-control-label" for="ExtendedPayBAM">Extended Pay</label>
+            </div>
+        </li>
+                        @*<li>
+                            <div class="custom-control custom-radio custom-control-inline">
+
+                                <input type="radio" id="ExtendedPayBAM" name="PayBAM" class="custom-control-input">
+                                <label class="custom-control-label" for="ExtendedPayBAM">Quarterly Pay</label>
+                            </div>
+                        </li>*@
+                    </ul>
+
+                    <br />
+
+                    <br />
+                    <div id="error-PayBAM" class="help-block with-errors error-PayBAM" style="margin-left:40px ; display: none;">Required *</div>
+
+                    <p class="text-center" style="display:none">
+                        <label id="submittoissue">Select submit to issue.</label>
+                        <a href="#" class="btn button btn-primary" id="btnBAMSubmit">Submit</a>
+                    </p>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <div class="text-center" style="margin-top: 20px;display:none"><input type="button" id="orbipay-checkout-button" class="button" value="Pay" /></div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+
+<div id="orbipay-checkout-form" method="POST" onsubmit="post_secure_token();">
+    <script id="orbipay-checkout-script"
+            src="https://jsco.billerpayments.com/app/opco/v4/scripts/checkoutofsc.js"
+            data-client_key="8717307401"
+            data-api_event="create_payment"
+            data-amount="177.00"
+            data-customer_account_reference="ABCD12345"
+            data-customer_first_name="Joee"
+            data-customer_last_name="Smith"
+            data-customer_reference="1372"
+            data-customer_email="mehedi.hasan@afi.org">
+    </script>
+</div>
+
+<script type="text/javascript">
+    const handlePayFrom = (e) => {
+        $("#hdnIdQuote").val($("#hdn_QuoteId").val());
+        $("#hdnRiskAddressId").val($("#hdn_RiskAddressId").val());
+        $("#hdnTotalRenterPremium").val($('#FullPay').val());
+        $("#hdnQuarterlyPay").val($('#QuaterPay').val());
+        $("#hdnExtendedPay").val($('#ExtendedPay').val());
+        $("#hdnPay").val($('input[name="Pay"]:checked').val());
+        $("#orbipay-checkout-script").attr({
+            "data-client_key": $("#hdn_ClientKey").val(),
+            "data-amount": $('input[name="Pay"]:checked').val(),
+            "data-customer_account_reference": $("#hdn_QuoteId").val(),
+            "data-customer_first_name": $('#first_Name').val(),
+            "data-customer_last_name": $('#last_Name').val(),
+            "data-customer_reference": $("#hdn_RiskAddressId").val(),
+            "data-customer_email": $('#email').val()
+        });
+    }
+</script>
+
+
+
+
+

@@ -1,0 +1,306 @@
+﻿@model AFI.Feature.QuoteForm.Areas.AFIQuoteForm.Models.MotorcycleForm.MotorcycleForm
+@using AFI.Feature.QuoteForm.Areas.AFIWEB.Models.Form_Models
+
+@{
+    int i = 1;
+    int j = 1;
+    var stepsCount = Model.wayfinder.steps.Count;
+}
+
+<!-- ************************************************ -->
+<!---------------------- MULTI-STEP 2 ------------------>
+<!-- ************************************************ -->
+<!-- VEHICLE SUMMARY -->
+@{
+    Section dataitem = Model.form.sections.Where(x => x.id == "vehicleSummary").SingleOrDefault();
+}
+<section class="form_section multi__step_2 summary__form">
+    <div class="container">
+        <!-- ******** STEP ******** -->
+        <div class="step__container">
+            <ul class="steps__list">
+                @foreach (var step in Model.wayfinder.steps)
+                {
+                    <li class="step @(i <= 2 ? "active_step" : "")" data-text="@step.label">@i</li>
+                    @Html.Raw(i != stepsCount ? "<li class='line'></li>" : "")
+                    i++;
+                }
+            </ul>
+        </div>
+
+        <div class="quote_request__section_wrapper">
+            <div class="form_container">
+                <h2 class="quote_request_heading">@dataitem.heading</h2>
+                <!-- Summary -->
+                <div class="quote_request__summary">
+                    <!-- Main Vehicle -->
+                    <!-- <div class="quote_request__summary_item quote_request__summary_main_item">
+                      <p class="quote_request__summary_item_info quote_request__summary_main_item_info"></p>
+                      <div class="quote_request__summary_item_actions delete_edit">
+                        <button id="mainVehicleEditBtn" class="button-bare" type="button">Edit</button>
+                      </div>
+                    </div> -->
+                    <!-- Demo Vehicles Items -->
+                    <div class="quote_request__summary_item demoItem __hide">
+                        <p class="quote_request__summary_item_info"></p>
+                        <div class="quote_request__summary_item_actions delete_edit">
+                            <button id="deleteBtn" class="button-bare deleteBtn" type="button">Delete</button>
+                            <button id="editBtn" class="button-bare editBtn" type="button">Edit</button>
+                        </div>
+                        <div class="quote_request__summary_item_actions yes_no __hide">
+                            <!--Updated By  24.7.23 Start-->
+                            <span>Are you sure?</span>
+                            <!--Updated By  24.7.23 End-->
+                            <button id="deleteYes" class="button-bare deleteYes" type="button">Yes</button>
+                            <button id="deleteNo" class="button-bare deleteNo" type="button">No</button>
+                        </div>
+                    </div>
+                    <!-- More Vehicles Items -->
+                    <div id="moreVehicles"></div>
+                </div>
+
+                <!-- Add Button -->
+                <button id="MCaddVehicle" class="button" type="button"> @Model.form.unique.addVehicleButtonText</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- VEHICLE FORM -->
+@{
+    Section data = Model.form.sections.Where(x => x.id == "vehicle").SingleOrDefault();
+}
+<section class="form_section multi__step_2 add_vehicle_form">
+    <div class="container">
+        <!-- ******** STEP ******** -->
+        <div class="step__container">
+            <ul class="steps__list">
+                @foreach (var step in Model.wayfinder.steps)
+                {
+                    <li class="step @(j <= 2 ? "active_step" : "")" data-text="@step.label">@j</li>
+                    @Html.Raw(j != stepsCount ? "<li class='line'></li>" : "")
+                    j++;
+                }
+            </ul>
+        </div>
+
+        <div class="quote_request__section_wrapper">
+            <!-- ******* FORM  *******-->
+            <div class="form_container">
+                <!--Updated By  25.7.23 Start-->
+                <button class="quote-request-sidebar__show-trigger" type="button">?</button>
+                <!--Updated By  25.7.23 End-->
+                <h2 class="quote_request_heading">@data.heading</h2>
+
+                <!-- Year -->
+                <div class="fields-row">
+                    <div class="field field--small">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="vehicle0Year">@data.fields[0].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required year"
+                                   id="@data.fields[0].id"
+                                   name="@data.fields[0].id"
+                                   type="text"
+                                   maxlength="4"
+                                   data-field="Year" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Make, Model -->
+                <div class="fields-row">
+                    <div class="field field--xlarge">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="vehicle0Make">@data.fields[1].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required"
+                                   id="@data.fields[1].id"
+                                   name="@data.fields[1].id"
+                                   type="text"
+                                   maxlength="50"
+                                   data-field="Make" />
+                        </div>
+                    </div>
+
+                    <div class="field field--xlarge">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="vehicle0Model">@data.fields[2].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required"
+                                   id="@data.fields[2].id"
+                                   name="@data.fields[2].id"
+                                   type="text"
+                                   maxlength="50"
+                                   data-field="Model" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Type -->
+                <div class="fields-row">
+                    <div class="field field--xlarge">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="vehicle0Type">@data.fields[3].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input required" id="@data.fields[3].id"
+                                    name="@data.fields[3].id" type="select" data-field="Type">
+                                <option value="">Choose One</option>
+                                @foreach (Options opt in data.fields[3].options)
+                                {
+                                    <option value="@opt.value">@opt.label</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Estimate Value of Vehicle,CC Size -->
+                <div class="fields-row">
+                    <div class="field extra_message_margin">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="vehicle0EstimatedValue">@data.fields[4].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required numberOnly"
+                                   id="@data.fields[4].id"
+                                   name="@data.fields[4].id"
+                                   type="text"
+                                   maxlength="20"
+                                   data-field="CcSize" />
+                            <!-- <p class="field__note">Numerical Values Only</p> -->
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="vehicle0Storage">@data.fields[5].label</label>
+                        </div>
+
+                        <div class="field__input-wrapper">
+                            <input class="field__input required numberOnly dollar"
+                                   id="@data.fields[5].id"
+                                   name="@data.fields[5].id"
+                                   type="text"
+                                   maxlength="50"
+                                   data-field="Value" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vehicleFullAddress">
+                    <!-- Same Address -->
+                    <div class="fields-row">
+                        <div class="field field--full">
+                            <div class="field-group field-group--inline">
+                                <div class="field__input-wrapper">
+                                    <input class="field__input AddressSameAsMailing--true"
+                                           id="vehicle0AddressSameAsMailing--true"
+                                           name="vehicle0AddressSameAsMailing"
+                                           type="checkbox"
+                                           value="true"
+                                           data-field="AddressSameAsMailing" /><label class="field__label AddressSameAsMailing--label" for="vehicle0AddressSameAsMailing--true">@data.fields[6].label</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Garaging Address -->
+                        <div class="fields-row">
+                            <div class="field field--xxlarge">
+                                <div class="field__label-wrapper">
+                                    <label class="field__label" for="vehicle0Address">@data.fields[7].label</label>
+                                </div>
+                                <div class="field__input-wrapper">
+                                    <input class="field__input vehicleAddress required"
+                                           id="@data.fields[7].id"
+                                           name="@data.fields[7].id"
+                                           type="text"
+                                           maxlength="100"
+                                           data-match="policyHolderMailingAddress"
+                                           data-field="Address" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- City, State, Zip -->
+                        <div class="fields-row">
+                            <div class="field field--large">
+                                <div class="field__label-wrapper">
+                                    <label class="field__label" for="vehicle0City">@data.fields[8].label</label>
+                                </div>
+                                <div class="field__input-wrapper">
+                                    <input class="field__input required vehicleCity"
+                                           id="@data.fields[8].id"
+                                           name="@data.fields[8].id"
+                                           maxlength="50"
+                                           type="text"
+                                           data-match="policyHolderCity"
+                                           data-field="City" />
+                                </div>
+                            </div>
+                            <div class="field field--medium">
+                                <div class="field__label-wrapper">
+                                    <label class="field__label" for="vehicle0State">@data.fields[9].label</label>
+                                </div>
+                                <div class="field__input-wrapper">
+                                    <select class="field__input vehicleState required"
+                                            id="@data.fields[9].id"
+                                            name="@data.fields[9].id"
+                                            type="select"
+                                            data-match="policyHolderState"
+                                            data-field="State">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="field field--small">
+                                <div class="field__label-wrapper">
+                                    <label class="field__label" for="vehicle0Zip">@data.fields[10].label</label>
+                                </div>
+                                <div class="field__input-wrapper">
+                                    <input class="field__input required zip"
+                                           id="@data.fields[10].id"
+                                           name="@data.fields[10].id"
+                                           type="text"
+                                           required=""
+                                           pattern="[0-9]{5}"
+                                           maxlength="5"
+                                           data-match="policyHolderZip"
+                                           data-field="Zip" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- ******* ASIDE  *******-->
+            @if (data.sidebar != null && data.sidebar.content.Count > 0)
+            {
+        <aside class="quote_request_aside">
+            <h2 class="quote_request_sidebar__heading">@data.sidebar.heading</h2>
+            <div class="quote_request_sidebar__content">
+                @foreach (SideBarContent sideContent in data.sidebar.content)
+                {
+                    <div class="quote_request_sidebar__item">
+                        <h3 class="quote_request_sidebar__item_heading">
+                            @sideContent.heading
+                        </h3>
+                        <p class="quote_request_sidebar__item_description">
+                            @sideContent.content
+                        </p>
+                    </div>
+                }
+
+            </div>
+            <!--Updated By  25.7.23 Start-->
+            <button class="button button--reversed quote-request-sidebar__hide-trigger" type="button">Close</button>
+            <!--Updated By  25.7.23 End-->
+        </aside>
+            }
+        </div>
+    </div>
+</section>

@@ -1,0 +1,23 @@
+.make_sound_section .row,
+.make_sound_section .col-md-7,
+.make_sound_section .col-md-5 {
+  padding: 0 !important;
+}
+
+.make_sound_section {
+  align-items: center;
+  padding: 3rem;
+}
+.make_sound_section h2 {
+  color: #004976 !important;
+}
+
+.content-column {
+  background-color: var(--afi-blue-200);
+  padding: 1rem 2rem;
+}
+
+.content-column ul {
+  list-style: disc !important;
+  padding-left: 20px;
+}

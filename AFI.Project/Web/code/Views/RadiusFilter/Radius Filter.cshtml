@@ -1,0 +1,45 @@
+@using Sitecore.XA.Foundation.MarkupDecorator.Extensions
+@using Sitecore.XA.Foundation.SitecoreExtensions.Extensions
+
+@model Sitecore.XA.Feature.Search.Models.RadiusFilterModel
+
+<div @Html.Sxa().Component(Model.Rendering.RenderingCssClass ?? "radius-filter", Model.Attributes).Decorate("class", "facet-component") data-properties='@Html.Raw(Model.JsonDataProperties)'>
+    <div class="component-content">
+        @if (Model.DataSourceItem == null)
+        {
+            if (Html.Sxa().IsEdit)
+            {
+                @Model.MessageIsEmpty
+            }
+        }
+        else
+        {
+            Html.RenderPartial("FacetHeader", Model);
+            
+           
+            
+
+            if (Model.FilterItems.Any())
+            {
+                <ul>
+                    @foreach (var radius in Model.FilterItems)
+                    {
+                        <li data-title="@radius.Key" data-value="@radius.Value">
+                            @radius.Key
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                if (Html.Sxa().IsEdit)
+                {
+                    <p>@Model.MessageEditHere</p>
+                }
+
+            }
+            Html.RenderPartial("FacetRemoveFilterButton", Model);
+
+        }
+    </div>
+</div>

@@ -1,0 +1,15 @@
+﻿@using Sitecore.Mvc
+@using Sitecore
+@using Sitecore.Data.Fields
+@using Sitecore.Data.Items
+@using System.Configuration
+@model AFI.Project.Web.Areas.AFIWEB.Models.SitecoreSendModel
+
+
+<div>
+    <p>comment : @Model.Comments</p>
+    <p>Email:  @Model.Email</p>
+    <p>@Model.Mobile</p>
+    <p>@Model.Name</p>
+</div>
+

@@ -1,0 +1,27 @@
+.landing-page-hero__wrapper {
+  display: block;
+  position: relative;
+  background: url(./img/videohero_auto1.jpg);
+  max-width: 1600px;
+  margin: auto;
+  padding: 20px;
+}
+
+.auto__hero .video__container {
+  max-width: 850px;
+  margin: auto;
+}
+
+.auto__hero .video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+@media screen and (min-width: 64em) {
+  .landing-page-hero__wrapper {
+    display: block;
+    height: 32.5rem;
+    overflow: hidden;
+    padding: 25px;
+  }
+}

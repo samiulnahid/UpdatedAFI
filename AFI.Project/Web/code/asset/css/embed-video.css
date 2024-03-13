@@ -1,0 +1,13 @@
+.main_section__container {
+  max-width: 1150px;
+  justify-content: space-between;
+}
+
+.video__container {
+  margin-bottom: 4rem;
+}
+
+.embed__video {
+  width: 100%;
+  aspect-ratio: 16/9;
+}

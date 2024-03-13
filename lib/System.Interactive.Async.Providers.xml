@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>System.Interactive.Async.Providers</name>
+    </assembly>
+    <members>
+        <member name="T:System.Linq.AsyncQueryableEx">
+            <summary>
+            Provides a set of extension methods for asynchronous enumerable sequences represented using expression trees.
+            </summary>
+        </member>
+    </members>
+</doc>

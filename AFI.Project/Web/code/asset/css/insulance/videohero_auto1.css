@@ -1,0 +1,76 @@
+.landing-page-hero__wrapper {
+  display: block;
+  position: relative;
+  /* background: url(./img/videohero_auto1.jpg); */
+  max-width: 1600px;
+  margin: auto;
+  padding: 20px;
+  position: relative;
+}
+
+.auto__hero .backround_image img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
+.auto__hero .container {
+  position: relative;
+  z-index: 2;
+}
+
+.auto__hero .video-wrapper {
+  background-color: transparent;
+  aspect-ratio: 16 / 9;
+}
+
+.auto__hero .video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.auto__hero .quote-start {
+  background-image: linear-gradient(120deg, #cb2c30, #881b26);
+  background-image: linear-gradient(
+    120deg,
+    var(--color-red-10),
+    var(--color-red-20)
+  );
+  color: #fff;
+  color: var(--color-white);
+  padding: 2.75rem 2.25rem;
+}
+
+.auto__hero .quote-start__type-image {
+  height: 2.9375rem;
+  width: auto;
+}
+
+.auto__hero .quote-start__heading {
+  margin-top: 0.8rem !important;
+}
+
+.auto__hero .quote-start__upper-wrapper p {
+  line-height: 2 !important;
+}
+
+.auto__hero .quote-start__controls .button {
+  width: 100%;
+  font-size: 1.125rem;
+}
+
+@media screen and (min-width: 992px) {
+  .landing-page-hero__wrapper {
+    display: block;
+    height: 32.5rem;
+    overflow: hidden;
+    padding: 25px;
+  }
+
+  .landing-page-hero__video-wrapper .quote-start {
+    max-width: 18rem;
+    margin-left: auto;
+    max-height: 370px;
+  }
+}

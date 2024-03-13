@@ -1,0 +1,1090 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Sitecore.CES.GeoIp.Core</name>
+    </assembly>
+    <members>
+        <member name="T:Sitecore.CES.GeoIp.Core.Caching.GeoIpCache">
+            <summary>
+            <inheritdoc cref="T:Sitecore.CES.GeoIp.Core.Caching.IGeoIpCache"/>
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Caching.GeoIpCache.#ctor(System.String,System.Int64,System.TimeSpan)">
+            <summary>
+            Initiate a new instance of <see cref="M:Sitecore.CES.GeoIp.Core.Caching.GeoIpCache.#ctor(System.String,System.Int64,System.TimeSpan)"/>
+            </summary>
+            <param name="cacheName"></param>
+            <param name="cacheSize"></param>
+            <param name="cacheExpiry"></param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Caching.GeoIpCache.Get(System.String)">
+            <summary>
+            Gets <see cref="T:Sitecore.CES.GeoIp.Core.Model.WhoIsInformation"/> from cache.
+            </summary>
+            <param name="ip">The IP address.</param>
+            <returns>The <see cref="T:Sitecore.CES.GeoIp.Core.Model.GeoIpFetchedData"/>.</returns>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Caching.GeoIpCache.Add(System.String,Sitecore.CES.GeoIp.Core.Model.GeoIpFetchedData)">
+            <summary>
+            Adds <see cref="T:Sitecore.CES.GeoIp.Core.Model.WhoIsInformation"/> to the cache.
+            </summary>
+            <param name="ip">The IP address.</param>
+            <param name="value">The <see cref="T:Sitecore.CES.GeoIp.Core.Model.GeoIpFetchedData"/> value.</param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Caching.GeoIpCache.GetDataLength(Sitecore.CES.GeoIp.Core.Model.GeoIpFetchedData)">
+            <summary>
+            Gets data length of the WhoIsInformation instance.
+            </summary>
+            <param name="geoIpFetchedData"> The <see cref="T:Sitecore.CES.GeoIp.Core.Model.GeoIpFetchedData"/>.</param>
+            <returns>The <see cref="T:System.Int64"/>.</returns>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.Caching.IGeoIpCache">
+            <summary>
+            The GeoIp cache
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Caching.IGeoIpCache.Get(System.String)">
+            <summary>
+            Get GeoIp fetched data record from cache
+            </summary>
+            <param name="ip">The ip address</param>
+            <returns>The GeoIp fetched data</returns>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Caching.IGeoIpCache.Add(System.String,Sitecore.CES.GeoIp.Core.Model.GeoIpFetchedData)">
+            <summary>
+            Add GeoIp fetched data record to cache
+            </summary>
+            <param name="ip">The ip address</param>
+            <param name="value">The GeoIp fetched data</param>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.Conditions.AreaCodeCondition`1">
+            <summary>Defines the area code condition class.</summary>
+            <typeparam name="T">The Rule Context type.</typeparam>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.AreaCodeCondition`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.AreaCodeCondition`1.#ctor"/> class.
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.AreaCodeCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.AreaCodeCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpResolverManager"></param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.AreaCodeCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager,Sitecore.CES.GeoIp.Core.Extractor.IIpAddressExtractor)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.AreaCodeCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpResolverManager"></param>
+            <param name="ipAddressExtractor"></param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.AreaCodeCondition`1.GetVisitorGeoIpPropertyValue(Sitecore.CES.GeoIp.Core.Model.WhoIsInformation)">
+            <summary>Gets the area code value from the GeoIP info.</summary>
+            <param name="visitorInfo">The visitor GeoIP info</param>
+            <returns>The area code</returns>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.Conditions.BusinessNameCondition`1">
+            <summary>Defines the business name condition class.</summary>
+            <typeparam name="T">The Rule Context type.</typeparam>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.BusinessNameCondition`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.BusinessNameCondition`1.#ctor"/> class.
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.BusinessNameCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.BusinessNameCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpResolverManager"></param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.BusinessNameCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager,Sitecore.CES.GeoIp.Core.Extractor.IIpAddressExtractor)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.BusinessNameCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpResolverManager"></param>
+            <param name="ipAddressExtractor"></param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.BusinessNameCondition`1.GetVisitorGeoIpPropertyValue(Sitecore.CES.GeoIp.Core.Model.WhoIsInformation)">
+            <summary>Gets the business name value from the GeoIP info.</summary>
+            <param name="visitorInfo">The visitor GeoIP info</param>
+            <returns>The business name</returns>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.Conditions.CityCondition`1">
+            <summary>Defines the city condition class.</summary>
+            <typeparam name="T">The Rule Context type.</typeparam>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.CityCondition`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.CityCondition`1.#ctor"/> class.
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.CityCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.CityCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpFetcherManager">The GeoIP fetcher manager</param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.CityCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager,Sitecore.CES.GeoIp.Core.Extractor.IIpAddressExtractor)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.CityCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpFetcherManager">The GeoIP fetcher manager</param>
+            <param name="ipAddressExtractor">The GeoIP fetcher manager</param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.CityCondition`1.GetVisitorGeoIpPropertyValue(Sitecore.CES.GeoIp.Core.Model.WhoIsInformation)">
+            <summary>Gets the city value from the GeoIP info.</summary>
+            <param name="visitorInfo">The visitor GeoIP info</param>
+            <returns>The city</returns>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.Conditions.DnsCondition`1">
+            <summary>Defines the DNS condition class.</summary>
+            <typeparam name="T">The Rule Context type.</typeparam>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.DnsCondition`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.DnsCondition`1.#ctor"/> class.
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.DnsCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.DnsCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpResolverManager"></param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.DnsCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager,Sitecore.CES.GeoIp.Core.Extractor.IIpAddressExtractor)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.DnsCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpResolverManager"></param>
+            <param name="ipAddressExtractor"></param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.DnsCondition`1.GetVisitorGeoIpPropertyValue(Sitecore.CES.GeoIp.Core.Model.WhoIsInformation)">
+            <summary>Gets the DNS value from the GeoIP info.</summary>
+            <param name="visitorInfo">The visitor GeoIP info</param>
+            <returns>The DNS</returns>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.Conditions.GeographicalCoordinatesConditionBase`1">
+            <summary>Defines the geographical-point condition class.</summary>
+            <typeparam name="T">The rule context.</typeparam>
+        </member>
+        <member name="F:Sitecore.CES.GeoIp.Core.Conditions.GeographicalCoordinatesConditionBase`1.GeoIpFetcherManager">
+            <summary>
+            The GeoIp fetcher manager instance
+            </summary>
+        </member>
+        <member name="F:Sitecore.CES.GeoIp.Core.Conditions.GeographicalCoordinatesConditionBase`1.IpAddressExtractor">
+            <summary>
+            The Ip Address Extractor instance
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.GeographicalCoordinatesConditionBase`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)">
+            <summary>
+            The constructor for base class <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.GeographicalCoordinatesConditionBase`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpFetcherManager">The GeoIp fetcher manager</param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.GeographicalCoordinatesConditionBase`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager,Sitecore.CES.GeoIp.Core.Extractor.IIpAddressExtractor)">
+            <summary>
+            The constructor for base class <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.GeographicalCoordinatesConditionBase`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpFetcherManager">The GeoIp fetch manager</param>
+            <param name="ipAddressExtractor">The Ip Address Extractor</param>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.Conditions.GeographicalCoordinatesConditionBase`1.Value">
+            <summary>
+            Gets or sets the value.
+            </summary>
+            <value>The value.</value>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.GeographicalCoordinatesConditionBase`1.Compare(Sitecore.Rules.Conditions.ConditionOperator,System.Double,System.Double)">
+            <summary>Compares the specified values.</summary>
+            <param name="conditionOperator">The conditionOperator.</param>
+            <param name="visitValue">The visitValue.</param>
+            <param name="value">The value.</param>
+            <returns>The boolean result of comparing two numbers.</returns>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.GeographicalCoordinatesConditionBase`1.Execute(`0)">
+            <summary>Executes the specified rule context.</summary>
+            <param name="ruleContext">The rule context.</param>
+            <returns><c>True</c>, if the condition succeeds, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.GeographicalCoordinatesConditionBase`1.GetCoordinateValue(Sitecore.CES.GeoIp.Core.Model.WhoIsInformation)">
+            <summary>Gets the geographical coordinate value.</summary>
+            <param name="visitorInfo">The visitor GeoIP info</param>
+            <returns>Returns the double value.</returns>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.Conditions.GeoIpConditionBase`1">
+            <summary>Defines the operator condition class.</summary>
+            <typeparam name="T">The rule context.</typeparam>
+        </member>
+        <member name="F:Sitecore.CES.GeoIp.Core.Conditions.GeoIpConditionBase`1.GeoIpFetcherManager">
+            <summary>
+            The GeoIp fetcher manager instance
+            </summary>
+        </member>
+        <member name="F:Sitecore.CES.GeoIp.Core.Conditions.GeoIpConditionBase`1.IpAddressExtractor">
+            <summary>
+            The Ip Address Extractor instance
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.GeoIpConditionBase`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)">
+            <summary>
+            The constructor for base class <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.GeoIpConditionBase`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpFetcherManager">The GeoIp fetch manager</param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.GeoIpConditionBase`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager,Sitecore.CES.GeoIp.Core.Extractor.IIpAddressExtractor)">
+            <summary>
+            The constructor for base class <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.GeoIpConditionBase`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpFetcherManager">The GeoIp fetch manager</param>
+            <param name="ipAddressExtractor">The Ip Address Extractor</param>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.Conditions.GeoIpConditionBase`1.Value">
+            <summary>
+            Gets or sets the value.
+            </summary>
+            <value>The value.</value>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.GeoIpConditionBase`1.Execute(`0)">
+            <summary>Executes the specified rule context.</summary>
+            <param name="ruleContext">The rule context.</param>
+            <returns><c>True</c>, if the condition succeeds, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.GeoIpConditionBase`1.GetVisitorGeoIpPropertyValue(Sitecore.CES.GeoIp.Core.Model.WhoIsInformation)">
+            <summary>Gets the string value</summary>
+            <param name="visitorInfo">The visitor GeoIP info</param>
+            <returns>The GeoIP property string value</returns>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.Conditions.IpAddressCondition`1">
+            <summary>Defines the TP address condition class.</summary>
+            <typeparam name="T">The Rule Context type.</typeparam>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.IpAddressCondition`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.IpAddressCondition`1.#ctor"/> class.
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.IpAddressCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.IpAddressCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpResolverManager"></param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.IpAddressCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager,Sitecore.CES.GeoIp.Core.Extractor.IIpAddressExtractor)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.IpAddressCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpResolverManager"></param>
+            <param name="ipAddressExtractor"></param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.IpAddressCondition`1.GetVisitorGeoIpPropertyValue(Sitecore.CES.GeoIp.Core.Model.WhoIsInformation)">
+            <summary>Get the IP address.</summary>
+            <param name="visitorInfo">The visitor GeoIP info</param>
+            <returns>The IP address</returns>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.Conditions.IspNameCondition`1">
+            <summary>Defines the ISP name condition class.</summary>
+            <typeparam name="T">The Rule Context type.</typeparam>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.IspNameCondition`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.IspNameCondition`1.#ctor"/> class.
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.IspNameCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.IspNameCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpResolverManager"></param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.IspNameCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager,Sitecore.CES.GeoIp.Core.Extractor.IIpAddressExtractor)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.IspNameCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpResolverManager"></param>
+            <param name="ipAddressExtractor"></param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.IspNameCondition`1.GetVisitorGeoIpPropertyValue(Sitecore.CES.GeoIp.Core.Model.WhoIsInformation)">
+            <summary>Gets the ISP name value from the GeoIP info.</summary>
+            <param name="visitorInfo">The visitor GeoIP info</param>
+            <returns>The ISP name</returns>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.Conditions.LatitudePointCondition`1">
+            <summary>Defines the geographical latitude-point condition class.</summary>
+            <typeparam name="T">The Rule Context type.</typeparam>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.LatitudePointCondition`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.LatitudePointCondition`1.#ctor"/> class.
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.LatitudePointCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.LatitudePointCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpResolverManager"></param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.LatitudePointCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager,Sitecore.CES.GeoIp.Core.Extractor.IIpAddressExtractor)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.LatitudePointCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpResolverManager"></param>
+            <param name="ipAddressExtractor"></param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.LatitudePointCondition`1.GetCoordinateValue(Sitecore.CES.GeoIp.Core.Model.WhoIsInformation)">
+            <summary>Gets the latitude point value from the GeoIP info.</summary>
+            <param name="visitorInfo">The visitor GeoIP info</param>
+            <returns>The latitude point value</returns>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.Conditions.LongitudePointCondition`1">
+            <summary>Defines the geographical longitude-point condition class.</summary>
+            <typeparam name="T">The Rule Context type.</typeparam>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.LongitudePointCondition`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.LongitudePointCondition`1.#ctor"/> class.
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.LongitudePointCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.LongitudePointCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpResolverManager"></param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.LongitudePointCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager,Sitecore.CES.GeoIp.Core.Extractor.IIpAddressExtractor)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.LongitudePointCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpResolverManager"></param>
+            <param name="ipAddressExtractor"></param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.LongitudePointCondition`1.GetCoordinateValue(Sitecore.CES.GeoIp.Core.Model.WhoIsInformation)">
+            <summary>Gets the longitude point value from the GeoIP info.</summary>
+            <param name="visitorInfo">The visitor GeoIP info</param>
+            <returns>The longitude point value</returns>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.Conditions.MetroCodeCondition`1">
+            <summary>Defines the metro code condition class.</summary>
+            <typeparam name="T">The Rule Context type.</typeparam>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.MetroCodeCondition`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.CES.GeoIp.Core.Conditions.MetroCodeCondition`1"/> class.
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.MetroCodeCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.MetroCodeCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpFetcherManager"></param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.MetroCodeCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager,Sitecore.CES.GeoIp.Core.Extractor.IIpAddressExtractor)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.MetroCodeCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpFetcherManager"></param>
+            <param name="ipAddressExtractor"></param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.MetroCodeCondition`1.GetVisitorGeoIpPropertyValue(Sitecore.CES.GeoIp.Core.Model.WhoIsInformation)">
+            <summary>Gets the metro code value from the GeoIP info.</summary>
+            <param name="visitorInfo">The visitor GeoIP info</param>
+            <returns>The IP address</returns>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.Conditions.PostalCodeCondition`1">
+            <summary>Defines the postal code condition class.</summary>
+            <typeparam name="T">The Rule Context type.</typeparam>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.PostalCodeCondition`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.PostalCodeCondition`1.#ctor"/> class.
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.PostalCodeCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.PostalCodeCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpResolverManager"></param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.PostalCodeCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager,Sitecore.CES.GeoIp.Core.Extractor.IIpAddressExtractor)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.PostalCodeCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpResolverManager"></param>
+            <param name="ipAddressExtractor"></param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.PostalCodeCondition`1.GetVisitorGeoIpPropertyValue(Sitecore.CES.GeoIp.Core.Model.WhoIsInformation)">
+            <summary>Gets the postal code value from the GeoIP info.</summary>
+            <param name="visitorInfo">The visitor GeoIP info</param>
+            <returns>The postal code</returns>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.Conditions.RegionCondition`1">
+            <summary>Defines the region condition class.</summary>
+            <typeparam name="T">The Rule Context type.</typeparam>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.RegionCondition`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.RegionCondition`1.#ctor"/> class.
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.RegionCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.RegionCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpResolverManager"></param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.RegionCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager,Sitecore.CES.GeoIp.Core.Extractor.IIpAddressExtractor)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Conditions.RegionCondition`1.#ctor(Sitecore.CES.GeoIp.Core.IGeoIpManager)"/> class.
+            </summary>
+            <param name="geoIpResolverManager"></param>
+            <param name="ipAddressExtractor"></param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Conditions.RegionCondition`1.GetVisitorGeoIpPropertyValue(Sitecore.CES.GeoIp.Core.Model.WhoIsInformation)">
+            <summary>Gets the region value from the GeoIP info.</summary>
+            <param name="visitorInfo">The visitor GeoIP info</param>
+            <returns>The region</returns>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.Database.CleanupAgent">
+            <summary>
+            GeoIp data cleanup agent
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Database.CleanupAgent.#ctor(Sitecore.Abstractions.BaseLog)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Database.CleanupAgent.#ctor(Sitecore.Abstractions.BaseLog)"/> class.
+            </summary>
+            <param name="log">The log</param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Database.CleanupAgent.Run">
+            <summary>
+            Execute the cleanup
+            </summary>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.DefaultGeoIpManager">
+            <inheritdoc cref="T:Sitecore.CES.GeoIp.Core.IGeoIpManager"/>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.DefaultGeoIpManager.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.DefaultGeoIpManager.#ctor"/>
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.DefaultGeoIpManager.#ctor(Sitecore.CES.GeoIp.Core.Request.IGeoIpRequestFactory,Sitecore.CES.GeoIp.Core.Fetcher.IGeoIpFetcher,Sitecore.CES.GeoIp.Core.Caching.IGeoIpCache,Sitecore.CES.GeoIp.Core.PerformanceCounters.GeoIpPerformanceCounters,Sitecore.CES.GeoIp.Core.GeoIpSettings)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.DefaultGeoIpManager.#ctor(Sitecore.CES.GeoIp.Core.Request.IGeoIpRequestFactory,Sitecore.CES.GeoIp.Core.Fetcher.IGeoIpFetcher,Sitecore.CES.GeoIp.Core.Caching.IGeoIpCache,Sitecore.CES.GeoIp.Core.PerformanceCounters.GeoIpPerformanceCounters,Sitecore.CES.GeoIp.Core.GeoIpSettings)"/> class.
+            </summary>
+            <param name="geoIpRequestFactory"></param>
+            <param name="ipInfoFetcher">The GeoIp info fetcher</param>
+            <param name="geoIpCache">The GeoIp cache</param>
+            <param name="geoIpTracking">The geo tracking count</param>
+             /// <param name="geoIpSettings">The geo settings</param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.DefaultGeoIpManager.GetGeoIpData(System.String,System.Nullable{System.TimeSpan})">
+            <inheritdoc />
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.DependencyInjection.GeoIpServicesConfigurator">
+            <summary>
+            Represents <see cref="T:Sitecore.DependencyInjection.IServicesConfigurator"/> for Sitecore.CES.GeoIp.Core assembly.
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.DependencyInjection.GeoIpServicesConfigurator.Configure(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Register GeoIP services.
+            </summary>
+            <param name="serviceCollection"></param>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.Extractor.IIpAddressExtractor">
+            <summary>
+            The Ip Address Extractor
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Extractor.IIpAddressExtractor.GetClientIpAddress(System.Web.HttpRequestBase)">
+            <summary>
+            Extract the client IP Address 
+            </summary>
+            <returns>The IP Address</returns>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Fetcher.Providers.DatabaseStorageGeoIpFetcher.#ctor(Sitecore.CES.GeoIp.Core.Database.IGeoIpDataProvider,Sitecore.CES.GeoIp.Core.GeoIpSettings,Sitecore.CES.GeoIp.Core.PerformanceCounters.GeoIpPerformanceCounters)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Fetcher.Providers.DatabaseStorageGeoIpFetcher.#ctor(Sitecore.CES.GeoIp.Core.Database.IGeoIpDataProvider,Sitecore.CES.GeoIp.Core.GeoIpSettings,Sitecore.CES.GeoIp.Core.PerformanceCounters.GeoIpPerformanceCounters)"/> class.
+            </summary>
+            <param name="geoIpDataProvider">The data api</param>
+            <param name="geoIpSettings">The settings</param>
+            <param name="geoIpTrackingCount">The GeoIp tracking count</param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Fetcher.Providers.LookupGeoIpFetcher.#ctor(Sitecore.CES.GeoIp.Core.Lookups.LookupProviderBase,Sitecore.CES.GeoIp.Core.PerformanceCounters.GeoIpPerformanceCounters)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Fetcher.Providers.LookupGeoIpFetcher.#ctor(Sitecore.CES.GeoIp.Core.Lookups.LookupProviderBase,Sitecore.CES.GeoIp.Core.PerformanceCounters.GeoIpPerformanceCounters)"/> class.
+            </summary>
+            <param name="lookupManager">The lookup manager</param>
+            <param name="geoIpTrackingCount">The GeoIp tracking count</param>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.GeoIpSettings.GetCanPerformLookupSetting">
+            <summary>
+            10.1 Use this temporary for backward compatibility with obsoleted config 'Analytics.PerformLookup'
+            Once 'Analytics.PerformLookup' is removed, we can directly call _settings.GetBoolSetting(GeoIpSettingsKey.PerformLookup, true)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.GeoIpSettings.GetGeoIpCacheExpiryTimeSetting">
+            <summary>
+            10.1 Use this temporary for backward compatibility with obsoleted config 'Analytics.GeoIpDataDictionaryCacheExpiration'
+            Once 'Analytics.GeoIpDataDictionaryCacheExpiration' is removed, we can directly call _settings.GetBoolSetting (GeoIpSettingsKey.GeoIpCacheExpiryTime, TimeSpan.FromDays(1))
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.GeoIpSettings.GetGeoIpCacheSizeSetting">
+            <summary>
+            10.1 Use this temporary for backward compatibility with obsoleted config 'Analytics.GeoIpDataDictionaryCacheSize'
+            Once 'Analytics.GeoIpDataDictionaryCacheSize' is removed, we can directly call _settings.GetBoolSetting (GeoIpSettingsKey.GeoIpCacheSize, '5MB')
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.IGeoIpManager">
+            <summary>
+            The GeoIp fetcher manager 
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.IGeoIpManager.GetGeoIpData(System.String,System.Nullable{System.TimeSpan})">
+            <summary>
+            Fetch the GeoIp data for the given ip address
+            </summary>
+            <param name="ipAddress">The ip address</param>
+            <param name="timeout">The timeout to wait for the process
+                None: use the timeout defined in configuration 'CES.GeoIp.LookupRequestTimeout'
+                TimeSpan.MaxValue wait until the process finishes
+                Other: wait until the process finishes or timeout is reached
+            </param>
+            <returns>The GeoIp Fetch data</returns>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProvider">
+            <summary>
+            Defines default provider for hashing IP addresses.
+            </summary>
+        </member>
+        <member name="F:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProvider._salt">
+            <summary>
+            The salt for hashing.
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProvider.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProvider.#ctor"/> class.
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProvider.#ctor(Sitecore.CES.GeoIp.Core.IpHashing.HashEncryptionFactory)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProvider.#ctor(Sitecore.CES.GeoIp.Core.IpHashing.HashEncryptionFactory)"/> class.
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProvider.Initialize(System.String,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Initializes the provider.
+            </summary>
+            <param name="name">
+            The friendly name of the provider.
+            </param>
+            <param name="config">
+            A collection of the name/value pairs representing the provider-specific attributes specified in the configuration for this provider.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            The name of the provider is null.
+            </exception>
+            <exception cref="T:System.InvalidOperationException">
+            An attempt is made to call <see cref="M:System.Configuration.Provider.ProviderBase.Initialize(System.String,System.Collections.Specialized.NameValueCollection)"></see> on a provider after the provider has already been initialized.
+            </exception>
+            <exception cref="T:System.ArgumentException">
+            The name of the provider has a length of zero.
+            </exception>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProvider.ComputeHash(System.Byte[])">
+            <summary>
+            Computes the hash key based on the given IP address.
+            </summary>
+            <param name="ip">The IP address to hash.</param>
+            <returns>
+            The hashed IP address.
+            </returns>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProvider.ComputeGuid(System.Byte[])">
+            <summary>
+            Computes the GUID hash key based on the given IP address.
+            </summary>
+            <param name="ip">The byte array representing the IP address to convert to a GUID.</param>
+            <returns>
+            A GUID representing the given IP address.
+            </returns>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProvider.ComputeGuid(System.Net.IPAddress)">
+            <summary>
+            Computes the GUID hash key based on the given IP address.
+            </summary>
+            <param name="ip">The IP address to convert to a GUID.</param>
+            <returns>
+            A GUID representing the given IP address.
+            </returns>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProvider.ComputeGuid(System.String)">
+            <summary>
+            Computes the GUID hash key based on the given IP address.
+            </summary>
+            <param name="ip">The IP address string to convert to a GUID.</param>
+            <returns>
+            A GUID representing the given IP address.
+            </returns>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProvider.EnsureHashedIpAddress(System.Byte[])">
+            <summary>
+            Ensures the resultant IP address is hashed.
+            </summary>
+            <param name="ip">The hashed or un-hashed IP address.</param>
+            <returns>
+            The hashed IP address.
+            </returns>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProvider.IsIpAddressHashed(System.Byte[])">
+            <summary>
+            Determines whether the specified IP address is hashed.
+            </summary>
+            <param name="ip">The IP address.</param>
+            <returns>
+              <c>true</c> if the specified IP address is hashed; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProviderBase">
+            <summary>
+            The IP hash provider base.
+            </summary>
+        </member>
+        <member name="F:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProviderBase.EmptyIpAddress">
+            <summary>
+            Defines an empty ip address
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProviderBase.ComputeHash(System.Byte[])">
+            <summary>
+            Computes the hash key based on the given IP address.
+            </summary>
+            <param name="ip">The IP address to hash.</param>
+            <returns>The hashed IP address.</returns>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProviderBase.ComputeHash(System.Net.IPAddress)">
+            <summary>
+            Computes the hash key based on the given IP address.
+            </summary>
+            <param name="ip">The IP address to hash.</param>
+            <returns>The hashed IP address.</returns>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProviderBase.ComputeGuid(System.Byte[])">
+            <summary>
+            Computes the GUID hash key based on the given IP address.
+            </summary>
+            <param name="ip">The byte array representing the IP address to convert to a GUID.</param>
+            <returns>A GUID representing the given IP address.</returns>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProviderBase.ComputeGuid(System.Net.IPAddress)">
+            <summary>
+            Computes the GUID hash key based on the given IP address.
+            </summary>
+            <param name="ip">The IP address to convert to a GUID.</param>
+            <returns>A GUID representing the given IP address.</returns>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProviderBase.ComputeGuid(System.String)">
+            <summary>
+            Computes the GUID hash key based on the given IP address.
+            </summary>
+            <param name="ip">The IP address string to convert to a GUID.</param>
+            <returns>A GUID representing the given IP address.</returns>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProviderBase.EnsureHashedIpAddress(System.Byte[])">
+            <summary>
+            Ensures the resultant IP address is hashed.
+            </summary>
+            <param name="ip">The hashed or un-hashed IP address.</param>
+            <returns>The hashed IP address.</returns>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProviderBase.EnsureHashedIpAddress(System.Net.IPAddress)">
+            <summary>
+            Ensures the resultant IP address is hashed.
+            </summary>
+            <param name="ip">The hashed or un-hashed IP address.</param>
+            <returns>The hashed IP address.</returns>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProviderBase.IsIpAddressHashed(System.Byte[])">
+            <summary>
+            Determines whether the specified IP address is hashed.
+            </summary>
+            <param name="ip">The IP address.</param>
+            <returns>
+              <c>true</c> if the specified IP address is hashed; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProviderBase.ResolveIpAddress(System.Byte[])">
+            <summary>
+            Resolves the ip address. If the byte array is null then the default IP address 0,0,0,0 is returned.
+            </summary>
+            <param name="ip">The ip.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProviderCollection">
+            <summary>
+            GeoIp ProviderCollection class
+            </summary>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProviderCollection.Item(System.String)">
+            <summary>
+            Gets the IP hash provider with the specified name.
+            </summary>
+            <param name="name">The name.</param>
+            <returns>The IP hash provider with the specified name.</returns>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.IpHashing.IpHashProviderCollection.Add(System.Configuration.Provider.ProviderBase)">
+            <summary>
+            Adds a provider to the collection.
+            </summary>
+            <param name="provider">
+            The provider to be added.
+            </param>
+            <exception cref="T:System.NotSupportedException">
+            The collection is read-only.
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="provider"/> is null.
+            </exception>
+            <exception cref="T:System.ArgumentException">
+            The <see cref="P:System.Configuration.Provider.ProviderBase.Name"/> of <paramref name="provider"/> is null.- or -The length of the <see cref="P:System.Configuration.Provider.ProviderBase.Name"/> of <paramref name="provider"/> is less than 1.
+            </exception>
+            <PermissionSet>
+            <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/>
+            </PermissionSet>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.Lookups.LookupManager">
+            <summary>Defines the lookup manager class.</summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Lookups.LookupManager.GetWhoIsInformationByIp(System.String)">
+            <summary>
+            Gets who is information by IP.
+            </summary>
+            <param name="ip">The ip.</param>
+            <returns>The who is information.</returns>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.Lookups.LookupManager.Provider">
+            <summary>
+                Gets the providers.
+            </summary>
+            <value>The providers.</value>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.Lookups.LookupManager.Providers">
+            <summary>
+                Gets the providers.
+            </summary>
+            <value>The providers.</value>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.Lookups.LookupProviderBase">
+            <summary>
+            Defines the lookup provider base class.
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Lookups.LookupProviderBase.GetWhoIsInformationByIp(System.String)">
+            <summary>
+            Gets who is information by IP.
+            </summary>
+            <param name="ip">The ip.</param>
+            <returns>The who is information.</returns>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.Lookups.LookupProviderCollection">
+            <summary>
+            LookupProviderCollection class
+            </summary>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.Lookups.LookupProviderCollection.Item(System.String)">
+            <summary>
+            Gets the <see cref="T:Sitecore.CES.GeoIp.Core.Lookups.LookupProviderBase"/> with the specified name.
+            </summary>
+            <param name="name">The name of the provider.</param>
+            <value>The selected provider.</value>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Lookups.LookupProviderCollection.Add(System.Configuration.Provider.ProviderBase)">
+            <summary>
+            Adds a provider to the collection.
+            </summary>
+            <param name="provider">The provider to be added.</param>
+            <exception cref="T:System.NotSupportedException">The collection is read-only.</exception>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="provider"/> is null.</exception>
+            <exception cref="T:System.ArgumentException">The <see cref="P:System.Configuration.Provider.ProviderBase.Name"/> of <paramref name="provider"/> is null.- or -The length of the <see cref="P:System.Configuration.Provider.ProviderBase.Name"/> of <paramref name="provider"/> is less than 1.</exception>
+            <PermissionSet>
+            <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence"/>
+            </PermissionSet>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Lookups.LookupProviderCollection.Add(Sitecore.CES.GeoIp.Core.Lookups.LookupProviderBase)">
+            <summary>
+            Adds the specified provider.
+            </summary>
+            <param name="provider">The provider.</param>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.Model.FilteredWhoIsInformation">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.Model.GeoIpFetchedData">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Model.GeoIpFetchedData.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Model.GeoIpFetchedData.#ctor"/> class.
+            </summary>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.Model.GeoIpFetchedData.WhoIsInformation">
+            <summary>
+            The geoIp data
+            </summary>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.Model.GeoIpFetchedData.Status">
+            <summary>
+            The resolving status
+            </summary>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.Model.GeoIpFetchDataStatus">
+            <summary>
+            Enum of GeoIp fetched data status
+            </summary>
+        </member>
+        <member name="F:Sitecore.CES.GeoIp.Core.Model.GeoIpFetchDataStatus.Unfetched">
+            <summary>
+            Not fetched yet
+            </summary>
+        </member>
+        <member name="F:Sitecore.CES.GeoIp.Core.Model.GeoIpFetchDataStatus.Fetched">
+            <summary>
+            Successfully fetched
+            </summary>
+        </member>
+        <member name="F:Sitecore.CES.GeoIp.Core.Model.GeoIpFetchDataStatus.Timeout">
+            <summary>
+            Timeout occurred before fetching completed 
+            </summary>
+        </member>
+        <member name="F:Sitecore.CES.GeoIp.Core.Model.GeoIpFetchDataStatus.Unknown">
+            <summary>
+            Unknown fetched GeoIp data
+            </summary>
+        </member>
+        <member name="F:Sitecore.CES.GeoIp.Core.Model.GeoIpFetchDataStatus.Disabled">
+            <summary>
+            GeoIp fetching is disabled
+            </summary>
+        </member>
+        <member name="F:Sitecore.CES.GeoIp.Core.Model.GeoIpFetchDataStatus.Invalid">
+            <summary>
+            The provided ip address is invalid
+            </summary>
+        </member>
+        <member name="F:Sitecore.CES.GeoIp.Core.Model.GeoIpFetchDataStatus.Failed">
+            <summary>
+            GeoIp fetching process failed 
+            </summary>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.Model.GeoIpRequestStatus">
+            <summary>
+            Enum of GeoIp request status
+            </summary>
+        </member>
+        <member name="F:Sitecore.CES.GeoIp.Core.Model.GeoIpRequestStatus.New">
+            <summary>
+            New request
+            </summary>
+        </member>
+        <member name="F:Sitecore.CES.GeoIp.Core.Model.GeoIpRequestStatus.InProgress">
+            <summary>
+            Request in progress
+            </summary>
+        </member>
+        <member name="F:Sitecore.CES.GeoIp.Core.Model.GeoIpRequestStatus.Succeeded">
+            <summary>
+            Request completed successfully
+            </summary>
+        </member>
+        <member name="F:Sitecore.CES.GeoIp.Core.Model.GeoIpRequestStatus.Failed">
+            <summary>
+            Request failed
+            </summary>
+        </member>
+        <member name="T:Sitecore.CES.GeoIp.Core.Model.WhoIsInformation">
+            <summary>
+              Contains geographical and IP address information received from a GeoIP provider.
+            </summary>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.Model.WhoIsInformation.IsUnknown">
+            <summary>
+              Gets or sets a value indicating whether this instance's fields could
+              not be resolved via GeoIP provider.
+            </summary>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.Model.WhoIsInformation.AreaCode">
+            <summary>
+              Gets or sets the area code.
+            </summary>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.Model.WhoIsInformation.BusinessName">
+            <summary>
+              Gets or sets the name of business.
+            </summary>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.Model.WhoIsInformation.City">
+            <summary>
+              Gets or sets the city.
+            </summary>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.Model.WhoIsInformation.Country">
+            <summary>
+              Gets or sets the country.
+            </summary>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.Model.WhoIsInformation.Dns">
+            <summary>
+              Gets or sets the domain name.
+            </summary>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.Model.WhoIsInformation.Isp">
+            <summary>
+              Gets or sets the ISP name.
+            </summary>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.Model.WhoIsInformation.Latitude">
+            <summary>
+              Gets or sets the latitude.
+            </summary>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.Model.WhoIsInformation.Longitude">
+            <summary>
+              Gets or sets the longitude.
+            </summary>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.Model.WhoIsInformation.MetroCode">
+            <summary>
+              Gets or sets the metro code.
+            </summary>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.Model.WhoIsInformation.PostalCode">
+            <summary>
+              Gets or sets the postal code.
+            </summary>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.Model.WhoIsInformation.Region">
+            <summary>
+              Gets or sets the region.
+            </summary>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.Model.WhoIsInformation.Url">
+            <summary>
+              Gets or sets the URL.
+            </summary>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Model.WhoIsInformation.CreateUnknown">
+            <summary>
+              Gets an instance of <see cref="T:Sitecore.CES.GeoIp.Core.Model.WhoIsInformation"/> with all properties
+              set to <i>'N/A'</i>.
+            </summary>
+            <returns>
+              A new instance of <see cref="T:Sitecore.CES.GeoIp.Core.Model.WhoIsInformation"/>.
+            </returns>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.PerformanceCounters.GeoIpPerformanceCounters.GeoIpUnknownIps">
+            <summary>
+            Gets the counter that counts the number of GeoIP requests per second that are fetched as "Unknown IP".
+            </summary>
+            <value>
+            The counter instance.
+            </value>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.PerformanceCounters.GeoIpPerformanceCounters.GeoIpProviderLookups">
+            <summary>
+            Gets the counter that counts the number of GeoIP requests per second that are fetched using the external GeoIP provider.
+            </summary>
+            <value>
+            The counter instance.
+            </value>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.PerformanceCounters.GeoIpPerformanceCounters.GeoIpFailedLookups">
+            <summary>
+            Gets the counter that counts the number of GeoIP per second requests that are not fetched.
+            </summary>
+            <value>
+            The counter instance.
+            </value>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.PerformanceCounters.GeoIpPerformanceCounters.GeoIpRequestsTotal">
+            <summary>
+            Gets the counter that counts the total number of GeoIP requests per second. This includes requests originating from pages and requests from a background job.
+            </summary>
+            <value>
+            The counter instance.
+            </value>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.PerformanceCounters.GeoIpPerformanceCounters.GeoIpMemoryLookups">
+            <summary>
+            Gets the counter that counts the number of GeoIP requests per second that are fetched from local memory.
+            </summary>
+            <value>
+            The counter instance.
+            </value>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.PerformanceCounters.GeoIpPerformanceCounters.GeoIpDatabaseLookups">
+            <summary>
+            Gets the counter that counts the number of GeoIP requests per second that are fetched from the GeoIp database.
+            </summary>
+            <value>
+            The counter instance.
+            </value>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.PerformanceCounters.GeoIpPerformanceCounters.GeoIpSuccessfulMemoryLookups">
+            <summary>
+            Gets the counter that counts the number of GeoIP requests per second that are fetched from local memory.
+            </summary>
+            <value>
+            The counter instance.
+            </value>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.PerformanceCounters.GeoIpPerformanceCounters.GeoIpSuccessfulDatabaseLookups">
+            <summary>
+            Gets the counter that counts the number of GeoIP requests per second that are fetched from the GeoIp database.
+            </summary>
+            <value>
+            The counter instance.
+            </value>
+        </member>
+        <member name="M:Sitecore.CES.GeoIp.Core.Request.GeoIpRequest.#ctor(System.String,Sitecore.CES.GeoIp.Core.IpHashing.IpHashProviderBase)">
+            <summary>
+            Initializes a new instance of the <see cref="M:Sitecore.CES.GeoIp.Core.Request.GeoIpRequest.#ctor(System.String,Sitecore.CES.GeoIp.Core.IpHashing.IpHashProviderBase)"/> class.
+            </summary>
+            <param name="ip">The ip address</param>
+            <param name="ipHashProvider">The ip hash provider</param>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.Request.GeoIpRequest.Ip">
+            <summary>
+            The ip address
+            </summary>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.Request.GeoIpRequest.RequestStatus">
+            <summary>
+            The GeoIp request status <see cref="T:Sitecore.CES.GeoIp.Core.Model.GeoIpFetchDataStatus"/>
+            </summary>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.Request.GeoIpRequest.Id">
+            <summary>
+            The unique Id
+            </summary>
+        </member>
+        <member name="P:Sitecore.CES.GeoIp.Core.Request.GeoIpRequest.FetchedData">
+            <summary>
+            The fetched GeoIp data <see cref="T:Sitecore.CES.GeoIp.Core.Model.GeoIpFetchedData"/>
+            </summary>
+        </member>
+    </members>
+</doc>

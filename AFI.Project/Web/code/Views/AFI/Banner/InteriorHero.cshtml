@@ -1,0 +1,32 @@
+﻿@using Sitecore.Mvc
+@using Sitecore
+@using Sitecore.Data.Fields
+@using Sitecore.Resources.Media
+@using Sitecore.Data.Items
+@using AFI.Foundation.Helper
+
+
+@using Sitecore.Mvc.Presentation
+@{
+    var rendering = RenderingContext.Current.Rendering.Item;
+    
+    var bgimg = SitecoreHelper.GetImageUrl(Model.Item, FeatureTemplate.InteriorHero.Fields.BackgroundImage);
+
+}
+
+
+<section class="interior__title" id="interior__title">
+       <style>
+        #interior__title {
+            background-image: linear-gradient(120deg,rgba(203,44,48,.9),rgba(136,27,38,.9)), url(@bgimg);
+                 background-size: cover;
+                 background-position: 50%;
+        }
+    </style>
+    <div class="container">
+        <h1 class="interior__title_h1" style="text-align:left">
+            @Html.Sitecore().Field(FeatureTemplate.InteriorHero.Fields.Title.ToString())
+        </h1>
+    </div>
+</section>
+

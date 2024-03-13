@@ -1,0 +1,51 @@
+﻿@using Sitecore.Mvc
+@using Sitecore
+@using Sitecore.Data.Fields
+@using Sitecore.Data.Items
+@using AFI.Foundation.Helper
+@using Sitecore.Mvc.Presentation
+@{
+    var rendering = RenderingContext.Current.Rendering.Item;
+    Sitecore.Data.Fields.MultilistField multiselectField = rendering.Fields["Leadership"];
+    Sitecore.Data.Items.Item[] items = multiselectField.GetItems();
+    var LinkUrl = "";
+
+}
+
+
+<section class="">
+    <div class="">
+      
+        <h1 class="">@Html.Sitecore().Field("Title", rendering)</h1>
+            
+        <div class="">
+            @if (items.Length > 0)
+            {
+                foreach (Sitecore.Data.Items.Item item in items)
+                {
+
+                    LinkUrl = SitecoreHelper.GetLinkUrl(item , item.Fields["Link"].ID);
+
+                    <p>
+                        <strong><a href="@LinkUrl">@item.Fields["Name"].ToString()</a>&nbsp;</strong>
+                        @if (!string.IsNullOrEmpty(item.Fields["Designation"].Value))
+                        {
+                            <br>
+                            @item.Fields["Designation"].ToString()
+                        }
+                        
+                    </p>
+                }
+            }
+            else
+            {
+                if (Sitecore.Context.PageMode.IsExperienceEditor)
+                {
+                    <p>Not Selected</p>
+                }
+            }
+        </div>
+               
+               
+    </div>
+</section>

@@ -1,0 +1,3965 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FiftyOne.Pipeline.Engines</name>
+    </assembly>
+    <members>
+        <member name="T:FiftyOne.Pipeline.Engines.Caching.DataKeyedCacheBase`1">
+            <summary>
+            Abstract base class for caches that use <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> as 
+            the key.
+            Internally, the cache actually uses a <see cref="T:FiftyOne.Pipeline.Core.Data.DataKey"/> instance
+            derived from <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/>.
+            </summary>
+            <typeparam name="TValue">
+            The type of data to store in the cache.
+            </typeparam>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Caching.DataKeyedCacheBase`1._internalCache">
+            <summary>
+            The cache that is actually used to store the data internally.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Caching.DataKeyedCacheBase`1.#ctor(FiftyOne.Pipeline.Engines.Configuration.CacheConfiguration)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="configuration">
+            The cache configuration to use when creating the internal cache.
+            </param>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Caching.DataKeyedCacheBase`1.Item(FiftyOne.Pipeline.Core.Data.IFlowData)">
+            <summary>
+            Get the <code>TValue</code> associated with the key generated 
+            from the supplied <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instance.
+            </summary>
+            <param name="data">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> to use as a key.
+            </param>
+            <returns>
+            If a matching item exists in the cache then the 
+             <code>TValue</code> is returned. If not, the default value
+            is returned. (i.e. null for reference types, 0 for int, etc) 
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Caching.DataKeyedCacheBase`1.Put(FiftyOne.Pipeline.Core.Data.IFlowData,`0)">
+            <summary>
+            Add the specified data to the cache.
+            </summary>
+            <param name="data">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> to use as a key.
+            </param>
+            <param name="value">
+            The <code>TValue</code> to store with the key.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Caching.DataKeyedCacheBase`1.GetFilter">
+            <summary>
+            Returns the <see cref="T:FiftyOne.Pipeline.Core.Data.IEvidenceKeyFilter"/> to use when 
+            generating a key from <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instances.
+            Only evidence values that the filter includes will be used to 
+            create the key.
+            </summary>
+            <returns>
+            An <see cref="T:FiftyOne.Pipeline.Core.Data.IEvidenceKeyFilter"/> instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Caching.DataKeyedCacheBase`1.Dispose">
+            <summary>
+            IDisposable support
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Caching.DataKeyedCacheBase`1.Finalize">
+            <summary>
+            Finalizer
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Caching.DataKeyedCacheBase`1.Dispose(System.Boolean)">
+            <summary>
+            Dispose of this instance
+            </summary>
+            <param name="disposing">
+            True if this is called from the Dispose method.
+            False if it is called from the finalizer.
+            </param>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Caching.DefaultFlowCache">
+            <summary>
+            The default 'flow cache' implementation.
+            A flow cache is a cache that is used to cache results from individual
+            flow elements in the pipeline.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Caching.DefaultFlowCache._flowElement">
+            <summary>
+            The <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> that this cache is associated with
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Caching.DefaultFlowCache.#ctor(FiftyOne.Pipeline.Engines.Configuration.CacheConfiguration)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="configuration">
+            The cache configuration to use when creating the internal cache.
+            </param>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Caching.DefaultFlowCache.FlowElement">
+            <summary>
+            Get/set the <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> that this cache is 
+            associated with.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Caching.DefaultFlowCache.GetFilter">
+            <summary>
+            The evidence key filter that is used to create
+            a <see cref="T:FiftyOne.Pipeline.Core.Data.DataKey"/> from an <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instance.
+            </summary>
+            <returns>
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IEvidenceKeyFilter"/> to use.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Caching.IDataKeyedCache`1">
+            <summary>
+            Represents a put cache where the key is a <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> 
+            instance. 
+            </summary>
+            <typeparam name="TValue">
+            The type of data to store in the cache associated with the 
+            <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> key.
+            </typeparam>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Caching.IFlowCache">
+            <summary>
+            Represents a 'flow cache'
+            A flow cache is a cache that is used to cache results from individual
+            flow elements in the pipeline.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Caching.IFlowCache.FlowElement">
+            <summary>
+            The <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> that this cache is associated with
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Configuration.CacheConfiguration">
+            <summary>
+            Contains everything needed to build a cache.
+            Currently, an <see cref="T:FiftyOne.Caching.ICacheBuilder"/> and an integer size parameter.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Configuration.CacheConfiguration.#ctor">
+            <summary>
+            Default constructor uses the LruPutCache
+            with a size of 1000.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.CacheConfiguration.Builder">
+            <summary>
+            The builder to use when building a cache.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.CacheConfiguration.Size">
+            <summary>
+            The maximum size parameter to use when building a cache.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration">
+            <summary>
+            This class contains the automatic update configuration parameters 
+            that can be supplied to an engine for a particular data file that 
+            the engine uses.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration.#ctor">
+            <summary>
+            Create <see cref="T:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration"/> instance
+            with all default values.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration.Identifier">
+            <summary>
+            The identifier of the data file that this configuration 
+            information applies to.
+            If the engine only supports a single data file then this 
+            value will be ignored.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration.DataFilePath">
+            <summary>
+            The complete file path to the location of the data file.
+            This value will be null if the instance has the MemoryOnly 
+            flag set. 
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration.CreateTempCopy">
+            <summary>
+            Set to true if the engine should create a temporary copy of 
+            the data file rather than using the one at the location
+            provided directly.
+            This setting must be set to true if automatic updates are required.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration.MemoryOnly">
+            <summary>
+            True if data for this file should only exist in memory. 
+            I.e. Assume there is no file system.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration.DataStream">
+            <summary>
+            The <see cref="T:System.IO.Stream"/> containing the data.
+            Note that this will be set to null after being read by the engine
+            in order to reduce memory usage.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration.DataUpdateUrl">
+            <summary>
+            The URL to check when looking for updates to the data file.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration.AutomaticUpdatesEnabled">
+            <summary>
+            Flag that indicates if updates to the data file will be checked 
+            for and applied to the engine automatically or not.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration.DataUpdateLicenseKeys">
+            <summary>
+            A list of license keys to use when checking for updates
+            using the <see cref="P:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration.DataUpdateUrl"/>.
+            Note that the exact formatting of the query string is 
+            controlled by the configured <see cref="P:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration.UrlFormatter"/>.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration.FileSystemWatcherEnabled">
+            <summary>
+            If true, a <see cref="T:System.IO.FileSystemWatcher"/> will be created
+            to watch the file at <see cref="P:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration.DataFilePath"/>.
+            If the file is modified then the engine will automatically 
+            be notified so that it can refresh it's internal data 
+            structures.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration.PollingIntervalSeconds">
+            <summary>
+            The interval between checks for updates for this data file
+            using the specified <see cref="P:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration.DataUpdateUrl"/>.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration.MaxRandomisationSeconds">
+            <summary>
+            The maximum time in seconds that the polling interval may
+            be randomized by.
+            I.e. each polling interval will be the configured
+            interval + or - a random amount between zero and this value.
+            </summary>
+            <remarks>
+            This settings is intended to be used to allow multiple 
+            instances of a system stagger their update requests to
+            reduce chance of conflict errors or slow update downloads.
+            </remarks>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration.UrlFormatter">
+            <summary>
+            The formatter to use when getting the data update URL with
+            query string parameters set.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration.DecompressContent">
+            <summary>
+            Must return true if the data downloaded from the DataUpdateUrl
+            is compressed and false otherwise.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration.VerifyMd5">
+            <summary>
+            Must return true if the response from the DataUpdateUrl
+            is expected to include a 'Content-Md5' HTTP header that
+            contains an Md5 hash that can be used to check the 
+            integrity of the downloaded content.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration.VerifyModifiedSince">
+            <summary>
+            Must return true if the request to the DataUpdateUrl supports
+            the 'If-Modified-Since' header and false if it does not.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration.UpdateOnStartup">
+            <summary>
+            If true then when this file is registered with the data 
+            update service, it will immediately try to download the latest
+            copy of the file. 
+            This action will block execution until the download is complete 
+            and the engine has loaded the new file.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration.LicenseKeyRequiredForUpdates">
+            <summary>
+            If true then, if updates are enabled, the software will 
+            check that a license key is present when the associated 
+            engine is built.
+            If a license key has not been supplied, an exception will
+            be thrown.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilder">
+            <summary>
+            Builder class for <see cref="T:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration"/> instances.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilderBase`2">
+            <summary>
+            Builder class that is used to create instances of
+            <see cref="T:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration"/> objects.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilderBase`2.DataUpdateLicenseKeys">
+            <summary>
+            License keys to use when updating the Engine's data file.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilderBase`2.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilderBase`2.SetDataFileIdentifier(System.String)">
+            <summary>
+            Set the identifier of the data file that this configuration 
+            information applies to.
+            If the engine only supports a single data file then this 
+            value will be ignored.
+            </summary>
+            <param name="identifier">
+            The identifier to use.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilderBase`2.SetDataUpdateUrl(System.String)">
+            <summary>
+            Configure the engine to use the specified URL when looking for
+            an updated data file.
+            </summary>
+            <param name="url">
+            The URL to check for a new data file.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if url parameter is null or and empty string
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilderBase`2.SetDataUpdateUrl(System.Uri)">
+            <summary>
+            Configure the engine to use the specified URL when looking for
+            an updated data file.
+            </summary>
+            <param name="url">
+            The URL to check for a new data file.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if url parameter is null
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilderBase`2.SetDataUpdateUrlFormatter(FiftyOne.Pipeline.Engines.Data.IDataUpdateUrlFormatter)">
+            <summary>
+            Specify a <see cref="T:FiftyOne.Pipeline.Engines.Data.IDataUpdateUrlFormatter"/> to be 
+            used by the <see cref="T:FiftyOne.Pipeline.Engines.Services.DataUpdateService"/> when building the 
+            complete URL to query for updated data.
+            </summary>
+            <param name="formatter">
+            The formatter to use.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilderBase`2.SetDataUpdateUseUrlFormatter(System.Boolean)">
+            <summary>
+            Enable or disable the <see cref="T:FiftyOne.Pipeline.Engines.Data.IDataUpdateUrlFormatter"/>
+            to be used when creating the complete URL to request updates
+            from.
+            </summary>
+            <remarks>
+            Setting this to false is equivalent to calling 
+            <see cref="M:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilderBase`2.SetDataUpdateUrlFormatter(FiftyOne.Pipeline.Engines.Data.IDataUpdateUrlFormatter)"/>
+            with a null parameter.
+            It is available as a separate method in order to support 
+            disabling the formatter from a configuration file.
+            </remarks>
+            <param name="useFormatter">
+            True to use the specified formatter (default). False to
+            prevent the specified formatter from being used.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilderBase`2.SetDataUpdateVerifyMd5(System.Boolean)">
+            <summary>
+            Set a value indicating if the <see cref="T:FiftyOne.Pipeline.Engines.Services.DataUpdateService"/>
+            should expect the response from the data update URL to contain a
+            'content-md5' HTTP header that can be used to verify the integrity
+            of the content.
+            </summary>
+            <param name="verify">
+            True if the content should be verified with the Md5 hash.
+            False otherwise.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilderBase`2.SetDataUpdateDecompress(System.Boolean)">
+            <summary>
+            Set a value indicating if the <see cref="T:FiftyOne.Pipeline.Engines.Services.DataUpdateService"/>
+            should expect content from the configured data update URL to be
+            compressed or not.
+            </summary>
+            <param name="decompress">
+            True if the content from the data update URL needs to be 
+            decompressed. False otherwise.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilderBase`2.SetAutoUpdate(System.Boolean)">
+            <summary>
+            Enable or disable automatic updates for this engine. 
+            </summary>
+            <param name="enabled">
+            If true, the engine will update it's data file with no manual 
+            intervention.
+            If false, the engine will never update it's data file unless 
+            the manual update method is called on 
+            <see cref="T:FiftyOne.Pipeline.Engines.Services.IDataUpdateService"/>
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilderBase`2.SetDataFileSystemWatcher(System.Boolean)">
+            <summary>
+            The <see cref="T:FiftyOne.Pipeline.Engines.Services.DataUpdateService"/> has the ability to watch a
+            data file on disk and automatically refresh the engine as soon 
+            as the file is updated.
+            This setting enables/disables that feature.
+            </summary>
+            <remarks>
+            The AutoUpdate feature must also be enabled in order for the file 
+            system watcher to work.
+            If the engine is built from a byte[] then this setting does nothing.
+            </remarks>
+            <param name="enabled">
+            The cache configuration to use.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilderBase`2.SetUpdatePollingInterval(System.Int32)">
+            <summary>
+            Set the time between checks for a new data file made by the 
+            <see cref="T:FiftyOne.Pipeline.Engines.Services.DataUpdateService"/>.
+            Default = 30 minutes.
+            </summary>
+            <remarks>
+            Generally, the <see cref="T:FiftyOne.Pipeline.Engines.Services.DataUpdateService"/> will not check for 
+            a new data file until the 'expected update time' that is stored
+            in the current data file.
+            This interval is the time to wait between checks after that time
+            if no update is initially found.
+            If automatic updates are disabled then this setting does nothing.
+            </remarks>
+            <param name="pollingIntervalSeconds">
+            The number of seconds between checks.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilderBase`2.SetUpdatePollingInterval(System.TimeSpan)">
+            <summary>
+            Set the time between checks for a new data file made by the 
+            <see cref="T:FiftyOne.Pipeline.Engines.Services.DataUpdateService"/>.
+            Default = 30 minutes.
+            </summary>
+            <remarks>
+            Generally, the <see cref="T:FiftyOne.Pipeline.Engines.Services.DataUpdateService"/> will not check for 
+            a new data file until the 'expected update time' that is stored
+            in the current data file.
+            This interval is the time to wait between checks after that time
+            if no update is initially found.
+            If automatic updates are disabled then this setting does nothing.
+            </remarks>
+            <param name="pollingInterval">
+            The time between checks.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilderBase`2.SetUpdateRandomisationMax(System.Int32)">
+            <summary>
+            A random element can be added to the <see cref="T:FiftyOne.Pipeline.Engines.Services.DataUpdateService"/> 
+            polling interval.
+            This option sets the maximum length of this random addition.
+            Default = 10 minutes.
+            </summary>
+            <param name="maximumDeviationSeconds">
+            The maximum time added to the data update polling interval.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilderBase`2.SetUpdateRandomisationMax(System.TimeSpan)">
+            <summary>
+            A random element can be added to the <see cref="T:FiftyOne.Pipeline.Engines.Services.DataUpdateService"/> 
+            polling interval.
+            This option sets the maximum length of this random addition.
+            Default = 10 minutes.
+            </summary>
+            <param name="maximumDeviation">
+            The maximum time added to the data update polling interval.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if the supplied deviation is too large.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilderBase`2.SetVerifyIfModifiedSince(System.Boolean)">
+            <summary>
+            Set if DataUpdateService sends the If-Modified-Since header
+            in the request for a new data file.
+            </summary>
+            <param name="enabled">
+            Whether to use the If-Modified-Since header.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilderBase`2.SetDataUpdateLicenseKey(System.String)">
+            <summary>
+            Set the license key to use when updating the Engine's data file.
+            </summary>
+            <param name="key">
+            51Degrees license key.
+            This parameter can be set to null, but doing so will disable 
+            automatic updates for this file.
+            </param>
+            <returns>This builder</returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilderBase`2.SetDataUpdateLicenseKeys(System.String[])">
+            <summary>
+            Set the license keys to use when updating the Engine's data file.
+            </summary>
+            <param name="keys">51Degrees license keys</param>
+            <returns>This builder</returns>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the supplied array is null
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilderBase`2.SetUpdateOnStartup(System.Boolean)">
+            <summary>
+            Configure the data file to update on startup or not.
+            </summary>
+            <param name="enabled">
+            If true then when this file is registered with the data 
+            update service, it will immediately try to download the latest
+            copy of the file. 
+            This action will block execution until the download is complete 
+            and the engine has loaded the new file.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilderBase`2.Build(System.String,System.Boolean)">
+            <summary>
+            Called to indicate that configuration of this file is complete
+            and the user can continue to configure the engine that the
+            data file will be used by.
+            </summary>
+            <param name="filename">
+            The path to the data file location.
+            If a relative path is supplied then the location is determined 
+            as relative to the current working directory as supplied by
+            <see cref="M:System.IO.Directory.GetCurrentDirectory"/>.
+            Whether the path is relative or absolute, if there is no file 
+            at the specified location then, before starting processing, 
+            the engine will download the latest version of the file using 
+            the configured auto-update settings.
+            </param>
+            <param name="createTempCopy">
+            If true then the engine will make a temporary copy of the data
+            file for its own use.
+            This allows the original to be updated while the engine 
+            continues processing.
+            </param>
+            <returns>
+            The new <see cref="T:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration"/> instance
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilderBase`2.Build(System.IO.Stream)">
+            <summary>
+            Called to indicate that configuration of this file is complete
+            and the user can continue to configure the engine that the
+            data file will be used by.
+            </summary>
+            <param name="data">
+            A <see cref="T:System.IO.Stream"/> containing the data.
+            </param>
+            <returns>
+            The new <see cref="T:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration"/> instance
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Configuration.DataFileConfigurationBuilderBase`2.ConfigureCommonOptions(`1)">
+            <summary>
+            Set any properties on the configuration object that are the 
+            same regardless of the method of creation. 
+            (i.e. file or byte array)
+            </summary>
+            <param name="config">
+            The configuration object to update.
+            </param>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration">
+            <summary>
+            Interface representing the configuration parameters 
+            controlling the automatic update checks for a 
+            specific data file.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration.Identifier">
+            <summary>
+            The identifier of the data file that this configuration 
+            information applies to.
+            If the engine only supports a single data file then this 
+            value will be ignored.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration.DataFilePath">
+            <summary>
+            The complete file path to the location of the data file.
+            This value will be null if the file has been supplied from 
+            a byte[] in memory. 
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration.CreateTempCopy">
+            <summary>
+            Set to true if the engine should create a temporary copy of 
+            the data file rather than using the one at the location
+            provided directly.
+            This setting must be set to true if automatic updates are required.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration.MemoryOnly">
+            <summary>
+            True if data for this file should only exist in memory. 
+            I.e. Assume there is no file system.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration.DataStream">
+            <summary>
+            The <see cref="T:System.IO.Stream"/> containing the data.
+            Note that this will be set to null after being read by the engine
+            in order to reduce memory usage.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration.DataUpdateUrl">
+            <summary>
+            The URL to check when looking for updates to the data file.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration.AutomaticUpdatesEnabled">
+            <summary>
+            Flag that indicates if updates to the data file will be checked 
+            for and applied to the engine automatically or not.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration.DataUpdateLicenseKeys">
+            <summary>
+            A list of license keys to use when checking for updates
+            using the <see cref="P:FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration.DataUpdateUrl"/>.
+            Note that the exact formatting of the query string is 
+            controlled by the configured <see cref="P:FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration.UrlFormatter"/>.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration.FileSystemWatcherEnabled">
+            <summary>
+            If true, a <see cref="T:System.IO.FileSystemWatcher"/> will be created
+            to watch the file at <see cref="P:FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration.DataFilePath"/>.
+            If the file is modified then the engine will automatically 
+            be notified so that it can refresh it's internal data 
+            structures.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration.PollingIntervalSeconds">
+            <summary>
+            The interval between checks for updates for this data file
+            using the specified <see cref="P:FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration.DataUpdateUrl"/>.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration.MaxRandomisationSeconds">
+            <summary>
+            The maximum time in seconds that the polling interval may
+            be randomized by.
+            I.e. each polling interval will be the configured
+            interval + or - a random amount between zero and this value.
+            </summary>
+            <remarks>
+            This settings is intended to be used to allow multiple 
+            instances of a system stagger their update requests to
+            reduce chance of conflict errors or slow update downloads.
+            </remarks>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration.UrlFormatter">
+            <summary>
+            The formatter to use when getting the data update URL with
+            query string parameters set.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration.DecompressContent">
+            <summary>
+            Must return true if the data downloaded from the DataUpdateUrl
+            is compressed and false otherwise.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration.VerifyMd5">
+            <summary>
+            Must return true if the response from the DataUpdateUrl
+            is expected to include a 'Content-Md5' HTTP header that
+            contains an Md5 hash that can be used to check the 
+            integrity of the downloaded content.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration.VerifyModifiedSince">
+            <summary>
+            Must return true if the request to the DataUpdateUrl supports
+            the 'If-Modified-Since' header and false if it does not.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration.UpdateOnStartup">
+            <summary>
+            If true then when this file is registered with the data 
+            update service, it will immediately try to download the latest
+            copy of the file. 
+            This action will block execution until the download is complete 
+            and the engine has loaded the new file.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration.LicenseKeyRequiredForUpdates">
+            <summary>
+            If true then, if updates are enabled, the software will 
+            check that a license key is present when the associated 
+            engine is built.
+            If a license key has not been supplied, an exception will
+            be thrown.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Configuration.LazyLoadingConfiguration">
+            <summary>
+            Used to store configuration values relating to lazy loading
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.LazyLoadingConfiguration.PropertyTimeoutMs">
+            <summary>
+            The timeout in milliseconds to use when waiting for 
+            processing to complete in order to retrieve property values.
+            If the timeout is exceeded then a 
+            <see cref="T:System.TimeoutException"/> will be thrown.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Configuration.LazyLoadingConfiguration.CancellationToken">
+            <summary>
+            The <see cref="T:System.Threading.CancellationToken"/> to use 
+            when waiting for processing to complete in order to retrieve 
+            property values.
+            If the cancellation token is triggered then the call to the 
+            property will return immediately with a null value. 
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Configuration.LazyLoadingConfiguration.#ctor(System.Int32,System.Nullable{System.Threading.CancellationToken})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="propertyTimeoutMs">
+            The timeout in milliseconds to use when waiting for 
+            processing to complete in order to retrieve property values.
+            If the timeout is exceeded then a 
+            <see cref="T:System.TimeoutException"/> will be thrown.
+            </param>
+            <param name="cancellationToken">
+            The <see cref="T:System.Threading.CancellationToken"/> to use 
+            when waiting for processing to complete in order to retrieve 
+            property values.
+            If the cancellation token is triggered then the call to the 
+            property will return immediately with a null value. 
+            </param>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Constants">
+            <summary>
+            Static class containing various constants that are used by the 
+            Pipeline and/or are helpful to callers. 
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Constants.FIFTYONE_COOKIE_PREFIX">
+            <summary>
+            The prefix that is added to all cookies set by 51Degrees
+            client-side code that can be used as evidence.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Constants.DEFAULT_ASP_COOKIE_NAME">
+            <summary>
+            The default name of the cookie that holds the ID for the 
+            ASP.NET session.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Constants.DATA_UPDATE_POLLING_DEFAULT">
+            <summary>
+            Default polling interval for the data update service
+            in seconds.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Constants.DATA_UPDATE_RANDOMISATION_DEFAULT">
+            <summary>
+            Default randomization to be applied to the calculated
+            update timer interval in seconds.
+            This is used to help prevent many requests hitting the 
+            update distribution endpoint at exactly the same time.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Data.AspectDataBase">
+            <summary>
+            Base class for element data instances that are generated by an 
+            <see cref="T:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine"/>.
+            Modifies the indexer from the <see cref="T:FiftyOne.Pipeline.Core.Data.ElementDataBase"/>
+            base class to use the <see cref="T:FiftyOne.Pipeline.Engines.Services.IMissingPropertyService"/> to 
+            determine the reason that a requested key value is missing. 
+            For example, if the user has excluded the property at the 
+            configuration stage.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectDataBase.MissingPropertyService">
+            <summary>
+            The <see cref="T:FiftyOne.Pipeline.Engines.Services.IMissingPropertyService"/> instance to be queried
+            when there is no entry for a requested key.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectDataBase.Logger">
+            <summary>
+            The logger to be used by this instance.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectDataBase.Engines">
+            <summary>
+            The engine that generated this data instance.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectDataBase.CacheHit">
+            <inheritdoc/>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectDataBase.ProcessTask">
+            <summary>
+            If the engine is configured for lazy loading, this property 
+            returns a task that will complete once the engine has finished
+            processing.
+            Otherwise, it will be null.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.AspectDataBase.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Engines.Data.AspectDataBase},FiftyOne.Pipeline.Core.FlowElements.IPipeline,FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger">
+            Used for logging
+            </param>
+            <param name="pipeline">
+            The <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IPipeline"/> instance this element data will
+            be associated with.
+            </param>
+            <param name="engine">
+            The <see cref="T:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine"/> that created this instance
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.AspectDataBase.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Engines.Data.AspectDataBase},FiftyOne.Pipeline.Core.FlowElements.IPipeline,FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine,FiftyOne.Pipeline.Engines.Services.IMissingPropertyService)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger">
+            Used for logging
+            </param>
+            <param name="pipeline">
+            The <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IPipeline"/> instance this element data will
+            be associated with.
+            </param>
+            <param name="engine">
+            The <see cref="T:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine"/> that created this instance
+            </param>
+            <param name="missingPropertyService">
+            The <see cref="T:FiftyOne.Pipeline.Engines.Services.IMissingPropertyService"/> to use when a requested
+            key cannot be found.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.AspectDataBase.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Engines.Data.AspectDataBase},FiftyOne.Pipeline.Core.FlowElements.IPipeline,FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine,FiftyOne.Pipeline.Engines.Services.IMissingPropertyService,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger">
+            Used for logging
+            </param>
+            <param name="pipeline">
+            The <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IPipeline"/> instance this element data will
+            be associated with.
+            </param>
+            <param name="engine">
+            The <see cref="T:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine"/> that created this instance
+            </param>
+            <param name="missingPropertyService">
+            The <see cref="T:FiftyOne.Pipeline.Engines.Services.IMissingPropertyService"/> to use when a requested
+            key cannot be found.
+            </param>
+            <param name="dictionary">
+            The dictionary instance to use internally when storing data values.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.AspectDataBase.AddProcessTask(System.Threading.Tasks.Task)">
+            <summary>
+            Add a process task to the lazy loading tasks for this 
+            data instance.
+            The property accessors will only complete once all such
+            tasks have completed.
+            </summary>
+            <param name="processTask"></param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.AspectDataBase.SetCacheHit">
+            <summary>
+            Set if this instance is a 
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectDataBase.Item(System.String)">
+            <summary>
+            get or set the specified value
+            </summary>
+            <param name="key">
+            The key/name of the property to get or set.
+            </param>
+            <returns>
+            The property value.
+            </returns>
+            <exception cref="T:FiftyOne.Pipeline.Engines.PropertyMissingException">
+            Thrown if there is no entry for the specified key.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.AspectDataBase.GetAs``1(System.String)">
+            <summary>
+            Get the value for the specified property as the specified type.
+            </summary>
+            <remarks>
+            This overrides the default implementation to provide additional
+            capabilities such as lazy loading and exposing a reason for  
+            properties that are not present in the data.
+            </remarks>
+            <typeparam name="T">
+            The type to return
+            </typeparam>
+            <param name="key">
+            The key of the property to get
+            </param>
+            <returns>
+            The value for the specified property.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if key is null.
+            </exception>
+            <exception cref="T:FiftyOne.Pipeline.Engines.PropertyMissingException">
+            Thrown if there is no entry matching the specified key.
+            </exception>
+            <exception cref="T:System.OperationCanceledException">
+            Thrown if lazy loading is enabled and the cancellation token
+            has been used to cancel processing before it was completed.
+            </exception>
+            <exception cref="T:System.TimeoutException">
+            Thrown if lazy loading is enabled and processing did not
+            complete before the configured timeout expired. 
+            </exception>
+            <exception cref="T:System.AggregateException">
+            Thrown if lazy loading is enabled and multiple errors occurred 
+            during processing.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.AspectDataBase.AsDictionary">
+            <inheritdoc/>
+            <exception cref="T:System.OperationCanceledException">
+            Thrown if lazy loading is enabled and the cancellation token
+            has been used to cancel processing before it was completed.
+            </exception>
+            <exception cref="T:System.TimeoutException">
+            Thrown if lazy loading is enabled and processing did not
+            complete before the configured timeout expired. 
+            </exception>
+            <exception cref="T:System.AggregateException">
+            Thrown if lazy loading is enabled and multiple errors occurred 
+            during processing.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.AspectDataBase.TryGetValue``1(System.String,``0@)">
+            <summary>
+            Get the value associated with the specified key.
+            Inheriting classes can override this method where they access
+            data in different ways.
+            </summary>
+            <param name="key">
+            The string key to retrieve the value for.
+            </param>
+            <param name="value">
+            Will be populated with the value for the specified key.
+            </param>
+            <returns>
+            True if the key is present in the data store, false if not.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.AspectDataBase.WaitForLazyLoad(System.String)">
+            <summary>
+            If lazy loading is configured then wait for engines to finish
+            processing (or timeouts to be exceeded or cancellation tokens 
+            to be triggered) before returning.
+            </summary>
+            <param name="key">
+            The key of the parameter that is being accessed if any.
+            </param>
+            <returns>
+            True if lazy loading is enabled, false if not.
+            </returns>
+            <exception cref="T:System.OperationCanceledException">
+            Thrown if lazy loading is enabled and the cancellation token
+            has been used to cancel processing before it was completed.
+            </exception>
+            <exception cref="T:System.TimeoutException">
+            Thrown if lazy loading is enabled and processing did not
+            complete before the configured timeout expired. 
+            </exception>
+            <exception cref="T:System.AggregateException">
+            Thrown if lazy loading is enabled and multiple errors occurred 
+            during processing.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.AspectDataBase.WaitOnAllProcessTasks(System.Int32,System.Nullable{System.Threading.CancellationToken})">
+            <summary>
+            Waits for the completion of all process tasks which must complete
+            before fetching a property value. Any exceptions which are thrown
+            by a task are returned as a list.
+            </summary>
+            <param name="timeoutMillis">timeout for each task</param>
+            <param name="token">cancellation token for the tasks</param>
+            <returns>list of exceptions that occurred</returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile">
+            <summary>
+            This class contains all configuration and run-time state information 
+            that is associated with a particular data file used by an aspect 
+            engine.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile._dataUpdateService">
+            <summary>
+            The data update service that this engine is 
+            registered with (if any)
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile.Identifier">
+            <summary>
+            The name or identifier for this data file object.
+            Note that this is not the same as the filename.
+            It is used by engines that require multiple data-files to 
+            determine what a given data file object relates to. 
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile.Engine">
+            <summary>
+            Get or set the <see cref="T:FiftyOne.Pipeline.Engines.FlowElements.IOnPremiseAspectEngine"/> associated 
+            with this data file.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile.EngineType">
+            <summary>
+            Get or set the type of the engine that this data file is for.
+            This exists in addition to the Engine property because Engine
+            can be null.
+            This then allows the user to identify which engine this file 
+            relates to.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile.DataFilePath">
+            <summary>
+            The complete file path to the location of the data file.
+            This value will be null if the file has been supplied from 
+            a byte[] in memory. 
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile.TempDataDirPath">
+            <summary>
+            The path to use when working with temporary files associated
+            with this data file.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile.AutomaticUpdatesEnabled">
+            <summary>
+            True if automatic updates are enabled, false otherwise.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile.TempDataFilePath">
+            <summary>
+            The complete file path to the location of the temporary
+            copy of the data file that is currently being used by the 
+            <see cref="T:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine"/>.
+            Engines often make a temporary copy of the data file in order
+            to allow the original to be updated.
+            This value will be null if the file is loaded entirely into memory.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile.UpdateAvailableTime">
+            <summary>
+            The date/time that a data update is expected to be available.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile.DataPublishedDateTime">
+            <summary>
+            The data/time that this data was published.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile.Configuration">
+            <summary>
+            The configuration parameters used when creating this 
+            data file instance.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile.FormattedUrl">
+            <summary>
+            Get the data update URL complete with any query string 
+            parameters that are needed to retrieve the data.
+            By default, no query string parameters are added to the URL.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile.FormattedUri">
+            <summary>
+            Get the data update URL complete with any query string 
+            parameters that are needed to retrieve the data.
+            By default, no query string parameters are added to the URL.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile.IsRegistered">
+            <summary>
+            Returns true if this file has been registered with the 
+            data update service. False if not.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile.#ctor(System.Type)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="engineType">
+            The type of the engine that this data file is used by.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile.SetDataUpdateService(FiftyOne.Pipeline.Engines.Services.IDataUpdateService)">
+            <summary>
+            Set the data update service that this data file is 
+            registered with.
+            </summary>
+            <param name="dataUpdateService">
+            The data update service.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile.Dispose(System.Boolean)">
+            <summary>
+            Dispose of this instance
+            </summary>
+            <param name="disposing">
+            True if this is called from the Dispose method. 
+            False if this is called from the finalizer.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile.Dispose">
+            <summary>
+            Dispose of this instance's resources.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile.Finalize">
+            <summary>
+            Finalizer
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Data.AspectPropertyMetaData">
+            <summary>
+            Meta-data relating to properties that are populated by Aspect Engines.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectPropertyMetaData.DataTiersWherePresent">
+            <summary>
+            A list of the data tiers that can be used to determine values 
+            for this property.
+            Examples values are:
+            Lite
+            Premium
+            Enterprise
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectPropertyMetaData.Description">
+            <summary>
+            Full description of the property.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.AspectPropertyMetaData.#ctor(FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine,System.String,System.Type,System.String,System.Collections.Generic.IList{System.String},System.Boolean,System.String,System.Collections.Generic.IReadOnlyList{FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData},System.Boolean,System.Collections.Generic.IReadOnlyList{System.String})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="element">
+            The <see cref="T:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine"/> that this property is associated 
+            with.
+            </param>
+            <param name="name">
+            The name of the property. Must match the string key used to
+            store the property value in the <see cref="T:FiftyOne.Pipeline.Engines.Data.IAspectData"/> instance.
+            </param>
+            <param name="type">
+            The type of the property values.
+            </param>
+            <param name="category">
+            The category the property belongs to.
+            </param>
+            <param name="dataTiersWherePresent">
+            A list of the data tiers that can be used to determine values 
+            for this property.
+            </param>
+            <param name="available">
+            True if the property is available in the results for the
+            associated <see cref="T:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine"/>, false otherwise.
+            </param>
+            <param name="description">
+            Full description of the property.
+            </param>
+            <param name="itemProperties">
+            The meta-data for properties that are stored in sub-items.
+            Only relevant if this meta-data instance relates to a 
+            collection of complex objects.
+            </param>
+            <param name="delayExecution">
+            Only relevant if `Type` is <see cref="T:FiftyOne.Pipeline.Core.Data.Types.JavaScript"/>.
+            Defaults to false.
+            If set to true then the JavaScript in this property will
+            not be executed automatically on the client device.
+            </param>
+            <param name="evidenceProperties">
+            The names of any <see cref="T:FiftyOne.Pipeline.Core.Data.Types.JavaScript"/> properties that,
+            when executed, will obtain additional evidence that can help
+            in determining the value of this property.
+            Note that these names should include any parts after the 
+            element data key.
+            I.e. if the complete property name is 
+            'devices.profiles.screenwidthpixelsjavascript' then the
+            name in this list must be 'profiles.screenwidthpixelsjavascript'
+            </param>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Data.AspectPropertyValue`1">
+            <summary>
+            This class can be used where engines have a property that 
+            may be populated and may not.
+            It can be used to let the user know details of why a property
+            value is not available.
+            For example, if a property requires additional evidence from
+            client side code before it can be populated.
+            </summary>
+            <typeparam name="T">
+            The type of data stored within the instance.
+            </typeparam>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Data.AspectPropertyValue`1._value">
+            <summary>
+            The value stored within this instance
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectPropertyValue`1.NoValueMessage">
+            <summary>
+            The message in the Exception if the Value property is accessed
+            and the instance does not have a set value.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectPropertyValue`1.HasValue">
+            <summary>
+            True if this instance contains a value, false otherwise.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectPropertyValue`1.Value">
+            <summary>
+            Get/set the underlying value.
+            </summary>
+            <remarks>
+            The underlying value can be set to null. In this case,
+            the <see cref="P:FiftyOne.Pipeline.Engines.Data.AspectPropertyValue`1.HasValue"/> property will return true and
+            <see cref="P:FiftyOne.Pipeline.Engines.Data.AspectPropertyValue`1.Value"/> will return null.
+            </remarks>
+            <exception cref="T:FiftyOne.Pipeline.Engines.Exceptions.NoValueException">
+            This exception will be thrown if the instance does not 
+            contain a value.
+            </exception>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.AspectPropertyValue`1.FiftyOne#Pipeline#Engines#Data#IAspectPropertyValue#Value">
+            <summary>
+            Get/set the underlying value as an object.
+            </summary>
+            <exception cref="T:FiftyOne.Pipeline.Engines.Exceptions.NoValueException">
+            This exception will be thrown if the instance does not 
+            contain a value.
+            </exception>
+            <exception cref="T:System.InvalidCastException">
+            Will be thrown if the supplied value is not of the expected type.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.AspectPropertyValue`1.#ctor">
+            <summary>
+            Default constructor. Used to create an instance 
+            with no initial underlying value.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.AspectPropertyValue`1.#ctor(`0)">
+            <summary>
+            Constructor. Used to create an instance with an 
+            underlying value.
+            </summary>
+            <param name="value">
+            The underlying value to assign to this instance.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.AspectPropertyValue`1.ToString">
+            <summary>
+            Get the string representation of this instance.
+            </summary>
+            <returns>
+            The string representation of the value of this instance or
+            'NULL' if it has explicitly been set to null.
+            </returns>
+            <exception cref="T:FiftyOne.Pipeline.Engines.Exceptions.NoValueException">
+            This exception will be thrown if the instance does not 
+            contain a value.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.AspectPropertyValue`1.Equals(System.Object)">
+            <summary>
+            Check if this instance is equal to the specified object.
+            <see cref="T:FiftyOne.Pipeline.Engines.Data.AspectPropertyValue`1"/> instances are considered 
+            equal they have the same generic type parameter and:
+            1. They both have hasValue == false.
+            2. They both have Value explicitly set to null.
+            3. The Value properties are considered equal.
+            </summary>
+            <param name="obj">
+            The object to check for equality
+            </param>
+            <returns>
+            True if this instance is equal to the specified object.
+            False if it is not.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.AspectPropertyValue`1.GetHashCode">
+            <summary>
+            Get the hash code for this instance.
+            If value has been set to null then this will return 0.
+            If HasValue = false then this will return -1.
+            Otherwise, this will return the result of GetHashCode for the
+            stored value.
+            </summary>
+            <remarks> 
+            In order to avoid the most problematic hash collisions, 
+            where GetHashCode for the stored value returns 0 or -1 it 
+            will be changed to 1 or -2 respectively.
+            </remarks>
+            <returns>
+            The hash code for this instance.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Data.IAspectData">
+            <summary>
+            Represents an ElementData instance that is generated by an 
+            <see cref="T:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine"/>.
+            This data object will contain property values that relate to 
+            a specific aspect.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.IAspectData.Engines">
+            <summary>
+            The engine that generated the data withing this data instance.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.IAspectData.ProcessTask">
+            <summary>
+            If the engine is configured for lazy loading, this property 
+            returns a task that will complete once the engine has finished
+            processing.
+            Otherwise, it will be null.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.IAspectData.CacheHit">
+            <summary>
+            Get whether this instance of element data was the result of a 
+            cache hit, rather than processing of the underlying aspect engine.
+            This field is only set if the Aspect Engine is configured to do so.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile">
+            <summary>
+            Interface for the details of a data file used by an Aspect engine.
+            These properties are used by the <see cref="T:FiftyOne.Pipeline.Engines.Services.DataUpdateService"/>
+            to perform automatic updates if enabled.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile.Identifier">
+            <summary>
+            An identifier for this data file. Each data file used by an engine
+            must have a different identifier.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile.Engine">
+            <summary>
+            The engine this data file is used by
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile.EngineType">
+            <summary>
+            Get the type of the engine that this data file is for.
+            This exists in addition to the Engine property because Engine
+            can be null.
+            This then allows the user to identify which engine this file 
+            relates to.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile.DataFilePath">
+            <summary>
+            The complete file path to the location of the data file.
+            This value will be null if the file has been supplied from 
+            a byte[] in memory. 
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile.TempDataDirPath">
+            <summary>
+            The path to use when working with temporary files associated
+            with this data file.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile.TempDataFilePath">
+            <summary>
+            The complete file path to the location of the temporary
+            copy of the data file that is currently being used by the 
+            <see cref="T:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine"/>.
+            Engines often make a temporary copy of the data file in order
+            to allow the original to be updated.
+            This value will be null if the file is loaded entirely into memory.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile.AutomaticUpdatesEnabled">
+            <summary>
+            True if automatic updates are enabled, false otherwise.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile.UpdateAvailableTime">
+            <summary>
+            The date and time by which an update to the current data file is 
+            expected to have been published.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile.DataPublishedDateTime">
+            <summary>
+            The date and time that the current data file was published.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile.Configuration">
+            <summary>
+            The configuration that was provided for this data file.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile.FormattedUrl">
+            <summary>
+            Get the data update URL complete with any query string 
+            parameters that are needed to retrieve the data.
+            By default, no query string parameters are added to the URL.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile.FormattedUri">
+            <summary>
+            Get the data update URL complete with any query string 
+            parameters that are needed to retrieve the data.
+            By default, no query string parameters are added to the URL.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile.IsRegistered">
+            <summary>
+            Returns true if this file has been registered with the 
+            data update service. False if not.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile.SetDataUpdateService(FiftyOne.Pipeline.Engines.Services.IDataUpdateService)">
+            <summary>
+            Set the data update service that this data file is 
+            registered with.
+            </summary>
+            <param name="dataUpdateService">
+            The data update service.
+            </param>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Data.IAspectPropertyMetaData">
+            <summary>
+            Represents meta-data relating to a property that is populated 
+            by an <see cref="T:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine"/> instance.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.IAspectPropertyMetaData.DataTiersWherePresent">
+            <summary>
+            A list of the data tiers that can be used to determine values 
+            for this property.
+            Examples values are:
+            Lite
+            Premium
+            Enterprise
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.IAspectPropertyMetaData.Description">
+            <summary>
+            Full description of the property.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Data.IAspectPropertyValue">
+            <summary>
+            Aspect 
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.IAspectPropertyValue.HasValue">
+            <summary>
+            True if this instance contains a value, false otherwise.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.IAspectPropertyValue.Value">
+            <summary>
+            Get/set the underlying value.
+            </summary>
+            <exception cref="T:FiftyOne.Pipeline.Engines.Exceptions.NoValueException">
+            This exception will be thrown if the instance does not 
+            contain a value.
+            </exception>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.IAspectPropertyValue.NoValueMessage">
+            <summary>
+            The message that will appear in the exception thrown 
+            if this instance has no value.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Data.IAspectPropertyValue`1">
+            <summary>
+            Represents a property of an <see cref="T:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine"/> for which 
+            we may not know the value.
+            </summary>
+            <remarks>
+            Some reasons for a value not being set could be:
+            - Some required evidence was not supplied.
+            - No match could be found using the supplied evidence.
+            Note that this is distinct from the related concept of a given
+            property not being accessible. (For example, due to the property 
+            only being available in a larger data file) In that case, 
+            the situation is handled by an <see cref="T:FiftyOne.Pipeline.Engines.Services.IMissingPropertyService"/>
+            instance.
+            </remarks>
+            <typeparam name="T">
+            The type of data stored within the instance.
+            </typeparam>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.IAspectPropertyValue`1.Value">
+            <summary>
+            Get/set the underlying value.
+            </summary>
+            <exception cref="T:FiftyOne.Pipeline.Engines.Exceptions.NoValueException">
+            This exception will be thrown if the instance does not 
+            contain a value.
+            </exception>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Data.IDataUpdateUrlFormatter">
+            <summary>
+            Represents an class that can build a complete update URL from
+            a supplied <see cref="T:FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile"/> instance.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.IDataUpdateUrlFormatter.GetFormattedDataUpdateUrl(FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile)">
+            <summary>
+            Get the URL to call to request an updated version of the 
+            supplied data file.
+            </summary>
+            <param name="dataFile">
+            The data file to build an update URL for.
+            </param>
+            <returns>
+            The URL to call in order to check for and download an update.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.IDataUpdateUrlFormatter.GetFormattedDataUpdateUri(FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile)">
+            <summary>
+            Get the URL to call to request an updated version of the 
+            supplied data file.
+            </summary>
+            <param name="dataFile">
+            The data file to build an update URL for.
+            </param>
+            <returns>
+            The URL to call in order to check for and download an update.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Data.IMultiProfileData`1">
+            <summary>
+            Represents a specific type of <see cref="T:FiftyOne.Pipeline.Engines.Data.IAspectData"/> that
+            contains multiple <see cref="T:FiftyOne.Pipeline.Engines.Data.IAspectData"/> instances.
+            This is used in cases where an engine can return multiple 
+            results for a single evidence value.
+            </summary>
+            <typeparam name="T">
+            The type of the <see cref="T:FiftyOne.Pipeline.Engines.Data.IAspectData"/> instances to store
+            in the list.
+            </typeparam>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Data.IMultiProfileData`1.Profiles">
+            <summary>
+            Get a list of the <see cref="T:FiftyOne.Pipeline.Engines.Data.IAspectData"/> objects that 
+            have been added to this instance.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.IMultiProfileData`1.AddProfile(`0)">
+            <summary>
+            Add the specified <see cref="T:FiftyOne.Pipeline.Engines.Data.IAspectData"/> object to
+            this instance.
+            </summary>
+            <param name="profile">
+            The data object to add to the list.
+            </param>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Data.Readers.IDataLoader`1">
+            <summary>
+            Used to load data from either a file or byte array into the format 'T'.
+            </summary>
+            <typeparam name="T">Type of object to load</typeparam>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.Readers.IDataLoader`1.LoadData(System.String)">
+            <summary>
+            Load a new instance of T using the data in the file provided.
+            </summary>
+            <param name="filePath">File to load from</param>
+            <returns></returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.Readers.IDataLoader`1.LoadData(System.IO.Stream)">
+            <summary>
+            Load a new instance of T using the data stream provided.
+            </summary>
+            <param name="data">Data to load from</param>
+            <returns></returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Data.Readers.JsonLoader`1">
+            <summary>
+            JSON implementation of IDataLoader. This deserializes the data from a
+            JSON file to the type T.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.Readers.JsonLoader`1.LoadData(System.IO.StreamReader)">
+            <summary>
+            Load data from a StreamReader.
+            </summary>
+            <param name="reader"></param>
+            <returns>A new instance of T</returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.Readers.JsonLoader`1.LoadData(System.String)">
+            <summary>
+            Load data from a file.
+            </summary>
+            <param name="filePath">
+            The complete path to the file to load data from.
+            </param>
+            <returns>
+            The data in the file as a new instance of type 'T'.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Data.Readers.JsonLoader`1.LoadData(System.IO.Stream)">
+            <summary>
+            Load data from a stream.
+            </summary>
+            <param name="data">
+            The stream to load data from.
+            </param>
+            <returns>
+            The data in the stream as a new instance of type 'T'.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.PerformanceProfiles">
+            <summary>
+            The performance profiles to use with the SetPerformanceProfile
+            method.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.PerformanceProfiles.LowMemory">
+            <summary>
+            Use as little memory as possible. 
+            Performance can be significantly impacted but will still be 
+            fast enough for many scenarios.
+            Similar to HighPerformance and Balanced but uses much 
+            smaller cache sizes.
+            The precise details will vary based on the implementation of 
+            the engine.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.PerformanceProfiles.MaxPerformance">
+            <summary>
+            Best possible performance. Everything loaded into memory.
+            Execution can be optimized to ignore operations relating to
+            maintaining caches, etc.
+            The precise details will vary based on the implementation of 
+            the engine.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.PerformanceProfiles.HighPerformance">
+            <summary>
+            Load smaller data structures into memory.
+            Larger data structures are cached to keep the most frequently
+            used data in memory as well.
+            Similar to Balanced but uses larger cache sizes.
+            The precise details will vary based on the implementation of 
+            the engine.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.PerformanceProfiles.Balanced">
+            <summary>
+            Load smaller data structures into memory.
+            Larger data structures are cached to keep the most frequently
+            used data in memory as well.
+            Similar to HighPerformance but uses smaller cache sizes.
+            The precise details will vary based on the implementation of 
+            the engine.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.PerformanceProfiles.BalancedTemp">
+            <summary>
+            The precise details will vary based on the implementation of 
+            the engine.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Exceptions.DataUpdateException">
+            <summary>
+            Exception that can be thrown when a <see cref="T:FiftyOne.Pipeline.Engines.Services.DataUpdateService"/>
+            fails to successfully complete an update.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Exceptions.DataUpdateException.Status">
+            <summary>
+            The status of the update process.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Exceptions.DataUpdateException.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Exceptions.DataUpdateException.#ctor(System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message">
+            The exception message
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Exceptions.DataUpdateException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message">
+            The exception message
+            </param>
+            <param name="innerException">
+            The inner exception that triggered this exception.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Exceptions.DataUpdateException.#ctor(System.String,FiftyOne.Pipeline.Engines.Services.AutoUpdateStatus)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message">
+            The exception message
+            </param>
+            <param name="status">
+            The <see cref="T:FiftyOne.Pipeline.Engines.Services.AutoUpdateStatus"/> associated with this exception.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Exceptions.DataUpdateException.#ctor(System.String,System.Exception,FiftyOne.Pipeline.Engines.Services.AutoUpdateStatus)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message">
+            The exception message
+            </param>
+            <param name="innerException">
+            The inner exception that triggered this exception.
+            </param>
+            <param name="status">
+            The <see cref="T:FiftyOne.Pipeline.Engines.Services.AutoUpdateStatus"/> associated with this exception.
+            </param>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Exceptions.NoValueException">
+            <summary>
+            Exception that can be thrown when an <see cref="T:FiftyOne.Pipeline.Engines.Data.AspectPropertyValue`1"/>
+            does not have a value.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Exceptions.NoValueException.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Exceptions.NoValueException.#ctor(System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message">
+            The exception message
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Exceptions.NoValueException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message">
+            The exception message
+            </param>
+            <param name="innerException">
+            The inner exception that triggered this exception.
+            </param>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBase`2">
+            <summary>
+            Base class for 51Degrees aspect engines. 
+            </summary>
+            <typeparam name="T">
+            The type of data that the engine will return. Must implement 
+            <see cref="T:FiftyOne.Pipeline.Engines.Data.IAspectData"/>.
+            </typeparam>
+            <typeparam name="TMeta">
+            The type of meta data that the flow element will supply 
+            about the properties it populates.
+            </typeparam>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBase`2._cache">
+            <summary>
+            The results cache to be used to store results against
+            relevant evidence values.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBase`2.DataSourceTier">
+            <summary>
+            The tier to which the current data source belongs.
+            For 51Degrees this will usually be one of:
+            Lite
+            Premium
+            Enterprise
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBase`2.LazyLoadingConfiguration">
+            <summary>
+            The lazy loading configuration to use.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBase`2.FiftyOne#Pipeline#Engines#FlowElements#IAspectEngine#Properties">
+            <summary>
+            Provide an implementation for the non-generic, 
+            aspect-specific version of the meta-data property.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBase`2.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBase{`0,`1}},System.Func{FiftyOne.Pipeline.Core.FlowElements.IPipeline,FiftyOne.Pipeline.Core.FlowElements.FlowElementBase{`0,`1},`0})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger">
+            The logger to use
+            </param>
+            <param name="aspectDataFactory">
+            The factory function to use when the engine creates an
+            <see cref="T:FiftyOne.Pipeline.Engines.Data.AspectDataBase"/> instance.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBase`2.SetCache(FiftyOne.Pipeline.Engines.Caching.IFlowCache)">
+            <summary>
+            Set the results cache.
+            This is used to store the results of queries against the evidence
+            that was provided.
+            If the same evidence is provided again then the cached response
+            is returned without needing to call the engine itself.
+            </summary>
+            <param name="cache">
+            The cache.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the parameter is null
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBase`2.SetCacheHitOrMiss(System.Boolean)">
+            <summary>
+            Set the engine to flag when a cache hit occurs by setting a field 
+            on the cached aspect data.
+            </summary>
+            <param name="cacheHitOrMiss">
+            Whether to flag cache hits or not.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBase`2.SetLazyLoading(FiftyOne.Pipeline.Engines.Configuration.LazyLoadingConfiguration)">
+            <summary>
+            Configure lazy loading of results.
+            </summary>
+            <param name="configuration">
+            The configuration to use.
+            </param>
+            <returns>
+            This engine builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBase`2.ProcessEngine(FiftyOne.Pipeline.Core.Data.IFlowData,`0)">
+            <summary>
+            Extending classes must implement this method.
+            It should perform the required processing and update the 
+            specified aspect data instance.
+            </summary>
+            <param name="data">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instance that provides the evidence.
+            </param>
+            <param name="aspectData">
+            The <see cref="T:FiftyOne.Pipeline.Engines.Data.IAspectData"/> instance to populate with the 
+            results of processing.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBase`2.ProcessInternal(FiftyOne.Pipeline.Core.Data.IFlowData)">
+            <summary>
+            Implementation of method from the base class 
+            <see cref="T:FiftyOne.Pipeline.Core.FlowElements.FlowElementBase`2"/>.
+            This exists to centralize the results caching logic.
+            </summary>
+            <param name="data">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instance that provides the evidence 
+            and holds the result.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the parameter is null
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBase`2.ProcessWithCache(FiftyOne.Pipeline.Core.Data.IFlowData)">
+            <summary>
+            Private method that checks if the result is already in the cache
+            or not.
+            If it is then the result is added to 'data', if not then 
+            <see cref="M:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBase`2.ProcessEngine(FiftyOne.Pipeline.Core.Data.IFlowData,`0)"/> is called to do so.
+            </summary>
+            <param name="data">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instance that provides the evidence 
+            and holds the result.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBase`2.ManagedResourcesCleanup">
+            <summary>
+            Called by the base class when this instance is disposed.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBuilderBase`2">
+            <summary>
+            Abstract base class that exposes the common options that all
+            51Degrees engine builders should make use of.
+            </summary>
+            <typeparam name="TBuilder">
+            The specific builder type to use as the return type from the fluent 
+            builder methods.
+            </typeparam>
+            <typeparam name="TEngine">
+            The type of the engine that this builder will build
+            </typeparam>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBuilderBase`2.Properties">
+            <summary>
+            A list of the string keys of properties that the user wants
+            the engine to determine values for.
+            Where this is an empty list, all properties should be
+            included.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBuilderBase`2.SetLazyLoading(FiftyOne.Pipeline.Engines.Configuration.LazyLoadingConfiguration)">
+            <summary>
+            Configure lazy loading of results.
+            </summary>
+            <param name="lazyLoadingConfig">
+            The configuration to use.
+            </param>
+            <returns>
+            This engine builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBuilderBase`2.SetLazyLoadingTimeout(System.Int32)">
+            <summary>
+            Configure lazy loading of results.
+            </summary>
+            <param name="timeoutMs">
+            The timeout length in milliseconds.
+            </param>
+            <returns>
+            This engine builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBuilderBase`2.SetCache(FiftyOne.Pipeline.Engines.Configuration.CacheConfiguration)">
+            <summary>
+            Configure the results cache that will be used by the Pipeline to
+            cache results from this engine.
+            </summary>
+            <param name="cacheConfig">
+            The cache configuration to use.
+            </param>
+            <returns>
+            This engine builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBuilderBase`2.SetCacheSize(System.Int32)">
+            <summary>
+            Configure the results cache that will be used by the Pipeline to
+            cache results from this engine.
+            </summary>
+            <param name="cacheSize">
+            The cache size to use.
+            </param>
+            <returns>
+            This engine builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBuilderBase`2.SetCacheHitOrMiss(System.Boolean)">
+            <summary>
+            Configure the engine to flag whether an element data originates from 
+            the engine cache. 
+            </summary>
+            <param name="cacheHitOrMiss">
+            Whether to flag cache hits or not.
+            </param>
+            <returns>
+            This engine builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBuilderBase`2.SetProperties(System.Collections.Generic.List{System.String})">
+            <summary>
+            Configure the properties that the engine will populate in the 
+            response.
+            By default all properties will be populated.
+            </summary>
+            <param name="properties">
+            The properties that we want the engine to populate.
+            </param>
+            <returns>
+            This engine builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBuilderBase`2.SetProperty(System.String)">
+            <summary>
+            Add a property to the list of properties that the engine will
+            populate in the response.
+            By default all properties will be populated.
+            </summary>
+            <param name="property">
+            The property that we want the engine to populate.
+            </param>
+            <returns>
+            This engine builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBuilderBase`2.ConfigureEngine(`1)">
+            <summary>
+            Called by the <see cref="M:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBuilderBase`2.BuildEngine"/> method to handle
+            configuration of the engine after it is built.
+            Can be overridden by derived classes to add additional
+            configuration, but the base method should always be called.
+            </summary>
+            <param name="engine">
+            The engine to configure.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBuilderBase`2.PreCreateEngine">
+            <summary>
+            Called by the <see cref="M:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBuilderBase`2.BuildEngine"/> method to handle
+            anything that needs doing before the engine is built.
+            By default, nothing needs to be done.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBuilderBase`2.NewEngine(System.Collections.Generic.List{System.String})">
+            <summary>
+            Called by the <see cref="M:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBuilderBase`2.BuildEngine"/> method to handle
+            creation of the engine instance.
+            </summary>
+            <param name="properties"></param>
+            <returns>
+            An <see cref="T:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine"/>.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBuilderBase`2.BuildEngine">
+            <summary>
+            Build an engine using the configured options.
+            Derived classes should call this method when building an
+            engine to ensure it is configured correctly all down the
+            class hierarchy.
+            </summary>
+            <returns>
+            An <see cref="T:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine"/>.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine">
+            <summary>
+            Interface representing 51Degrees on-premise aspect engines. 
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine.SetCache(FiftyOne.Pipeline.Engines.Caching.IFlowCache)">
+            <summary>
+            Set the results cache.
+            This is used to store the results of queries against the evidence
+            that was provided.
+            If the same evidence is provided again then the cached response
+            is returned without needing to call the engine itself.
+            </summary>
+            <param name="cache">
+            The cache.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine.SetCacheHitOrMiss(System.Boolean)">
+            <summary>
+            Set the engine to flag when a cache hit occurs by setting a field 
+            on the cached aspect data.
+            </summary>
+            <param name="cacheHitOrMiss">
+            Whether to flag cache hits or not.
+            </param>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine.DataSourceTier">
+            <summary>
+            The tier to which the current data source belongs.
+            For 51Degrees this will usually be one of:
+            Lite
+            Premium
+            Enterprise
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine.SetLazyLoading(FiftyOne.Pipeline.Engines.Configuration.LazyLoadingConfiguration)">
+            <summary>
+            Configure lazy loading of results.
+            </summary>
+            <param name="configuration">
+            The configuration to use.
+            </param>
+            <returns>
+            This engine builder instance.
+            </returns>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine.LazyLoadingConfiguration">
+            <summary>
+            The lazy loading configuration to use.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine.Properties">
+            <summary>
+            Aspect engine specific view of the properties so we can
+            get at the IAspectPropertyMetaData representation without
+            casting, etc.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine`2">
+            <summary>
+            Interface representing 51Degrees on-premise aspect engines. 
+            </summary>
+            <typeparam name="T">
+            The type of element data that the flow element will write to 
+            <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/>.
+            </typeparam>
+            <typeparam name="TMeta">
+            The type of meta data that the flow element will supply 
+            about the properties it populates.
+            </typeparam>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FlowElements.ICloudAspectEngine">
+            <summary>
+            An interface for aspect engines that process responses from
+            a cloud service.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FlowElements.IOnPremiseAspectEngine">
+            <summary>
+            Interface for an AspectEngine that processes evidence using one 
+            or more local data files.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FlowElements.IOnPremiseAspectEngine.DataFiles">
+            <summary>
+            Details of the data files used by this engine.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.IOnPremiseAspectEngine.RefreshData(System.String)">
+            <summary>
+            Causes the engine to reload data from the file at 
+            <see cref="P:FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile.DataFilePath"/> for the
+            data file matching the given identifier.
+            </summary>
+            <remarks>
+            Implementors should consider thread-safety to ensure that
+            parallel calls to 'Process' will resolve as normal.
+            </remarks>
+            <param name="dataFileIdentifier">
+            The identifier of the data file to update. Must match the 
+            value in <see cref="P:FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile.Identifier"/>.
+            If the engine only has a single data file, this parameter 
+            is ignored.
+            If null is passed then all data files should be refreshed.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.IOnPremiseAspectEngine.RefreshData(System.String,System.IO.Stream)">
+            <summary>
+            Causes the engine to reload data from the supplied
+            <see cref="T:System.IO.Stream"/> for the file matching the given identifier.
+            </summary>
+            <remarks>
+            Implementors should consider thread-safety to ensure that
+            parallel calls to 'Process' will resolve as normal.
+            </remarks>
+            <param name="dataFileIdentifier">
+            The identifier of the data file to update. Must match the 
+            value in <see cref="P:FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile.Identifier"/>.
+            If the engine only has a single data file, this parameter 
+            is ignored.
+            </param>
+            <param name="data">
+            A <see cref="T:System.IO.Stream"/> containing the data to use when refreshing.
+            </param>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FlowElements.IOnPremiseAspectEngine.TempDataDirPath">
+            <summary>
+            The complete file path to the directory that is used by the
+            engine to store temporary copies of any data files that it uses.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.IOnPremiseAspectEngine.GetDataFileMetaData(System.String)">
+            <summary>
+            Get the details of a specific data file used by this engine.
+            </summary>
+            <param name="dataFileIdentifier">
+            The identifier of the data file to get meta data for.
+            This parameter is ignored if the engine only has one data file.
+            </param>
+            <returns>
+            The meta data associated with the specified data file.
+            Returns null if the engine has no associated data files.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.IOnPremiseAspectEngine.AddDataFile(FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile)">
+            <summary>
+            Add the specified data file to the engine.
+            </summary>
+            <param name="dataFile">
+            The data file to add.
+            </param>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FlowElements.OnPremiseAspectEngineBase`2">
+            <summary>
+            Base class for 51Degrees on-premise aspect engines. 
+            </summary>
+            <typeparam name="T">
+            The type of data that the engine will return. Must implement 
+            <see cref="T:FiftyOne.Pipeline.Engines.Data.IAspectData"/>.
+            </typeparam>   
+            <typeparam name="TMeta">
+            The type of meta data that the flow element will supply 
+            about the properties it populates.
+            </typeparam>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FlowElements.OnPremiseAspectEngineBase`2.DataFiles">
+            <summary>
+            Details of the data files used by this engine.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FlowElements.OnPremiseAspectEngineBase`2.TempDataDirPath">
+            <summary>
+            Directory to use as a temporary file location when required.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.OnPremiseAspectEngineBase`2.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBase{`0,`1}},System.Func{FiftyOne.Pipeline.Core.FlowElements.IPipeline,FiftyOne.Pipeline.Core.FlowElements.FlowElementBase{`0,`1},`0},System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger">
+            The logger to use
+            </param>
+            <param name="aspectDataFactory">
+            The factory function to use when the engine creates an
+            <see cref="T:FiftyOne.Pipeline.Engines.Data.AspectDataBase"/> instance.
+            </param>
+            <param name="tempDataFilePath">
+            The directory to use when storing temporary copies of the 
+            data file(s) used by this engine.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.OnPremiseAspectEngineBase`2.GetDataFileMetaData(System.String)">
+            <summary>
+            Get the details of a specific data file used by this engine.
+            </summary>
+            <param name="dataFileIdentifier">
+            The identifier of the data file to get meta data for.
+            This parameter is ignored if the engine only has one data file.
+            </param>
+            <returns>
+            The meta data associated with the specified data file.
+            Returns null if the engine has no associated data files.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.OnPremiseAspectEngineBase`2.RefreshData(System.String)">
+            <summary>
+            Causes the engine to reload data from the file at 
+            <see cref="P:FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile.DataFilePath"/> for the
+            data file matching the given identifier.
+            </summary>
+            <remarks>
+            Implementors should consider thread-safety to ensure that
+            parallel calls to 'Process' will resolve as normal.
+            </remarks>
+            <param name="dataFileIdentifier">
+            The identifier of the data file to update. Must match the 
+            value in <see cref="P:FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile.Identifier"/>.
+            If the engine only has a single data file, this parameter 
+            is ignored.
+            If null is passed then all data files should be refreshed.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.OnPremiseAspectEngineBase`2.RefreshData(System.String,System.IO.Stream)">
+            <summary>
+            Causes the engine to reload data from the supplied
+            <see cref="T:System.IO.Stream"/> for the file matching the given identifier.
+            </summary>
+            <remarks>
+            Implementors should consider thread-safety to ensure that
+            parallel calls to 'Process' will resolve as normal.
+            </remarks>
+            <param name="dataFileIdentifier">
+            The identifier of the data file to update. Must match the 
+            value in <see cref="P:FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile.Identifier"/>.
+            If the engine only has a single data file, this parameter 
+            is ignored.
+            </param>
+            <param name="data">
+            A <see cref="T:System.IO.Stream"/> containing the data to use when refreshing.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.OnPremiseAspectEngineBase`2.ManagedResourcesCleanup">
+            <summary>
+            Called when this instance is being disposed
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.OnPremiseAspectEngineBase`2.AddDataFile(FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile)">
+            <summary>
+            Add the specified data file to the engine.
+            </summary>
+            <param name="dataFile">
+            The data file to add.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if supplied data file is null.
+            </exception>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FlowElements.OnPremiseAspectEngineBuilderBase`2">
+            <summary>
+            Abstract base class that exposes the common options that all
+            51Degrees on-premise engine builders should make use of.
+            </summary>
+            <typeparam name="TBuilder">
+            The specific builder type to use as the return type from the fluent 
+            builder methods.
+            </typeparam>
+            <typeparam name="TEngine">
+            The type of the engine that this builder will build
+            </typeparam>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FlowElements.OnPremiseAspectEngineBuilderBase`2.DataFileConfigs">
+            <summary>
+            A list of the <see cref="T:FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration"/> instances 
+            for all data files being supplied to the engine.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FlowElements.OnPremiseAspectEngineBuilderBase`2.DataFiles">
+            <summary>
+            Used to store a temporary list of the data file 
+            meta data between their creation and the creation
+            of the engine.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FlowElements.OnPremiseAspectEngineBuilderBase`2.TempDir">
+            <summary>
+            The directory to use for temporary files when needed
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.OnPremiseAspectEngineBuilderBase`2.#ctor(FiftyOne.Pipeline.Engines.Services.IDataUpdateService)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="dataUpdateService">
+            The <see cref="T:FiftyOne.Pipeline.Engines.Services.IDataUpdateService"/> instance to use when 
+            checking for data updates.
+            If null is passed then data updates functionality will be 
+            unavailable.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.OnPremiseAspectEngineBuilderBase`2.AddDataFile(FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration)">
+            <summary>
+            Add a data file for this engine to use.
+            </summary>
+            <param name="configuration">
+            The data file configuration to add to this engine.
+            </param>
+            <returns>
+            This engine builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.OnPremiseAspectEngineBuilderBase`2.SetTempDirPath(System.String)">
+            <summary>
+            Set the temporary path to use when the engine needs to create
+            temporary files. (e.g. when downloading data updates)
+            Default = Path.GetTempPath();
+            </summary>
+            <param name="dirPath">
+            The full path to the temporary directory
+            </param>
+            <returns>
+            This engine builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.OnPremiseAspectEngineBuilderBase`2.SetPerformanceProfile(FiftyOne.Pipeline.Engines.PerformanceProfiles)">
+            <summary>
+            Set the performance profile that the engine should use.
+            </summary>
+            <param name="profile"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.OnPremiseAspectEngineBuilderBase`2.NewAspectEngineDataFile">
+            <summary>
+            Create a new instance of the <see cref="T:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile"/>
+            instances used by the engine associated with this builder.
+            If the engine uses a derived type then this method should be 
+            overridden to return a new instance on that type.
+            </summary>
+            <returns>
+            A new <see cref="T:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile"/> instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.OnPremiseAspectEngineBuilderBase`2.PreCreateEngine">
+            <summary>
+            Called by the 'BuildEngine' method to handle
+            anything that needs doing before the engine is built.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.OnPremiseAspectEngineBuilderBase`2.ConfigureEngine(`1)">
+            <summary>
+            Called by the 'BuildEngine' method to handle
+            configuration of the engine after it is built.
+            Can be overridden by derived classes to add additional
+            configuration, but the base method should always be called.
+            </summary>
+            <param name="engine">
+            The engine to configure.
+            </param>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FlowElements.PrePackagedPipelineBuilderBase`1">
+            <summary>
+            Base class for pipeline builders that will produce a pipeline
+            with specific flow elements.
+            </summary>
+            <typeparam name="TBuilder"></typeparam>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FlowElements.PrePackagedPipelineBuilderBase`1.LazyLoading">
+            <summary>
+            True if lazy loading is enabled for the relevant engine(s).
+            False if not.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FlowElements.PrePackagedPipelineBuilderBase`1.ResultsCache">
+            <summary>
+            True if a results cache should be added to the relevant engine(s).
+            False if not.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FlowElements.PrePackagedPipelineBuilderBase`1.LazyLoadingTimeout">
+            <summary>
+            The timeout to be used by the lazy loading feature.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FlowElements.PrePackagedPipelineBuilderBase`1.LazyLoadingCancellationToken">
+            <summary>
+            The cancellation token to be used by the lazy loading feature.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FlowElements.PrePackagedPipelineBuilderBase`1.ResultsCacheSize">
+            <summary>
+            The cache size to use for the results cache
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.PrePackagedPipelineBuilderBase`1.#ctor(Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="loggerFactory"></param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.PrePackagedPipelineBuilderBase`1.UseLazyLoading">
+            <summary>
+            Enable lazy loading of results.
+            Uses a default timeout of 5 seconds.
+            </summary>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.PrePackagedPipelineBuilderBase`1.UseLazyLoading(System.Int32)">
+            <summary>
+            Enable lazy loading of results.
+            </summary>
+            <param name="timeoutMilliseconds">
+            The timeout to use when attempting to access lazy-loaded values.
+            Default is 5 seconds.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.PrePackagedPipelineBuilderBase`1.UseLazyLoading(System.TimeSpan)">
+            <summary>
+            Enable lazy loading of results.
+            </summary>
+            <param name="timeout">
+            The timeout to use when attempting to access lazy-loaded values.
+            Default is 5 seconds.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.PrePackagedPipelineBuilderBase`1.UseLazyLoading(System.Threading.CancellationToken)">
+            <summary>
+            Enable lazy loading of results.
+            Uses a default timeout of 5 seconds.
+            </summary>
+            <param name="cancellationToken">
+            The cancellation token to observe while attempting to access 
+            lazy-loaded values.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.PrePackagedPipelineBuilderBase`1.UseLazyLoading(System.TimeSpan,System.Threading.CancellationToken)">
+            <summary>
+            Enable lazy loading of results.
+            </summary>
+            <param name="timeout">
+            The timeout to use when attempting to access lazy-loaded values.
+            Default is 5 seconds.
+            </param>
+            <param name="cancellationToken">
+            The cancellation token to observe while attempting to access 
+            lazy-loaded values.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.PrePackagedPipelineBuilderBase`1.UseResultsCache">
+            <summary>
+            Enable caching of results.
+            Uses a default cache size of 1000.
+            </summary>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.PrePackagedPipelineBuilderBase`1.UseResultsCache(System.Int32)">
+            <summary>
+            Enable caching of results.
+            </summary>
+            <param name="size">
+            The maximum number of results to hold in the device 
+            detection cache.
+            Default is 1000.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FlowElements.SingleFileAspectEngineBuilderBase`2">
+            <summary>
+            Abstract base class that exposes the common options that all
+            on-premise engine builders using a single data file should make use of.
+            </summary>
+            <typeparam name="TBuilder">
+            The specific builder type to use as the return type from the fluent 
+            builder methods.
+            </typeparam>
+            <typeparam name="TEngine">
+            The type of the engine that this builder will build
+            </typeparam>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.SingleFileAspectEngineBuilderBase`2.#ctor(FiftyOne.Pipeline.Engines.Services.IDataUpdateService)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="dataUpdateService">
+            The <see cref="T:FiftyOne.Pipeline.Engines.Services.IDataUpdateService"/> instance to use when 
+            checking for data updates.
+            If null is passed then data updates functionality will be 
+            unavailable.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.SingleFileAspectEngineBuilderBase`2.Build(System.String,System.Boolean)">
+            <summary>
+            Build an engine using the current options and the specified 
+            data file.
+            Also registers the data file with the data update service.
+            </summary>
+            <param name="datafile">        
+            The path to the data file location.
+            If a relative path is supplied then the location is determined 
+            as relative to the current working directory as supplied by
+            <see cref="M:System.IO.Directory.GetCurrentDirectory"/>.
+            Whether the path is relative or absolute, if there is no file 
+            at the specified location then, before starting processing, 
+            the engine will download the latest version of the file using 
+            the configured auto-update settings.
+            </param>
+            <param name="createTempDataCopy"> 
+            If true, the engine will create a copy of the data file in a
+            temporary location rather than using the file provided directly.
+            If not loading all data into memory, this is required for 
+            automatic data updates to occur.
+            </param>
+            <returns>
+            An <see cref="T:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine"/>
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.SingleFileAspectEngineBuilderBase`2.Build(System.IO.Stream)">
+            <summary>
+            Build an engine using the current options and the specified 
+            byte array.
+            Also registers the data file with the data update service.
+            </summary>
+            <param name="data">
+            A <see cref="T:System.IO.Stream"/> containing the data that would normally 
+            be in a data file. 
+            If this argument is null then, before starting processing, 
+            the engine will download the latest version of the datafile 
+            using the configured auto-update settings. 
+            </param>
+            <returns>
+            An <see cref="T:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine"/>.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.SingleFileAspectEngineBuilderBase`2.Build">
+            <summary>
+            Build an engine using the configured options.
+            Also registers the data file with the data update service.
+            </summary>
+            <returns>
+            An <see cref="T:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine"/>.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.SingleFileAspectEngineBuilderBase`2.SetDataUpdateUrl(System.String)">
+            <summary>
+            Configure the engine to use the specified URL when looking for
+            an updated data file.
+            </summary>
+            <param name="url">
+            The URL to check for a new data file.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.SingleFileAspectEngineBuilderBase`2.SetDataUpdateUrl(System.Uri)">
+            <summary>
+            Configure the engine to use the specified URL when looking for
+            an updated data file.
+            </summary>
+            <param name="url">
+            The URL to check for a new data file.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.SingleFileAspectEngineBuilderBase`2.SetDataUpdateUrlFormatter(FiftyOne.Pipeline.Engines.Data.IDataUpdateUrlFormatter)">
+            <summary>
+            Specify a <see cref="T:FiftyOne.Pipeline.Engines.Data.IDataUpdateUrlFormatter"/> to be 
+            used by the <see cref="T:FiftyOne.Pipeline.Engines.Services.DataUpdateService"/> when building the 
+            complete URL to query for updated data.
+            </summary>
+            <param name="formatter">
+            The formatter to use.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.SingleFileAspectEngineBuilderBase`2.SetDataUpdateUseUrlFormatter(System.Boolean)">
+            <summary>
+            Enable or disable the <see cref="T:FiftyOne.Pipeline.Engines.Data.IDataUpdateUrlFormatter"/>
+            to be used when creating the complete URL to request updates
+            from.
+            </summary>
+            <remarks>
+            Setting this to false is equivalent to calling 
+            <see cref="M:FiftyOne.Pipeline.Engines.FlowElements.SingleFileAspectEngineBuilderBase`2.SetDataUpdateUrlFormatter(FiftyOne.Pipeline.Engines.Data.IDataUpdateUrlFormatter)"/>
+            with a null parameter.
+            It is available as a separate method in order to support 
+            disabling the formatter from a configuration file.
+            </remarks>
+            <param name="useFormatter">
+            True to use the specified formatter (default). False to
+            prevent the specified formatter from being used.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.SingleFileAspectEngineBuilderBase`2.SetDataUpdateUseUrlFormatter(FiftyOne.Pipeline.Engines.Data.IDataUpdateUrlFormatter)">
+            <summary>
+            Enable/Disable the UrlFormatter to be used when this engine's
+            data file is updated.
+            Default is true.
+            If set to false, the UrlFormatter will be ignored.
+            </summary>
+            <param name="formatter">
+            The formatter to use.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.SingleFileAspectEngineBuilderBase`2.SetDataUpdateVerifyMd5(System.Boolean)">
+            <summary>
+            Set a value indicating if the <see cref="T:FiftyOne.Pipeline.Engines.Services.DataUpdateService"/>
+            should expect the response from the data update URL to contain a
+            'content-md5' HTTP header that can be used to verify the integrity
+            of the content.
+            </summary>
+            <param name="verify">
+            True if the content should be verified with the Md5 hash.
+            False otherwise.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.SingleFileAspectEngineBuilderBase`2.SetDataUpdateDecompress(System.Boolean)">
+            <summary>
+            Set a value indicating if the <see cref="T:FiftyOne.Pipeline.Engines.Services.DataUpdateService"/>
+            should expect content from the configured data update URL to be
+            compressed or not.
+            </summary>
+            <param name="decompress">
+            True if the content from the data update URL needs to be 
+            decompressed. False otherwise.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.SingleFileAspectEngineBuilderBase`2.SetAutoUpdate(System.Boolean)">
+            <summary>
+            Enable or disable automatic updates for this engine. 
+            </summary>
+            <param name="enabled">
+            If true, the engine will update it's data file with no manual 
+            intervention.
+            If false, the engine will never update it's data file unless 
+            the manual update method is called on 
+            <see cref="T:FiftyOne.Pipeline.Engines.Services.IDataUpdateService"/>
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.SingleFileAspectEngineBuilderBase`2.SetDataFileSystemWatcher(System.Boolean)">
+            <summary>
+            The <see cref="T:FiftyOne.Pipeline.Engines.Services.DataUpdateService"/> has the ability to watch a
+            data file on disk and automatically refresh the engine as soon 
+            as the file is updated.
+            This setting enables/disables that feature.
+            </summary>
+            <remarks>
+            The AutoUpdate feature must also be enabled in order for the file 
+            system watcher to work.
+            If the engine is built from a byte[] then this setting does nothing.
+            </remarks>
+            <param name="enabled">
+            The cache configuration to use.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.SingleFileAspectEngineBuilderBase`2.SetUpdatePollingInterval(System.Int32)">
+            <summary>
+            Set the time between checks for a new data file made by the 
+            <see cref="T:FiftyOne.Pipeline.Engines.Services.DataUpdateService"/>.
+            Default = 30 minutes.
+            </summary>
+            <remarks>
+            Generally, the <see cref="T:FiftyOne.Pipeline.Engines.Services.DataUpdateService"/> will not check for 
+            a new data file until the 'expected update time' that is stored
+            in the current data file.
+            This interval is the time to wait between checks after that time
+            if no update is initially found.
+            If automatic updates are disabled then this setting does nothing.
+            </remarks>
+            <param name="pollingIntervalSeconds">
+            The number of seconds between checks.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.SingleFileAspectEngineBuilderBase`2.SetUpdatePollingInterval(System.TimeSpan)">
+            <summary>
+            Set the time between checks for a new data file made by the 
+            <see cref="T:FiftyOne.Pipeline.Engines.Services.DataUpdateService"/>.
+            Default = 30 minutes.
+            </summary>
+            <remarks>
+            Generally, the <see cref="T:FiftyOne.Pipeline.Engines.Services.DataUpdateService"/> will not check for 
+            a new data file until the 'expected update time' that is stored
+            in the current data file.
+            This interval is the time to wait between checks after that time
+            if no update is initially found.
+            If automatic updates are disabled then this setting does nothing.
+            </remarks>
+            <param name="pollingInterval">
+            The time between checks.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.SingleFileAspectEngineBuilderBase`2.SetUpdateRandomisationMax(System.Int32)">
+            <summary>
+            A random element can be added to the <see cref="T:FiftyOne.Pipeline.Engines.Services.DataUpdateService"/> 
+            polling interval.
+            This option sets the maximum length of this random addition.
+            Default = 10 minutes.
+            </summary>
+            <param name="maximumDeviationSeconds">
+            The maximum time added to the data update polling interval.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.SingleFileAspectEngineBuilderBase`2.SetUpdateRandomisationMax(System.TimeSpan)">
+            <summary>
+            A random element can be added to the <see cref="T:FiftyOne.Pipeline.Engines.Services.DataUpdateService"/> 
+            polling interval.
+            This option sets the maximum length of this random addition.
+            Default = 10 minutes.
+            </summary>
+            <param name="maximumDeviation">
+            The maximum time added to the data update polling interval.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.SingleFileAspectEngineBuilderBase`2.SetVerifyIfModifiedSince(System.Boolean)">
+            <summary>
+            Set if DataUpdateService sends the If-Modified-Since header
+            in the request for a new data file.
+            </summary>
+            <param name="enabled">
+            Whether to use the If-Modified-Since header.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.SingleFileAspectEngineBuilderBase`2.SetDataUpdateLicenseKey(System.String)">
+            <summary>
+            Set the license key to use when updating the Engine's data file.
+            </summary>
+            <param name="key">
+            51Degrees license key.
+            This parameter can be set to null, but doing so will disable 
+            automatic updates for this file.
+            </param>
+            <returns>This builder</returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.SingleFileAspectEngineBuilderBase`2.SetDataUpdateLicenseKeys(System.String[])">
+            <summary>
+            Set the license keys to use when updating the Engine's data file.
+            </summary>
+            <param name="keys">51Degrees license keys</param>
+            <returns>This builder</returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FlowElements.SingleFileAspectEngineBuilderBase`2.SetDataUpdateOnStartup(System.Boolean)">
+            <summary>
+            Configure the data file to update on startup or not.
+            </summary>
+            <param name="enabled">
+            If true then when this file is registered with the data 
+            update service, it will immediately try to download the latest
+            copy of the file. 
+            This action will block execution until the download is complete 
+            and the engine has loaded the new file.
+            </param>
+            <returns>This builder</returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Messages">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.ExceptionAutoUpdate">
+            <summary>
+              Looks up a localized string similar to Error during check for data update.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.ExceptionAutoUpdateOnStartupFailed">
+            <summary>
+              Looks up a localized string similar to Update on startup failed for {0} with status {1}. See log for details.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.ExceptionAutoUpdateRefreshEngine">
+            <summary>
+              Looks up a localized string similar to An error occurred when applying a data update to engine &apos;{0}&apos;.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.ExceptionMissingDataUpdateService">
+            <summary>
+              Looks up a localized string similar to Some enabled features ({0}) require an IDataUpdateService but one has not been supplied. This can be corrected by passing an IDataUpdateService instance to the engine builder constructor. If building from configuration, an IServiceProvider instance, able to resolve an IDataUpdateService, must be passed to the pipeline builder..
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.ExceptionMissingLicenseKey">
+            <summary>
+              Looks up a localized string similar to Some enabled features ({0}) require a license key but one has not been supplied. This can be corrected by passing a license key to the engine builder. If building from configuration, check the associated builder implementation to determine the correct parameter name to use..
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.ExceptionPollingIntervalTooLarge">
+            <summary>
+              Looks up a localized string similar to Polling interval timespan too large. Must be less than {0} seconds but is {1} seconds.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.ExceptionProcessingError">
+            <summary>
+              Looks up a localized string similar to Failed to retrieve {0} because processing threw an exception in engine(s) &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.ExceptionProcessingMultipleErrors">
+            <summary>
+              Looks up a localized string similar to Failed to retrieve {0} because processing threw multiple exceptions in engine(s) &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.ExceptionProcessingTimeout">
+            <summary>
+              Looks up a localized string similar to Failed to retrieve {0} because the processing for engine(s) &apos;{1}&apos; took longer than the specified timeout..
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.ExceptionRandomizationTooLarge">
+            <summary>
+              Looks up a localized string similar to Update randomization timespan too large. Must be less than {0} seconds but is {1} seconds.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.MessageAutoUpdateCheck">
+            <summary>
+              Looks up a localized string similar to Checking for update.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.MessageAutoUpdateCheckFileSystem">
+            <summary>
+              Looks up a localized string similar to Checking file system.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.MessageAutoUpdateCreateTimer">
+            <summary>
+              Looks up a localized string similar to Creating update check timer.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.MessageAutoUpdateCreateWatcher">
+            <summary>
+              Looks up a localized string similar to Creating file system watcher.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.MessageAutoUpdateOnStartup">
+            <summary>
+              Looks up a localized string similar to Updating on startup.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.MessageAutoUpdateRefreshEngine">
+            <summary>
+              Looks up a localized string similar to Attempting to refresh engine with new data.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.MessageAutoUpdateRegisterDataFile">
+            <summary>
+              Looks up a localized string similar to Registering file with auto update service.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.MessageAutoUpdateUnhandledError">
+            <summary>
+              Looks up a localized string similar to An unhandled error occurred while checking for automatic updates for engine &apos;{0}&apos;.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.MissingPropertyMessageDataUpgradeRequired">
+            <summary>
+              Looks up a localized string similar to This is because your license and/or data file does not include this property. The property is available with the {0} license/data for the {1}.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.MissingPropertyMessagePrefix">
+            <summary>
+              Looks up a localized string similar to Property &apos;{0}&apos; not found in data for element &apos;{1}&apos;. .
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.MissingPropertyMessageProductNotInCloudResource">
+            <summary>
+              Looks up a localized string similar to This is because your resource key does not include access to any properties under &apos;{0}&apos;. For more details on resource keys, see our explainer: https://51degrees.com/documentation/_info__resource_keys.html.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.MissingPropertyMessagePropertyExcluded">
+            <summary>
+              Looks up a localized string similar to This is because the property has been excluded when configuring the engine..
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.MissingPropertyMessagePropertyNotInCloudResource">
+            <summary>
+              Looks up a localized string similar to This is because your resource key does not include access to this property. Properties that are included for this key under &apos;{0}&apos; are {1}. For more details on resource keys, see our explainer: https://51degrees.com/documentation/_info__resource_keys.html.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Messages.MissingPropertyMessageUnknown">
+            <summary>
+              Looks up a localized string similar to The reason for this is unknown. Please check that the aspect and property name are correct..
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.PropertyMissingException">
+            <summary>
+            Exception thrown when a user requests a property that is not present
+            in the <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/>.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.PropertyMissingException.Reason">
+            <summary>
+            The reason the property is not present
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.PropertyMissingException.PropertyName">
+            <summary>
+            The name of the property that is not present
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.PropertyMissingException.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.PropertyMissingException.#ctor(System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message">
+            The exception message
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.PropertyMissingException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message">
+            The exception message
+            </param>
+            <param name="innerException">
+            The inner exception that triggered this exception.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.PropertyMissingException.#ctor(FiftyOne.Pipeline.Engines.Services.MissingPropertyReason,System.String,System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="reason">
+            The reason the property is not present
+            </param>
+            <param name="propertyName">
+            The name of the property that is not present
+            </param>
+            <param name="message">
+            The exception message
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.PropertyMissingException.#ctor(FiftyOne.Pipeline.Engines.Services.MissingPropertyReason,System.String,System.String,System.Exception)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="reason">
+            The reason the property is not present
+            </param>
+            <param name="propertyName">
+            The name of the property that is not present
+            </param>
+            <param name="message">
+            The exception message
+            </param>
+            <param name="innerException">
+            The inner exception that triggered this exception.
+            </param>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Services.DataUpdateService">
+            <summary>
+            Service that manages updates to data files that are used by
+            <see cref="T:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine"/> instances.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Services.DataUpdateService._httpClient">
+            <summary>
+            The HttpClient to use when checking for updates.
+            </summary>
+        </member>
+        <member name="E:FiftyOne.Pipeline.Engines.Services.DataUpdateService.CheckForUpdateComplete">
+            <summary>
+            The event handler fired when a call to CheckForUpdate is completed.
+            </summary>
+        </member>
+        <member name="E:FiftyOne.Pipeline.Engines.Services.DataUpdateService.CheckForUpdateStarted">
+            <summary>
+            The event handler fired when a call to CheckForUpdate is started.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.DataUpdateService.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Engines.Services.DataUpdateService},System.Net.Http.HttpClient)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger">
+            The logger to use
+            </param>
+            <param name="httpClient">
+            The <see cref="T:System.Net.Http.HttpClient"/> to use when requesting an update
+            from a URL.
+            Note that only one HttpClient instance should be used throughout 
+            the application, as described in the documentation: 
+            https://msdn.microsoft.com/library/system.net.http.httpclient(v=vs.110).aspx
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.DataUpdateService.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Engines.Services.DataUpdateService},System.Net.Http.HttpClient,FiftyOne.Common.Wrappers.IO.IFileSystem,System.Func{System.Threading.TimerCallback,System.Object,System.TimeSpan,System.Threading.Timer})">
+            <summary>
+            Internal constructor. Should only be called directly 
+            by unit tests 
+            </summary>
+            <param name="logger">
+            The logger to use
+            </param>
+            <param name="httpClient">
+            The <see cref="T:System.Net.Http.HttpClient"/> to use when requesting an update
+            from a URL.
+            Note that only one HttpClient instance should be used throughout 
+            the application, as described in the documentation: 
+            https://msdn.microsoft.com/library/system.net.http.httpclient(v=vs.110).aspx
+            </param>
+            <param name="fileSystemWrapper">
+            A wrapper for file system.
+            In normal operation this will usually be a <see cref="T:FiftyOne.Common.Wrappers.IO.RealFileSystem"/>
+            instance. If null is passed, a new <see cref="T:FiftyOne.Common.Wrappers.IO.RealFileSystem"/>
+            instance is created.
+            </param>
+            <param name="timerFactory">
+            A factory method for creating <see cref="T:System.Threading.Timer"/> instances.
+            Parameters are: callback method, state, time until callback 
+            triggered.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.DataUpdateService.RegisterDataFile(FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile)">
+            <summary>
+            Register an data file for automatic updates.
+            </summary>
+            <param name="dataFile">
+            The details of the data file to register.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.DataUpdateService.UnRegisterDataFile(FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile)">
+            <summary>
+            Unregister a data file.
+            </summary>
+            <param name="dataFile">
+            The data file to unregister
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.DataUpdateService.CheckForUpdate(FiftyOne.Pipeline.Engines.FlowElements.IOnPremiseAspectEngine,System.String)">
+            <summary>
+            Check if there are updates for the specified engine.
+            </summary>
+            <param name="engine">
+            The engine to check for
+            </param>
+            <param name="dataFileIdentifier">
+            The identifier of the data file to check for.
+            If the engine has only one data file then this parameter is ignored.
+            </param>
+            <returns>
+            The result of the update check.
+            </returns>
+            <exception cref="T:FiftyOne.Pipeline.Engines.Exceptions.DataUpdateException">
+            Thrown if some problem occurs during the update process.
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the parameter is null
+            </exception>        
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.DataUpdateService.UpdateFromMemory(FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile,System.IO.MemoryStream)">
+            <summary>
+            Update the specified data file from a <see cref="T:System.IO.MemoryStream"/>
+            </summary>
+            <param name="dataFile">
+            The data file to update.
+            </param>
+            <param name="data">
+            The data to update with.
+            </param>
+            <exception cref="T:FiftyOne.Pipeline.Engines.Exceptions.DataUpdateException">
+            Thrown if some problem occurs during the update process.
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if arguments are null.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.DataUpdateService.TimerFactory(System.Threading.TimerCallback,System.Object,System.TimeSpan)">
+            <summary>
+            Default method used to create Timer instances when a timer factory
+            is not provided in the constructor.
+            </summary>
+            <param name="callback"></param>
+            <param name="state"></param>
+            <param name="dueTime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.DataUpdateService.OnUpdateComplete(FiftyOne.Pipeline.Engines.Services.DataUpdateCompleteArgs)">
+            <summary>
+            Called when the 'CheckForUpdate' method is finished.
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.DataUpdateService.OnUpdateStarted(FiftyOne.Pipeline.Engines.Services.DataUpdateEventArgs)">
+            <summary>
+            Called when the 'CheckForUpdate' method is started.
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.DataUpdateService.DataFileUpdated(System.Object,System.IO.FileSystemEventArgs)">
+            <summary>
+            Event handler that is called when the data file is updated.
+            </summary>
+            <remarks>
+            The <see cref="T:System.IO.FileSystemWatcher"/> will raise multiple events 
+            in many cases, for example, if a file is copied over an existing 
+            file then 3 'changed' events will be raised.
+            This handler deals with the extra events by using synchronisation 
+            with a double-check lock to ensure that the update will only be 
+            done once.
+            </remarks>
+            <param name="sender">
+            The <see cref="T:System.IO.FileSystemWatcher"/> sender of the event.
+            </param>
+            <param name="e">
+            The event arguments.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.DataUpdateService.CheckForUpdate(System.Object)">
+            <summary>
+            Private method called by update timers when an update is believed
+            to be available.
+            </summary>
+            <param name="state">
+            The <see cref="T:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile"/>
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.DataUpdateService.CheckForUpdate(System.Object,System.Boolean)">
+            <summary>
+            Private method that performs the following actions:
+            1. Checks for an update to the data file on disk.
+            2. Checks for an update using the update URL.
+            3. Refresh engine with new data if available.
+            4. Schedule the next update check if needed.
+            </summary>
+            <param name="state">
+            The <see cref="T:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile"/>
+            </param>
+            <param name="manualUpdate">
+            True if this update was requested by the user and or is running 
+            synchronously from the 'main' thread. 
+            (For example, when the update on startup option is used)
+            False if it was triggered by a timer expiring and is therefore
+            running in a background thread.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.DataUpdateService.CheckForUpdateFromUrl(FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile)">
+            <summary>
+            Download an update for the specified data file from its update URL.
+            </summary>
+            <param name="dataFile">
+            The <see cref="T:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile"/> containing the 
+            update configuration settings.
+            </param>
+            <returns>
+            An <see cref="T:FiftyOne.Pipeline.Engines.Services.AutoUpdateStatus"/> value indicating the result
+            of the update.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.DataUpdateService.CheckForUpdateFromUrl(FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile,System.IO.Stream,System.IO.Stream)">
+            <summary>
+            Download an update for the specified data file from its update URL.
+            </summary>
+            <param name="dataFile">
+            The <see cref="T:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile"/> containing the 
+            update configuration settings.
+            </param>
+            <param name="compressedDataStream">
+            A <see cref="T:System.IO.Stream"/> to write the data to as it is downloaded.
+            </param>
+            <param name="uncompressedDataStream">
+            A <see cref="T:System.IO.Stream"/> to write the uncompressed data to once
+            download is complete.
+            If the <see cref="P:FiftyOne.Pipeline.Engines.Configuration.DataFileConfiguration.DecompressContent"/>
+            flag is set to false then this can be null.
+            </param>
+            <returns>
+            An <see cref="T:FiftyOne.Pipeline.Engines.Services.AutoUpdateStatus"/> value indicating the result
+            of the update.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.DataUpdateService.UpdatedDataAvailable(FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile)">
+            <summary>
+            Called when a data update is available and the file at 
+            engine.DataFilePath contains this new data.
+            1. Refresh the engine.
+            2. Dispose of the existing update timer if there is one.
+            3. Re-register the engine with the update service.
+            </summary>
+            <param name="dataFile"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.DataUpdateService.ClearTimer(FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile)">
+            <summary>
+            Clear the timer ready for a new one to be created.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.DataUpdateService.DownloadFile(FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile,System.IO.Stream,System.String@)">
+            <summary>
+            Get the most recent data file available from the configured 
+            update URL.
+            If the data currently used by the engine is the newest available
+            then nothing will be downloaded.
+            </summary>
+            <param name="dataFile">
+            The <see cref="T:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile"/> to use.
+            </param>
+            <param name="tempStream">
+            The stream to write the data to.
+            </param>
+            <param name="expectedMd5Hash">
+            Used to output the md5 hash for the file from the 
+            'Content-MD5' header.
+            </param>
+            <returns>
+            An <see cref="T:FiftyOne.Pipeline.Engines.Services.AutoUpdateStatus"/> value indicating the result
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.DataUpdateService.Decompress(System.IO.Stream,System.IO.Stream)">
+            <summary>
+            Reads a source GZip stream and writes the uncompressed data to 
+            destination stream.
+            </summary>
+            <param name="compressedDataStream">
+            Stream containing GZipped data to be uncompressed
+            </param>
+            <param name="uncompressedDataStream">
+            Stream to write the uncompressed data to.
+            </param>
+            <returns>The current state of the update process.</returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.DataUpdateService.VerifyMd5(FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile,System.String,System.IO.Stream)">
+            <summary>
+            Check that the specified file matches the specified md5 hash
+            </summary>
+            <param name="dataFile">
+            The meta-data relating to the data file to verify
+            </param>
+            <param name="serverHash">
+            The expected md5 hash value
+            </param>
+            <param name="compressedDataStream">
+            The stream containing the data to hash
+            </param>
+            <returns>
+            True if the hashes match, false if not.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.DataUpdateService.GetMd5(System.IO.Stream)">
+            <summary>
+            Calculates the MD5 hash of the given data array.
+            </summary>
+            <param name="compressedDataStream">
+            The stream containing the data to hash
+            </param>
+            <returns>The MD5 hash of the given data.</returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.DataUpdateService.GetMd5(System.Security.Cryptography.MD5,System.IO.Stream)">
+            <summary>
+            Calculates the MD5 hash of the given data array.
+            </summary>
+            <param name="stream">calculate MD5 of this stream</param>
+            <param name="md5Hash">instance of MD5 hash calculator</param>
+            <returns>The MD5 hash of the given data.</returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.DataUpdateService.GetInterval(FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration)">
+            <summary>
+            Get an interval in the form of a <see cref="T:System.TimeSpan"/> based
+            on the configuration object provided.
+            If configured, a random additional number of seconds is added 
+            between 0 and the specified maximum.
+            </summary>
+            <param name="config">
+            The configuration to use to generate the interval
+            </param>
+            <returns>
+            A TimeSpan representing time interval.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.DataUpdateService.ApplyIntervalRandomisation(System.TimeSpan,FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration)">
+            <summary>
+            Add a random amount of time to the specified interval
+            </summary>
+            <param name="interval">
+            The <see cref="T:System.TimeSpan"/> to add a random amount of time to.
+            </param>
+            <param name="config">
+            The <see cref="T:FiftyOne.Pipeline.Engines.Configuration.IDataFileConfiguration"/> object that 
+            specifies the maximum number of seconds to add.
+            </param>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Services.IDataUpdateService">
+            <summary>
+            Service that manages updates to data files that are used by
+            <see cref="T:FiftyOne.Pipeline.Engines.FlowElements.IOnPremiseAspectEngine"/> instances.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.IDataUpdateService.RegisterDataFile(FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile)">
+            <summary>
+            Register an data file for automatic updates.
+            </summary>
+            <param name="dataFile">
+            The details of the data file to register.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.IDataUpdateService.UnRegisterDataFile(FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile)">
+            <summary>
+            Unregister a data file.
+            </summary>
+            <param name="dataFile">
+            The data file to unregister
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.IDataUpdateService.CheckForUpdate(FiftyOne.Pipeline.Engines.FlowElements.IOnPremiseAspectEngine,System.String)">
+            <summary>
+            Check if there are updates for the specified engine.
+            </summary>
+            <param name="engine">
+            The engine to check for
+            </param>
+            <param name="dataFileIdentifier">
+            The identifier of the data file to check for.
+            If the engine has only one data file then this parameter is ignored.
+            </param>
+            <returns>
+            The result of the update check.
+            </returns>
+            <exception cref="T:FiftyOne.Pipeline.Engines.Exceptions.DataUpdateException">
+            Thrown if some problem occurs during the update process.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.IDataUpdateService.UpdateFromMemory(FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile,System.IO.MemoryStream)">
+            <summary>
+            Update the specified data file from a <see cref="T:System.IO.MemoryStream"/>
+            </summary>
+            <param name="dataFile">
+            The data file to update.
+            </param>
+            <param name="data">
+            The data to update with.
+            </param>
+            <exception cref="T:FiftyOne.Pipeline.Engines.Exceptions.DataUpdateException">
+            Thrown if some problem occurs during the update process.
+            </exception>
+        </member>
+        <member name="E:FiftyOne.Pipeline.Engines.Services.IDataUpdateService.CheckForUpdateComplete">
+            <summary>
+            The event handler fired when a call to CheckForUpdate is completed.
+            </summary>
+        </member>
+        <member name="E:FiftyOne.Pipeline.Engines.Services.IDataUpdateService.CheckForUpdateStarted">
+            <summary>
+            The event handler fired when a call to CheckForUpdate is started.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Services.DataUpdateEventArgs">
+            <summary>
+            Event arguments used when events are fired by an 
+            <see cref="T:FiftyOne.Pipeline.Engines.Services.IDataUpdateService"/>
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Services.DataUpdateEventArgs.DataFile">
+            <summary>
+            The data file that the event relates to
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Services.DataUpdateCompleteArgs">
+            <summary>
+            Event arguments used when an 'UpdteComplete' event is fired by an 
+            <see cref="T:FiftyOne.Pipeline.Engines.Services.IDataUpdateService"/>
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Services.DataUpdateCompleteArgs.Status">
+            <summary>
+            The final status of the data update
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Services.AutoUpdateStatus">
+            <summary>
+            Possible status values for the data update process.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Services.AutoUpdateStatus.UNSPECIFIED">
+            <summary>
+            Status has not been set.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Services.AutoUpdateStatus.AUTO_UPDATE_SUCCESS">
+            <summary>
+            Update completed successfully. 
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Services.AutoUpdateStatus.AUTO_UPDATE_HTTPS_ERR">
+            <summary>
+            HTTPS connection could not be established. 
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Services.AutoUpdateStatus.AUTO_UPDATE_NOT_NEEDED">
+            <summary>
+            No need to perform update. 
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Services.AutoUpdateStatus.AUTO_UPDATE_IN_PROGRESS">
+            <summary>
+            Update currently under way. 
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Services.AutoUpdateStatus.AUTO_UPDATE_MASTER_FILE_CANT_RENAME">
+            <summary>
+            Path to master file is directory not file
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Services.AutoUpdateStatus.AUTO_UPDATE_ERR_429_TOO_MANY_ATTEMPTS">
+            <summary>
+            51Degrees server responded with 429: too many attempts. 
+            /// </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Services.AutoUpdateStatus.AUTO_UPDATE_ERR_403_FORBIDDEN">
+            <summary>
+            51Degrees server responded with 403, meaning key is revoked. 
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Services.AutoUpdateStatus.AUTO_UPDATE_ERR_READING_STREAM">
+            <summary>
+            Used when IO operations with input or output stream failed. 
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Services.AutoUpdateStatus.AUTO_UPDATE_ERR_MD5_VALIDATION_FAILED">
+            <summary>
+            MD5 validation failed 
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Services.AutoUpdateStatus.AUTO_UPDATE_NEW_FILE_CANT_RENAME">
+            <summary>
+            The new data file can't be renamed to replace the previous one.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Services.AutoUpdateStatus.AUTO_UPDATE_REFRESH_FAILED">
+            <summary>
+            Refreshing the engine with the new data caused an error to occur.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Services.AutoUpdateStatus.AUTO_UPDATE_NO_CONFIGURATION">
+            <summary>
+            There was no data file configuration matching the specified
+            identifier.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Services.AutoUpdateStatus.AUTO_UPDATE_TEMP_PATH_NOT_SET">
+            <summary>
+            A temporary file path was required but has not been set.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Services.AutoUpdateStatus.AUTO_UPDATE_UNKNOWN_ERROR">
+            <summary>
+            There was an error while checking for an update that was not
+            anticipated by the developers of this service.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Services.AutoUpdateStatus.AUTO_UPDATE_TIMEOUT">
+            <summary>
+            An operation could not be completed within the expected time.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Services.IMissingPropertyService">
+            <summary>
+            Service that determines the reason for a property not being populated 
+            by an engine.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.IMissingPropertyService.GetMissingPropertyReason(System.String,FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine)">
+            <summary>
+            Get the reason that the specified property is not available
+            in the results from the specified engine.
+            </summary>
+            <param name="propertyName">
+            The property name to check.
+            </param>
+            <param name="engine">
+            The engine that was expected to populate the property.
+            </param>
+            <returns>
+            A <see cref="T:FiftyOne.Pipeline.Engines.Services.MissingPropertyResult"/> instance explaining 
+            why the property is not populated.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.IMissingPropertyService.GetMissingPropertyReason(System.String,System.Collections.Generic.IReadOnlyList{FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine})">
+            <summary>
+            Get the reason that the specified property is not available
+            in the results from the specified engines.
+            </summary>
+            <param name="propertyName">
+            The property name to check.
+            </param>
+            <param name="engines">
+            The engines that were expected to populate the property.
+            </param>
+            <returns>
+            A <see cref="T:FiftyOne.Pipeline.Engines.Services.MissingPropertyResult"/> instance explaining 
+            why the property is not populated.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Services.MissingPropertyResult">
+            <summary>
+            Details of why a property is not populated by an engine.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Services.MissingPropertyResult.Reason">
+            <summary>
+            The reason the property was not populated.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Services.MissingPropertyResult.Description">
+            <summary>
+            A text description of the reason the property was not populated.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Services.MissingPropertyReason">
+            <summary>
+            The reason a property is not populated by an engine.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Services.MissingPropertyReason.DataFileUpgradeRequired">
+            <summary>
+            The property was not populated because the data file being 
+            used does not contain that property.
+            For example, the free, lite 51Degrees device detection data file
+            has only a handful of properties of the 250+ that are available
+            in the paid-for versions.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Services.MissingPropertyReason.PropertyExcludedFromEngineConfiguration">
+            <summary>
+            The property was not included in the list of properties that
+            were passed in when the engine was created.
+            Restricting the list of properties that you want an engine to
+            populate can result in improved performance. However, if you
+            then request a property that is not in that list then it 
+            will not be populated.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Services.MissingPropertyReason.PropertyNotAccessibleWithResourceKey">
+            <summary>
+            51Degrees cloud engines use a 'resourceKey' to determine
+            the properties that should be returned in the response.
+            This reason indicates that the resource key probably does
+            not include the requested property.
+            A new resource key will need to be created that does 
+            include the property before you will be able to access it.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Services.MissingPropertyReason.ProductNotAccessibleWithResourceKey">
+            <summary>
+            51Degrees cloud engines use a 'resourceKey' to determine
+            the properties that should be returned in the response.
+            This reason indicates that the resource key does
+            not include any properties for the requested engine.
+            A new resource key will need to be created that does 
+            include the property before you will be able to access it.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.Services.MissingPropertyReason.Unknown">
+            <summary>
+            The reason for the property not being present could not 
+            be determined.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Services.MissingPropertyService">
+            <summary>
+            Service that determines the reason for a property not being populated 
+            by an engine.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.Services.MissingPropertyService.Instance">
+            <summary>
+            Get the singleton instance of this service.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.MissingPropertyService.#ctor">
+            <summary>
+            Constructor is private to ensure the single instance accessible
+            through the 'Instance' property is used.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.MissingPropertyService.GetMissingPropertyReason(System.String,System.Collections.Generic.IReadOnlyList{FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine})">
+            <summary>
+            Get the reason that a property is not available from an engine.
+            </summary>
+            <param name="propertyName">
+            The name of the property to look for
+            </param>
+            <param name="engines">
+            The engines that are expected to supply the property value.
+            </param>
+            <returns>
+            A <see cref="T:FiftyOne.Pipeline.Engines.Services.MissingPropertyResult"/> instance that includes an
+            enum giving the reason and a developer-facing description of 
+            the reason.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Services.MissingPropertyService.GetMissingPropertyReason(System.String,FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine)">
+            <summary>
+            Get the reason that a property is not available from an engine.
+            </summary>
+            <param name="propertyName">
+            The name of the property to look for
+            </param>
+            <param name="engine">
+            The engine that is expected to supply the property value.
+            </param>
+            <returns>
+            A <see cref="T:FiftyOne.Pipeline.Engines.Services.MissingPropertyResult"/> instance that includes an
+            enum giving the reason and a developer-facing description of 
+            the reason.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Trackers.ITracker">
+            <summary>
+            <para>
+            Represents a 'tracker'.
+            A tracker is a data structure that stores meta-data relating to a 
+            key derived from a given <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instance.
+            This meta-data is used to determine if the <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/>
+            should continue to be processed or not.
+            </para>
+            <para>
+            The details of key creation and the specifics of the meta-data are
+            determined by the tracker implementation.
+            </para>
+            </summary>
+            <remarks>
+            As an example, a tracker could create a key using the source IP 
+            address from the <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> evidence and use the 
+            associated meta-data to store a count of the number of times a given 
+            source IP has been seen.
+            </remarks>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Trackers.ITracker.Track(FiftyOne.Pipeline.Core.Data.IFlowData)">
+            <summary>
+            Track the specified <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instance.
+            If the key created from the data does not yet exist in the 
+            tracker then it will be added. If it does already exist
+            then the meta-data will be updated according to the tracker
+            implementation's logic.
+            </summary>
+            <param name="data">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> to track.
+            </param>
+            <returns>
+            True if further processing is allowed by the tracker's logic.
+            False otherwise.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Trackers.TrackerBase`1">
+            <summary>
+            The abstract base class for trackers.
+            A tracker is a data structure that stores meta-data relating to a 
+            key derived from a given <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instance.
+            The details of key creation and the specifics of the meta-data are
+            determined by the tracker implementation.
+            The key will always be a <see cref="T:FiftyOne.Pipeline.Core.Data.DataKey"/> instance as defined
+            by <see cref="T:FiftyOne.Pipeline.Engines.Caching.DataKeyedCacheBase`1"/>.
+            The meta-data can be any type and is specified using the generic
+            type parameter <code>TValue</code>.
+            </summary>
+            <remarks>
+            As an example, a tracker could create a key using the source IP 
+            address from the <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> evidence and use the 
+            associated meta-data to store a count of the number of times a given 
+            source IP has been seen.
+            </remarks>
+            <typeparam name="TValue">
+            The type of the meta-data object that the tracker stores with each
+            key value.
+            </typeparam>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Trackers.TrackerBase`1.#ctor(FiftyOne.Pipeline.Engines.Configuration.CacheConfiguration)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="configuration">
+            The cache configuration to use when building the cache that
+            is used internally by the tracker.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Trackers.TrackerBase`1.NewValue(FiftyOne.Pipeline.Core.Data.IFlowData)">
+            <summary>
+            Create a tracker value instance.
+            Called when a new key is added to the tracker.
+            </summary>
+            <param name="data">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> that is being added to the tracker.
+            </param>
+            <returns>
+            A new meta-data instance to be stored with the 
+            <see cref="T:FiftyOne.Pipeline.Core.Data.DataKey"/> created from the flow data instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Trackers.TrackerBase`1.Match(FiftyOne.Pipeline.Core.Data.IFlowData,`0)">
+            <summary>
+            Update the tracker value with relevant details.
+            Called when a tracked item matches an instance already in 
+            the tracker.
+            </summary>
+            <param name="data">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> that has matched an existing entry
+            in the tracker.
+            </param>
+            <param name="value">
+            The meta-data instance that the tracker holds for the key 
+            generated from the data.
+            </param>
+            <returns>
+            True if the tracker's logic allows further processing of this
+            flow data instance. False otherwise.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Trackers.TrackerBase`1.Track(FiftyOne.Pipeline.Core.Data.IFlowData)">
+            <summary>
+            Track the specified <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instance.
+            If the key created from the data does not yet exist in the 
+            tracker then it will be added. If it does already exist
+            then the meta-data will be updated according to the tracker
+            implementation's logic.
+            </summary>
+            <param name="data">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> to track.
+            </param>
+            <returns>
+            True if no matching entry existed in the tracker or if the 
+            entry existed but further processing is allowed by the tracker's 
+            logic.
+            False if a matching entry was found and the tracker's logic does
+            not allow further processing of this flow data instance.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.Utils">
+            <summary>
+            Static utility methods
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.Utils.IsTypeOrAspectPropertyValue``1(System.Type)">
+            <summary>
+            Check if the specified type is a specific type 'T' or an
+            implementation of <see cref="T:FiftyOne.Pipeline.Engines.Data.IAspectPropertyValue`1"/>
+            that wraps 'T'.
+            </summary>
+            <typeparam name="T">
+            The type to check for
+            </typeparam>
+            <param name="type">
+            The type to check
+            </param>
+            <returns>
+            True if 'type' is of type 'T' or a wrapper around 'T' 
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if required parameters are null
+            </exception>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Core.Exceptions.EngineRefreshException">
+            <summary>
+            Exception that can be thrown when an <see cref="T:FiftyOne.Pipeline.Engines.FlowElements.IOnPremiseAspectEngine"/>
+            fails to reload from one or more of it's data sources.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Exceptions.EngineRefreshException.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Exceptions.EngineRefreshException.#ctor(System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message">
+            The exception message
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Core.Exceptions.EngineRefreshException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message">
+            The exception message
+            </param>
+            <param name="innerException">
+            The inner exception that triggered this exception.
+            </param>
+        </member>
+    </members>
+</doc>

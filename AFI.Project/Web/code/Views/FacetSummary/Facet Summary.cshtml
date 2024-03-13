@@ -1,0 +1,32 @@
+﻿@using Sitecore.XA.Foundation.MarkupDecorator.Extensions
+@using Sitecore.XA.Foundation.SitecoreExtensions.Extensions
+@using Sitecore.Web
+
+@model Sitecore.XA.Feature.Search.Models.FacetSummaryRenderingModel
+
+<div @Html.Sxa().Component(Model.Rendering.RenderingCssClass ?? "facet-summary", Model.Attributes) data-properties='@Model.JsonDataProperties'>
+    <div class="component-content">
+        @{Html.RenderPartial("FacetHeader", Model); }
+
+            <div class="facet-summary-placeholder">
+                @if (WebUtil.GetQueryString(Sitecore.XA.Feature.Search.Constants.CreativeExchangeExport) == "true")
+                {
+                    <div class='facet-summary-wrapper clearfix'>
+                        <div class='active-facet-summary-element' data-hash='FacetName' data-key='FacetKey' data-signature=''>
+                            Facet Name <span>Facet value</span>
+                            <div class='removeFacet'>x</div>
+                        </div>
+                        <div class='active-facet-summary-element' data-hash='FacetName' data-key='FacetKey' data-signature=''>
+                            Facet 3 Name <span>Facet value</span>
+                            <div class='removeFacet'>x</div>
+                        </div>
+                        <div class='active-facet-summary-element' data-hash='FacetName' data-key='FacetKey' data-signature=''>
+                            Facet 4 Name <span>Facet value</span>
+                            <div class='removeFacet'>x</div>
+                        </div>
+                    </div>
+                }
+            </div>
+       @{Html.RenderPartial("FacetRemoveFilterButton", Model);}
+    </div>
+</div>

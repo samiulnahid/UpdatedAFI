@@ -1,0 +1,143 @@
+.account-pods {
+  text-align: center;
+  margin: 50px 0 !important;
+}
+
+.account-pod {
+  padding: 2rem 0 !important;
+  text-align: center;
+  margin: 50px 0 !important;
+}
+
+.account-pod__icon {
+  display: block;
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  color: #163a63;
+}
+
+.account-pod__content h1,
+.account-pod__content p {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.account-pod__content p {
+  max-width: 16.5rem;
+}
+
+.button--small-text {
+  font-size: 0.75rem;
+}
+
+.button-group,
+.button-group .button {
+  display: flex;
+  justify-content: center;
+}
+
+.button-group .button {
+  align-items: center;
+  margin: 0 0.25rem 1rem;
+}
+
+.account_item .button-acc {
+  overflow: hidden;
+  display: inline-block !important;
+}
+
+.loginbtn .field-link {
+  text-align: right !important;
+}
+
+.registerbtn .field-link {
+  text-align: left !important;
+}
+
+.acc-btn .field-link {
+  margin-top: 25px;
+}
+
+.AFIconnectBtnColor {
+  color: #0570c5 !important;
+  font-weight: 500;
+  border-bottom: none !important;
+}
+
+/* cng end */
+
+/* RESPONSIVE */
+@media screen and (min-width: 64em) {
+  .component.container.account-pods {
+    padding: 3.625rem 0 2.75rem !important;
+  }
+}
+
+@media screen and (max-width: 64em) {
+  .connectBtn {
+    min-width: 7rem !important;
+  }
+
+  .account-pods {
+    text-align: center;
+    margin: 20px 0 !important;
+    padding: 3rem 0 !important;
+  }
+
+  .account-pod {
+    margin: 20px 0 !important;
+  }
+
+  .account-pod__icon {
+    margin-bottom: 7px;
+  }
+}
+
+.account-pod__content .button {
+  font-size: 12px !important;
+}
+
+.account-pod__content .button-group {
+  font-size: 12px !important;
+}
+
+.button-acc.account__pods_forgot {
+  border: none !important;
+}
+
+.account-pod__content .position-left .button {
+  margin-left: 5px;
+}
+
+.account-pod__content .position-right .button {
+  margin-right: 5px;
+}
+
+/* 18 April */
+.account-pods {
+  position: relative;
+}
+
+/* .account-pods::before,
+.account-pods::after {
+  content: "";
+  position: absolute;
+  width: 1000px;
+  height: 100%;
+  background: #f6f6f6;
+  top: 0;
+}
+
+.account-pods::before {
+  left: -999px;
+}
+.account-pods::after {
+  right: -999px;
+} */
+
+/* 26 April */
+@media screen and (max-width: 767px) {
+  .account-pods .account_item {
+    padding: 30px 0;
+  }
+}

@@ -1,0 +1,28 @@
+.additional_coverages_container {
+  max-width: 1150px;
+  margin: auto;
+  justify-content: space-between;
+}
+.additional_coverages_container .quote-cta {
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to bottom right, #cb2c30, #881b26);
+  color: #fff;
+  padding: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem 1.5rem;
+  gap: 1rem;
+  align-items: center;
+}
+
+.additional_coverages_container .quote-cta h2,
+.additional_coverages_container .quote-cta p {
+  margin: 0;
+  color: #fff;
+}
+
+.quote-cta .quote-cta-inner {
+  flex-shrink: 0;
+  flex-grow: 1;
+}

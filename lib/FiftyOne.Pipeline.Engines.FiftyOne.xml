@@ -1,0 +1,1982 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FiftyOne.Pipeline.Engines.FiftyOne</name>
+    </assembly>
+    <members>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.Configuration.FiftyOneDataFileConfiguration">
+            <summary>
+            Data file configuration class for 51Degrees data files.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Configuration.FiftyOneDataFileConfiguration.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.Configuration.FiftyOneDataFileConfigurationBuilder">
+            <summary>
+            Builder class for 51Degrees specific data file configuration
+            instances.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.Constants">
+            <summary>
+            Constants used by 51Degrees Aspect Engines.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.Constants.SHARE_USAGE_MAX_EVIDENCE_LENGTH">
+            <summary>
+            The maximum length of a piece of evidence's value which can be
+            added to the usage data being sent.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.Constants.SHARE_USAGE_DEFAULT_MAX_QUEUE_SIZE">
+            <summary>
+            The default maximum size of the usage data queue which is stored
+            before sending to the remote service.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.Constants.SHARE_USAGE_DEFAULT_ADD_TIMEOUT">
+            <summary>
+            The default timeout in milliseconds to use when adding usage data
+            to the queue.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.Constants.SHARE_USAGE_DEFAULT_TAKE_TIMEOUT">
+            <summary>
+            The default timeout in milliseconds to use when taking usage data
+            from the queue.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.Constants.SHARE_USAGE_DEFAULT_REPEAT_EVIDENCE_INTERVAL">
+            <summary>
+            The default repeat evidence interval in minutes.
+            This is the maximum time to consider a set of evidence as a 
+            match for another (and thus, prevent it from being shared)
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.Constants.SHARE_USAGE_DEFAULT_SHARE_PERCENTAGE">
+            <summary>
+            The default percentage of requests to include in usage sharing.
+            1 = 100%
+            0.5 = 50%
+            etc.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.Constants.SHARE_USAGE_DEFAULT_MIN_ENTRIES_PER_MESSAGE">
+            <summary>
+            The default minimum entries per usage sharing message.
+            No data will be sent until this amount is reached.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.Constants.SHARE_USAGE_DEFAULT_URL">
+            <summary>
+            The default URL to send usage data to
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.Constants.EVIDENCE_SESSIONID_SUFFIX">
+            <summary>
+            The suffix for 'session id' data populated and used by
+            the <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SequenceElement"/> and other internal
+            Pipeline elements.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.Constants.EVIDENCE_SESSIONID">
+            <summary>
+            session id evidence constant.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.Constants.EVIDENCE_SEQUENCE_SUFIX">
+            <summary>
+            The suffix for 'sequence' data populated and used by
+            the <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SequenceElement"/> and other internal
+            Pipeline elements.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.Constants.EVIDENCE_SEQUENCE">
+            <summary>
+            Sequence evidence constant.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.Constants.EVIDENCE_HTTPHEADER_COOKIE_SUFFIX">
+            <summary>
+            Constant Added to blocked HTTP Headers so that the cookie header is 
+            blocked by default.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.Data.EvidenceKeyFilterShareUsage">
+            <summary>
+            This filter is used by the <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageElement"/>.
+            It will include anything that is:
+            1) An HTTP header that is not blocked by the constructor parameter.
+            2) A cookie that starts with <see cref="F:FiftyOne.Pipeline.Engines.Constants.FIFTYONE_COOKIE_PREFIX"/>
+                or is the asp session cookie (if configured in the constructor).
+            3) An query string parameters that have been configured to be shared
+                using the constructor parameter.
+            4) Not a header, cookie or query string parameter.
+            </summary>
+            <remarks>
+            As this filter is generally inclusive, it will often cause far more
+            evidence to be passed into a pipeline than the engine-specific 
+            filters, which tend to be based on a list of values to include such as
+            <see cref="T:FiftyOne.Pipeline.Core.Data.EvidenceKeyFilterWhitelist"/>.
+            </remarks>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.Data.EvidenceKeyFilterShareUsage._includeSession">
+            <summary>
+            If true then the asp.net session cookie will be included in
+            the filter.
+            </summary>
+            <remarks>
+            The session cookie is used by the <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.Trackers.ShareUsageTracker"/> 
+            but we do not actually want to share it.
+            </remarks>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.Data.EvidenceKeyFilterShareUsage._shareAll">
+            <summary>
+            If true then all evidence will always be shared.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.Data.EvidenceKeyFilterShareUsage._aspSessionCookieName">
+            <summary>
+            The cookie name being used to store the asp.net session id.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.Data.EvidenceKeyFilterShareUsage._blockedHttpHeaders">
+            <summary>
+            The content of HTTP headers in this array will not be included in 
+            the request information sent to 51degrees.
+            Any header names added here are hard-coded to be blocked
+            regardless of the settings passed to the constructor.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.Data.EvidenceKeyFilterShareUsage._includedQueryStringParams">
+            <summary>
+            Query string parameters will not be shared by default.
+            Any query string parameters to be shared must be added to this
+            collection.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Data.EvidenceKeyFilterShareUsage.#ctor">
+            <summary>
+            Constructor
+            Using this constructor will create a filter that allows all 
+            evidence. I.e. All evidence will be shared.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Data.EvidenceKeyFilterShareUsage.#ctor(System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String},System.Boolean,System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="blockedHttpHeaders">
+            A list of the names of the HTTP headers that share usage should
+            not send to 51Degrees.
+            </param>
+            <param name="includedQueryStringParams">
+            A list of the names of query string parameters that share 
+            usage should send to 51Degrees.
+            If this value is null, all query string parameters are shared.
+            </param>
+            <param name="includeSession">
+            If true then the asp.net session cookie will be included in
+            the filter.
+            </param>
+            <param name="aspSessionCookieName">
+            The name of the cookie that contains the asp.net session id. 
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Data.EvidenceKeyFilterShareUsage.Include(System.String)">
+            <summary>
+            Check if the specified evidence key is included by this filter.
+            </summary>
+            <param name="key">
+            The key to check
+            </param>
+            <returns>
+            True if the key is included and false if not.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the supplied key is null
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Data.EvidenceKeyFilterShareUsage.Order(System.String)">
+            <summary>
+            Return the 'order of precedence of the specified evidence
+            key.
+            Lower values indicate evidence where the value is more likely
+            to provide differentiation between requests. This is used by 
+            features such as Caching to improve performance when checking
+            if one set of evidence matches another.
+            </summary>
+            <param name="key">
+            The key to get the order for.
+            </param>
+            <returns>
+            The order, where lower values indicate a higher order of 
+            precedence. 
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.Data.EvidenceKeyFilterShareUsageTracker">
+            <summary>
+            Wrapper for EvidenceKeyFilter for Share Usage, to be used with the 
+            ShareUsageTracker to exclude specific evidence keys from the filter
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Data.EvidenceKeyFilterShareUsageTracker.#ctor">
+            <summary>
+            Constructor
+            This constructor will create a filter that will include
+            all evidence. (Except the default excluded items)
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Data.EvidenceKeyFilterShareUsageTracker.#ctor(System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String},System.Boolean,System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="blockedHttpHeaders">
+            A list of the names of the HTTP headers that share usage should
+            not send to 51Degrees.
+            </param>
+            <param name="includedQueryStringParams">
+            A list of the names of query string parameters that share 
+            usage should send to 51Degrees.
+            If this value is null, all query string parameters are shared.
+            </param>
+            <param name="includeSession">
+            If true then the asp.net session cookie will be included in
+            the filter.
+            </param>
+            <param name="aspSessionCookieName">
+            The name of the cookie that contains the asp.net session id. 
+            </param>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.Data.FiftyOneDataFile">
+            <summary>
+            Class that stores meta-data relating to a data file associated
+            with a 51Degrees engine.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Data.FiftyOneDataFile.#ctor(System.Type)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="engineType"></param>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.FiftyOneDataFile.DataDownloadType">
+            <summary>
+            Get the type name to send when checking for data file updates.
+            </summary>
+            <remarks>
+            In general, this value should be pulled from the Engine, which
+            will have read it from the data file.
+            However, in some cases, we want to know the type name before
+            the engine is created. (e.g. when UpdateOnStartup is set)
+            This is why the value can also be set.
+            </remarks>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.Data.FiftyOneUrlFormatter">
+            <summary>
+            51Degrees specific URL formatter. This formats a data file download URL
+            using the parameters required by the 51Degrees distributor.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Data.FiftyOneUrlFormatter.GetFormattedDataUpdateUrl(FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile)">
+            <summary>
+            Get the URL to call to request an updated version of the 
+            supplied data file.
+            </summary>
+            <param name="dataFile">
+            The data file to build an update URL for.
+            </param>
+            <returns>
+            The URL to call in order to check for and download an update.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the supplied data file is null
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Data.FiftyOneUrlFormatter.GetFormattedDataUpdateUri(FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile)">
+            <summary>
+            Get the URL to call to request an updated version of the 
+            supplied data file.
+            </summary>
+            <param name="dataFile">
+            The data file to build an update URL for.
+            </param>
+            <returns>
+            The URL to call in order to check for and download an update.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the supplied data file is null
+            </exception>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.Data.IComponentMetaData">
+            <summary>
+            Meta data relating to a component of an Engine's results e.g. Hardware.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.IComponentMetaData.ComponentId">
+            <summary>
+            The unique Id of the component.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.IComponentMetaData.Name">
+            <summary>
+            The name of the component.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.IComponentMetaData.DefaultProfile">
+            <summary>
+            The default profile which is used by the Engine for this component.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.IComponentMetaData.Properties">
+            <summary>
+            List of the properties which come under the umbrella of this
+            component.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Data.IComponentMetaData.GetProperties">
+            <summary>
+            Get the properties which come under the umbrella of this component.
+            </summary>
+            <returns>Properties enumerable</returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Data.IComponentMetaData.GetProperty(System.String)">
+            <summary>
+            Get the property from the component which has the name provided.
+            Null is returned if the component does not contain a property with
+            the name provided
+            </summary>
+            <param name="propertyName">
+            Name of the property to return
+            </param>
+            <returns>The property or null if not in this component</returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.Data.IFiftyOneAspectPropertyMetaData">
+            <summary>
+            51Degrees specific meta data. This adds meta data properties which are
+            available in 51Degrees Engines.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.IFiftyOneAspectPropertyMetaData.Url">
+            <summary>
+            URL relating to the property.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.IFiftyOneAspectPropertyMetaData.DisplayOrder">
+            <summary>
+            Order to display the property.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.IFiftyOneAspectPropertyMetaData.Mandatory">
+            <summary>
+            True if the property is mandatory.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.IFiftyOneAspectPropertyMetaData.List">
+            <summary>
+            True if the property value type is a list.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.IFiftyOneAspectPropertyMetaData.Obsolete">
+            <summary>
+            True if the property is obsolete.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.IFiftyOneAspectPropertyMetaData.Show">
+            <summary>
+            True if the property should be shown.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.IFiftyOneAspectPropertyMetaData.ShowValues">
+            <summary>
+            True if the values of the property should be shown.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.IFiftyOneAspectPropertyMetaData.Component">
+            <summary>
+            The component which the property belongs to.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.IFiftyOneAspectPropertyMetaData.Values">
+            <summary>
+            The list of values which relate to the property i.e. the values
+            which can be returned for this property.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.IFiftyOneAspectPropertyMetaData.DefaultValue">
+            <summary>
+            The default value for this property.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Data.IFiftyOneAspectPropertyMetaData.GetComponent">
+            <summary>
+            Get the component which the property belongs to.
+            </summary>
+            <returns>The component</returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Data.IFiftyOneAspectPropertyMetaData.GetValues">
+            <summary>
+            Get the values which relate to the property i.e. the values which
+            can be returned for this property.
+            </summary>
+            <returns>Values enumerable</returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Data.IFiftyOneAspectPropertyMetaData.GetValue(System.String)">
+            <summary>
+            Get the value from the property which has the name provided.
+            Null is returned if the property does not contain a value with the
+            name provided
+            </summary>
+            <param name="valueName">
+            Name of the value to return
+            </param>
+            <returns>The value or null if not in this property</returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Data.IFiftyOneAspectPropertyMetaData.GetDefaultValue">
+            <summary>
+            Get the default value for this property.
+            </summary>
+            <returns>Default value</returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.Data.IFiftyOneDataFile">
+            <summary>
+            A specialized can of <see cref="T:FiftyOne.Pipeline.Engines.Data.IAspectEngineDataFile"/> for files 
+            that will be distributed by the 51Degrees 'Distributor' web service.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.IFiftyOneDataFile.DataDownloadType">
+            <summary>
+            The value for the 'type' parameter that is passed to the 
+            distributor service when checking for a new file.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.Data.IProfileMetaData">
+            <summary>
+            Meta data relating to a profile within the data set.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.IProfileMetaData.ProfileId">
+            <summary>
+            Unique id of the profile.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Data.IProfileMetaData.GetValues">
+            <summary>
+            The values which are defined in the profile (for some Engines 
+            multiple profiles are required to build a full set of results).
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Data.IProfileMetaData.GetValues(System.String)">
+            <summary>
+            Gets the values associated with the profile and the property name.
+            </summary>
+            <param name="propertyName"></param>
+            <returns>Enumerable of values matching the property</returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Data.IProfileMetaData.GetValue(System.String,System.String)">
+            <summary>
+            If there is a value for the profile with the property name and value
+            then return an instance of it.
+            </summary>
+            <param name="propertyName"></param>
+            <param name="valueName"></param>
+            <returns>Value instance for property and value, or null if doesn't 
+            exist</returns>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.IProfileMetaData.Component">
+            <summary>
+            The component which the profile belongs to.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.IProfileMetaData.Name">
+            <summary>
+            The name of the profile. Usually indicates the type of device.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.Data.ISetHeadersData">
+            <summary>
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IElementData"/> interface for 
+            <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElement"/>.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.ISetHeadersData.ResponseHeaderDictionary">
+            <summary>
+            A dictionary containing the names and values that engines 
+            in the pipeline would like to be used to set HTTP headers 
+            in the response.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.Data.IValueMetaData">
+            <summary>
+            Meta data relating to a specific value within a data set.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.IValueMetaData.Property">
+            <summary>
+            The property which the value relates to i.e. the value is a value
+            which can be returned by the property.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.IValueMetaData.Name">
+            <summary>
+            The name of the value e.g. "True" or "Samsung".
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.IValueMetaData.Description">
+            <summary>
+            Full description of the meaning of the value.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.IValueMetaData.Url">
+            <summary>
+            URL relating to the value if more information is available.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Data.IValueMetaData.GetProperty">
+            <summary>
+            Get the property which the value relates to i.e. the value is a
+            value which can be returned by the property.
+            </summary>
+            <returns>The property</returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.Data.SetHeadersData">
+            <summary>
+            Element data instance for <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElement"/>
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.Data.SetHeadersData.RESPONSE_HEADERS_KEY">
+            <summary>
+            The key used to store the value for the 
+            HTTP response headers in the internal data collection.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Data.SetHeadersData.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Engines.FiftyOne.Data.SetHeadersData},FiftyOne.Pipeline.Core.FlowElements.IPipeline)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Data.SetHeadersData.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Core.Data.ElementDataBase},FiftyOne.Pipeline.Core.FlowElements.IPipeline,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Data.SetHeadersData.ResponseHeaderDictionary">
+            <inheritdoc/>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.FiftyOneOnPremiseAspectEngineBase`1">
+            <summary>
+            51Degrees specific Engine base class. This adds the concept of license
+            keys to the standard Engine base class.
+            </summary>
+            <typeparam name="T">
+            </typeparam>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.FiftyOneOnPremiseAspectEngineBase`1.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.FiftyOneOnPremiseAspectEngineBase{`0}},System.Func{FiftyOne.Pipeline.Core.FlowElements.IPipeline,FiftyOne.Pipeline.Core.FlowElements.FlowElementBase{`0,FiftyOne.Pipeline.Engines.FiftyOne.Data.IFiftyOneAspectPropertyMetaData},`0},System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger">
+            The logger to use
+            </param>
+            <param name="aspectDataFactory">
+            The factory function to use when the engine creates an
+            <see cref="T:FiftyOne.Pipeline.Engines.Data.AspectDataBase"/> instance.
+            </param>
+            <param name="tempDataFilePath">
+            The directory to use when storing temporary copies of the 
+            data file(s) used by this engine.
+            </param>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.FiftyOneOnPremiseAspectEngineBase`1.Profiles">
+            <summary>
+            The profiles that are present in the data source for this engine.
+            A Profile is a set of specific property values.
+            Each profile is associated with a component.
+            For example, the 'hardwareProfile' component has an 'iPhone 8' 
+            profile that would contain properties relating to that 
+            hardware device.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.FiftyOneOnPremiseAspectEngineBase`1.Components">
+            <summary>
+            The components that are present in the data source for this engine.
+            A 'component' refers to a logical sub-set of the collection 
+            of properties related to an event (usually an HTTP request).
+            For example, the 'hardwareProfile' component groups all 
+            properties related to the hardware device that is being used 
+            to make the request.
+            Examples of other components would be: the operating system, 
+            the browser software, the physical location the request is 
+            being made from, the ISP serving the request, etc.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.FiftyOneOnPremiseAspectEngineBase`1.Values">
+            <summary>
+            The values that are present in the data source for this engine.
+            A 'value' is uniquely identified by the combination of a 
+            property and a value that property can have.
+            For example, 'HardwareModel' is a property and a possible 
+            value could be 'A1234'.
+            If another property 'HardwareVariants' had the same value of
+            'A1234', that would be a separate IValueMetaData instance.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.FiftyOneOnPremiseAspectEngineBase`1.GetDataDownloadType(System.String)">
+            <summary>
+            The default value for the 'Type' parameter when checking for
+            updates from the 51Degrees 'Distributor' web service.
+            </summary>
+            <param name="identifier">
+            The identifier for the data file that we want to get the 
+            download type for.
+            </param>
+            <returns>
+            The string value to use for the 'Type' parameter when 
+            making a request to the 51Degrees Distributor.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.FiftyOneOnPremiseAspectEngineBuilderBase`2">
+            <summary>
+            A base class for engine builders for on-premise engines that use 
+            a single data file and use the 51Degrees Distributor web service to 
+            check for and download data updates.
+            </summary>
+            <typeparam name="TBuilder">
+            The specific type of the builder.
+            </typeparam>
+            <typeparam name="TEngine">
+            The type of the engine that this builder builds.
+            </typeparam>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.FiftyOneOnPremiseAspectEngineBuilderBase`2.DefaultDataDownloadType">
+            <summary>
+            The default value to use for the 'Type' parameter when sending
+            a request to the Distributor
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.FiftyOneOnPremiseAspectEngineBuilderBase`2.#ctor(FiftyOne.Pipeline.Engines.Services.IDataUpdateService)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="dataUpdateService"></param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.FiftyOneOnPremiseAspectEngineBuilderBase`2.SetDataDownloadType(System.String)">
+            <summary>
+            Set the 'type' string that will be sent to the 'distributor' 
+            service when downloading a new data file.
+            Note that this is only needed if using UpdateOnStartup. 
+            Otherwise, the update service will use the type name from the 
+            existing data file.
+            The default value is provided by the specific engine builder 
+            implementation.
+            </summary>
+            <param name="typeName">
+            The download type to use. For example 'HashV4'.
+            </param>
+            <returns>
+            This builder.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.FiftyOneOnPremiseAspectEngineBuilderBase`2.NewAspectEngineDataFile">
+            <summary>
+            This method is called when the builder needs to create a new 
+            <see cref="T:FiftyOne.Pipeline.Engines.Data.AspectEngineDataFile"/> instance.
+            </summary>
+            <returns>
+            A new <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.Data.FiftyOneDataFile"/> instance with the 
+            DataDownloadType property set based on the configuration
+            of this builder.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.FiftyOnePipelineBuilder">
+            <summary>
+            Pipeline builder class that allows the 51Degrees share usage 
+            element to be enabled/disabled.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.FiftyOnePipelineBuilder.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.FiftyOnePipelineBuilder.#ctor(Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="loggerFactory"></param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.FiftyOnePipelineBuilder.#ctor(Microsoft.Extensions.Logging.ILoggerFactory,System.IServiceProvider)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="loggerFactory"></param>
+            <param name="services"></param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.FiftyOnePipelineBuilder.SetShareUsage(System.Boolean)">
+            <summary>
+            Set share usage enabled/disabled.
+            Defaults to enabled.
+            </summary>
+            <param name="enabled">
+            true to enable usage sharing. False to disable.
+            </param>
+            <returns>
+            This builder instance.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.FiftyOnePipelineBuilder.OnPreBuild">
+            <summary>
+            Called just before the pipeline is built.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.IFiftyOneAspectEngine">
+            <summary>
+            51Degrees specific Engine interface. This adds the concept of license
+            keys to the standard Engine interface.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.IFiftyOneAspectEngine.Profiles">
+            <summary>
+            All profiles contained in the data set which the Engine is using.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.IFiftyOneAspectEngine.Components">
+            <summary>
+            All data components contained in the data set which the Engine is
+            using e.g. Hardware, Software etc.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.IFiftyOneAspectEngine.Values">
+            <summary>
+            All property values contained in the data set which the Engine is
+            using.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.IFiftyOneAspectEngine.GetDataDownloadType(System.String)">
+            <summary>
+            Get the type name of the data file being used by the engine.
+            This is used by the UpdateService to download the correct
+            data file updates.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ISetHeadersElement">
+            <summary>
+            An <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> that collates responses from all
+            engines that want to set headers in the HTTP response in order
+            to gather additional data.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SequenceElement">
+            <summary>
+            Sequence element establishes session and sequence evidence in the 
+            pipeline. If a session id is already in the evidence then the sequence 
+            is incremented.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SequenceElement.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Core.FlowElements.FlowElementBase{FiftyOne.Pipeline.Core.Data.IElementData,FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData}})">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="logger"></param>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SequenceElement.DEFAULT_ELEMENT_DATA_KEY">
+            <summary>
+            The default element data key that will be used for this element. 
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SequenceElement.ElementDataKey">
+            <summary>
+            The element data key.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SequenceElement.EvidenceKeyFilter">
+            <summary>
+            The evidence key filter.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SequenceElement.Properties">
+            <summary>
+            The properties populated by this element.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SequenceElement.ManagedResourcesCleanup">
+            <summary>
+            Called when the element is disposed.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SequenceElement.ProcessInternal(FiftyOne.Pipeline.Core.Data.IFlowData)">
+            <summary>
+            Process method checks for presence of a session id and sequence 
+            number. If they do not exist then they are initialized in evidence.
+            If they do exist in evidence then the sequence number is incremented
+            and added back to the evidence.
+            </summary>
+            <param name="data">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instance to process.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the supplied data instance is null
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SequenceElement.UnmanagedResourcesCleanup">
+            <summary>
+            Called as part of object disposal.
+            This element has no unmanaged resources so this method is empty.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SequenceElementBuilder">
+            <summary>
+            Builder for <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SequenceElement"/> instances.
+            Sequence Element is an element that is required by other Pipeline
+            elements to provide certain features.
+            In most cases, it will automatically be added to the Pipeline 
+            when needed.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SequenceElementBuilder.#ctor(Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="loggerFactory">
+            The factory to use when creating logger instances
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SequenceElementBuilder.Build">
+            <summary>
+            Create the <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SequenceElement"/>
+            </summary>
+            <returns>
+            A new <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SequenceElement"/> instance
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElement">
+            <summary>
+            An <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> that collates responses from all
+            engines that want to set headers in the HTTP response in order
+            to gather additional data.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElement.DEFAULT_ELEMENT_DATA_KEY">
+            <summary>
+            The element data key used by default for this element.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElement.PipelineConfig">
+            <summary>
+            Contains configuration information relating to a particular 
+            pipeline.
+            In most cases, a single instance of this element will only 
+            be added to one pipeline at a time but it does support being 
+            added to multiple pipelines simultaneously.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElement.PipelineConfig.SetHeaderProperties">
+            <summary>
+            A collection containing details about any properties 
+            where the name starts with 'SetHeader'
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElement.PropertyDetails">
+            <summary>
+            Used to store details of SetHeader* properties
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElement.PropertyDetails.PropertyMetaData">
+            <summary>
+            The property meta data
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElement.PropertyDetails.ResponseHeaderName">
+            <summary>
+            The name of the HTTP header to set from the 
+            value of this property.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElement.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Core.FlowElements.FlowElementBase{FiftyOne.Pipeline.Engines.FiftyOne.Data.ISetHeadersData,FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData}},System.Func{FiftyOne.Pipeline.Core.FlowElements.IPipeline,FiftyOne.Pipeline.Core.FlowElements.FlowElementBase{FiftyOne.Pipeline.Engines.FiftyOne.Data.ISetHeadersData,FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData},FiftyOne.Pipeline.Engines.FiftyOne.Data.ISetHeadersData})">
+            <inheritdoc/>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElement.ElementDataKey">
+            <inheritdoc/>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElement.EvidenceKeyFilter">
+            <inheritdoc/>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElement.Properties">
+            <inheritdoc/>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElement.ProcessInternal(FiftyOne.Pipeline.Core.Data.IFlowData)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElement.ManagedResourcesCleanup">
+            <inheritdoc/>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElement.UnmanagedResourcesCleanup">
+            <inheritdoc/>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElement.PopulateConfig(FiftyOne.Pipeline.Core.FlowElements.IPipeline)">
+            <summary>
+            Executed on first request in order to build some collections 
+            from the meta-data exposed by the Pipeline.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElementBuilder">
+            <summary>
+            Fluent builder for <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElement"/> instances.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElementBuilder.#ctor(Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="loggerFactory">
+            The logger factory for this builder to use when creating new 
+            instances.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElementBuilder.Build">
+            <summary>
+            Create a new <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElement"/> instance.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElementBuilder.CreateData(FiftyOne.Pipeline.Core.FlowElements.IPipeline,FiftyOne.Pipeline.Core.FlowElements.FlowElementBase{FiftyOne.Pipeline.Engines.FiftyOne.Data.ISetHeadersData,FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData})">
+            <summary>
+            Factory method for creating the 
+            <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.Data.SetHeadersData"/> instances that 
+            will be populated by the <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElement"/>.
+            </summary>
+            <param name="pipeline">
+            The pipeline that this is part of.
+            </param>
+            <param name="setHeadersElement">
+            The <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElement"/> the is creating this data
+            instance.
+            </param>
+            <returns>
+            A new <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.SetHeadersElement"/> instance.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase">
+            <summary>
+            Abstract base class for ShareUsage elements. 
+            Contains common functionality such as filtering the evidence and
+            building the XML records.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase._httpClient">
+            <summary>
+            The HttpClient to use when sending the data.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.HttpClient">
+            <summary>
+            The HttpClient to use when sending the data.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.ShareUsageData">
+            <summary>
+            Inner class that is used to store details of data in memory
+            prior to it being sent to 51Degrees.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.ShareUsageData.SessionId">
+            <summary>
+            The Pipeline session id for this event.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.ShareUsageData.Sequence">
+            <summary>
+            The sequence number for this event.
+            This is incremented as requests are made using the associated
+            session id.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.ShareUsageData.ClientIP">
+            <summary>
+            The source IP address for this event.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.ShareUsageData.EvidenceData">
+            <summary>
+            The evidence data from this event.
+            The dictionary key is the first part of the evidence key.
+            The value is another dictionary containing the rest of 
+            the evidence key and the evidence value.
+            For example, the evidence "header.user-agent"="ABC123"
+            would become:
+            <code>
+            { Key = "header", Value = { Key = "user-agent" Value = "ABC123" }}
+            </code>
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.LOCALHOSTS">
+            <summary>
+            IP Addresses of local host device.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.EvidenceCollection">
+            <summary>
+            Queue used to store entries in memory prior to them being sent
+            to 51Degrees.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase._sendDataTask">
+            <summary>
+            The current task sending data to the remote service.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase._lock">
+            <summary>
+            Lock to use when starting a new send data task.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase._addTimeout">
+            <summary>
+            Timeout to use when adding to the queue.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.TakeTimeout">
+            <summary>
+            Timeout to use when taking from the queue.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase._tracker">
+            <summary>
+            The tracker to use to determine if a <see cref="T:FiftyOne.Pipeline.Core.Data.FlowData"/>
+            instance should be shared or not.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.MinEntriesPerMessage">
+            <summary>
+            The minimum number of request entries per message sent to 51Degrees.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase._interval">
+            <summary>
+            The interval is a timespan which is used to determine if a piece
+            of repeated evidence should be considered new evidence to share.
+            If the evidence from a request matches that in the tracker but this
+            interval has elapsed then the tracker will track it as new evidence.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase._sharePercentage">
+            <summary>
+            The approximate proportion of requests to be shared.
+            1 = 100%, 0.5 = 50%, etc.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.FlowElements">
+            <summary>
+            Return a list of <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> in the pipeline. 
+            If the list is null then populate from the pipeline.
+            If there are multiple or no pipelines then log a warning.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.ShareUsageUrl">
+            <summary>
+            The base URL to send usage data to.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.ShareUsageUri">
+            <summary>
+            The base URL to send usage data to.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.WriterSettings">
+            <summary>
+            The settings to use when creating an XML payload to send
+            to the usage sharing web service.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.DEFAULT_ELEMENT_DATA_KEY">
+            <summary>
+            The default element data key that will be used for this element. 
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.ElementDataKey">
+            <summary>
+            The data key for this element
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.EvidenceKeyFilter">
+            <summary>
+            Get the evidence key filter for this element.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase._flagBadSchema">
+            <summary>
+            Set to true if the evidence within a flow data contains invalid XML
+            characters such as control characters.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.HostAddress">
+            <summary>
+            Get the IP address of the machine that this code is running on.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.Properties">
+            <summary>
+            Get a list of the meta-data relating to the properties 
+            that this flow element will populate.
+            For this share usage element, the list will always be empty
+            as it does not populate any properties.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.IsCanceled">
+            <summary>
+            Indicates whether share usage has been canceled as a result of an
+            error.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.IsRunning">
+            <summary>
+            True if there is a task running to send usage data to the remote
+            service.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.SendDataTask">
+            <summary>
+            Currently running task which is sending the usage data to the
+            remote service.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase},System.Net.Http.HttpClient,System.Double,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean,System.String,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{System.String,System.String}},System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger">
+            The logger to use.
+            </param>
+            <param name="httpClient">
+            The <see cref="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.HttpClient"/> to use when sending request data.
+            </param>
+            <param name="sharePercentage">
+            The approximate proportion of requests to share. 
+            1 = 100%, 0.5 = 50%, etc.
+            </param>
+            <param name="minimumEntriesPerMessage">
+            The minimum number of request entries per message sent to 51Degrees.
+            </param>
+            <param name="maximumQueueSize">
+            The maximum number of items to hold in the queue at one time. This
+            must be larger than minimum entries.
+            </param>
+            <param name="addTimeout">
+            The timeout in milliseconds to allow when attempting to add an
+            item to the queue. If this timeout is exceeded then usage sharing
+            will be disabled.
+            </param>
+            <param name="takeTimeout">
+            The timeout in milliseconds to allow when attempting to take an
+            item to the queue.
+            </param>
+            <param name="repeatEvidenceIntervalMinutes">
+            The interval (in minutes) which is used to decide if repeat 
+            evidence is old enough to consider a new session.
+            </param>
+            <param name="trackSession">
+            Set if the tracker should consider sessions in share usage.
+            </param>
+            <param name="shareUsageUrl">
+            The URL to send data to
+            </param>
+            <param name="blockedHttpHeaders">
+            A list of the names of the HTTP headers that share usage should
+            not send to 51Degrees.
+            </param>
+            <param name="includedQueryStringParameters">
+            A list of the names of query string parameters that share 
+            usage should send to 51Degrees.
+            If this value is null, all query string parameters are shared.
+            </param>
+            <param name="ignoreDataEvidenceFilter"></param>
+            <param name="aspSessionCookieName">
+            The name of the cookie that contains the asp.net session id.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase},System.Net.Http.HttpClient,System.Double,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean,System.String,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{System.String,System.String}},System.String,FiftyOne.Pipeline.Engines.Trackers.ITracker)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger">
+            The logger to use.
+            </param>
+            <param name="httpClient">
+            The <see cref="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.HttpClient"/> to use when sending request data.
+            </param>
+            <param name="sharePercentage">
+            The approximate proportion of requests to share. 
+            1 = 100%, 0.5 = 50%, etc.
+            </param>
+            <param name="minimumEntriesPerMessage">
+            The minimum number of request entries per message sent to 51Degrees.
+            </param>
+            <param name="maximumQueueSize">
+            The maximum number of items to hold in the queue at one time. This
+            must be larger than minimum entries.
+            </param>
+            <param name="addTimeout">
+            The timeout in milliseconds to allow when attempting to add an
+            item to the queue. If this timeout is exceeded then usage sharing
+            will be disabled.
+            </param>
+            <param name="takeTimeout">
+            The timeout in milliseconds to allow when attempting to take an
+            item to the queue.
+            </param>
+            <param name="repeatEvidenceIntervalMinutes">
+            The interval (in minutes) which is used to decide if repeat 
+            evidence is old enough to consider a new session.
+            </param>
+            <param name="trackSession">
+            Set if the tracker should consider sessions in share usage.
+            </param>
+            <param name="shareUsageUrl">
+            The URL to send data to
+            </param>
+            <param name="blockedHttpHeaders">
+            A list of the names of the HTTP headers that share usage should
+            not send to 51Degrees.
+            </param>
+            <param name="includedQueryStringParameters">
+            A list of the names of query string parameters that share 
+            usage should send to 51Degrees.
+            If this value is null, all query string parameters are shared.
+            </param>
+            <param name="ignoreDataEvidenceFilter"></param>
+            <param name="aspSessionCookieName">
+            The name of the cookie that contains the asp.net session id.
+            </param>
+            <param name="tracker">
+            The <see cref="T:FiftyOne.Pipeline.Engines.Trackers.ITracker"/> to use to determine if a given 
+            <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instance should be shared or not.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase},System.Net.Http.HttpClient,System.Double,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean,System.String,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{System.String,System.String}},System.String,FiftyOne.Pipeline.Engines.Trackers.ITracker,System.Boolean)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger">
+            The logger to use.
+            </param>
+            <param name="httpClient">
+            <see cref="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.HttpClient"/> to use when sending request data.
+            </param>
+            <param name="sharePercentage">
+            The approximate proportion of requests to share. 
+            1 = 100%, 0.5 = 50%, etc.
+            </param>
+            <param name="minimumEntriesPerMessage">
+            The minimum number of request entries per message sent to 51Degrees.
+            </param>
+            <param name="maximumQueueSize">
+            The maximum number of items to hold in the queue at one time. This
+            must be larger than minimum entries.
+            </param>
+            <param name="addTimeout">
+            The timeout in milliseconds to allow when attempting to add an
+            item to the queue. If this timeout is exceeded then usage sharing
+            will be disabled.
+            </param>
+            <param name="takeTimeout">
+            The timeout in milliseconds to allow when attempting to take an
+            item to the queue.
+            </param>
+            <param name="repeatEvidenceIntervalMinutes">
+            The interval (in minutes) which is used to decide if repeat 
+            evidence is old enough to consider a new session.
+            </param>
+            <param name="trackSession">
+            Set if the tracker should consider sessions in share usage.
+            </param>
+            <param name="shareUsageUrl">
+            The URL to send data to
+            </param>
+            <param name="blockedHttpHeaders">
+            A list of the names of the HTTP headers that share usage should
+            not send to 51Degrees.
+            </param>
+            <param name="includedQueryStringParameters">
+            A list of the names of query string parameters that share 
+            usage should send to 51Degrees.
+            If this value is null, all query string parameters are shared.
+            </param>
+            <param name="ignoreDataEvidenceFilter"></param>
+            <param name="aspSessionCookieName">
+            The name of the cookie that contains the asp.net session id.
+            </param>
+            <param name="tracker">
+            The <see cref="T:FiftyOne.Pipeline.Engines.Trackers.ITracker"/> to use to determine if a given 
+            <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instance should be shared or not.
+            </param>
+            <param name="shareAllEvidence">
+            If true, all evidence will be shared and  
+            the blockedHttpHeaders, includedQueryStringParameters and
+            ignoreDataEvidenceFilter parameters will be ignored.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if certain arguments are null.
+            </exception>
+            <exception cref="T:System.ArgumentException">
+            Thrown if certain argument values are invalid.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.AddPipeline(FiftyOne.Pipeline.Core.FlowElements.IPipeline)">
+            <summary>
+            Add 
+            </summary>
+            <param name="pipeline"></param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.ProcessInternal(FiftyOne.Pipeline.Core.Data.IFlowData)">
+            <summary>
+            Process the data
+            </summary>
+            <param name="data">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instance that provides the evidence
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the supplied data instance is null
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.ManagedResourcesCleanup">
+            <summary>
+            Send any data which has built up locally and not yet been sent to
+            the remote service.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.UnmanagedResourcesCleanup">
+            <summary>
+            Clean up any unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.IsLocalHost(System.Net.IPAddress)">
+            <summary>
+            Returns true if the request is from the local host IP address.
+            </summary>
+            <param name="address">
+            The IP address to be checked.
+            </param>
+            <returns>
+            True if from the local host IP address.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.ProcessData(FiftyOne.Pipeline.Core.Data.IFlowData)">
+            <summary>
+            Process the supplied request data
+            </summary>
+            <param name="data">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instance that provides the evidence
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.GetDataFromEvidence(FiftyOne.Pipeline.Core.Data.IEvidence)">
+            <summary>
+            Extract the desired data from the evidence.
+            In order to avoid problems with the evidence data being disposed 
+            before it is sent, the data placed into a new object rather 
+            than being a reference to the existing evidence instance.
+            </summary>
+            <param name="evidence">
+            An <see cref="T:FiftyOne.Pipeline.Core.Data.IEvidence"/> instance that contains the data to be
+            extracted.
+            </param>
+            <returns>
+            A <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.ShareUsageData"/> instance populated with data from
+            the evidence.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.TrySendData">
+            <summary>
+            Attempt to send the data to the remote service. This only happens
+            if there is not a task already running.
+            
+            If any error occurs while sending the data, then usage sharing is
+            stopped.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.BuildAndSendXml">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.WriteData(System.Xml.XmlWriter,FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.ShareUsageData)">
+            <summary>
+            Virtual method to be overridden in extending usage share elements.
+            Write the specified data using the specified writer.
+            </summary>
+            <param name="writer">
+            The <see cref="T:System.Xml.XmlWriter"/> to use.
+            </param>
+            <param name="data">
+            The <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.ShareUsageData"/> to write.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the supplied arguments are null
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.WriteDeviceData(System.Xml.XmlWriter,FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.ShareUsageData)">
+            <summary>
+            Write the specified device data using the specified writer.
+            </summary>
+            <param name="writer">
+            The <see cref="T:System.Xml.XmlWriter"/> to use.
+            </param>
+            <param name="data">
+            The <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.ShareUsageData"/> to write.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the supplied arguments are null
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.WritePipelineInfo(System.Xml.XmlWriter)">
+            <summary>
+            Virtual method to write details about the pipeline.
+            </summary>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the supplied writer is null
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase.EncodeInvalidXMLChars(System.String)">
+            <summary>
+            encodes any unusual characters into their hex representation
+            </summary>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the supplied text is null
+            </exception>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilder">
+            <summary>
+            Builder class that is used to create <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageElement"/>
+            instances.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilder.#ctor(Microsoft.Extensions.Logging.ILoggerFactory,System.Net.Http.HttpClient)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="loggerFactory">
+            The <see cref="T:Microsoft.Extensions.Logging.ILoggerFactory"/> to use when creating loggers for
+            a <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageElement"/>.
+            </param>
+            <param name="httpClient">
+            The <see cref="T:System.Net.Http.HttpClient"/> that <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageElement"/>
+            should use for sending data.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilder.#ctor(Microsoft.Extensions.Logging.ILoggerFactory,Microsoft.Extensions.Logging.ILogger,System.Net.Http.HttpClient)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger"></param>
+            The <see cref="T:Microsoft.Extensions.Logging.ILogger"/> to use for a <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageElement"/>.
+            <param name="loggerFactory">
+            The <see cref="T:Microsoft.Extensions.Logging.ILoggerFactory"/> to use when creating loggers for
+            a <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageElement"/>.
+            </param>
+            <param name="httpClient">
+            The <see cref="T:System.Net.Http.HttpClient"/> that <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageElement"/>
+            should use for sending data.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilder.Build">
+            <summary>
+            Create the <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageElement"/>
+            </summary>
+            <returns>
+            The newly created <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageElement"/>
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1">
+            <summary>
+            Abstract base class for ShareUsageElement builders.
+            </summary>
+            <typeparam name="T">Element type</typeparam>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.LoggerFactory">
+            <summary>
+            The logger factory used by this builder
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.Logger">
+            <summary>
+            The logger to be used by this builder
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.RepeatEvidenceInterval">
+            <summary>
+            Where a set of evidence values exactly matches a previously seen
+            set of evidence values, it will not be shared if that situation 
+            occurs within this time interval. (in minutes)
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.SharePercentage">
+            <summary>
+            The approximate proportion of events to share.
+            Specified as a floating point number from 0 to 1.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.MinimumEntriesPerMessage">
+            <summary>
+            The minimum number of entries to be present in the XML
+            PAyload before it is sent to the usage sharing endpoint.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.MaximumQueueSize">
+            <summary>
+            Set the maximum number of entries to be stored in the queue to be
+            sent. This must be more than the minimum entries per message.
+            By default, the value is calculated automatically based on the 
+            MinimumEntriesPerMessage setting.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.AddTimeout">
+            <summary>
+            The timeout in milliseconds to allow when attempting to add an
+            item to the queue. If this timeout is exceeded then usage sharing
+            will be disabled.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.TakeTimeout">
+            <summary>
+            The timeout in milliseconds to allow when attempting to take an
+            item from the queue in order to send to the remote service.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.ShareUsageUrl">
+            <summary>
+            The remote endpoint to send usage data to. 
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.ShareUsageUri">
+            <summary>
+            The remote endpoint to send usage data to. 
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.AspSessionCookieName">
+            <summary>
+            The name of the cookie that contains the asp.net session id.
+            This is used to help prevent the same usage data being shared
+            multiple times.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.BlockedHttpHeaders">
+            <summary>
+            A list of HTTP headers that should not be shared.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.IncludedQueryStringParameters">
+            <summary>
+            A list of query string parameters to be shared.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.IgnoreDataEvidenceFilter">
+            <summary>
+            A collection of evidence keys and values which, if present,
+            cause the event to be ignored for the purposes of usage sharing.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.TrackSession">
+            <summary>
+            Controls whether session tracking is enabled or disabled.
+            If enabled, requests from a single user session will only be 
+            shared once.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.ShareAllEvidence">
+            <summary>
+            If set to true then all evidence values will be shared.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.#ctor(Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="loggerFactory">
+            The <see cref="T:Microsoft.Extensions.Logging.ILoggerFactory"/> to use when creating loggers for
+            a <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageElement"/>.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.#ctor(Microsoft.Extensions.Logging.ILoggerFactory,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            
+            </summary>
+            <param name="loggerFactory"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.SetIncludedQueryStringParameters(System.Collections.Generic.List{System.String})">
+            <summary>
+            By default query string and HTTP form parameters are not shared 
+            unless prefixed with '51D_'.
+            This setting allows you to share these parameters with 51Degrees
+            if needed.
+            </summary>
+            <param name="queryStringParameterNames">
+            The (case insensitive) names of the query string parameters to include.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the parameter is null
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.SetIncludedQueryStringParameters(System.String)">
+            <summary>
+            By default query string and HTTP form parameters are not shared 
+            unless prefixed with '51D_'.
+            This setting allows you to share these parameters with 51Degrees
+            if needed.
+            </summary>
+            <param name="queryStringParameterNames">
+            A comma separated list of the (case insensitive) names of 
+            the query string parameters to include.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if the parameter is null
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.SetIncludedQueryStringParameter(System.String)">
+            <summary>
+            By default query string and HTTP form parameters are not shared 
+            unless prefixed with '51D_'.
+            This setting allows you to share these parameters with 51Degrees
+            if needed.
+            </summary>
+            <param name="queryStringParameterName">
+            The (case insensitive) name of the query string parameter to 
+            include.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.SetShareAllQueryStringParameters(System.Boolean)">
+            <summary>
+            Configure the usage sharing element to share all query string
+            and HTTP form parameters.
+            </summary>
+            <param name="shareAll">
+            If set to true then all query string parameters will be shared
+            </param>
+            <returns>
+            This builder instance
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.SetShareAllEvidence(System.Boolean)">
+            <summary>
+            Configure the usage sharing element to share all evidence.
+            This will override all the other evidence filtering settings.
+            </summary>
+            <param name="shareAll">
+            If set to true then all evidence will be shared
+            </param>
+            <returns>
+            This builder instance
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.SetBlockedHttpHeaders(System.Collections.Generic.List{System.String})">
+            <summary>
+            By default, all HTTP headers (excluding a few such as 'cookies')
+            are shared. Individual headers can be excluded from sharing by 
+            adding them to this list.
+            </summary>
+            <param name="blockedHeaders">
+            The (case insensitive) names of the headers to block.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.SetBlockedHttpHeader(System.String)">
+            <summary>
+            By default, all HTTP headers (excluding a few such as 'cookies')
+            are shared. Individual headers can be excluded from sharing by 
+            adding them to this list.
+            </summary>
+            <param name="blockedHeader">
+            The (case insensitive) name of the header to block.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.SetIgnoreFlowDataEvidenceFilter(System.String)">
+            <summary>
+            This setting can be used to stop the usage sharing element 
+            from sharing anything about specific requests.
+            For example, if you wanted to stop sharing any details from 
+            requests where the user-agent header was 'ABC', you would 
+            set this to "header.user-agent:ABC"
+            </summary>
+            <param name="evidenceFilter">
+            Comma separated string containing entries in the format 
+            <code>[evidenceKey]:[evidenceValue]</code>.
+            Any requests with evidence matching these entries will
+            not be shared.
+            </param>
+            <returns></returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.SetSharePercentage(System.Double)">
+            <summary>
+            Set the percentage of data that the <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageElement"/>
+            should be sharing.
+            </summary>
+            <param name="sharePercentage">
+            The proportion of events sent to the pipeline that should be
+            shared to 51Degrees.
+            1 = 100%, 0.5 = 50%, etc.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.SetMinimumEntriesPerMessage(System.Int32)">
+            <summary>
+            The usage element will group data into single requests before
+            sending it.
+            This setting controls the minimum number of entries before
+            data is sent.
+            If you are sharing large amounts of data, increasing this 
+            value is recommended in order to reduce the overhead of
+            sending HTTP messages.
+            For example, the 51Degrees cloud service uses a value of 
+            2500.
+            </summary>
+            <param name="minimumEntriesPerMessage">
+            The minimum number of entries to be aggregated by the
+            <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageElement"/> before they are sent to the
+            remote service.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.SetMaximumQueueSize(System.Int32)">
+            <summary>
+            Set the maximum number of entries to be stored in the queue to be
+            sent. This must be more than MinimumEntriesPerMessage.      
+            By default, the value is calculated automatically based on the
+            MinimumEntriesPerMessage setting.
+            </summary>
+            <param name="size">Size to set</param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.SetAddTimeout(System.Int32)">
+            <summary>
+            Set the timeout in milliseconds to allow when attempting to add an
+            item to the queue. If this timeout is exceeded then usage sharing
+            will be disabled.
+            </summary>
+            <param name="milliseconds">Timeout to set</param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.SetTakeTimeout(System.Int32)">
+            <summary>
+            Set the timeout in milliseconds to allow when attempting to take an
+            item from the queue in order to send to the remote service.
+            </summary>
+            <param name="milliseconds">Timeout to set</param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.SetShareUsageUrl(System.String)">
+            <summary>
+            Set the URL to use when sharing usage data.
+            </summary>
+            <param name="shareUsageUrl">
+            The URL to use when sharing usage data.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.SetShareUsageUrl(System.Uri)">
+            <summary>
+            Set the URL to use when sharing usage data.
+            </summary>
+            <param name="shareUsageUrl">
+            The URL to use when sharing usage data.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.SetAspSessionCookieName(System.String)">
+            <summary>
+            Set the name of the cookie that contains the asp.net session id.
+            This setting has no effect if TrackSession is false.
+            </summary>
+            <seealso cref="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.SetTrackSession(System.Boolean)"/>
+            <param name="cookieName">
+            The name of the cookie that contains the asp.net session id.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.SetRepeatEvidenceIntervalMinutes(System.Int32)">
+            <summary>
+            If exactly the same evidence values are seen multiple times 
+            within this time limit then they will only be shared once.
+            </summary>
+            <param name="interval">
+            The interval in minutes.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.SetTrackSession(System.Boolean)">
+            <summary>
+            If set to true, the configured session cookie will be used to
+            identify user sessions.
+            This will help to differentiate duplicate values that should
+            not be shared.
+            </summary>
+            <seealso cref="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.SetAspSessionCookieName(System.String)"/>
+            <param name="track">
+            Boolean value sets whether the usage element should 
+            track sessions.
+            </param>
+            <returns></returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBuilderBase`1.Build">
+            <summary>
+            Create the <see cref="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageElement"/>
+            </summary>
+            <returns>
+            The newly created element.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageElement">
+            <summary>
+            Flow element that sends usage data to 51Degrees for analysis.
+            The type and quantity of data being sent can be customised using the 
+            options on the constructor.
+            By default, data is queued until there are at least 50 items in memory.
+            It is then serialised to an XML file and sent to the specified URL.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageElement.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageBase},System.Net.Http.HttpClient,System.Double,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean,System.String,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{System.String,System.String}},System.String,FiftyOne.Pipeline.Engines.Trackers.ITracker,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.FlowElements.ShareUsageElement.BuildAndSendXml">
+            <summary>
+            Create the XML file from the specified data and send it to
+            the configured URL.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.Messages">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Messages.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Messages.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Messages.ExceptionSetHeadersNotSetHeader">
+            <summary>
+              Looks up a localized string similar to Property name &apos;{0}&apos; does not start with &apos;SetHeader&apos;.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Messages.ExceptionSetHeadersWrongFormat">
+            <summary>
+              Looks up a localized string similar to Property name &apos;{0}&apos; is not in the expected format (SetHeader[Component][HeaderName]).
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Messages.ExceptionShareUsageMinimumEntriesTooLarge">
+            <summary>
+              Looks up a localized string similar to The minimum entries per message cannot be larger than the maximum size of the queue.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Messages.ExceptionShareUsageSinglePipeline">
+            <summary>
+              Looks up a localized string similar to Cannot add ShareUsageElement to multiple pipelines.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Messages.MessageFailSequenceNumberIncrement">
+            <summary>
+              Looks up a localized string similar to Failed to increment usage sequence number.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Messages.MessageFailSequenceNumberParse">
+            <summary>
+              Looks up a localized string similar to The value for the ‘sequence’ parameter is not valid. See http://51degrees.com/documentation/_info__error_messages.html#Sequence_value_invalid for more information..
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Messages.MessageFailSequenceNumberRetreive">
+            <summary>
+              Looks up a localized string similar to Failed to retrieve sequence number.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Messages.MessageShareUsageCancelled">
+            <summary>
+              Looks up a localized string similar to Usage sharing was canceled due to an error.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Messages.MessageShareUsageFailedToAddData">
+            <summary>
+              Looks up a localized string similar to Share usage was canceled after failing to add data to the collection. This may mean that the max collection size is too low for the amount of traffic / min devices to send, or that the &apos;send&apos; thread has stopped taking data from the collection.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Messages.MessageShareUsageInvalidConfig">
+            <summary>
+              Looks up a localized string similar to Configuration for &apos;{0}&apos; is invalid.{1}.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Messages.MessageShareUsageNoPipelines">
+            <summary>
+              Looks up a localized string similar to Share usage element not registered to any Pipelines. Unable to populate flow element information.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.Engines.FiftyOne.Messages.MessageShareUsageTooManyPipelines">
+            <summary>
+              Looks up a localized string similar to Share usage element registered to {0} Pipelines. Unable to populate flow element information.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.Engines.FiftyOne.Trackers.ShareUsageTracker">
+            <summary>
+            A tracker used by share usage to attempt to avoid repeatedly 
+            sending data relating to the same user session.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.Trackers.ShareUsageTracker._filter">
+            <summary>
+            The filter that defines which evidence keys to use in the 
+            tracker.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.Engines.FiftyOne.Trackers.ShareUsageTracker._interval">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Trackers.ShareUsageTracker.#ctor(FiftyOne.Pipeline.Engines.Configuration.CacheConfiguration,System.TimeSpan,FiftyOne.Pipeline.Core.Data.IEvidenceKeyFilter)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="configuration">
+            The cache configuration to use when building the internal cache
+            used by this tracker
+            </param>
+            <param name="filter">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IEvidenceKeyFilter"/> that defines the evidence
+            values to use when creating a key from an <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/>.
+            </param>
+            <param name="interval">
+            The tracker will return a match and update the matching entry 
+            if it is younger than this time interval.
+            If it is older then it will not return a match.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Trackers.ShareUsageTracker.GetFilter">
+            <summary>
+            Get the evidence filter used to create keys for this tracker. 
+            </summary>
+            <returns>
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IEvidenceKeyFilter"/> to use.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Trackers.ShareUsageTracker.Match(FiftyOne.Pipeline.Core.Data.IFlowData,System.Nullable{System.DateTime})">
+            <summary>
+            Called when the flow data matches an existing entry in the tracker
+            </summary>
+            <param name="data">
+            The flow data
+            </param>
+            <param name="value">
+            The meta-data value associated with the flow data in the tracker.
+            </param>
+            <returns>
+            Boolean - if tracked values age is less than the period set by 
+            <see cref="F:FiftyOne.Pipeline.Engines.FiftyOne.Trackers.ShareUsageTracker._interval"/> then return true and update. Else if older 
+            then consider new and return false.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.Engines.FiftyOne.Trackers.ShareUsageTracker.NewValue(FiftyOne.Pipeline.Core.Data.IFlowData)">
+            <summary>
+            Called when a new instance of this tracker's meta-data is needed
+            to add to the tracker.
+            </summary>
+            <param name="data">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> that is being added to the tracker.
+            </param>
+            <returns>
+            True as the meta-data holds no extra detail for this tracker.
+            </returns>
+        </member>
+    </members>
+</doc>

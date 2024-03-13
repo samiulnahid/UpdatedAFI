@@ -1,0 +1,415 @@
+﻿@using System.Web.Mvc.Html
+@using Sitecore.Mvc
+@using Sitecore.XA.Foundation.MarkupDecorator.Extensions
+@using Sitecore.XA.Foundation.SitecoreExtensions.Extensions
+@using Sitecore.XA.Foundation.Grid.Extensions
+@using Sitecore.XA.Foundation.Theming.Bundler
+@using Sitecore.XA.Foundation.Theming.Models
+@using Sitecore.XA.Foundation.Theming.Services
+@using Microsoft.Extensions.DependencyInjection
+@using Sitecore.DependencyInjection
+@using Sitecore.Mvc.Analytics.Extensions
+
+@model Sitecore.Mvc.Presentation.RenderingModel
+
+@{
+    AssetLinks assetLinks = AssetLinksGenerator.GenerateLinks(new ThemesProvider());
+    HTMLIncludes includes = ServiceLocator.ServiceProvider.GetService<IHTMLIncludesService>().GetHTMLIncludes();
+}
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="@Model.Item.Language.Name">
+<!--<![endif]-->
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;300;400;500;600;700&family=Roboto:wght@100;300;400;500;700;900&family=Zilla+Slab:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet" />
+    <link as="font"
+          rel="stylesheet preload prefetch"
+          href="https://fonts.gstatic.com/s/zillaslab/v11/dFa6ZfeM_74wlPZtksIFajo6_Q.woff2"
+          type="font/woff2"
+          crossorigin="anonymous" />
+    <link as="font"
+          rel="stylesheet preload prefetch"
+          href="https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxK.woff2"
+          type="font/woff2"
+          crossorigin="anonymous" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+ 
+
+    @foreach (var include in includes.Head)
+    {
+        @Html.Raw(include.HTML)
+    }
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/-/media/Project/AFI/afi/FavIcon/favicon-32x32.png">
+    <link href="~/asset/css/common.css" rel="stylesheet" />
+    <link href="~/asset/css/footer.css" rel="stylesheet" />
+    <link href="~/asset/css/header_sxa.css" rel="stylesheet" />
+	
+	<!-- QuoteHub CSS and JS -->
+	<!--External-->
+	<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" />
+	
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+	
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	
+	<!--Internal-->
+	<link href="~/NewDesign/css/daterangepicker.css" rel="stylesheet" />
+	<link rel="stylesheet" href="~/NewDesign/style.css" crossorigin="anonymous" />
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="~/NewDesign/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/NewDesign/css/bootstrap-datepicker.min.css" />
+	<script src="~/NewDesign/js/jquery.min.js"></script>
+	<script src="~/NewDesign/js/bootstrap.min.js"></script>
+	<!-- Include Date Picker -->
+	<script src="~/NewDesign/js/moment.min.js"></script>
+	<script src="~/NewDesign/js/daterangepicker.js"></script>
+	<script src="~/NewDesign/js/JqueryValidate.js"></script>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+    <link href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" rel="stylesheet" />
+	
+<!--
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous"></script>
+	<script src="~/js/jquery.min.js"></script>
+
+	<script src="~/js/Bootstrapmultiselect.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" />
+	<link href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" rel="stylesheet" />	
+	
+-->
+	
+	<!--Closed QuoteHub CSS and JS-->
+	
+	<!--webchat2-->
+	<link rel="stylesheet" href="~/css/cookieBox.css" />	
+	<style>
+        #chat-button {
+            display: none;
+        }
+        #chat-button.purecloud-chat-available {
+            display: inline;
+        }
+	</style>
+   <link rel="stylesheet" href="~/css/webchat.css" />	
+   <!-- Close webchat2-->
+	
+
+    @Html.Sxa().VisitorIdentification()
+    @Html.Sxa().Placeholder("head")
+</head>
+<body @Html.Sxa().Body().Decorate()>
+
+    @{
+        Sitecore.Data.Items.Item item = Sitecore.Context.Database.GetItem(RenderingContext.Current.Rendering.Item.ID);
+        var page_css = item["CSS"];
+        @Html.Raw(page_css)
+    }
+
+
+    @Html.Sitecore().Placeholder("body-top")
+    @foreach (var include in includes.BodyTop)
+    {
+        @Html.Raw(include.HTML)
+    }
+    @Html.Sxa().GridBody()
+    @Html.Sitecore().Placeholder("body-bottom")
+    @foreach (var include in includes.BodyBottom)
+    {
+        @Html.Raw(include.HTML)
+    }
+
+
+    @*@Html.Partial("~/Views/AFI/CookieBanner/CookieBanner.cshtml")*@
+
+    @foreach (string include in assetLinks.Scripts)
+    {
+        @Html.Raw(include)
+    }
+	
+	
+	<!-- Copied from QHResponsivePage -->
+	   <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-10840241649"></script>
+    <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "AW-10840241649");
+    </script>
+    
+<!-- EmoryDay Analytics Please Remove if No Longer Using EmoryDay -->
+<script src="https://cdn.emoryday-analytics.com/js/VO9MGO_a2PbbO.js" defer></script>
+<!-- End EmoryDay Analytics -->
+    
+	<script type="application/ld+json">
+    {
+        "@@context": "http://schema.org",
+        "@@type": "Corporation",
+        "legalName": "Armed Forces Insurance",
+        "telephone": "+18002556792",
+        "email": "service@afi.org",
+        "department": [
+            {
+                "@@type": "LocalBusiness",
+                "name": "Armed Forces Insurance",
+                "image": "/images/logo.png",
+                "telephone": "+18002556792",
+                "priceRange" : "$0 - $0",
+                "address": {
+                    "@@type": "PostalAddress",
+                    "streetAddress": "550 Eisenhower Rd.",
+                    "addressLocality": "Leavenworth",
+                    "addressRegion": "KS",
+                    "postalCode": "66048"
+                },
+                "openingHours": ["Mo-Fr 08:00-17:00"]
+            }
+        ],
+        "address": {
+            "@@type": "PostalAddress",
+            "streetAddress": "550 Eisenhower Rd.",
+            "addressLocality": "Leavenworth",
+            "addressRegion": "KS",
+            "postalCode": "66048"
+        }
+    }
+</script>
+  <script>
+
+        function deleteAllCookies() {
+            var cookies = document.cookie.split(";");
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i];
+                var eqPos = cookie.indexOf("=");
+                var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            }
+        }
+        function getUrlParameters() {
+            var search = window.location.search.substring(1).replace(/&&/g, '&');
+            var fields = {};
+            if (search) {
+                fields = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
+            }
+            var parameters = {};
+            for (var key in fields) {
+                parameters[key.toLowerCase().trim()] = fields[key];
+            }
+            return parameters;
+        };
+
+        function accessCookie(cookieName) {
+            var name = cookieName + "=";
+            var allCookieArray = document.cookie.split(';');
+            for (var i = 0; i < allCookieArray.length; i++) {
+                var temp = allCookieArray[i].trim();
+                if (temp.indexOf(name) == 0)
+                    return temp.substring(name.length, temp.length);
+            }
+            return "";
+        }
+
+		function getQueryParam(param) {
+			var rx = new RegExp("[?&]" + param + "=([^&]+).*$");
+			var returnVal = window.location.search.toLowerCase().match(rx);
+			return returnVal === null ? "" : decodeURIComponent(returnVal[1].replace(/\+/g, " "));
+		}
+		
+		 function PaidMediaNew() {
+ 
+            //var domainName = "afi.org";
+			var domainName = "afidev-435500-single.azurewebsites.net"; //MVPLogoChange
+		
+          if (getQueryParam("responsetype") != "") {        
+		   document.cookie = "responsetype =" + getQueryParam("responsetype") + ";domain=" + domainName + ";";
+		  }
+			if (getQueryParam("responsedescription") != "") { 
+			document.cookie = "responsedescription =" + getQueryParam("responsedescription") + ";domain=" + domainName + ";";
+				
+			}
+
+			if (getQueryParam("utm_campaign") != "") { 
+			document.cookie = "utm_campaign=" + getQueryParam("utm_campaign") + ";domain=" + domainName + ";";
+			}
+			if (getQueryParam("utm_content") != "") { 
+			document.cookie = "utm_content=" + getQueryParam("utm_content") + ";domain=" + domainName + ";";
+			}
+			if (getQueryParam("utm_medium") != "") { 
+			document.cookie = "utm_medium=" + getQueryParam("utm_medium") + ";domain=" + domainName + ";";
+			}
+			if (getQueryParam("utm_source") != "") { 
+			document.cookie = "utm_source=" + getQueryParam("utm_source") + ";domain=" + domainName + ";";
+			}
+			if (getQueryParam("utm_term") != "") { 
+			document.cookie = "utm_term=" + getQueryParam("utm_term") + ";domain=" + domainName + ";";
+			}
+			if (getQueryParam("gclid") != "") { 
+			document.cookie = "gclid=" + getQueryParam("gclid") + ";domain=" + domainName + ";";
+			}
+			if (getQueryParam("msclkid") != "") { 
+			document.cookie = "msclkid=" + getQueryParam("msclkid") + ";domain=" + domainName + ";";
+			}
+			if (getQueryParam("fbclid") != "") { 
+			document.cookie = "fbclid=" + getQueryParam("fbclid") + ";domain=" + domainName + ";";
+			}
+			
+			var isCookieModalShown = accessCookie("cookieConsetShown");
+
+            if (isCookieModalShown == "") {
+
+                document.getElementById("cookieboxID").style.visibility = "visible";
+
+                                                }
+												
+						//IE check
+			<!-- var user_agent = navigator.userAgent; -->
+                                                <!-- var is_it_ie = user_agent.indexOf("MSIE ") > -1 || user_agent.indexOf("Trident/") > -1; -->
+                                                <!-- if(is_it_ie){ -->
+												<!-- var str = window.location.href; -->
+												<!-- if(str.indexOf("browserSupport")= -1){ -->
+                                                <!-- window.location.href("https://afiweb-cm-beta.afi.org/browserSupport"); -->
+												<!-- } -->
+                                                <!-- }else{ -->
+                                                <!-- console.log("This is not IE!"); -->
+
+                                                <!-- } -->
+												
+															//IE check
+												var user_agent = navigator.userAgent;
+                                                var is_it_ie = user_agent.indexOf("MSIE ") > -1 || user_agent.indexOf("Trident/") > -1;
+                                                if(is_it_ie){
+														var strBrwser = window.location.href;
+														if(strBrwser.indexOf("BrowserSupport")== -1){
+												             window.location.href("https://afiweb-cm-beta.afi.org/BrowserSupport");
+														}
+                                                }
+												//Safari check
+												var user_agent_sf = navigator.userAgent;
+												var chromeAgentSf = user_agent_sf.indexOf("Chrome") > -1;
+												var safariAgentSf = user_agent_sf.indexOf("Safari") > -1;
+												if ((chromeAgentSf) && (safariAgentSf)) safariAgentSf = false;
+                                                if(safariAgentSf){
+													console.log("This is safari.");
+													var fullVersion  = ''+parseFloat(navigator.appVersion); 
+													var majorVersion = parseInt(navigator.appVersion,10);
+													var verOffset,ix;
+													
+													verOffset=user_agent_sf.indexOf("Safari")
+													fullVersion = user_agent_sf.substring(verOffset+7);
+													if ((verOffset=user_agent_sf.indexOf("Version"))!=-1) 
+													   fullVersion = user_agent_sf.substring(verOffset+8);
+													   
+													   // trim the fullVersion string at semicolon/space if present
+														if ((ix=fullVersion.indexOf(";"))!=-1)
+														   fullVersion=fullVersion.substring(0,ix);
+														if ((ix=fullVersion.indexOf(" "))!=-1)
+														   fullVersion=fullVersion.substring(0,ix);
+
+														majorVersion = parseInt(''+fullVersion,10);
+														if (isNaN(majorVersion)) {
+														 fullVersion  = ''+parseFloat(navigator.appVersion); 
+														 majorVersion = parseInt(navigator.appVersion,10);
+														}
+														
+														if(majorVersion >=14){
+															
+														}
+														else{
+															console.log("Kindly use Safari browser version 14 and above.");	
+														var date_input=$('input[type="date"]');
+														date_input.attr("placeholder", "yyyy-mm-dd");
+														  var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+														  var options={
+														    format: 'yyyy-mm-dd',
+															container: container,
+															todayHighlight: true,
+															autoclose: true,
+														  };
+														  date_input.datepicker(options);
+															//alert("For better experience, kindly use Safari browser version 14 and above.");																
+														}														
+																								  
+												}else{
+													console.log("This is not Safari.");
+										
+												}
+												
+				//MVPLogoChange
+				if(accessCookie("responsedescriptionq")=="8942"){
+				console.log('From accessCookie');
+					document.getElementsByClassName('img_right')[0].style.display = 'block';
+				}
+												
+		  
+		  }
+		  
+        //window.onload = PaidMedia;
+		window.onload = PaidMediaNew;
+        //window.unload = deleteAllCookies;
+
+    </script>
+
+<!-- Copied from QHResponsivePage -->
+
+	<script src="~/js/yt_iframe_optimize.js" defer></script>
+	<!--webchat2-->
+	<script src="https://momentjs.com/downloads/moment.js"></script>
+	<script src="https://momentjs.com/downloads/moment-timezone-with-data.js"></script>
+	<script src="https://apps.mypurecloud.com/widgets/9.0/cxbus.min.js"></script>
+	<script src="~/js/webchat.js"></script> 
+		<style type="text/css">
+		.cx-side-button-group {
+		z-index: 5!important;
+		}
+		</style>
+	<!-- end Webchat2 -->
+	
+		
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.min.js" integrity="sha512-0N/5ZOjfsh3niel+5dRD40HQkFOWaxoVzqMVAHnmAO2DC3nY/TFB7OYTaPRAFJ571IRS/XRsXGb2XyiFLFeu1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="~/asset/js/main.js"></script>
+	
+	
+</body>
+<!-- QH reference from QHResponsivePage --> 
+<script src="~/NewDesign/js/bootstrap-datepicker.min.js"></script>
+<!-- Close QH reference from QHResponsivePage --> 
+
+</html>

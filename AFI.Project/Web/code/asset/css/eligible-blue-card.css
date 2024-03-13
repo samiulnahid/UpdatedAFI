@@ -1,0 +1,116 @@
+.not__eligible__blue {
+  background: #004976;
+  border: none;
+  padding: 1.5rem;
+  border: 1px solid var(--afi-grey-700);
+  border-radius: 4px;
+  color: #fff;
+  padding: 16px !important;
+  width: 100%;
+}
+
+.not__eligible__blue h2 {
+  color: #bbddf1;
+  font-size: 1.5rem !important;
+  font-weight: normal !important;
+  margin: 0;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem !important;
+  /* text-align: center; */
+}
+
+.not__eligible__blue.h2__center h2 {
+  text-align: center;
+}
+
+.not__eligible__blue p {
+  font-size: 1rem !important;
+  margin: 0 !important;
+  line-height: 1.5rem !important;
+  color: #fff;
+}
+
+.not__eligible__blue .button {
+  color: #fff;
+  background-color: #cb2c30 !important;
+  border-color: #cb2c30 !important;
+  margin: 1rem auto 0;
+  display: block !important;
+  width: 150px !important;
+}
+
+.not__eligible__blue .button.auto__width {
+  width: auto !important;
+}
+
+.not__eligible__blue .button.auto__width:hover {
+  background-color: #cb2c30 !important;
+  border-color: #cb2c30 !important;
+}
+
+.not__eligible__blue .button__container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.not__eligible__blue .button:hover {
+  background-color: #0570c5 !important;
+  border-color: #0570c5 !important;
+}
+
+
+/* Life Page Logos */
+.life_logo_image_parent {
+  justify-content: center;
+  gap: 60px;
+}
+
+.life_logo_image {
+  width: auto !important;
+}
+
+.btn__w-auto__container .button {
+  width: auto !important;
+}
+
+
+/********************************************************
+*                   not__eligible__red
+********************************************************/
+.not__eligible__red {
+  background-image: linear-gradient(120deg, #cb2c30, #881b26);
+  color: #fff !important;
+  padding: 2.75rem 2.25rem !important;
+  margin: 15px 0;
+}
+
+.not__eligible__red .cta-widget-start__upper-wrapper {
+  padding-bottom: 20px;
+}
+
+.not__eligible__red .cta-normal-title {
+  color: #fff !important;
+  font-weight: 600 !important;
+  margin-bottom: 5px;
+  font-size: 18px !important;
+}
+
+.not__eligible__red .cta-large-title {
+  color: #fff !important;
+  font-weight: 600 !important;
+  font-size: 24px !important;
+  font-family: Zilla Slab, serif !important;
+}
+
+.not__eligible__red .button {
+  padding: 12px 20px !important;
+}
+
+@media screen and (max-width:991px) {
+
+  .not__eligible__red,
+  .not__eligible__blue {
+    text-align: center;
+  }
+}

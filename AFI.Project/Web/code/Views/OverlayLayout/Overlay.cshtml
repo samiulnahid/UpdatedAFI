@@ -1,0 +1,14 @@
+﻿@model Sitecore.XA.Feature.Overlays.Models.OverlayRenderingModel
+@using Sitecore.ExperienceForms.Mvc.Html
+@using Sitecore.Mvc
+@using Sitecore.XA.Foundation.SitecoreExtensions.Extensions
+
+<span class="overlay-data" data-width="@Model.Width" data-height="@Model.Height" data-percent="@Model.Percent">
+    @Html.Sitecore().Placeholder("overlay")
+    @if (@Html.Sxa().AnyRendering(r => r.RenderingItem.ID == Sitecore.XA.Feature.Overlays.Renderings.SitecoreForm.ID))
+    {
+        @Html.RenderFormStyles()
+        @Html.RenderFormScripts()
+    }
+</span>
+

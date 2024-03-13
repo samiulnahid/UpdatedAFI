@@ -1,0 +1,768 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>HotChocolate.Abstractions</name>
+    </assembly>
+    <members>
+        <member name="P:HotChocolate.Execution.IBatchOperation.BufferSize">
+            <summary>
+            Gets count of items in the current batch.
+            </summary>
+        </member>
+        <member name="M:HotChocolate.Execution.IBatchOperation.InvokeAsync(System.Threading.CancellationToken)">
+            <summary>
+            Executes the current batch
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:HotChocolate.Execution.IQuery">
+            <summary>
+            Represent a executable query.
+            </summary>
+        </member>
+        <member name="M:HotChocolate.Execution.IQuery.WriteTo(System.IO.Stream)">
+            <summary>
+            Writes the current query to the output stream.
+            </summary>
+        </member>
+        <member name="M:HotChocolate.Execution.IQuery.WriteToAsync(System.IO.Stream)">
+            <summary>
+            Writes the current query to the output stream.
+            </summary>
+        </member>
+        <member name="M:HotChocolate.Execution.IQuery.WriteToAsync(System.IO.Stream,System.Threading.CancellationToken)">
+            <summary>
+            Writes the current query to the output stream.
+            </summary>
+        </member>
+        <member name="M:HotChocolate.Execution.IQuery.ToSpan">
+            <summary>
+            Returns the binary query representation.
+            </summary>
+        </member>
+        <member name="M:HotChocolate.Execution.IQuery.ToString">
+            <summary>
+            Returns the query string representation.
+            </summary>
+        </member>
+        <member name="T:HotChocolate.Execution.IReadStoredQueries">
+            <summary>
+            A tool for reading queries from some persistence medium.
+            </summary>
+        </member>
+        <member name="M:HotChocolate.Execution.IReadStoredQueries.TryReadQueryAsync(System.String)">
+            <summary>
+            Retrieves the query associated with the given identifier.
+            If the query is not found <c>null</c> is returned.
+            </summary>
+            <param name="queryId">The query identifier.</param>
+            <returns>
+            The desired query or null if no query
+            is found with the specified identifier.
+            </returns>
+        </member>
+        <member name="M:HotChocolate.Execution.IReadStoredQueries.TryReadQueryAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Retrieves the query associated with the given identifier.
+            If the query is not found <c>null</c> is returned.
+            </summary>
+            <param name="queryId">The query identifier.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            The desired query or null if no query
+            is found with the specified identifier.
+            </returns>
+        </member>
+        <member name="T:HotChocolate.Execution.IVariableValueCollection">
+            <summary>
+            Represents a collection of coerced variables.
+            </summary>
+        </member>
+        <member name="M:HotChocolate.Execution.IVariableValueCollection.GetVariable``1(HotChocolate.NameString)">
+            <summary>
+            Gets a coerced variable value from the collection.
+            </summary>
+            <param name="name">The variable name.</param>
+            <returns></returns>
+            <exception cref="T:HotChocolate.Execution.QueryException">
+            A GraphQL execution error is thrown when the
+            requested variable cannot be found or cannot
+            be converted to the request type.
+            </exception>
+            <exception cref="!:ArgumentNullException">
+            The <paramref name="name" /> mustn't be null or
+            <see cref="F:System.String.Empty" />.
+            </exception>
+        </member>
+        <member name="M:HotChocolate.Execution.IVariableValueCollection.TryGetVariable``1(HotChocolate.NameString,``0@)">
+            <summary>
+            Tries to get a coerced variable value from the collection.
+            </summary>
+            <param name="name">The variable name.</param>
+            <param name="value">The coerced variable value.</param>
+            <returns>
+            <c>true</c> if a coerced variable exists and can be converted
+            to the requested type; otherwise, <c>false</c> will be returned.
+            </returns>
+        </member>
+        <member name="T:HotChocolate.Execution.IWriteStoredQueries">
+            <summary>
+            A tool for storing queries to some persistence medium.
+            </summary>
+        </member>
+        <member name="M:HotChocolate.Execution.IWriteStoredQueries.WriteQueryAsync(System.String,HotChocolate.Execution.IQuery)">
+            <summary>
+            Stores a given query using the given identifier.
+            </summary>
+            <param name="queryId">The query identifier.</param>
+            <param name="query">The query to store.</param>
+            <returns>An asynchronous operation.</returns>
+        </member>
+        <member name="M:HotChocolate.Execution.IWriteStoredQueries.WriteQueryAsync(System.String,HotChocolate.Execution.IQuery,System.Threading.CancellationToken)">
+            <summary>
+            Stores a given query using the given identifier.
+            </summary>
+            <param name="queryId">The query identifier.</param>
+            <param name="query">The query to store.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>An asynchronous operation.</returns>
+        </member>
+        <member name="T:HotChocolate.GraphQLDeprecatedAttribute">
+            <summary>
+            Denotes a deprecated field on a GraphQL type or a
+            deprecated value on a GraphQL enum.
+            </summary>
+        </member>
+        <member name="M:HotChocolate.GraphQLDeprecatedAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:HotChocolate.GraphQLDeprecatedAttribute"/>
+            with a specific deprecation reason.
+            </summary>
+            <param name="deprecationReason">The deprecation reason.</param>
+        </member>
+        <member name="P:HotChocolate.GraphQLDeprecatedAttribute.DeprecationReason">
+            <summary>
+            The reason the field or enum value was deprecated.
+            </summary>
+        </member>
+        <member name="T:HotChocolate.IError">
+            <summary>
+            Represents a schema or query error.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.IError.Message">
+            <summary>
+            Gets the error message.
+            This property is mandatory and cannot be null.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.IError.Code">
+            <summary>
+            Gets an error code that can be used to automatically
+            process an error.
+            This property is optional and can be null.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.IError.Path">
+            <summary>
+            Gets the path to the object that caused the error.
+            This property is optional and can be null.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.IError.Locations">
+            <summary>
+            Gets the source text positions to which this error refers to.
+            This property is optional and can be null.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.IError.Exception">
+            <summary>
+            Gets the exception associated with this error.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.IError.Extensions">
+            <summary>
+            Gets non-spec error properties.
+            This property is optional and can be null.
+            </summary>
+        </member>
+        <member name="M:HotChocolate.IError.WithMessage(System.String)">
+            <summary>
+            Creates a new error that contains all properties of this error
+            but with the specified <paramref name="message" />.
+            </summary>
+            <param name="message">
+            The error message.
+            </param>
+            <returns>
+            Returns a new error that contains all properties of this error
+            but with the specified <paramref name="message" />.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            The <paramref name="message" /> is null or empty.
+            </exception>
+        </member>
+        <member name="M:HotChocolate.IError.WithCode(System.String)">
+            <summary>
+            Creates a new error that contains all properties of this error
+            but with the specified <paramref name="code" />.
+            </summary>
+            <param name="code">
+            An error code that is specified as custom error property.
+            </param>
+            <returns>
+            Returns a new error that contains all properties of this error
+            but with the specified <paramref name="code" />.
+            </returns>
+        </member>
+        <member name="M:HotChocolate.IError.WithPath(HotChocolate.Path)">
+            <summary>
+            Creates a new error that contains all properties of this error
+            but with the specified <paramref name="path" />.
+            </summary>
+            <param name="path">
+            A path representing a ceratain syntax node of a query or schema.
+            </param>
+            <returns>
+            Returns a new error that contains all properties of this error
+            but with the specified <paramref name="path" />.
+            </returns>
+        </member>
+        <member name="M:HotChocolate.IError.WithPath(System.Collections.Generic.IReadOnlyList{System.Object})">
+            <summary>
+            Creates a new error that contains all properties of this error
+            but with the specified <paramref name="path" />.
+            </summary>
+            <param name="path">
+            A path representing a ceratain syntax node of a query or schema.
+            </param>
+            <returns>
+            Returns a new error that contains all properties of this error
+            but with the specified <paramref name="path" />.
+            </returns>
+        </member>
+        <member name="M:HotChocolate.IError.WithLocations(System.Collections.Generic.IReadOnlyList{HotChocolate.Location})">
+            <summary>
+            Creates a new error that contains all properties of this error
+            but with the specified <paramref name="locations" />.
+            </summary>
+            <param name="locations">
+            A collection of locations referring to certain
+            syntax nodes of a query or schema.
+            </param>
+            <returns>
+            Returns a new error that contains all properties of this error
+            but with the specified <paramref name="locations" />.
+            </returns>
+        </member>
+        <member name="M:HotChocolate.IError.WithException(System.Exception)">
+            <summary>
+            Creates a new error that contains all properties of this error
+            but with the specified <paramref name="exception" />.
+            </summary>
+            <param name="exception">
+            The .net exception that caused this error.
+            </param>
+            <returns>
+            Returns a new error that contains all properties of this error
+            but with the specified <paramref name="exception" />.
+            </returns>
+        </member>
+        <member name="M:HotChocolate.IError.RemoveException">
+            <summary>
+            Creates a new error that contains all properties of this error
+            but removed the exception from it.
+            </summary>
+            <returns>
+            Returns a new error that contains all properties of this error
+            but without any exception details.
+            </returns>
+        </member>
+        <member name="M:HotChocolate.IError.WithExtensions(System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object})">
+            <summary>
+            Creates a new error that contains all properties of this error
+            but with the specified <paramref name="extensions" />.
+            </summary>
+            <param name="extensions">
+            A collection of custom error properties.
+            </param>
+            <returns>
+            Returns a new error that contains all properties of this error
+            but with the specified <paramref name="extensions" />.
+            </returns>
+        </member>
+        <member name="M:HotChocolate.IError.AddExtension(System.String,System.Object)">
+            <summary>
+            Creates a new error that contains all properties of this error
+            but with and additional custom error property.
+            </summary>
+            <param name="key">The custom error property name.</param>
+            <param name="value">The value of the custiom error property.</param>
+            <returns>
+            Returns a new error that contains all properties of this error
+            but with and additional custom error property.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            The <paramref name="key" /> is null or empty.
+            </exception>
+        </member>
+        <member name="M:HotChocolate.IError.RemoveExtension(System.String)">
+            <summary>
+            Creates a new error that contains all properties of this error
+            but with the specified additional custom error property removed.
+            </summary>
+            <param name="key">The custom error property name.</param>
+            <returns>
+            Returns a new error that contains all properties of this error
+            but with the specified additional custom error property removed.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            The <paramref name="key" /> is null or empty.
+            </exception>
+        </member>
+        <member name="T:HotChocolate.IErrorFilter">
+            <summary>
+            An error filter can handle and rewrite errors that occured
+            during execution.
+            </summary>
+        </member>
+        <member name="M:HotChocolate.IErrorFilter.OnError(HotChocolate.IError)">
+            <summary>
+            OnError is called whenever an error occured during
+            execution of a query.
+            </summary>
+            <param name="error">
+            The error that occured. This argument cannot be null.
+            </param>
+            <returns>
+            Returns the error passed in to this filter or a rewritten error.
+            It is not allowed to return null.
+            </returns>
+        </member>
+        <member name="M:HotChocolate.IErrorHandler.CreateUnexpectedError(System.Exception)">
+            <summary>
+            Creates an error from an unexpected exception.
+            </summary>
+            <param name="exception"></param>
+            <returns></returns>
+        </member>
+        <member name="P:HotChocolate.IHasContextData.ContextData">
+            <summary>
+            The context data dictionary can be used by middleware components and
+            resolvers to store and retrieve data during execution.
+            </summary>
+        </member>
+        <member name="T:HotChocolate.IOptional">
+            <summary>
+            This interface represents a way to access optionals easier
+            without the need to know the actual value type.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.IOptional.Value">
+            <summary>
+            The name value.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.IOptional.HasValue">
+            <summary>
+            <c>true</c> if the optional has a value.
+            </summary>
+        </member>
+        <member name="T:HotChocolate.IResolverResult">
+            <summary>
+            A resolver result represents an error or a value that is returned by the
+            field resolver. This interface provides a way to path field errors to
+            the execution engine without throwing QueryExceptions.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.IResolverResult.ErrorMessage">
+            <summary>
+            The error message that shall be used to create a
+            field error if the resolver result represents an error.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.IResolverResult.IsError">
+            <summary>
+            Defines if the resolver result instance represents
+            an error <c>true</c> or a value <c>false</c>.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.IResolverResult.Value">
+            <summary>
+            The resolver result value that shall be processed by the
+            execution engine in case this resolver is not an error.
+            </summary>
+        </member>
+        <member name="T:HotChocolate.IResolverResult`1">
+            <summary>
+            A resolver result represents an error or a value that is returned by the
+            field resolver. This interface provides a way to path field errors to
+            the execution engine without throwing QueryExceptions.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.IResolverResult`1.Value">
+            <summary>
+            The resolver result value that shall be processed by the
+            execution engine in case this resolver is not an error.
+            </summary>
+        </member>
+        <member name="T:HotChocolate.NameString">
+            <summary>
+            The type name string guarantees that a string adheres to the
+            GraphQL spec rules: /[_A-Za-z][_0-9A-Za-z]*/
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:HotChocolate.NameString.#ctor(System.String)" -->
+        <member name="P:HotChocolate.NameString.Value">
+            <summary>
+            The name value.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.NameString.HasValue">
+            <summary>
+            <c>true</c> if the name is not empty
+            </summary>
+        </member>
+        <member name="M:HotChocolate.NameString.ToString">
+            <summary>
+            Provides the name string.
+            </summary>
+            <returns>The name string value</returns>
+        </member>
+        <member name="M:HotChocolate.NameString.Add(HotChocolate.NameString)">
+            <summary>
+            Appends a <see cref="T:HotChocolate.NameString"/> to this
+            instance and returns a new instance of <see cref="T:HotChocolate.NameString"/>
+            representing the combined <see cref="T:HotChocolate.NameString"/>.
+            </summary>
+            <returns>The combined <see cref="T:HotChocolate.NameString"/>.</returns>
+        </member>
+        <member name="M:HotChocolate.NameString.Equals(HotChocolate.NameString,System.StringComparison)">
+            <summary>
+            Compares this <see cref="T:HotChocolate.NameString"/> value to another value
+            using a specific <see cref="T:System.StringComparison"/> type.
+            </summary>
+            <param name="other">
+            The second <see cref="T:HotChocolate.NameString"/> for comparison.
+            </param>
+            <param name="comparisonType">
+            The <see cref="T:System.StringComparison"/> type to use.
+            </param>
+            <returns>
+            <c>true</c> if both <see cref="T:HotChocolate.NameString"/> values are equal.
+            </returns>
+        </member>
+        <member name="M:HotChocolate.NameString.Equals(HotChocolate.NameString)">
+            <summary>
+            Compares this <see cref="T:HotChocolate.NameString"/> value to another value using
+            <see cref="F:System.StringComparison.Ordinal"/> comparison type.
+            </summary>
+            <param name="other">
+            The second <see cref="T:HotChocolate.NameString"/> for comparison.
+            </param>
+            <returns>
+            <c>true</c> if both <see cref="T:HotChocolate.NameString"/> values are equal.
+            </returns>
+        </member>
+        <member name="M:HotChocolate.NameString.Equals(System.Object)">
+            <summary>
+            Compares this <see cref="T:HotChocolate.NameString"/> value to another value using
+            <see cref="F:System.StringComparison.Ordinal"/> comparison.
+            </summary>
+            <param name="obj">
+            The second <see cref="T:HotChocolate.NameString"/> for comparison.
+            </param>
+            <returns>
+            <c>true</c> if both <see cref="T:HotChocolate.NameString"/> values are equal.
+            </returns>
+        </member>
+        <member name="M:HotChocolate.NameString.GetHashCode">
+            <summary>
+            Serves as a hash function for a <see cref="T:HotChocolate.NameString"/> object.
+            </summary>
+            <returns>
+            A hash code for this instance that is suitable for use in hashing
+            algorithms and data structures such as a hash table.
+            </returns>
+        </member>
+        <member name="M:HotChocolate.NameString.op_Equality(HotChocolate.NameString,HotChocolate.NameString)">
+            <summary>
+            Operator call through to Equals
+            </summary>
+            <param name="left">The left parameter</param>
+            <param name="right">The right parameter</param>
+            <returns>
+            <c>true</c> if both <see cref="T:HotChocolate.NameString"/> values are equal.
+            </returns>
+        </member>
+        <member name="M:HotChocolate.NameString.op_Inequality(HotChocolate.NameString,HotChocolate.NameString)">
+            <summary>
+            Operator call through to Equals
+            </summary>
+            <param name="left">The left parameter</param>
+            <param name="right">The right parameter</param>
+            <returns>
+            <c>true</c> if both <see cref="T:HotChocolate.NameString"/> values are not equal.
+            </returns>
+        </member>
+        <member name="M:HotChocolate.NameString.op_Addition(System.String,HotChocolate.NameString)">
+            <summary>
+            </summary>
+            <param name="left">The left parameter</param>
+            <param name="right">The right parameter</param>
+            <returns>The ToString combination of both values</returns>
+        </member>
+        <member name="M:HotChocolate.NameString.op_Addition(HotChocolate.NameString,System.String)">
+            <summary>
+            </summary>
+            <param name="left">The left parameter</param>
+            <param name="right">The right parameter</param>
+            <returns>The ToString combination of both values</returns>
+        </member>
+        <member name="M:HotChocolate.NameString.op_Addition(HotChocolate.NameString,HotChocolate.NameString)">
+            <summary>
+            Operator call through to Add
+            </summary>
+            <param name="left">The left parameter</param>
+            <param name="right">The right parameter</param>
+            <returns>
+            The <see cref="T:HotChocolate.NameString"/> combination of both values
+            </returns>
+        </member>
+        <member name="M:HotChocolate.NameString.op_Implicit(System.String)~HotChocolate.NameString">
+            <summary>
+            Implicitly creates a new <see cref="T:HotChocolate.NameString"/> from
+            the given string.
+            </summary>
+            <param name="s">The string.</param>
+        </member>
+        <member name="M:HotChocolate.NameString.op_Implicit(HotChocolate.NameString)~System.String">
+            <summary>
+            Implicitly calls ToString().
+            </summary>
+            <param name="name"></param>
+        </member>
+        <member name="T:HotChocolate.Optional`1">
+            <summary>
+            The optional type is used to differentiate between not set and set input values.
+            </summary>
+        </member>
+        <member name="M:HotChocolate.Optional`1.#ctor(`0)">
+            <summary>
+            Initializes a new instance of the <see cref="T:HotChocolate.Optional`1"/> struct.
+            </summary>
+            <param name="value">The actual value.</param>
+        </member>
+        <member name="P:HotChocolate.Optional`1.Value">
+            <summary>
+            The name value.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Optional`1.HasValue">
+            <summary>
+            <c>true</c> if the optional has a value.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Optional`1.IsEmpty">
+            <summary>
+            <c>true</c> if the optional has no value.
+            </summary>
+        </member>
+        <member name="M:HotChocolate.Optional`1.ToString">
+            <summary>
+            Provides the name string.
+            </summary>
+            <returns>The name string value</returns>
+        </member>
+        <member name="M:HotChocolate.Optional`1.Equals(HotChocolate.Optional{`0})">
+            <summary>
+            Compares this <see cref="T:HotChocolate.Optional`1"/> value to another value.
+            </summary>
+            <param name="other">
+            The second <see cref="T:HotChocolate.Optional`1"/> for comparison.
+            </param>
+            <returns>
+            <c>true</c> if both <see cref="T:HotChocolate.Optional`1"/> values are equal.
+            </returns>
+        </member>
+        <member name="M:HotChocolate.Optional`1.Equals(System.Object)">
+            <summary>
+            Compares this <see cref="T:HotChocolate.Optional`1"/> value to another value.
+            </summary>
+            <param name="obj">
+            The second <see cref="T:HotChocolate.Optional`1"/> for comparison.
+            </param>
+            <returns>
+            <c>true</c> if both <see cref="T:HotChocolate.Optional`1"/> values are equal.
+            </returns>
+        </member>
+        <member name="M:HotChocolate.Optional`1.GetHashCode">
+            <summary>
+            Serves as a hash function for a <see cref="!:Optional"/> object.
+            </summary>
+            <returns>
+            A hash code for this instance that is suitable for use in hashing
+            algorithms and data structures such as a hash table.
+            </returns>
+        </member>
+        <member name="M:HotChocolate.Optional`1.op_Equality(HotChocolate.Optional{`0},HotChocolate.Optional{`0})">
+            <summary>
+            Operator call through to Equals
+            </summary>
+            <param name="left">The left parameter</param>
+            <param name="right">The right parameter</param>
+            <returns>
+            <c>true</c> if both <see cref="!:Optional"/> values are equal.
+            </returns>
+        </member>
+        <member name="M:HotChocolate.Optional`1.op_Inequality(HotChocolate.Optional{`0},HotChocolate.Optional{`0})">
+            <summary>
+            Operator call through to Equals
+            </summary>
+            <param name="left">The left parameter</param>
+            <param name="right">The right parameter</param>
+            <returns>
+            <c>true</c> if both <see cref="!:Optional"/> values are not equal.
+            </returns>
+        </member>
+        <member name="M:HotChocolate.Optional`1.op_Implicit(`0)~HotChocolate.Optional{`0}">
+            <summary>
+            Implicitly creates a new <see cref="!:Optional"/> from
+            the given value.
+            </summary>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:HotChocolate.Optional`1.op_Implicit(HotChocolate.Optional{`0})~`0">
+            <summary>
+            Implicitly gets the optional value.
+            </summary>
+            <param name="name"></param>
+        </member>
+        <member name="T:HotChocolate.Properties.AbstractionResources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.AbstractionResources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.AbstractionResources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.AbstractionResources.DataLoader_KeyMustNotBeNullOrEmpty">
+            <summary>
+              Looks up a localized string similar to The DataLoader key mustn&apos;t null or empty..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.AbstractionResources.DirectiveArgument_NameMustNotBeNullOrempty">
+            <summary>
+              Looks up a localized string similar to The directive argument name be mustn&apos;t null or empty..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.AbstractionResources.Name_MustNotBeEmpty">
+            <summary>
+              Looks up a localized string similar to The specified name mustn&apos;t be empty..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.AbstractionResources.QueryRequestBuilder_QueryIsNull">
+            <summary>
+              Looks up a localized string similar to You must specify a query before creating a query request..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.AbstractionResources.QueryRequestBuilder_QueryIsNullOrEmpty">
+            <summary>
+              Looks up a localized string similar to The query mustn&apos;t be null or empty..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.AbstractionResources.State_KeyMustNotBeNullOrEmpty">
+            <summary>
+              Looks up a localized string similar to The state key mustn&apos;t null or empty..
+            </summary>
+        </member>
+        <member name="P:HotChocolate.Properties.AbstractionResources.Type_NameIsNotValid">
+            <summary>
+              Looks up a localized string similar to `{0}` is not a valid GraphQL type name..
+            </summary>
+        </member>
+        <member name="T:HotChocolate.ResolverResult`1">
+            <summary>
+            A resolver result represents an error or a value that is returned by the
+            field-resolver. This interface provides a way to path field errors to
+            the execution engine without throwing QueryExceptions.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.ResolverResult`1.ErrorMessage">
+            <summary>
+            The error message that shall be used to create a
+            field error if the resolver result represents an error.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.ResolverResult`1.IsError">
+            <summary>
+            Defines if the resolver result instance represents
+            an error <c>true</c> or a value <c>false</c>.
+            </summary>
+        </member>
+        <member name="P:HotChocolate.ResolverResult`1.Value">
+            <summary>
+            The resolver result value that shall be processed by the
+            execution engine in case this resolver is not an error.
+            </summary>
+        </member>
+        <member name="M:HotChocolate.ResolverResult`1.CreateError(System.String)">
+            <summary>
+            Creates a field error resolver result.
+            </summary>
+            <param name="errorMessage">
+            The error message.
+            </param>
+            <returns>
+            Returns a field error resolver result.
+            </returns>
+        </member>
+        <member name="M:HotChocolate.ResolverResult`1.CreateValue(`0)">
+            <summary>
+            Creates a value resolver result.
+            </summary>
+            <param name="value">
+            The reolver result value.
+            </param>
+            <returns>
+            Returns a value resolver result.
+            </returns>
+        </member>
+        <member name="T:HotChocolate.ResolverResult">
+            <summary>
+            This is a helper class in order to have a simpler api to
+            create a resolver result.
+            </summary>
+        </member>
+        <member name="M:HotChocolate.ResolverResult.CreateError``1(System.String)">
+            <summary>
+            Creates a field error resolver result.
+            </summary>
+            <param name="errorMessage">
+            The error message.
+            </param>
+            <returns>
+            Returns a field error resolver result.
+            </returns>
+        </member>
+        <member name="M:HotChocolate.ResolverResult.CreateValue``1(``0)">
+            <summary>
+            Creates a value resolver result.
+            </summary>
+            <param name="value">
+            The reolver result value.
+            </param>
+            <returns>
+            Returns a value resolver result.
+            </returns>
+        </member>
+    </members>
+</doc>

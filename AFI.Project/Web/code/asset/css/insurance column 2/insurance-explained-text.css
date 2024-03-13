@@ -1,0 +1,25 @@
+.additional_coverages_container {
+  max-width: 1150px;
+  margin: auto;
+  justify-content: space-between;
+}
+
+.left__text__content {
+  padding-left: 0;
+}
+
+.additional_coverages_container dl {
+  color: #363636;
+  padding: 0;
+  margin-left: 0 !important;
+}
+
+.additional_coverages_container dt {
+  font-weight: bold !important;
+  color: #004976;
+}
+
+.additional_coverages_container dd {
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+}

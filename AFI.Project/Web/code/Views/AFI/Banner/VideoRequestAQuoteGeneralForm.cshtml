@@ -1,0 +1,202 @@
+﻿
+@using Sitecore.Mvc
+@using Sitecore
+@using Sitecore.Data.Fields
+@using Sitecore.Resources.Media
+@using Sitecore.Data.Items
+@using Sitecore.Mvc.Presentation
+@using AFI.Foundation.Helper
+
+
+@{
+    var rendering = RenderingContext.Current.Rendering.Item;
+    Sitecore.Data.Fields.MultilistField multiselectField = rendering.Fields[FeatureTemplate.DropdownQuoteForm.Fields.InsuranceTypeList];
+    Sitecore.Data.Items.Item[] items = multiselectField.GetItems();
+
+    var yturl = ((Sitecore.Data.Fields.LinkField)rendering.Fields[FeatureTemplate.VideoRequestDropdownQuoteForm.Fields.Link]).GetFriendlyUrl();
+
+    var _position = RenderingContext.Current.Rendering.Parameters["DropDownPosition"];
+    var _CTAcolor = RenderingContext.Current.Rendering.Parameters["DropDownCTAcolor"];
+    var _colorbtn = "";
+
+    var _margin_position = "";
+    if (_position == "Left")
+    {
+        _margin_position = "quote__start_left";
+
+    }
+    else
+    {
+        _margin_position = " ";
+    }
+    if (_CTAcolor == "Yollow")
+    {
+        _colorbtn = "yellow__btn";
+    }
+    else
+    {
+        _colorbtn = " ";
+    }
+
+}
+
+
+@if (Sitecore.Context.PageMode.IsExperienceEditor)
+{
+    <section class="frontier___hero">
+
+        <div class="landing-page-hero__wrapper landing-page-hero__video-wrapper @_margin_position">
+            <section class="">
+
+                <picture class="backround_image mv_bg_image_remove">
+                    
+                    @Html.Sitecore().Field(FeatureTemplate.DropdownQuoteForm.Fields.Image.ToString())
+                </picture>
+            </section>
+            <div class="wrapper container  ">
+                <section class="video-wrapper">
+                    
+
+                    @if (!string.IsNullOrEmpty(yturl))
+                    {
+
+                        <article class="video-container">
+                            <iframe src="@yturl"
+                                    title="YouTube video player"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen
+                                    class="video"></iframe>
+                        </article>
+
+                    }
+                    else
+                    {
+                        <section class="text-info">
+                            <p>
+                                Please add Youtube embed video URL like https://www.youtube.com/embed/AtdcUuUOV6w <br />
+                                @Html.Sitecore().Field("Youtube Link")
+                            </p>
+                        </section>
+                    }
+                </section>
+                <div class="quote_form_wrapper quote-start">
+                    <section class="quote-selector quote-selector--dropdown quote-selector">
+                        
+                            <fieldset class="quote-selector__form  " id = "quote-selector__form">
+                                <h1 class="quote_selector__heading">@Html.Sitecore().Field(FeatureTemplate.DropdownQuoteForm.Fields.Title.ToString())</h1>
+                                <input type="hidden" name="gclid" value="TeSter-123" />
+                                <div class="quote-selector__fields">
+                                    <div class="field  ">
+                                        <label class="type-label" for="quoteSelector" class="label ">@Html.Sitecore().Field(FeatureTemplate.DropdownQuoteForm.Fields.InsuranceTypeText.ToString())</label>
+                                        <select class="input  " id="quoteSelector" name="quoteSelector" required aria-required="true">
+                                           
+                                            @if(items.Length > 0){
+                                                <option value="">Please Select</option>
+                                                foreach (Sitecore.Data.Items.Item item in items)
+                                                    {
+                                                        <option value="@item.ID">@item.Fields[FeatureTemplate.InsuranceType.Fields.Title.ToString()]</option>
+
+                                                    }
+                                            }
+                                                    
+                                            else
+                                            {
+                                                <option value="">No insurance types have been selected</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="quote-selector__controls" style="display:none;">
+                                        <div class="field" style="display:none;">
+                                            <input class="input js-shortzip-mask" id="quote-zip" name="quote-zip" type="text" value="" required aria-required="true" />
+                                            <label for="quote-zip" class="label quote-selector__label">@Html.Sitecore().Field(FeatureTemplate.DropdownQuoteForm.Fields.PlaceHolderText.ToString())</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button id="submit-quote" class="button button--large-text quote-selector__button Click-here @_colorbtn" type="button">@Html.Sitecore().Field(FeatureTemplate.DropdownQuoteForm.Fields.ButtonText.ToString())</button>
+                            </fieldset>
+                        
+                    </section>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+}
+else
+{
+
+    <section class="frontier___hero">
+
+        <div class="landing-page-hero__wrapper landing-page-hero__video-wrapper @_margin_position">
+            <section class="">
+
+                @{string bgImageUrl = "";
+                    ImageField bgimgField = rendering.Fields[FeatureTemplate.DropdownQuoteForm.Fields.Image];
+                    if (bgimgField.MediaItem != null)
+                    {
+                        bgImageUrl = MediaManager.GetMediaUrl(bgimgField.MediaItem);
+                    }
+                }
+                <picture class="backround_image mv_bg_image_remove">
+                    <source media="(min-width: 64em)" srcset="@bgImageUrl">
+                    @Html.Sitecore().Field(FeatureTemplate.DropdownQuoteForm.Fields.Image.ToString())
+                </picture>
+            </section>
+            <div class="wrapper container  ">
+                <section class="video-wrapper">
+                    
+                        @if (!string.IsNullOrEmpty(yturl))
+                        {
+
+                            <div class="video-container">
+                                <iframe src="@yturl"
+                                        title="YouTube video player"
+                                        frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowfullscreen
+                                        class="video"></iframe>
+                            </div>
+
+                        }
+                    
+                </section>
+                <div class="quote_form_wrapper quote-start">
+                    <section class="quote-selector quote-selector--dropdown quote-selector">
+                        @using (Html.BeginRouteForm(Sitecore.Mvc.Configuration.MvcSettings.SitecoreRouteName, FormMethod.Post, htmlAttributes: new { @class = "quote-selector__form", @id = "quote-selector__form" }))
+                        {
+                            @Html.Sitecore().FormHandler("QuoteForm", "HomepageQuoteFormSubmit")
+                            <fieldset>
+                                <h1 class="quote_selector__heading">@Html.Sitecore().Field(FeatureTemplate.DropdownQuoteForm.Fields.Title.ToString())</h1>
+                                <input type="hidden" name="gclid" value="TeSter-123" />
+                                <div class="quote-selector__fields">
+                                    <div class="field  ">
+                                        <label class="type-label" for="quoteSelector" class="label ">@Html.Sitecore().Field(FeatureTemplate.DropdownQuoteForm.Fields.InsuranceTypeText.ToString())</label>
+                                        <select class="input  " id="quoteSelector" name="type" required aria-required="true">
+                                            <option value="">@Html.Sitecore().Field(FeatureTemplate.DropdownQuoteForm.Fields.FieldDefaultText.ToString())</option>
+                                            @foreach (Sitecore.Data.Items.Item item in items)
+                                            {
+                                                <option value="@item.ID">@item.Fields[FeatureTemplate.InsuranceType.Fields.Title.ToString()]</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="quote-selector__controls" style="display:none;">
+                                        <div class="field" style="display:none;">
+                                            <input class="input js-shortzip-mask" id="quote-zip" name="quote-zip" type="text" value="" required aria-required="true" />
+                                            <label for="quote-zip" class="label quote-selector__label">@Html.Sitecore().Field(FeatureTemplate.DropdownQuoteForm.Fields.PlaceHolderText.ToString())</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button id="submit-quote" class="button button--large-text quote-selector__button Click-here @_colorbtn" type="button">@Html.Sitecore().Field(FeatureTemplate.DropdownQuoteForm.Fields.ButtonText.ToString())</button>
+                            </fieldset>
+                        }
+                    </section>
+                </div>
+            </div>
+        </div>
+
+    </section>
+}
+
+

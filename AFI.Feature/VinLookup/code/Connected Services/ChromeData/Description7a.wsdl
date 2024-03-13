@@ -1,0 +1,1088 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:dtns="urn:description7a.services.chrome.com" xmlns="http://schemas.xmlsoap.org/wsdl/" name="Description7a" targetNamespace="urn:description7a.services.chrome.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <documentation>
+        Copyright 2023 Autodata, Inc. dba ChromeData. 7.8.0.275
+    </documentation>
+  <wsdl:types>
+    <xsd:schema xmlns:tns="urn:description7a.services.chrome.com" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="urn:description7a.services.chrome.com">
+      <xsd:complexType name="AccountInfo">
+        <xsd:attribute name="number" type="xsd:string" use="required">
+          <xsd:annotation>
+            <xsd:documentation>Account Number provided by Chrome.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="secret" type="xsd:string" use="required">
+          <xsd:annotation>
+            <xsd:documentation>Account Secret/Password provided by Chrome.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="country" type="xsd:string" use="required">
+          <xsd:annotation>
+            <xsd:documentation>Upper-case, two-letter code defined by ISO-3166.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="language" type="xsd:string" use="required">
+          <xsd:annotation>
+            <xsd:documentation>Lower-case, two-letter code defined by ISO-639.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="behalfOf" type="xsd:string" />
+      </xsd:complexType>
+      <xsd:element name="VersionInfo">
+        <xsd:complexType>
+          <xsd:complexContent mixed="false">
+            <xsd:extension base="tns:BaseResponse">
+              <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" name="data">
+                  <xsd:annotation>
+                    <xsd:documentation>Represents each country of data available via this service, its
+                                            version, and licensed availability.
+                                        </xsd:documentation>
+                  </xsd:annotation>
+                  <xsd:complexType>
+                    <xsd:attribute name="country" type="xsd:string" use="required">
+                      <xsd:annotation>
+                        <xsd:documentation>Upper-case, two-letter country code defined by ISO-3166.
+                                                </xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:attribute>
+                    <xsd:attribute name="build" type="xsd:string" use="required">
+                      <xsd:annotation>
+                        <xsd:documentation>The unique version number for this data set.
+                                                </xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:attribute>
+                    <xsd:attribute name="date" type="xsd:dateTime" use="required">
+                      <xsd:annotation>
+                        <xsd:documentation>The time at which this data was published.
+                                                </xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:attribute>
+                    <xsd:attribute name="licensed" type="xsd:boolean">
+                      <xsd:annotation>
+                        <xsd:documentation>True if these data are licensed.</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:attribute>
+                  </xsd:complexType>
+                </xsd:element>
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="BaseResponse">
+        <xsd:sequence>
+          <xsd:element name="responseStatus" type="tns:ResponseStatus" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="ModelYears">
+        <xsd:complexType>
+          <xsd:complexContent mixed="false">
+            <xsd:extension base="tns:BaseResponse">
+              <xsd:sequence>
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="modelYear" type="xsd:int" />
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Divisions">
+        <xsd:complexType>
+          <xsd:complexContent mixed="false">
+            <xsd:extension base="tns:BaseResponse">
+              <xsd:sequence>
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="division" type="tns:IdentifiedString" />
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Subdivisions">
+        <xsd:complexType>
+          <xsd:complexContent mixed="false">
+            <xsd:extension base="tns:BaseResponse">
+              <xsd:sequence>
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="subdivision" type="tns:IdentifiedString" />
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Models">
+        <xsd:complexType>
+          <xsd:complexContent mixed="false">
+            <xsd:extension base="tns:BaseResponse">
+              <xsd:sequence>
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="model" type="tns:IdentifiedString" />
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Styles">
+        <xsd:complexType>
+          <xsd:complexContent mixed="false">
+            <xsd:extension base="tns:BaseResponse">
+              <xsd:sequence>
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="style" type="tns:IdentifiedString" />
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="Style">
+        <xsd:sequence>
+          <xsd:element name="division" type="tns:IdentifiedString" />
+          <xsd:element name="subdivision" type="tns:IdentifiedString" />
+          <xsd:element name="model" type="tns:IdentifiedString" />
+          <xsd:element minOccurs="0" name="basePrice" type="tns:Price" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="bodyType">
+            <xsd:complexType>
+              <xsd:complexContent mixed="false">
+                <xsd:extension base="tns:IdentifiedString">
+                  <xsd:attribute name="primary" type="xsd:boolean" />
+                </xsd:extension>
+              </xsd:complexContent>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element minOccurs="0" name="marketClass" type="tns:IdentifiedString" />
+          <xsd:element minOccurs="0" name="stockImage">
+            <xsd:complexType>
+              <xsd:complexContent mixed="false">
+                <xsd:extension base="tns:Image">
+                  <xsd:attribute name="filename" type="xsd:string" use="required" />
+                </xsd:extension>
+              </xsd:complexContent>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element minOccurs="0" name="mediaGallery" type="tns:MediaGallery" />
+        </xsd:sequence>
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="modelYear" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="nameWoTrim" type="xsd:string" />
+        <xsd:attribute name="trim" type="xsd:string" />
+        <xsd:attribute name="mfrModelCode" type="xsd:string" />
+        <xsd:attribute name="fleetOnly" type="xsd:boolean" />
+        <xsd:attribute name="modelFleet" type="xsd:boolean" />
+        <xsd:attribute name="passDoors" type="xsd:int" />
+        <xsd:attribute name="altModelName" type="xsd:string" />
+        <xsd:attribute name="altStyleName" type="xsd:string" />
+        <xsd:attribute name="altBodyType" type="xsd:string" />
+        <xsd:attribute name="drivetrain" type="tns:DriveTrain" />
+      </xsd:complexType>
+      <xsd:complexType name="Price">
+        <xsd:attribute name="unknown" type="xsd:boolean" />
+        <xsd:attribute name="invoice" type="xsd:double" />
+        <xsd:attribute name="msrp" type="xsd:double" />
+        <xsd:attribute name="destination" type="xsd:double" />
+      </xsd:complexType>
+      <xsd:complexType name="PriceRange">
+        <xsd:sequence>
+          <xsd:element name="invoice" type="tns:Range" />
+          <xsd:element name="msrp" type="tns:Range" />
+          <xsd:element name="destination" type="tns:Range" />
+        </xsd:sequence>
+        <xsd:attribute name="unknown" type="xsd:boolean" />
+      </xsd:complexType>
+      <xsd:simpleType name="DriveTrain">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="Front Wheel Drive" />
+          <xsd:enumeration value="Rear Wheel Drive" />
+          <xsd:enumeration value="All Wheel Drive" />
+          <xsd:enumeration value="Four Wheel Drive" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:element name="VehicleDescription">
+        <xsd:complexType>
+          <xsd:complexContent mixed="false">
+            <xsd:extension base="tns:BaseResponse">
+              <xsd:sequence>
+                <xsd:element minOccurs="0" name="vinDescription">
+                  <xsd:complexType>
+                    <xsd:sequence>
+                      <xsd:element minOccurs="0" name="gvwr" type="tns:Range" />
+                      <xsd:element minOccurs="0" name="WorldManufacturerIdentifier" type="xsd:string" />
+                      <xsd:element minOccurs="0" name="ManufacturerIdentificationCode" type="xsd:string" />
+                      <xsd:element minOccurs="0" maxOccurs="unbounded" name="restraintTypes" type="tns:CategoryDefinition" />
+                      <xsd:element minOccurs="0" maxOccurs="unbounded" name="marketClass" type="tns:IdentifiedString" />
+                    </xsd:sequence>
+                    <xsd:attribute name="vin" type="xsd:string" use="required" />
+                    <xsd:attribute name="modelYear" type="xsd:int" use="required" />
+                    <xsd:attribute name="division" type="xsd:string" use="required" />
+                    <xsd:attribute name="modelName" type="xsd:string" use="required" />
+                    <xsd:attribute name="styleName" type="xsd:string" />
+                    <xsd:attribute name="bodyType" type="xsd:string" />
+                    <xsd:attribute name="drivingWheels" type="xsd:string" />
+                    <xsd:attribute name="built" type="xsd:dateTime" />
+                  </xsd:complexType>
+                </xsd:element>
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="style" type="tns:Style" />
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="engine" type="tns:Engine" />
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="standard" type="tns:Standard" />
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="factoryOption" type="tns:Option" />
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="genericEquipment" type="tns:GenericEquipment" />
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="consumerInformation" type="tns:ConsumerInformation" />
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="technicalSpecification" type="tns:TechnicalSpecification" />
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="exteriorColor" type="tns:Color" />
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="interiorColor" type="tns:Color" />
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="genericColor" type="tns:GenericColor" />
+                <xsd:element minOccurs="0" name="basePrice" type="tns:PriceRange" />
+              </xsd:sequence>
+              <xsd:attribute name="country" type="xsd:string" use="required" />
+              <xsd:attribute name="language" type="xsd:string" use="required" />
+              <xsd:attribute name="modelYear" type="xsd:int" />
+              <xsd:attribute name="bestMakeName" type="xsd:string" />
+              <xsd:attribute name="bestModelName" type="xsd:string" />
+              <xsd:attribute name="bestStyleName" type="xsd:string" />
+              <xsd:attribute name="bestTrimName" type="xsd:string" />
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="Range">
+        <xsd:attribute name="low" type="xsd:double" />
+        <xsd:attribute name="high" type="xsd:double" />
+      </xsd:complexType>
+      <xsd:complexType name="InstallationCause">
+        <xsd:attribute name="cause" use="required">
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:string">
+              <xsd:enumeration value="Engine" />
+              <xsd:enumeration value="RelatedCategory" />
+              <xsd:enumeration value="RelatedColor" />
+              <xsd:enumeration value="CategoryLogic" />
+              <xsd:enumeration value="OptionLogic" />
+              <xsd:enumeration value="OptionCodeBuild" />
+              <xsd:enumeration value="ExteriorColorBuild" />
+              <xsd:enumeration value="InteriorColorBuild" />
+              <xsd:enumeration value="EquipmentDescriptionInput" />
+              <xsd:enumeration value="ExteriorColorInput" />
+              <xsd:enumeration value="InteriorColorInput" />
+              <xsd:enumeration value="OptionCodeInput" />
+              <xsd:enumeration value="BaseEquipment" />
+              <xsd:enumeration value="VIN" />
+              <xsd:enumeration value="NonFactoryEquipmentInput" />
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:attribute>
+        <xsd:attribute name="detail" type="xsd:string" />
+      </xsd:complexType>
+      <xsd:complexType name="Engine">
+        <xsd:sequence>
+          <xsd:element name="engineType" type="tns:IdentifiedString" />
+          <xsd:element name="fuelType" type="tns:IdentifiedString" />
+          <xsd:element minOccurs="0" name="horsepower" type="tns:ValueRPM" />
+          <xsd:element minOccurs="0" name="netTorque" type="tns:ValueRPM" />
+          <xsd:element minOccurs="0" name="cylinders" type="xsd:int" />
+          <xsd:element minOccurs="0" name="displacement">
+            <xsd:complexType>
+              <xsd:attribute name="liters" type="xsd:double" />
+              <xsd:attribute name="cubicIn" type="xsd:int" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element minOccurs="0" name="fuelEconomy">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="city" type="tns:Range" />
+                <xsd:element name="hwy" type="tns:Range" />
+              </xsd:sequence>
+              <xsd:attribute name="unit" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element minOccurs="0" name="fuelCapacity">
+            <xsd:complexType>
+              <xsd:complexContent mixed="false">
+                <xsd:extension base="tns:Range">
+                  <xsd:attribute name="unit" type="xsd:string" use="required" />
+                </xsd:extension>
+              </xsd:complexContent>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element minOccurs="0" name="forcedInduction" type="tns:IdentifiedString" />
+          <xsd:element minOccurs="0" name="installed" type="tns:InstallationCause" />
+        </xsd:sequence>
+        <xsd:attribute name="highOutput" type="xsd:boolean" />
+      </xsd:complexType>
+      <xsd:complexType name="ValueRPM">
+        <xsd:attribute name="value" type="xsd:double" />
+        <xsd:attribute name="rpm" type="xsd:int" />
+      </xsd:complexType>
+      <xsd:complexType name="Standard">
+        <xsd:sequence>
+          <xsd:element name="header" type="tns:IdentifiedString" />
+          <xsd:element name="description" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="category" type="tns:CategoryAssociation" />
+          <xsd:element maxOccurs="unbounded" name="styleId" type="xsd:int" />
+          <xsd:element minOccurs="0" name="installed" type="tns:InstallationCause" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="CategoryAssociation">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="removed" type="xsd:boolean" />
+      </xsd:complexType>
+      <xsd:complexType name="Option">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="header" type="tns:IdentifiedString" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="description" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="category" type="tns:CategoryAssociation" />
+          <xsd:element minOccurs="0" name="price" type="tns:OptionPrice" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="styleId" type="xsd:int" />
+          <xsd:element minOccurs="0" name="installed" type="tns:InstallationCause" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="ambiguousOption" type="tns:Option" />
+        </xsd:sequence>
+        <xsd:attribute name="chromeCode" type="xsd:string" />
+        <xsd:attribute name="oemCode" type="xsd:string" />
+        <xsd:attribute name="altOptionCode" type="xsd:string" />
+        <xsd:attribute name="standard" type="xsd:boolean" />
+        <xsd:attribute name="optionKindId" type="xsd:int" />
+        <xsd:attribute name="utf" type="xsd:string" />
+        <xsd:attribute name="fleetOnly" type="xsd:boolean" />
+      </xsd:complexType>
+      <xsd:complexType name="OptionPrice">
+        <xsd:attribute name="unknown" type="xsd:boolean" />
+        <xsd:attribute name="invoiceMin" type="xsd:double" />
+        <xsd:attribute name="invoiceMax" type="xsd:double" />
+        <xsd:attribute name="msrpMin" type="xsd:double" />
+        <xsd:attribute name="msrpMax" type="xsd:double" />
+      </xsd:complexType>
+      <xsd:complexType name="GenericEquipment">
+        <xsd:sequence>
+          <xsd:choice>
+            <xsd:element name="categoryId" type="xsd:int" />
+            <xsd:element name="definition" type="tns:CategoryDefinition" />
+          </xsd:choice>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="styleId" type="xsd:int" />
+            <xsd:element minOccurs="0" name="installed" type="tns:InstallationCause" />
+          </xsd:sequence>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ConsumerInformation">
+        <xsd:sequence>
+          <xsd:element name="type" type="tns:IdentifiedString" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="item">
+            <xsd:complexType>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="conditionNote" type="xsd:string" />
+              <xsd:attribute name="value" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element maxOccurs="unbounded" name="styleId" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="TechnicalSpecification">
+        <xsd:sequence>
+          <xsd:choice>
+            <xsd:element name="titleId" type="xsd:int" />
+            <xsd:element name="definition" type="tns:TechnicalSpecificationDefinition" />
+          </xsd:choice>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" name="range">
+              <xsd:complexType>
+                <xsd:attribute name="min" type="xsd:double" use="required" />
+                <xsd:attribute name="max" type="xsd:double" use="required" />
+              </xsd:complexType>
+            </xsd:element>
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="value">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element maxOccurs="unbounded" name="styleId" type="xsd:int" />
+                </xsd:sequence>
+                <xsd:attribute name="value" type="xsd:string" />
+                <xsd:attribute name="condition" type="xsd:string" />
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="GenericColor">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="installed" type="tns:InstallationCause" />
+        </xsd:sequence>
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="primary" type="xsd:boolean" use="optional" />
+      </xsd:complexType>
+      <xsd:complexType name="Color">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="genericColor" type="tns:GenericColor" />
+          <xsd:element maxOccurs="unbounded" name="styleId" type="xsd:int" />
+          <xsd:element minOccurs="0" name="installed" type="tns:InstallationCause" />
+        </xsd:sequence>
+        <xsd:attribute name="colorCode" type="xsd:string" use="required" />
+        <xsd:attribute name="colorName" type="xsd:string" use="required" />
+        <xsd:attribute name="rgbValue" type="xsd:string" />
+      </xsd:complexType>
+      <xsd:complexType name="ResponseStatus">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="matchedEquipment" type="tns:MatchedEquipment" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="matchedNonFactoryEquipment" type="tns:MatchedNonFactoryEquipment" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="status">
+            <xsd:complexType>
+              <xsd:simpleContent>
+                <xsd:extension base="xsd:string">
+                  <xsd:attribute name="code" use="required">
+                    <xsd:simpleType>
+                      <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="UnrecognizedTrimName" />
+                        <xsd:enumeration value="UnusedTrimName" />
+                        <xsd:enumeration value="UnrecognizedManufacturerModelCode" />
+                        <xsd:enumeration value="UnusedManufacturerModelCode" />
+                        <xsd:enumeration value="UnrecognizedStyleId" />
+                        <xsd:enumeration value="UnusedReducingStyleId" />
+                        <xsd:enumeration value="UnrecognizedReducingStyleId" />
+                        <xsd:enumeration value="UnrecognizedWheelBase" />
+                        <xsd:enumeration value="UnusedWheelBase" />
+                        <xsd:enumeration value="UnrecognizedOptionCode" />
+                        <xsd:enumeration value="UnusedOptionCode" />
+                        <xsd:enumeration value="UnrecognizedEquipmentDescription" />
+                        <xsd:enumeration value="UnrecognizedNonFactoryEquipmentDescription" />
+                        <xsd:enumeration value="UnusedNonFactoryEquipmentDescription" />
+                        <xsd:enumeration value="UsingAlternateLocale" />
+                        <xsd:enumeration value="NameMatchNotFound" />
+                        <xsd:enumeration value="VinNotCarriedByChrome" />
+                        <xsd:enumeration value="InvalidVinCheckDigit" />
+                        <xsd:enumeration value="InvalidVinCharacter" />
+                        <xsd:enumeration value="InvalidVinLength" />
+                        <xsd:enumeration value="UnrecognizedInteriorColor" />
+                        <xsd:enumeration value="UnrecognizedExteriorColor" />
+                        <xsd:enumeration value="UnrecognizedTechnicalSpecificationTitleId" />
+                        <xsd:enumeration value="Unexpected" />
+                      </xsd:restriction>
+                    </xsd:simpleType>
+                  </xsd:attribute>
+                </xsd:extension>
+              </xsd:simpleContent>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="responseCode" use="required">
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:string">
+              <xsd:enumeration value="Successful" />
+              <xsd:enumeration value="Unsuccessful" />
+              <xsd:enumeration value="ConditionallySuccessful" />
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:attribute>
+        <xsd:attribute name="description" type="xsd:string" />
+      </xsd:complexType>
+      <xsd:complexType name="MatchedEquipment">
+        <xsd:sequence>
+          <xsd:element name="equipmentDescription" type="xsd:string" />
+          <xsd:element maxOccurs="unbounded" name="categoryId" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="MatchedNonFactoryEquipment">
+        <xsd:sequence>
+          <xsd:element name="equipmentDescription" type="xsd:string" />
+          <xsd:element maxOccurs="unbounded" name="category" type="tns:CategoryDefinition" />
+          <xsd:element minOccurs="0" name="installed" type="tns:InstallationCause" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="IdentifiedString">
+        <xsd:simpleContent>
+          <xsd:extension base="xsd:string">
+            <xsd:attribute name="id" type="xsd:int" use="required" />
+          </xsd:extension>
+        </xsd:simpleContent>
+      </xsd:complexType>
+      <xsd:complexType name="CategoryDefinition">
+        <xsd:sequence>
+          <xsd:element name="group" type="tns:IdentifiedString" />
+          <xsd:element name="header" type="tns:IdentifiedString" />
+          <xsd:element name="category" type="tns:IdentifiedString" />
+          <xsd:element minOccurs="0" name="type" type="tns:IdentifiedString" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="CategoryDefinitions">
+        <xsd:complexType>
+          <xsd:complexContent mixed="false">
+            <xsd:extension base="tns:BaseResponse">
+              <xsd:sequence>
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="category" type="tns:CategoryDefinition" />
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="TechnicalSpecificationDefinition">
+        <xsd:sequence>
+          <xsd:element name="group" type="tns:IdentifiedString" />
+          <xsd:element name="header" type="tns:IdentifiedString" />
+          <xsd:element name="title" type="tns:IdentifiedString" />
+        </xsd:sequence>
+        <xsd:attribute name="measurementUnit" type="xsd:string" />
+      </xsd:complexType>
+      <xsd:element name="TechnicalSpecificationDefinitions">
+        <xsd:complexType>
+          <xsd:complexContent mixed="false">
+            <xsd:extension base="tns:BaseResponse">
+              <xsd:sequence>
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="definition" type="tns:TechnicalSpecificationDefinition" />
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="MediaGallery">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="view">
+            <xsd:complexType>
+              <xsd:complexContent mixed="false">
+                <xsd:extension base="tns:Image">
+                  <xsd:attribute name="shotCode" type="xsd:string" />
+                  <xsd:attribute name="backgroundDescription" type="xsd:string" use="optional" />
+                </xsd:extension>
+              </xsd:complexContent>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="colorized">
+            <xsd:complexType>
+              <xsd:complexContent mixed="false">
+                <xsd:extension base="tns:Image">
+                  <xsd:attribute name="primaryColorOptionCode" type="xsd:string" use="required" />
+                  <xsd:attribute name="secondaryColorOptionCode" type="xsd:string" use="optional" />
+                  <xsd:attribute name="match" type="xsd:boolean" use="optional" />
+                  <xsd:attribute name="shotCode" type="xsd:string" />
+                  <xsd:attribute name="backgroundDescription" type="xsd:string" use="optional" />
+                  <xsd:attribute name="primaryRGBHexCode" type="xsd:string" use="optional" />
+                  <xsd:attribute name="secondaryRGBHexCode" type="xsd:string" use="optional" />
+                </xsd:extension>
+              </xsd:complexContent>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="styleId" type="xsd:int" />
+      </xsd:complexType>
+      <xsd:complexType name="Image">
+        <xsd:attribute name="url" type="xsd:string" use="required" />
+        <xsd:attribute name="width" type="xsd:int" />
+        <xsd:attribute name="height" type="xsd:int" />
+      </xsd:complexType>
+      <xsd:complexType name="BaseRequest">
+        <xsd:sequence>
+          <xsd:element name="accountInfo" type="tns:AccountInfo" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="VersionInfoRequest" type="tns:BaseRequest" />
+      <xsd:element name="ModelYearsRequest" type="tns:BaseRequest" />
+      <xsd:element name="DivisionsRequest">
+        <xsd:complexType>
+          <xsd:annotation>
+            <xsd:documentation>Provides a list of Chrome division ID's associated with the provided year.
+                        </xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexContent mixed="false">
+            <xsd:extension base="tns:BaseRequest">
+              <xsd:attribute name="modelYear" type="xsd:int" use="required" />
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="SubdivisionsRequest">
+        <xsd:annotation>
+          <xsd:documentation>Provides a list of Chrome subdivision ID's associated with the provided year.
+                    </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:complexContent mixed="false">
+            <xsd:extension base="tns:BaseRequest">
+              <xsd:attribute name="modelYear" type="xsd:int" use="required" />
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ModelsRequest">
+        <xsd:annotation>
+          <xsd:documentation>Provides a list of Chrome model ID's associated with the provided year and
+                        (sub)division ID.
+                    </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:complexContent mixed="false">
+            <xsd:extension base="tns:BaseRequest">
+              <xsd:sequence>
+                <xsd:element name="modelYear" type="xsd:int" />
+                <xsd:choice>
+                  <xsd:element name="divisionId" type="xsd:int" />
+                  <xsd:element name="subdivisionId" type="xsd:int" />
+                </xsd:choice>
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="StylesRequest">
+        <xsd:annotation>
+          <xsd:documentation>Provides a list of Chrome style ID's associated with the provided model ID.
+                    </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:complexContent mixed="false">
+            <xsd:extension base="tns:BaseRequest">
+              <xsd:attribute name="modelId" type="xsd:int" use="required" />
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:simpleType name="Switch">
+        <xsd:annotation>
+          <xsd:documentation>Adding one or more switch strings to your request will change the behavior of ADS.
+                        Use the following switches to match output with your particular needs.
+                    </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="DisableSafeStandards">
+            <xsd:annotation>
+              <xsd:documentation>By default, only equipment that could not have been upgraded or removed will
+                                be presented as installed. When you use this switch, any equipment that could
+                                be standard equipment will be installed even if they could have been removed
+                                or upgraded.
+                            </xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="ShowExtendedDescriptions">
+            <xsd:annotation>
+              <xsd:documentation>Causes ADS to provide additional description information for each piece of
+                                equipment.
+                            </xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="ShowAvailableEquipment">
+            <xsd:annotation>
+              <xsd:documentation>Causes ADS to show information about all equipment available for the vehicle,
+                                whether or not it is installed.
+                            </xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="ShowConsumerInformation">
+            <xsd:annotation>
+              <xsd:documentation>Causes ADS to show normalized consumer information such as recalls, awards,
+                                and test results.
+                            </xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="ShowExtendedTechnicalSpecifications">
+            <xsd:annotation>
+              <xsd:documentation>Causes ADS to show all available technical specifications for the vehicle,
+                                and additional information about them.
+                            </xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="IncludeRegionalVehicles">
+            <xsd:annotation>
+              <xsd:documentation>By default, only vehicles sold nationally are considered for description.
+                                This switch causes ADS to also consider vehicles sold only regionally.
+                            </xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="UseDependencyOrderingLogic">
+            <xsd:annotation>
+              <xsd:documentation>By default, ADS describes and installs only equipment specifically
+                                known to exist (usually because of user input.) This switch causes ADS
+                                to consider ordering logic caused by the installed equipment itself
+                                in addition to the ordering logic of the user-identified equipment.
+                            </xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="IncludeDefinitions">
+            <xsd:annotation>
+              <xsd:documentation>Causes ADS to show Category and Technical Specification definitions in-line within a vehicle description.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="SwitchAvailability">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="ExcludeFleetOnly">
+            <xsd:annotation>
+              <xsd:documentation>Excludes Fleet Only information. (Default is "both.")</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="ExcludeRetailOnly">
+            <xsd:annotation>
+              <xsd:documentation>Excludes Retail Only information. (Default is "both".)</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="SwitchChromeMediaGallery">
+        <xsd:annotation>
+          <xsd:documentation>Provides a Chrome Media Gallery URL's associated with the described vehicle.
+                        Your user license dictates which views (none, multi-view, colorMatch, or both) are
+                        available. The default value is the most your license permits (hopefully "both.")
+                    </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="Multi-View">
+            <xsd:annotation>
+              <xsd:documentation>Provide Multi-view images, if the client license permits.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="ColorMatch">
+            <xsd:annotation>
+              <xsd:documentation>Provide ColorMatch images, if the client license permits.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+          <xsd:enumeration value="Both">
+            <xsd:annotation>
+              <xsd:documentation>Provide both image types, if the client license permits.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:enumeration>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:element name="VehicleDescriptionRequest">
+        <xsd:annotation>
+          <xsd:documentation>
+                        Describe a vehicle. You must provide one of: vehicle identifier
+                        (VIN or HIN); Chrome style ID; or year, make name, and model name. Optional input fields can
+                        help identification by limiting color, trim, wheelbase, and installed options.
+                    </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:complexContent mixed="false">
+            <xsd:extension base="tns:BaseRequest">
+              <xsd:sequence>
+                <xsd:choice>
+                  <xsd:sequence>
+                    <xsd:annotation>
+                      <xsd:documentation>
+                                                Causes ADS to describe a vehicle from a given year, make, and model. All
+                                                three must be populated.
+                                            </xsd:documentation>
+                    </xsd:annotation>
+                    <xsd:element name="modelYear" type="xsd:int" />
+                    <xsd:element name="makeName" type="xsd:string" />
+                    <xsd:element name="modelName" type="xsd:string" />
+                  </xsd:sequence>
+                  <xsd:sequence>
+                    <xsd:annotation>
+                      <xsd:documentation>
+                                                Causes ADS to describe a vehicle from a given vehicle identifier (VIN
+                                                or HIN.) You can optionally provide a known Chrome style ID to help
+                                                the identification process.
+                                            </xsd:documentation>
+                    </xsd:annotation>
+                    <xsd:element name="vin" type="xsd:string" />
+                    <xsd:element minOccurs="0" name="reducingStyleId" type="xsd:int" />
+                  </xsd:sequence>
+                  <xsd:element name="styleId" type="xsd:int">
+                    <xsd:annotation>
+                      <xsd:documentation>Causes ADS to find and describe the given vehicle.
+                                            </xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:element>
+                </xsd:choice>
+                <xsd:element minOccurs="0" name="trimName" type="xsd:string">
+                  <xsd:annotation>
+                    <xsd:documentation>Trim names are typically things like "XLT", "Sport" or "Eddie
+                                            Bauer".
+                                        </xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="manufacturerModelCode" type="xsd:string">
+                  <xsd:annotation>
+                    <xsd:documentation>MMC are typically things like "TK10743"or "CC10706".
+                                        </xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="wheelBase" type="xsd:double">
+                  <xsd:annotation>
+                    <xsd:documentation>
+                                            Give wheel base in inches. ADS will try to find vehicles where (1) the
+                                            wheel base matters in the identification (usually Ford pickups) and (2)
+                                            within +/- 2" of the given value. Round to the nearest whole inch. If
+                                            you don't, ADS will.
+                                        </xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="OEMOptionCode" type="xsd:string">
+                  <xsd:annotation>
+                    <xsd:documentation>
+                                            OEM option codes are identifiers that manufacturers use to
+                                            identify which options and packages to install on a specific vehicle. The
+                                            codes to use are unique to each manufacturer and will look like "FF3" or
+                                            "AJX". You can provide as many of these as you know, but only one per
+                                            element.
+                                        </xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="equipmentDescription" type="xsd:string">
+                  <xsd:annotation>
+                    <xsd:documentation>
+                                            Provide the name and or description of equipment you know to be installed.
+                                            If you know the manufacturer's actual name use it. Otherwise use the most
+                                            descriptive name you can think of. You can provide as many of these as
+                                            you know, but only one per element.
+                                        </xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="exteriorColorName" type="xsd:string">
+                  <xsd:annotation>
+                    <xsd:documentation>
+                                            The name of the exterior color. If you know the manufacturer's actual
+                                            color name, use it. Otherwise use the most reasonable color you can
+                                            think of.
+                                        </xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="interiorColorName" type="xsd:string">
+                  <xsd:annotation>
+                    <xsd:documentation>
+                                            The name of the interior color or interior color pair. If you know the
+                                            manufacturer's actual color name, use it. Otherwise use the most
+                                            reasonable color you can think of.
+                                        </xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="nonFactoryEquipmentDescription" type="xsd:string">
+                  <xsd:annotation>
+                    <xsd:documentation>
+                                            Provide the name and or description of non-factory (aftermarket) equipment
+                                            you know to be installed. This equipment will be listed as installed
+                                            non-factory equipment, without validation against manufacturer's install
+                                            logic and will not affect the identification or installation of factory
+                                            options, packages or equipment. You can provide as many of these as
+                                            you know, but only one per element.
+                                        </xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="switch" type="tns:Switch" />
+                <xsd:element minOccurs="0" name="vehicleProcessMode" type="tns:SwitchAvailability">
+                  <xsd:annotation>
+                    <xsd:documentation>The default behavior of ADS is to include both fleet-only and
+                                            retail only styles when discovering vehicles. Use this switch to tell
+                                            ADS to ignore either or both.
+                                        </xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="optionsProcessMode" type="tns:SwitchAvailability">
+                  <xsd:annotation>
+                    <xsd:documentation>The default behavior of ADS is to include both fleet-only and
+                                            retail only options when discovering equipment. Use this switch to tell
+                                            ADS to ignore either or both.
+                                        </xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element minOccurs="0" name="includeMediaGallery" type="tns:SwitchChromeMediaGallery">
+                  <xsd:annotation>
+                    <xsd:documentation>
+                                            If your license allows, ADS will provide additional images (beyond the
+                                            stock image) for each style described in the output. Chrome Media gallery
+                                            supports "colorMatch" (where the image is the designated color), "multiView"
+                                            (where the vehicle is seen from several angles) and "both." See the
+                                            documentation for the switch type for specific instructions.
+                                        </xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="includeTechnicalSpecificationTitleId" type="xsd:int">
+                  <xsd:annotation>
+                    <xsd:documentation>The default behavior of ADS is to include all available technical specifications.
+                                            Use this switch to tell ADS specific technical specifications (by title id) to be shown.
+                                        </xsd:documentation>
+                  </xsd:annotation>
+                </xsd:element>
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CategoryDefinitionsRequest" type="tns:BaseRequest">
+        <xsd:annotation>
+          <xsd:documentation>
+                        Provide a list of all available equipment category ID's.
+                    </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="TechnicalSpecificationDefinitionsRequest" type="tns:BaseRequest">
+        <xsd:annotation>
+          <xsd:documentation>
+                        Provide a list of all available technical specification definitions.
+                    </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="getVersionInfo">
+    <wsdl:part name="request" element="dtns:VersionInfoRequest" />
+  </wsdl:message>
+  <wsdl:message name="getVersionInfoResponse">
+    <wsdl:part name="result" element="dtns:VersionInfo" />
+  </wsdl:message>
+  <wsdl:message name="getModelYears">
+    <wsdl:part name="request" element="dtns:ModelYearsRequest" />
+  </wsdl:message>
+  <wsdl:message name="getModelYearsResponse">
+    <wsdl:part name="result" element="dtns:ModelYears" />
+  </wsdl:message>
+  <wsdl:message name="getDivisions">
+    <wsdl:part name="request" element="dtns:DivisionsRequest" />
+  </wsdl:message>
+  <wsdl:message name="getDivisionsResponse">
+    <wsdl:part name="result" element="dtns:Divisions" />
+  </wsdl:message>
+  <wsdl:message name="getSubdivisions">
+    <wsdl:part name="request" element="dtns:SubdivisionsRequest" />
+  </wsdl:message>
+  <wsdl:message name="getSubdivisionsResponse">
+    <wsdl:part name="result" element="dtns:Subdivisions" />
+  </wsdl:message>
+  <wsdl:message name="getModels">
+    <wsdl:part name="request" element="dtns:ModelsRequest" />
+  </wsdl:message>
+  <wsdl:message name="getModelsResponse">
+    <wsdl:part name="result" element="dtns:Models" />
+  </wsdl:message>
+  <wsdl:message name="getStyles">
+    <wsdl:part name="request" element="dtns:StylesRequest" />
+  </wsdl:message>
+  <wsdl:message name="getStylesResponse">
+    <wsdl:part name="result" element="dtns:Styles" />
+  </wsdl:message>
+  <wsdl:message name="describeVehicle">
+    <wsdl:part name="request" element="dtns:VehicleDescriptionRequest" />
+  </wsdl:message>
+  <wsdl:message name="describeVehicleResponse">
+    <wsdl:part name="result" element="dtns:VehicleDescription" />
+  </wsdl:message>
+  <wsdl:message name="getCategoryDefinitions">
+    <wsdl:part name="request" element="dtns:CategoryDefinitionsRequest" />
+  </wsdl:message>
+  <wsdl:message name="getCategoryDefinitionsResponse">
+    <wsdl:part name="result" element="dtns:CategoryDefinitions" />
+  </wsdl:message>
+  <wsdl:message name="getTechnicalSpecificationDefinitions">
+    <wsdl:part name="request" element="dtns:TechnicalSpecificationDefinitionsRequest" />
+  </wsdl:message>
+  <wsdl:message name="getTechnicalSpecificationDefinitionsResponse">
+    <wsdl:part name="result" element="dtns:TechnicalSpecificationDefinitions" />
+  </wsdl:message>
+  <wsdl:portType name="Description7aPortType">
+    <wsdl:operation name="getVersionInfo">
+      <wsdl:input message="dtns:getVersionInfo" />
+      <wsdl:output message="dtns:getVersionInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getModelYears">
+      <wsdl:input message="dtns:getModelYears" />
+      <wsdl:output message="dtns:getModelYearsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDivisions">
+      <wsdl:input message="dtns:getDivisions" />
+      <wsdl:output message="dtns:getDivisionsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getSubdivisions">
+      <wsdl:input message="dtns:getSubdivisions" />
+      <wsdl:output message="dtns:getSubdivisionsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getModels">
+      <wsdl:input message="dtns:getModels" />
+      <wsdl:output message="dtns:getModelsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getStyles">
+      <wsdl:input message="dtns:getStyles" />
+      <wsdl:output message="dtns:getStylesResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="describeVehicle">
+      <wsdl:input message="dtns:describeVehicle" />
+      <wsdl:output message="dtns:describeVehicleResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getCategoryDefinitions">
+      <wsdl:input message="dtns:getCategoryDefinitions" />
+      <wsdl:output message="dtns:getCategoryDefinitionsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getTechnicalSpecificationDefinitions">
+      <wsdl:input message="dtns:getTechnicalSpecificationDefinitions" />
+      <wsdl:output message="dtns:getTechnicalSpecificationDefinitionsResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Description7aBinding" type="dtns:Description7aPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getVersionInfo">
+      <soap:operation soapAction="" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getModelYears">
+      <soap:operation soapAction="" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDivisions">
+      <soap:operation soapAction="" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSubdivisions">
+      <soap:operation soapAction="" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getModels">
+      <soap:operation soapAction="" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getStyles">
+      <soap:operation soapAction="" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="describeVehicle">
+      <soap:operation soapAction="" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCategoryDefinitions">
+      <soap:operation soapAction="" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTechnicalSpecificationDefinitions">
+      <soap:operation soapAction="" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Description7a">
+    <wsdl:port name="Description7aPort" binding="dtns:Description7aBinding">
+      <soap:address location="http://services.chromedata.com:80/Description/7a" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

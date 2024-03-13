@@ -1,0 +1,59 @@
+﻿@model AFI.Feature.QuoteForm.Areas.AFIQuoteForm.Models.MobilehomeForm.MobilehomeForm
+
+@foreach (var Section in Model.form.sections)
+{
+    if (Section.id == "eligibility")
+    {
+
+        @Html.Partial("~/Views/AFI/Quote/Partial/_InsuranceEligibility.cshtml", Section);
+    }
+
+    if (Section.id == "eligibilityDetails")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/_MilitaryInformation.cshtml", Section)
+    }
+
+    if (Section.id == "eligibilityDetailsParent")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/_ChildInformation.cshtml", Section)
+    }
+
+    if (Section.id == "eligibilityDetailsChild")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/_ParentInformation.cshtml", Section)
+    }
+
+    if (Section.id == "policyHolder")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/MobileHome/_StepOne.cshtml", Model)
+    }
+    if (Section.id == "addressToBeQuoted")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/MobileHome/_StepTwo.cshtml", Model)
+    }
+    if (Section.id == "coverageHistory")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/MobileHome/_StepThree.cshtml", Model)
+    }
+}
+
+<section class="quote_request__action_buttons">
+    <div class="container d-flex">
+        <button id="mobileBackBtn"
+                class="button button__back button__left hide"
+                type="button">
+            @Model.form.backButtonText
+        </button>
+        <button id="mobileNextBtn"
+                class="button button__next button__right"
+                type="submit">
+            @Model.form.nextButtonText
+        </button>
+    </div>
+</section>
+
+
+<script>
+    var mobileSuccessRedirection = "/Quote-Forms-Save-Success";
+</script>
+

@@ -1,0 +1,243 @@
+/* ********************************
+      COLLECTOR VEHICLES PAGE
+************************************/
+/* COLLECTOR VEHICLES */
+.quote_request_heading.extra_mb {
+  margin-bottom: 30px !important;
+}
+
+.quote-request__section-columns {
+  display: flex;
+  margin-bottom: 2rem;
+}
+
+.quote-request__fields {
+  background-color: #f6f6f6;
+  background-color: var(--color-gray-10);
+  flex-grow: 1;
+  padding: 1.5rem 1rem;
+}
+
+.quote-request__fields--separated {
+  background: transparent;
+  left: 0;
+  padding: 0;
+}
+
+.quote-request__fields--separated .field {
+  display: flex;
+  justify-content: space-between;
+  max-width: none;
+}
+
+.quote-request__fields--separated .field__label {
+  font-weight: 700;
+}
+
+.quote-request__fields--separated .field__sublabel {
+  display: block;
+  font-weight: 400;
+  /* margin-top: 0.25rem; */
+}
+
+.quote-request__fields--separated .field__label-wrapper {
+  padding-right: 2rem;
+}
+
+.quote-request__fields--separated .field__input-wrapper {
+  flex-basis: 12rem;
+}
+
+.fields-row .qrf-accordion {
+  max-width: 40rem;
+}
+
+.fields-row .qrf-accordion .button-bare.qrf-accordion__trigger {
+  margin-top: 0.2rem;
+  /* margin-top: 0.5rem; */
+  /* padding-left: 0.75rem; */
+  position: relative;
+}
+
+.fields-row .qrf-accordion .button-bare.qrf-accordion__trigger:hover {
+  text-decoration: underline;
+}
+
+/* .field.extra_message_margin .field_message.error {
+  margin-top: 15px !important;
+} */
+
+.fields-row .qrf-accordion .qrf-accordion__heading {
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 10px !important;
+  display: none;
+}
+
+.qrf-accordion.qrf-accordion--active .qrf-accordion__heading {
+  display: block;
+}
+
+@media screen and (min-width: 48em) {
+  .quote-request__fields {
+    padding: 2.625rem 2.25rem;
+  }
+
+  .quote-request__fields--separated {
+    padding: 0;
+  }
+}
+
+.quote_request__summary {
+  margin-bottom: 4rem;
+}
+
+.quote_request__summary_item {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.quote_request__summary_item_info {
+  color: #4a4a4a !important;
+  font-weight: bold !important;
+  margin-bottom: 5px !important;
+}
+
+.button-bare {
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  color: #004976;
+  color: var(--color-blue-30);
+  cursor: pointer;
+  display: inline;
+  font-size: 1rem;
+  margin: 0;
+  outline: none;
+  padding: 0;
+}
+
+.quote_request__summary .button-bare:hover {
+  text-decoration: underline;
+}
+
+.quote_request__summary_item_actions {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.violations__form .add_violation_btn {
+  width: auto !important;
+}
+
+/* .violations__form .has_violation_inputs_container {
+  display: block !important;
+} */
+
+.violations__form .has_violation_inputs {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (min-width: 48em) {
+  .has_violation_row {
+    margin-bottom: 20px;
+  }
+}
+
+.has_violation_row .field_message.error {
+  /* text-align: center !important; */
+  width: 100%;
+}
+
+.field__input:disabled,
+.button:disabled {
+  opacity: .5;
+}
+
+.flex_gap_10 {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.gap_20 {
+  gap: 20px;
+}
+
+/* ********************************
+      Flood PAGE
+************************************/
+@media screen and (min-width: 48em) {
+  .flood__step .steps__list .step::after {
+    width: 160px;
+  }
+}
+
+.flood__step .steps__list .line {
+  width: 11%;
+}
+
+.flood__step.spouse_information .form_container.min_height {
+  min-height: 560px;
+}
+
+
+/* ********************************
+      Small Form Page
+************************************/
+.email_confirmation #small_back_btn2 {
+  background: #d6d6d6 !important;
+  color: #000 !important;
+  border: #d6d6d6 !important;
+}
+
+.email_confirmation #small_submit_btn {
+  width: 15rem !important;
+}
+
+/* ********************************
+          Motorcycle
+************************************/
+.fields-row .field.field--extended-label .field__label.motor-experience {
+  position: relative;
+  width: 260%;
+}
+
+
+/* ********************************
+          Watercraft
+************************************/
+.structureACondomError .field__error-message,
+.awareOfFloodError .field__error-message {
+  display: block !important;
+}
+
+#WCaddVehicle,
+.add_violation_btn {
+  width: auto;
+}
+
+/* ********************************
+      All Page
+************************************/
+.fields-row .field.field--extended-label .field__label {
+  position: relative;
+  width: 200%;
+}
+
+@media screen and (max-width:991px) {
+  .fields-row .field.field--extended-label .field__label {
+    width: 100%;
+  }
+}
+
+.quote_request__summary_policyholder_item_info p {
+  font-weight: 400 !important;
+  margin: 0 !important;
+  line-height: 10px !important;
+}

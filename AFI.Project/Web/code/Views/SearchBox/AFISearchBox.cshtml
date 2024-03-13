@@ -1,0 +1,52 @@
+﻿@using Sitecore.XA.Feature.Search
+@using Sitecore.XA.Foundation.MarkupDecorator.Extensions
+@using Sitecore.XA.Foundation.SitecoreExtensions.Extensions
+
+@model Sitecore.XA.Feature.Search.Models.SearchBoxRenderingModel
+
+<form class="utility-search" action="/search-page" method="get">
+    <input class="utility-search__input"
+           name="search"
+           type="text"
+           placeholder="Search" />
+    <button class="utility-search__submit" type="submit">
+        <span class="is-vishidden">Submit</span><span class="icon-search">
+            <i class="fas fa-search"></i>
+        </span>
+    </button>
+</form>
+
+@*<div @Html.Sxa().Component(Model.Rendering.RenderingCssClass ?? "search-box", Model.Attributes) data-properties='@Html.Raw(Model.JsonDataProperties)'>
+        <div class="component-content">
+            @Model.MessageIsEmpty
+            @if (Model.DataSourceItem != null)
+            {
+                if (Model.SearchTextBoxVisible)
+                {
+                    if (@Html.Sxa().IsEdit || !String.IsNullOrWhiteSpace(Model.Label))
+                    {
+                        <label for="textBoxSearch">
+                            @Html.Sxa().Field(Templates.SearchBoxConfiguration.Fields.SearchTextBoxLabel, Model.DataSourceItem, !Model.IsControlEditable)
+                        </label>
+                    }
+
+                    <input type="text" class="search-box-input" autocomplete="off" name="textBoxSearch" maxlength="100" placeholder="@Model.SearchTextBoxText" />
+                }
+                if (!string.IsNullOrWhiteSpace(Model.SearchButtonText))
+                {
+                    if (string.IsNullOrWhiteSpace(Model.SearchResultPageUrl))
+                    {
+                        <button class="search-box-button" type="submit">
+                            @Model.SearchButtonText
+                        </button>
+                    }
+                    else
+                    {
+                        <button class="search-box-button-with-redirect" type="submit">
+                            @Model.SearchButtonText
+                        </button>
+                    }
+                }
+            }
+        </div>
+    </div>*@

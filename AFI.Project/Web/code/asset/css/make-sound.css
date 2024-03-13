@@ -1,0 +1,57 @@
+.make_sound_section .row,
+.make_sound_section .col-md-7 {
+  padding: 0 !important;
+}
+
+.make_sound_section {
+  max-width: 1114px;
+  padding-left: 30px;
+}
+
+.make_sound_section h2 {
+  color: #004976 !important;
+}
+
+.content-column {
+  background-color: var(--afi-blue-200);
+  padding: 1rem 2rem !important;
+}
+
+.content-column ul {
+  list-style: disc !important;
+  padding-left: 20px;
+}
+
+.make_sound_section .flood_article_img {
+  width: 100%;
+  height: 100%;
+}
+
+.make_sound_section .flood_article_img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+/* 16 Nov */
+.text-panel-group__item {
+  background-color: #f6f6f6;
+  background-color: var(--color-gray-10) !important;
+  padding: 2.75rem !important;
+}
+
+@media screen and (max-width:640px) {
+  .text-panel-group__item {
+    padding: 1.5rem !important;
+  }
+}
+
+/* 05 Dec 23 */
+.make_sound_section .content-column p {
+  line-height: 1.65 !important;
+}
+
+.make_sound_section .content-column.reduced__line p {
+  line-height: 22.5px !important;
+}

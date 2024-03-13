@@ -1,0 +1,679 @@
+.hero__wrapper {
+  display: none;
+}
+
+.hero-and-quote-selector-wrapper {
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.quote-selector,
+.quote-selector a {
+  color: #fff;
+  color: var(--color-white);
+}
+
+.quote-selector a {
+  color: #fff;
+  color: var(--color-white) !important;
+  text-decoration: underline !important;
+}
+
+.hero_section .quote-selector {
+  background-image: linear-gradient(120deg, #cb2c30, #881b26);
+  background-image: linear-gradient(120deg,
+      var(--color-red-10),
+      var(--color-red-20));
+  padding: 3.125rem 0 2.5rem;
+  text-align: center;
+}
+
+.quote-selector__subheading {
+  display: block;
+  font-size: 1rem;
+  line-height: 1.625rem;
+  margin-bottom: 1.5rem;
+  max-width: 13.125rem;
+}
+
+.quote-selector__types {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 20rem;
+}
+
+/* .hero_section .field {
+  margin-bottom: 2rem;
+} */
+
+.quote-selector__type {
+  height: 6rem;
+  margin-bottom: 1rem;
+  min-width: 5.375rem;
+  position: relative;
+  text-align: center;
+}
+
+.hero_section input[type="radio"] {
+  width: 1rem;
+}
+
+.is-vishidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+.quote-selector__type-label {
+  align-items: center;
+  border: 0.1875rem solid transparent;
+  border-radius: 0.625rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.875rem;
+  height: 100%;
+  justify-content: flex-end;
+  transition: border-color 0.25s;
+  transition: border-color var(--anim-duration-half);
+  /* 28 April */
+  margin: 0 !important;
+  padding: 0 !important;
+  max-height: 105px !important;
+  padding-top: 25px !important;
+}
+
+.quote-selector__icon {
+  height: 100%;
+  left: 0;
+  /* position: absolute; */
+  top: 0.5rem;
+  width: 60%;
+}
+
+.quote-selector__type-label-text {
+  margin-bottom: 0.75rem;
+  margin-top: 0.375rem;
+  color: #fff;
+}
+
+.hero_section svg {
+  width: 100%;
+  height: 100%;
+  transform: translate3d(0px, 0px, 0px);
+}
+
+.quote-selector__controls {
+  margin: 0 auto;
+  max-width: 14rem;
+  /* text-align: left; */
+}
+
+.quote-selector__controls .field {
+  margin-bottom: 1.375rem;
+  max-width: 11.25rem;
+  position: relative;
+}
+
+.quote-selector__controls .field input {
+  background: transparent;
+  border: 0;
+  border-bottom: 0.0625rem solid #fff;
+  border-bottom: 0.0625rem solid var(--color-white);
+  border-radius: 0;
+  caret-color: #fff;
+  caret-color: var(--color-white);
+  color: #fff;
+  color: var(--color-white);
+  font-size: 1.125rem;
+  height: 100%;
+  outline: none;
+  padding: 0.5rem 0;
+  width: 100%;
+}
+
+.quote-selector__controls .field input:empty+label {
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.quote-selector__controls .field label {
+  color: #fff;
+  color: var(--color-white);
+  cursor: text;
+  font-size: 1.125rem;
+  margin-top: 0;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  -webkit-transform-origin: top left;
+  transform-origin: top left;
+  transition: color 0.25s, -webkit-transform 0.25s;
+  transition: transform 0.25s, color 0.25s;
+  transition: transform 0.25s, color 0.25s, -webkit-transform 0.25s;
+  transition: color var(--anim-duration-half),
+    -webkit-transform var(--anim-duration-half);
+  transition: transform var(--anim-duration-half),
+    color var(--anim-duration-half);
+  transition: transform var(--anim-duration-half),
+    color var(--anim-duration-half), -webkit-transform var(--anim-duration-half);
+}
+
+.quote-selector__controls .button {
+  flex-basis: 10.75rem;
+}
+
+.button--large-text {
+  font-size: 1.125rem;
+}
+
+.quote-selector__type-input:checked+.quote-selector__type-label {
+  border-color: #fff;
+  border-color: var(--color-white);
+}
+
+.hero_section legend {
+  float: unset;
+}
+
+.quote-selector a {
+  color: #fff;
+  color: var(--color-white);
+  text-decoration: underline;
+}
+
+/* ======================================================== */
+
+@media screen and (min-width: 35em) {
+  .hero_section .quote-selector {
+    padding: 3.125rem 0 2.5rem;
+  }
+
+  .quote-selector__subheading,
+  .quote-selector__types {
+    max-width: 100%;
+  }
+
+  .quote-selector__subheading,
+  .quote-selector__types {
+    max-width: 100%;
+  }
+
+  .quote-selector__controls {
+    justify-content: center;
+    display: flex;
+    max-width: 100%;
+  }
+
+  .quote-selector__controls .field {
+    flex-basis: 11rem;
+    margin-bottom: 0;
+    margin-right: 1rem;
+  }
+}
+
+/* ============ */
+@media screen and (min-width: 48em) {
+  .hero_section .quote-selector {
+    padding: 1.5rem 2rem;
+  }
+
+  .quote-selector__types {
+    flex-wrap: nowrap;
+  }
+
+  .quote-selector__type {
+    height: 7.125rem;
+    min-width: 6.3125rem;
+  }
+
+  /* .quote-selector__type-label-text {
+    margin-top: 1rem;
+  } */
+}
+
+/* =============== */
+@media screen and (min-width: 64em) {
+  .hero-and-quote-selector-wrapper {
+    padding-bottom: 2.75rem;
+    position: relative;
+  }
+
+  .hero_section .hero__wrapper {
+    display: block;
+    height: 32.5rem;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hero_section .quote-selector {
+    bottom: 0;
+    left: 50%;
+    width: 47.75rem;
+    position: absolute;
+    text-align: left;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+  }
+
+  .quote-selector__heading {
+    position: absolute;
+    left: 2.375rem;
+    margin-bottom: 0;
+  }
+
+  .quote-selector__subheading {
+    display: block;
+    font-size: 1.125rem;
+    line-height: 2.75rem;
+    margin-bottom: 0.5rem;
+    padding-left: 15.5rem;
+  }
+}
+
+/* ============ */
+
+@media screen and (max-width: 48em) {
+
+  /* Bike Hide */
+  .quote-selector__type:nth-child(1n + 7) {
+    display: none;
+  }
+}
+
+/* 18 April */
+input[type="radio"]+label:before,
+input[type="radio"]+label:after {
+  display: none;
+}
+
+.custom-static-icon {
+  width: 70px;
+}
+
+.auto__icon {
+  margin-top: 20px;
+}
+
+.home__icon {
+  width: 60px;
+  margin-top: 10px;
+}
+
+.quote-selector__controls .button {
+  padding: 8px 40px !important;
+}
+
+.hero__image img {
+  object-fit: cover;
+  width: 100%;
+}
+
+/* 28 April */
+@media screen and (max-width: 991px) {
+  .hero_section {
+    /* margin: 0 0 40px; */
+    padding: 0 !important;
+  }
+}
+
+.quote-selector_friend_form fieldset {
+  text-align: center;
+}
+
+.quote-selector_friend_heading {
+  margin-bottom: 30px !important;
+}
+
+.quote-selector_friend_form .input_field {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-bottom: 30px;
+  width: 230px;
+}
+
+.quote-selector__left,
+.quote-selector__right {
+  left: 0 !important;
+  transform: translateX(0) !important;
+  max-width: 19rem !important;
+  bottom: 3rem !important;
+}
+
+.quote-selector__right {
+  left: unset !important;
+  right: 0 !important;
+}
+
+@media screen and (max-width:991px) {
+
+  .quote-selector__left,
+  .quote-selector__right {
+    max-width: unset !important;
+    margin: auto;
+  }
+}
+
+
+/********************************************************
+*                   NEW ANIMATED HERO
+********************************************************/
+.hero__wrapper {
+  display: none;
+}
+
+.hero-and-quote-selector-wrapper {
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.quote-selector,
+.quote-selector a {
+  color: #fff;
+  color: var(--color-white);
+}
+
+.hero_section .quote-selector {
+  background-image: linear-gradient(120deg, #cb2c30, #881b26);
+  background-image: linear-gradient(120deg, var(--color-red-10), var(--color-red-20));
+  padding: 3.125rem 0 2.5rem;
+  text-align: center;
+}
+
+.quote-selector__subheading {
+  display: block;
+  font-size: 1rem;
+  line-height: 1.625rem;
+  margin-bottom: 1.5rem;
+  max-width: 13.125rem;
+}
+
+.quote-selector__types {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 20rem;
+}
+
+.quote-selector__type {
+  height: 6rem;
+  margin-bottom: 1rem;
+  min-width: 5.375rem;
+  position: relative;
+  text-align: center;
+}
+
+.hero_section input[type="radio"] {
+  width: 1rem;
+}
+
+.is-vishidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+.quote-selector__type-label {
+  align-items: center;
+  border: 0.1875rem solid transparent;
+  border-radius: 0.625rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.875rem;
+  height: 100%;
+  justify-content: flex-end;
+  transition: border-color 0.25s;
+  transition: border-color var(--anim-duration-half);
+}
+
+.quote-selector__icon {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: -0.5rem;
+  width: 100%;
+  opacity: 0.8;
+}
+
+.quote-selector__icon img {
+  width: 100%;
+  margin: auto !important;
+}
+
+.quote-selector__icon.Watercraft img {
+  width: 80%;
+}
+
+.quote-selector__icon img.normal {
+  display: block;
+}
+
+.quote-selector__icon img.animated {
+  display: none;
+}
+
+.quote-selector__icon.animation img.normal {
+  display: none;
+}
+
+.quote-selector__icon.animation img.animated {
+  display: block;
+}
+
+.quote-selector__type-label-text {
+  margin-bottom: 0.75rem;
+  margin-top: 0.375rem;
+}
+
+.hero_section svg {
+  width: 100%;
+  height: 100%;
+  transform: translate3d(0px, 0px, 0px);
+}
+
+.quote-selector__controls {
+  margin: 0 auto;
+  max-width: 14rem;
+  /* text-align: left; */
+}
+
+.quote-selector__controls .field {
+  margin-bottom: 1.375rem;
+  max-width: 11.25rem;
+  position: relative;
+}
+
+.quote-selector__controls .field input {
+  background: transparent;
+  border: 0;
+  border-bottom: 0.0625rem solid #fff;
+  border-bottom: 0.0625rem solid var(--color-white);
+  border-radius: 0;
+  caret-color: #fff;
+  caret-color: var(--color-white);
+  color: #fff;
+  color: var(--color-white);
+  font-size: 1.125rem;
+  height: 100%;
+  outline: none;
+  padding: 0.5rem 0;
+  width: 100%;
+}
+
+.quote-selector__controls .field input:empty+label {
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.quote-selector__controls .field label {
+  color: #fff;
+  color: var(--color-white);
+  cursor: text;
+  font-size: 1.125rem;
+  margin-top: 0;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  -webkit-transform-origin: top left;
+  transform-origin: top left;
+  transition: color 0.25s, -webkit-transform 0.25s;
+  transition: transform 0.25s, color 0.25s;
+  transition: transform 0.25s, color 0.25s, -webkit-transform 0.25s;
+  transition: color var(--anim-duration-half), -webkit-transform var(--anim-duration-half);
+  transition: transform var(--anim-duration-half), color var(--anim-duration-half);
+  transition: transform var(--anim-duration-half), color var(--anim-duration-half),
+    -webkit-transform var(--anim-duration-half);
+}
+
+.quote-selector__controls .button {
+  flex-basis: 10.75rem;
+}
+
+.button--large-text {
+  font-size: 1.125rem;
+}
+
+.quote-selector__type-input:checked+.quote-selector__type-label {
+  border-color: #fff;
+  border-color: var(--color-white);
+}
+
+.hero_section legend {
+  float: unset;
+}
+
+.quote-selector a {
+  color: #fff;
+  color: var(--color-white) !important;
+  text-decoration: underline !important;
+}
+
+/* ======================================================== */
+
+@media screen and (min-width: 35em) {
+  .hero_section .quote-selector {
+    padding: 3.125rem 0 2.5rem;
+  }
+
+  .quote-selector__subheading,
+  .quote-selector__types {
+    max-width: 100%;
+  }
+
+  .quote-selector__subheading,
+  .quote-selector__types {
+    max-width: 100%;
+  }
+
+  .quote-selector__controls {
+    justify-content: center;
+    display: flex;
+    max-width: 100%;
+  }
+
+  .quote-selector__controls .field {
+    flex-basis: 11rem;
+    margin-bottom: 0;
+    margin-right: 1rem;
+  }
+}
+
+/* ============ */
+@media screen and (min-width: 48em) {
+  .hero_section .quote-selector {
+    padding: 1.5rem 2rem;
+  }
+
+  .quote-selector__types {
+    flex-wrap: nowrap;
+  }
+
+  .quote-selector__type {
+    height: 7.125rem;
+    min-width: 6.3125rem;
+  }
+
+  .quote-selector__type-label-text {
+    margin-top: 1rem;
+  }
+}
+
+/* =============== */
+@media screen and (min-width: 64em) {
+  .hero-and-quote-selector-wrapper {
+    padding-bottom: 2.75rem;
+    position: relative;
+  }
+
+  .hero_section .hero__wrapper {
+    display: block;
+    height: 32.5rem;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hero_section .quote-selector {
+    bottom: 0;
+    left: 50%;
+    width: 47.75rem;
+    position: absolute;
+    text-align: left;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+  }
+
+  .quote-selector__heading {
+    position: absolute;
+    left: 2.375rem;
+    margin-bottom: 0;
+  }
+
+  .quote-selector__subheading {
+    display: block;
+    font-size: 1.125rem;
+    line-height: 2.75rem;
+    margin-bottom: 0.5rem;
+    padding-left: 15.5rem;
+  }
+}
+
+/* ============ */
+
+@media screen and (max-width: 48em) {
+
+  /* Bike Hide */
+  .quote-selector__type:nth-child(1n + 7) {
+    display: none;
+  }
+}
+
+.js-animated-icon .normal {
+  display: block;
+}
+
+.js-animated-icon .animated {
+  display: none;
+}
+
+.js-animated-icon.hovered .normal {
+  display: none;
+}
+
+.js-animated-icon.hovered .animated {
+  display: block;
+}

@@ -1,0 +1,608 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Sitecore.XConnect.DataTools.Xmgmt</name>
+    </assembly>
+    <members>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.DataExportController">
+            <summary>
+            xConnect Data Tools Web API, which exposes endpoints to export data.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.DataExportController.#ctor(Sitecore.Processing.Engine.Client.ProcessingEngineClient,Sitecore.XConnect.DataTools.Xmgmt.Providers.IXdbModelProvider)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.XConnect.DataTools.Xmgmt.DataExportController" /> class.
+            </summary>
+            <param name="processingEngineClient">The client used to register processing tasks.</param>
+            <param name="xdbModelProvider">The provider to get <see cref="T:Sitecore.XConnect.Schema.XdbModel"/> from.</param>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.DataExportController.RegisterExportContactsTask(Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterExportContactsTaskModel)">
+            <summary>
+            Registers the export contacts task.
+            </summary>
+            <returns>The created task id.</returns>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.DataExportController.RegisterExportInteractionsTask(Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterExportInteractionsTaskModel)">
+            <summary>
+            Registers the export interactions task.
+            </summary>
+            <returns>The created task id.</returns>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.DataPurgeController">
+            <summary>
+            Represents Web API for managing data purge process.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.DataPurgeController.#ctor(Sitecore.Processing.Engine.Client.ProcessingEngineClient,Sitecore.XConnect.DataTools.Xmgmt.ValueGenerator,Sitecore.XConnect.DataTools.Xmgmt.Mappers.IMarketingItemsMapperFactory)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.XConnect.DataTools.Xmgmt.DataPurgeController" /> class.
+            </summary>
+            <param name="processingClient">The task manager.</param>
+            <param name="valueGenerator">The well known values generator.</param>
+            <param name="mapperFactory">The mapper factory, which creates mappers to map marketing items by monikers.</param>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.DataPurgeController.RegisterDeleteContactsTask(Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterDeleteContactsTaskModel)">
+            <summary>
+            Registers the delete contacts task.
+            </summary>
+            <returns>The created task id.</returns>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.DataPurgeController.RegisterDeleteInteractionsTask(Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterDeleteInteractionsTaskModel)">
+            <summary>
+            Registers the delete interaction task.
+            </summary>
+            <returns>The created task id.</returns>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.DataPurgeController.GetTaskProgress(System.Guid)">
+            <summary>
+            Gets the task status.
+            </summary>
+            <param name="taskId">The task id.</param>
+            <returns>The task status information.</returns>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.DataPurgeController.CancelTask(System.Guid)">
+            <summary>
+            Cancels the processing task.
+            </summary>
+            <returns>The canceled task id.</returns>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.DataToolsServiceConfigurator">
+            <summary>
+            Configures Data purge tool WebAPI controllers and all their dependencies.
+            </summary>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.EstimateController">
+            <summary>
+            xConnect Data Tools Web API, which exposes endpoints to get estimates for certain kind of entities.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.EstimateController.#ctor(Sitecore.XConnect.DataTools.Xmgmt.Providers.IEntityEstimateProvider)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.XConnect.DataTools.Xmgmt.EstimateController"/> class.
+            </summary>
+            <param name="entityEstimateProvider">The provider used to get estimates.</param>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.EstimateController.EstimateContactsAsync(Sitecore.XConnect.DataTools.Xmgmt.Models.EstimateContactsCriteria)">
+            <summary>
+            Estimates contacts base on the provided criteria.
+            </summary>
+            <param name="estimateCriteria">The criteria used to estimate contacts.</param>
+            <returns><see cref="T:Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateContactsResponse"/></returns>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.EstimateController.EstimateInteractionsAsync(Sitecore.XConnect.DataTools.Xmgmt.Models.EstimateInteractionsCriteria)">
+            <summary>
+            Estimates interactions based on the provided criteria.
+            </summary>
+            <param name="estimateCriteria">The criteria used to estimate interactions.</param>
+            <returns><see cref="T:Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateInteractionsResponse"/></returns>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Extensions.XdbModelExtensions">
+            <summary>
+            Extensions for <see cref="T:Sitecore.XConnect.Schema.XdbModel"/>.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Extensions.XdbModelExtensions.GetFacetNames(Sitecore.XConnect.Schema.XdbModel,Sitecore.XConnect.EntityType)">
+            <summary>
+            Gets the names of the facets defined in the specified model.
+            </summary>
+            <param name="model">The model to get the facet names from.</param>
+            <param name="entityType">Type of the entity to filter the facets by.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">model</exception>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Filters.DataToolsExceptionFilterAttribute">
+            <summary>
+            Attribute that is used to handle data tools exceptions.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Filters.DataToolsExceptionFilterAttribute.OnException(System.Web.Http.Filters.HttpActionExecutedContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Filters.ProcessingEngineExceptionFilterAttribute">
+            <summary>
+            Attribute that is used to handle Processing Engine exceptions.
+            </summary>
+            <seealso cref="T:System.Web.Http.Filters.ExceptionFilterAttribute" />
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Filters.ProcessingEngineExceptionFilterAttribute.OnException(System.Web.Http.Filters.HttpActionExecutedContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Filters.XConnectExceptionFilterAttribute">
+            <summary>
+            Attribute that is used to handle data tools exceptions.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Filters.XConnectExceptionFilterAttribute.OnException(System.Web.Http.Filters.HttpActionExecutedContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Mappers.IMarketingItemsLocator">
+            <summary>
+            Defines locator which locates marketing items.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Mappers.IMarketingItemsLocator.GetByAlias(System.String)">
+            <summary>
+            Gets the marketing item IDs by alias.
+            </summary>
+            <param name="alias">The alias to get by.</param>
+            <returns>The marketing item IDs.</returns>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Mappers.IMarketingItemsLocator.Exists(System.Guid)">
+            <summary>
+            Checks whether a marketing item exists.
+            </summary>
+            <param name="itemId">The ID of the marketing item to check by.</param>
+            <returns>
+            <c>true</c> if the marketing item exists; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Mappers.IMarketingItemsMapper">
+            <summary>
+            Mapper which maps monikers to the definition item ids.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Mappers.IMarketingItemsMapper.Map(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Maps definition item ids by monikers.
+            </summary>
+            <param name="monikers">
+            The monikers to map definition item ids by.
+            Moniker is either a marketing definition item alias/name or GUID.
+            </param>
+            <returns><see cref="T:Sitecore.XConnect.DataTools.Xmgmt.Mappers.MappingResult"/>.</returns>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Mappers.IMarketingItemsMapper.ItemType">
+            <summary>
+            Gets the type of the item.
+            </summary>
+            <value>
+            The type of the item.
+            </value>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Mappers.IMarketingItemsMapperFactory">
+            <summary>
+            Defines a factory to return marketing items mapper based on the item type.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Mappers.IMarketingItemsMapperFactory.GetMapper(Sitecore.XConnect.DataTools.Xmgmt.Mappers.MarketingItemType)">
+            <summary>
+            Gets the marketing items mapper by item type.
+            </summary>
+            <param name="itemType">The item type to get the mapper for.</param>
+            <returns>The marketing items mapper.</returns>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Mappers.MappingResult">
+            <summary>
+            Represents the result of the marketing definition items mapping.
+            </summary>
+            <seealso cref="M:Sitecore.XConnect.DataTools.Xmgmt.Mappers.IMarketingItemsMapper.Map(System.Collections.Generic.IEnumerable{System.String})"/>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Mappers.MappingResult.Success">
+            <summary>
+            Gets the value indicating whether the result is success.
+            </summary>
+            <value>
+              <c>true</c> if the result is success; otherwise, <c>false</c>.
+            </value>
+            <remarks>
+            Success result has empty <see cref="P:Sitecore.XConnect.DataTools.Xmgmt.Mappers.MappingResult.NotMappedIds"/>, <see cref="P:Sitecore.XConnect.DataTools.Xmgmt.Mappers.MappingResult.NotMappedAliases"/> and <see cref="P:Sitecore.XConnect.DataTools.Xmgmt.Mappers.MappingResult.Conflicts"/>.
+            </remarks>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Mappers.MappingResult.MappedIds">
+            <summary>
+            Gets the IDs of the mapped definition items.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Mappers.MappingResult.NotMappedIds">
+            <summary>
+            Gets the IDs which are not mapped.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Mappers.MappingResult.NotMappedAliases">
+            <summary>
+            Gets the aliases which are not mapped.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Mappers.MappingResult.Conflicts">
+            <summary>
+            Gets the dictionary, where the key is an alias, and the value is the list of IDs mapped by this alias.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Mappers.MappingResultExtensions.ToErrorMessage(Sitecore.XConnect.DataTools.Xmgmt.Mappers.MappingResult)">
+            <summary>
+            Gets an error message.
+            </summary>
+            <returns>
+            The error message, which contains information about mapping failures, if <see cref="P:Sitecore.XConnect.DataTools.Xmgmt.Mappers.MappingResult.Success"/> is <c>false</c>;
+            otherwise, an empty string.
+            </returns>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Mappers.MarketingChannelTaxonomyLocator.GetByAlias(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Mappers.MarketingChannelTaxonomyMapper.#ctor(Sitecore.XConnect.DataTools.Xmgmt.Mappers.IChannelsLocator)">
+            <inheritdoc />
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Mappers.MarketingChannelTaxonomyMapper.ItemType">
+            <inheritdoc />
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Mappers.MarketingEventDefinitionLocator.GetByAlias(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Mappers.MarketingEventDefinitionLocator.Exists(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Mappers.MarketingEventDefinitionMapper.#ctor(Sitecore.XConnect.DataTools.Xmgmt.Mappers.IEventsLocator)">
+            <inheritdoc />
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Mappers.MarketingEventDefinitionMapper.ItemType">
+            <inheritdoc />
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Mappers.MarketingItemsMapper`1.ItemType">
+            <inheritdoc />
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Mappers.MarketingItemsMapper`1.Map(System.Collections.Generic.IEnumerable{System.String})">
+            <inheritdoc />
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Mappers.MarketingItemType">
+            <summary>
+            Defines the enum of marketing item types.
+            </summary>
+        </member>
+        <member name="F:Sitecore.XConnect.DataTools.Xmgmt.Mappers.MarketingItemType.Event">
+            <summary>
+            Represents the marketing definition event type.
+            </summary>
+        </member>
+        <member name="F:Sitecore.XConnect.DataTools.Xmgmt.Mappers.MarketingItemType.Channel">
+            <summary>
+            Represents the channel taxonomy type.
+            </summary>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Models.EstimateBySamplingCriteria">
+            <summary>
+            Defines abstract criteria used to estimate entities by sampling options.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Models.EstimateBySamplingCriteria.StartPercentile">
+            <summary>
+            Gets or sets the start percentile.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Models.EstimateBySamplingCriteria.EndPercentile">
+            <summary>
+            Gets or sets the end percentile.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Models.EstimateBySamplingCriteria.Validate(System.ComponentModel.DataAnnotations.ValidationContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Models.EstimateContactsCriteria">
+            <summary>
+            Criteria that is used to estimate contacts.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Models.EstimateContactsCriteria.CutoffDays">
+            <summary>
+            Gets or sets the cutoff days.
+            </summary>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Models.EstimateInteractionsCriteria">
+            <summary>
+            Criteria that is used to estimate interactions.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Models.EstimateInteractionsCriteria.StartedDaysCutoff">
+            <summary>
+            Gets or sets the number of days passed after interaction was started.
+            </summary>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterDeleteContactsTaskModel">
+            <summary>
+            Model for register delete contacts task.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterDeleteContactsTaskModel.CutoffDays">
+            <summary>
+            Gets or sets the cutoff days.
+            </summary>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterDeleteInteractionsTaskModel">
+            <summary>
+            Model for register delete interactions task.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterDeleteInteractionsTaskModel.StartedDaysCutoff">
+            <summary>
+            Gets or sets the number of days passed after interaction was started.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterDeleteInteractionsTaskModel.DeleteIfHasEvents">
+            <summary>
+            Gets or sets event names. Interaction should be removed if it has at least one of this events.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterDeleteInteractionsTaskModel.SkipIfHasEvents">
+            <summary>
+            Gets or sets event names. Interaction should not be removed if it has at least one of this events.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterDeleteInteractionsTaskModel.DeleteIfHasChannels">
+            <summary>
+            Gets or sets channel names to delete.
+            Interaction should be removed if interaction's channel is in the list.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterDeleteInteractionsTaskModel.SkipIfHasChannels">
+            <summary>
+            Gets or sets channel names to skip.
+            Interaction should not be removed if interaction's channel is in the list.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterDeleteInteractionsTaskModel.Validate(System.ComponentModel.DataAnnotations.ValidationContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterDeleteTaskModel">
+            <summary>
+            Abstract model for register data purge processing task.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterDeleteTaskModel.StartPercentile">
+            <inheritdoc />
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterDeleteTaskModel.EndPercentile">
+            <inheritdoc />
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterDeleteTaskModel.Conditions">
+            <summary>
+            Gets or sets the conditions.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterDeleteTaskModel.Validate(System.ComponentModel.DataAnnotations.ValidationContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterExportContactsTaskModel">
+            <summary>
+            Model for register export contacts task.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterExportContactsTaskModel.CutoffDays">
+            <summary>
+            Gets or sets the cutoff days.
+            </summary>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterExportDataTaskModel">
+            <summary>
+            Abstract model for register data export processing task.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterExportDataTaskModel.StorageProfile">
+            <summary>
+            Gets or sets the profile of the storage to export data to.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterExportDataTaskModel.StartPercentile">
+            <summary>
+            Gets or sets the start percentile.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterExportDataTaskModel.EndPercentile">
+            <summary>
+            Gets or sets the end percentile.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterExportDataTaskModel.Validate(System.ComponentModel.DataAnnotations.ValidationContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterExportInteractionsTaskModel">
+            <summary>
+            Model for register export interactions task.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterExportInteractionsTaskModel.StartedDaysCutoff">
+            <summary>
+            Gets or sets the number of days passed after interaction was started.
+            </summary>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterTaskModel">
+            <summary>
+            Abstract model for register processing task.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterTaskModel.BatchSize">
+            <summary>
+            Gets or sets the size of the batch.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterTaskModel.DefaultSplitItemCount">
+            <summary>
+            Gets or sets the default split item count.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Models.RegisterTaskModel.ExpiresAfterHours">
+            <summary>
+            Gets or sets the expires after hours.
+            </summary>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.PostSteps.ComponentPostStep">
+            <summary>
+            Creates "sitecore\Sitecore XConnect Data Admin" role.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.PostSteps.ComponentPostStep.Run(Sitecore.Install.Framework.ITaskOutput,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Runs the process of creating the role.
+            </summary>
+            <param name="output">The <see cref="T:Sitecore.Install.Framework.ITaskOutput"/>.</param>
+            <param name="metaData">The <see cref="T:System.Collections.Specialized.NameValueCollection"/>.</param>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Providers.DataExtractionEstimateProvider.EstimateContactsAsync(Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateContactsRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Providers.DataExtractionEstimateProvider.EstimateInteractionsAsync(Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateInteractionsRequest)">
+            <inheritdoc />
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateContactsRequest">
+            <summary>
+            Represents a request to estimate contacts.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateContactsRequest.#ctor(System.DateTime,Sitecore.XConnect.SamplingOptions)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateContactsRequest"/> class.
+            </summary>
+            <param name="cutoffDateTime">The upper bound date time to filter contacts by the last date time they have interacted with the brand.</param>
+            <param name="samplingOptions">Optional. The sampling options to filter contacts by.</param>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateContactsRequest.CutoffDateTime">
+            <summary>
+            Gets the upper bound date time to filter contacts by the last date time they have interacted with the brand.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateContactsRequest.SamplingOptions">
+            <summary>
+            Gets the sampling options to filter contacts by.
+            </summary>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateContactsResponse">
+            <summary>
+            Represents a response to the estimate contacts request.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateContactsResponse.#ctor(System.Int64)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateContactsResponse"/> class.
+            </summary>
+            <param name="totalCount">The total count of contacts.</param>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateContactsResponse.TotalCount">
+            <summary>
+            Gets the total count of contacts.
+            </summary>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateInteractionsRequest">
+            <summary>
+            Represents a request to estimate interactions.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateInteractionsRequest.#ctor(System.DateTime,Sitecore.XConnect.SamplingOptions)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateInteractionsRequest"/> class.
+            </summary>
+            <param name="maxStartDateTime">The upper bound date time to filter interactions by the start date time.</param>
+            <param name="samplingOptions">Optional. The sampling options to filter interactions by.</param>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateInteractionsRequest.MaxStartDateTime">
+            <summary>
+            Gets the upper bound date time to filter interactions by the start date time.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateInteractionsRequest.SamplingOptions">
+            <summary>
+            Gets the sampling options to filter interactions by.
+            </summary>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateInteractionsResponse">
+            <summary>
+            Represents a response to the estimate interactions request.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateInteractionsResponse.#ctor(System.Int64)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateInteractionsResponse"/> class.
+            </summary>
+            <param name="totalCount">The total count of interactions.</param>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateInteractionsResponse.TotalCount">
+            <summary>
+            Gets the total count of interactions.
+            </summary>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Providers.IEntityEstimateProvider">
+            <summary>
+            Defines the provider, which provides estimates for entities.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Providers.IEntityEstimateProvider.EstimateContactsAsync(Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateContactsRequest)">
+            <summary>
+            Provides an estimate for the contacts based on the specific data.
+            </summary>
+            <param name="request">The request, which contain the data to estimate the contacts based on.</param>
+            <returns><see cref="T:Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateContactsResponse"/> with the result of the estimation.</returns>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Providers.IEntityEstimateProvider.EstimateInteractionsAsync(Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateInteractionsRequest)">
+            <summary>
+            Provides an estimate for the interactions based on the specific data.
+            </summary>
+            <param name="request">The request, which contain the data to estimate the interactions based on.</param>
+            <returns><see cref="T:Sitecore.XConnect.DataTools.Xmgmt.Providers.EstimateInteractionsResponse"/> with the result of the estimation.</returns>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Providers.IXdbModelProvider">
+            <summary>
+            Defines the provider to get <see cref="T:Sitecore.XConnect.Schema.XdbModel"/> from.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Providers.IXdbModelProvider.Model">
+            <summary>
+            Gets the <see cref="T:Sitecore.XConnect.Schema.XdbModel"/>.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Providers.XConnectClientXdbModelProvider.Model">
+            <inheritdoc />
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.TasksController">
+            <summary>
+            Represents Web API for processing tasks management.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.TasksController.#ctor(Sitecore.Processing.Engine.Client.ProcessingEngineClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.XConnect.DataTools.Xmgmt.TasksController"/> class.
+            </summary>
+            <param name="processingClient">The client used to manage processing tasks.</param>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.TasksController.GetTaskProgress(System.Guid)">
+            <summary>
+            Gets the processing task progress.
+            </summary>
+            <param name="taskId">The ID of the task.</param>
+            <returns>The task status information.</returns>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.TasksController.CancelTask(System.Guid)">
+            <summary>
+            Cancels the processing task.
+            </summary>
+            <returns>The ID of the canceled task.</returns>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.ValueGenerator">
+            <summary>
+            Provides a wrapper over static value generating methods.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.ValueGenerator.UtcNow">
+            <summary>
+            Gets the now date time UTC value.
+            </summary>
+        </member>
+    </members>
+</doc>

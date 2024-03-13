@@ -1,0 +1,23 @@
+﻿@using Sitecore.XA.Foundation.Presentation
+@using Sitecore.XA.Foundation.SitecoreExtensions.Extensions
+@using Microsoft.Extensions.DependencyInjection
+
+@{
+    Layout = Sitecore.Configuration.Settings.GetSetting("XA.Foundation.Presentation.MetaComponentLayoutPath", "../SXA/Meta Component Layout.cshtml");
+    var isEditingMetaPartial = Sitecore.Context.PageMode.IsExperienceEditorEditing && Sitecore.Context.Item.InheritsFrom(Templates.MetadataPartialDesign.ID);
+}
+
+@if (Sitecore.Context.PageMode.IsExperienceEditorEditing)
+{
+    if (Sitecore.Context.Item.InheritsFrom(Templates.MetadataPartialDesign.ID))
+    {
+        @Html.Raw(System.Net.WebUtility.HtmlEncode("<script src='/sitecore modules/Shell/SXA/xa-inline-editor.js' type='module'></script>"))
+    }
+    else
+    {
+        if (Sitecore.DependencyInjection.ServiceLocator.ServiceProvider.GetService<Sitecore.XA.Foundation.Horizon.Context.IHorizonContext>().IsHorizonEditing)
+        {
+            <script src="/sitecore modules/Shell/SXA/xa-inline-editor.js" type="module"></script>
+        }
+    }
+}

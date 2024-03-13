@@ -1,0 +1,3719 @@
+﻿{
+  "wayfinder": {
+    "steps": [
+      {
+        "id": "driverInfo",
+        "label": "Driver Information"
+      },
+      {
+        "id": "vehicleInfo",
+        "label": "Vehicle"
+      },
+      {
+        "id": "coverages",
+        "label": "Coverages"
+      },
+      {
+        "id": "quote",
+        "label": "Quote"
+      }
+    ]
+  },
+  "form": {
+    "unique": {
+      "Year": "",
+      "Make": "",
+      "Model": "",
+      "TypeOfVehicle": [
+        {
+          "label": "",
+          "value": ""
+        }
+      ],
+      "CCSize": "",
+      "ValueOfVehicle": "",
+      "addDriverButtonText": "+ Add Driver",
+      "addVehicleButtonText": "+ Add Vehicle",
+      "addViolationButtonText": "Add Another Violation",
+      "overallCoveragesSidebars": [
+        {
+          "heading": "Personal Injury",
+          "content": [
+            {
+              "heading": "heading 1",
+              "content": "content 1"
+            },
+            {
+              "heading": "heading 2",
+              "content": "content 2"
+            }
+          ]
+        },
+        {
+          "heading": "Uninsured Motorist",
+          "content": [
+            {
+              "heading": "heading 1",
+              "content": "content 1"
+            },
+            {
+              "heading": "heading 2",
+              "content": "heading 2"
+            }
+          ]
+        },
+        {
+          "heading": "Property Damage",
+          "content": [
+            {
+              "heading": "heading 1",
+              "content": "content 1"
+            },
+            {
+              "heading": "heading 2",
+              "content": "content 2"
+            }
+          ]
+        },
+        {
+          "heading": "Medical Payment",
+          "content": [
+            {
+              "heading": "heading 1",
+              "content": "content 1"
+            },
+            {
+              "heading": "heading 2",
+              "content": "content 2"
+            }
+          ]
+        },
+        {
+          "heading": "Bodily Injury",
+          "content": [
+            {
+              "heading": "heading 1",
+              "content": "content 1"
+            },
+            {
+              "heading": "heading 1",
+              "content": "content 1"
+            }
+          ]
+        }
+      ],
+      "householdViolationTypes": [
+        {
+          "label": "Accident - At Fault with payout more than $1000",
+          "value": "Accident - At Fault with payout more than $1000"
+        },
+        {
+          "label": "Accident - At Fault with payout under $1000",
+          "value": "Accident - At Fault with payout under $1000"
+        },
+        {
+          "label": "Accident - Not at fault",
+          "value": "Accident - Not at fault"
+        },
+        {
+          "label": "Careless or Improper Operation",
+          "value": "Careless or Improper Operation"
+        },
+        {
+          "label": "Comprehensive Claim $1000 or less or Weather Claim",
+          "value": "Comprehensive Claim $1000 or less or Weather Claim"
+        },
+        {
+          "label": "Comprehensive Claim over $1000",
+          "value": "Comprehensive Claim over $1000"
+        },
+        {
+          "label": "Driving Under Suspension",
+          "value": "Driving Under Suspension"
+        },
+        {
+          "label": "Driving While Intoxicated/Under Influence",
+          "value": "Driving While Intoxicated/Under Influence"
+        },
+        {
+          "label": "Failing to Yield",
+          "value": "Failing to Yield"
+        },
+        {
+          "label": "Felony of Motor Vehicle / Vehicle Theft",
+          "value": "Felony of Motor Vehicle / Vehicle Theft"
+        },
+        {
+          "label": "Fleeing from Police",
+          "value": "Fleeing from Police"
+        },
+        {
+          "label": "Following Vehicle Too Closely",
+          "value": "Following Vehicle Too Closely"
+        },
+        {
+          "label": "Improper Lane Changing or Passing",
+          "value": "Improper Lane Changing or Passing"
+        },
+        {
+          "label": "Improper Turning",
+          "value": "Improper Turning"
+        },
+        {
+          "label": "Leaving the Scene of an Accident",
+          "value": "Leaving the Scene of an Accident"
+        },
+        {
+          "label": "License or Credentials Violation",
+          "value": "License or Credentials Violation"
+        },
+        {
+          "label": "Minor Moving Violation",
+          "value": "Minor Moving Violation"
+        },
+        {
+          "label": "Open Container",
+          "value": "Open Container"
+        },
+        {
+          "label": "Racing",
+          "value": "Racing"
+        },
+        {
+          "label": "Reckless Driving",
+          "value": "Reckless Driving"
+        },
+        {
+          "label": "Serious License Violation",
+          "value": "Serious License Violation"
+        },
+        {
+          "label": "Speeding",
+          "value": "Speeding"
+        },
+        {
+          "label": "Speeding 1-10 MPH in 55-70 MPH Zone",
+          "value": "Speeding 1-10 MPH in 55-70 MPH Zone"
+        },
+        {
+          "label": "Speeding 1-7 MPH in 30-54 MPH Zone",
+          "value": "Speeding 1-7 MPH in 30-54 MPH Zone"
+        },
+        {
+          "label": "Traffic Device or Sign",
+          "value": "Traffic Device or Sign"
+        },
+        {
+          "label": "Vehicle Use without Owner's Consent",
+          "value": "Vehicle Use without Owner's Consent"
+        },
+        {
+          "label": "Vehicular Homicide",
+          "value": "Vehicular Homicide"
+        },
+        {
+          "label": "Wrong Way on a One-Way Street",
+          "value": "Wrong Way on a One-Way Street"
+        }
+      ],
+      "bodilyInjuryLiabilitySublabel": "If you hurt someone in an auto accident, we\\'ll help pay up to",
+      "propertyDamageLiabilitySublabel": "If you damage someone else\\'s property in an auto accident, we\\'ll help pay up to",
+      "medicalPaymentSublabel": "If you or your passengers are injured in an auto accident, we\\'ll help pay up to",
+      "uninsuredMotoristBodilyInjurySublabel": "If an uninsured driver injures you or your passenger, we\\'ll help pay up to"
+    },
+    "id": "motorcycle",
+    "backButtonText": "Back",
+    "preSaveButtonText": "Save and Exit",
+    "saveButtonText": "Save and Exit",
+    "nextButtonText": "Next",
+    "submitButtonText": "Submit Request for Quote",
+    "selectMenuDefaultText": "--Choose One--",
+    "saveSuccessRedirect": "",
+    "submitSuccessRedirect": "",
+    "common": {
+      "genders": [
+        {
+          "label": "Male",
+          "value": "Male"
+        },
+        {
+          "label": "Female",
+          "value": "Female"
+        }
+      ],
+      "suffixes": [
+        {
+          "label": "Jr.",
+          "value": "Jr."
+        },
+        {
+          "label": "Sr.",
+          "value": "Sr."
+        },
+        {
+          "label": "III",
+          "value": "III"
+        },
+        {
+          "label": "IV",
+          "value": "IV"
+        }
+      ],
+      "maritalStatuses": [
+        {
+          "label": "Married",
+          "value": "Married"
+        },
+        {
+          "label": "Single",
+          "value": "Single"
+        },
+        {
+          "label": "Divorced",
+          "value": "Divorced"
+        },
+        {
+          "label": "Widowed",
+          "value": "Widowed"
+        },
+        {
+          "label": "Cohabitant",
+          "value": "Cohabitant"
+        },
+        {
+          "label": "Civil Union Or Domestic Partner",
+          "value": "Civil Union Or Domestic Partner"
+        }
+      ],
+      "phoneTypes": [
+        {
+          "label": "Home",
+          "value": "Home"
+        },
+        {
+          "label": "Business",
+          "value": "Business"
+        },
+        {
+          "label": "Cell",
+          "value": "Cell"
+        }
+      ],
+      "educationLevels": [
+        {
+          "label": "Military Training/Vocational",
+          "value": "Military Training/Vocational"
+        },
+        {
+          "label": "High School",
+          "value": "High School"
+        },
+        {
+          "label": "Completed Some College",
+          "value": "Completed Some College"
+        },
+        {
+          "label": "College Degree",
+          "value": "College Degree"
+        }
+      ],
+      "states": [
+        {
+          "label": "Alabama",
+          "value": "AL"
+        },
+        {
+          "label": "Alaska",
+          "value": "AK"
+        },
+        {
+          "label": "Arizona",
+          "value": "AZ"
+        },
+        {
+          "label": "Arkansas",
+          "value": "AR"
+        },
+        {
+          "label": "California",
+          "value": "CA"
+        },
+        {
+          "label": "Colorado",
+          "value": "CO"
+        },
+        {
+          "label": "Connecticut",
+          "value": "CT"
+        },
+        {
+          "label": "Delaware",
+          "value": "DE"
+        },
+        {
+          "label": "District of Columbia",
+          "value": "DC"
+        },
+        {
+          "label": "Florida",
+          "value": "FL"
+        },
+        {
+          "label": "Georgia",
+          "value": "GA"
+        },
+        {
+          "label": "Hawaii",
+          "value": "HI"
+        },
+        {
+          "label": "Idaho",
+          "value": "ID"
+        },
+        {
+          "label": "Illinois",
+          "value": "IL"
+        },
+        {
+          "label": "Indiana",
+          "value": "IN"
+        },
+        {
+          "label": "Iowa",
+          "value": "IA"
+        },
+        {
+          "label": "Kansas",
+          "value": "KS"
+        },
+        {
+          "label": "Kentucky",
+          "value": "KY"
+        },
+        {
+          "label": "Louisiana",
+          "value": "LA"
+        },
+        {
+          "label": "Maine",
+          "value": "ME"
+        },
+        {
+          "label": "Maryland",
+          "value": "MD"
+        },
+        {
+          "label": "Massachusetts",
+          "value": "MA"
+        },
+        {
+          "label": "Michigan",
+          "value": "MI"
+        },
+        {
+          "label": "Minnesota",
+          "value": "MN"
+        },
+        {
+          "label": "Mississippi",
+          "value": "MS"
+        },
+        {
+          "label": "Missouri",
+          "value": "MO"
+        },
+        {
+          "label": "Montana",
+          "value": "MT"
+        },
+        {
+          "label": "Nebraska",
+          "value": "NE"
+        },
+        {
+          "label": "Nevada",
+          "value": "NV"
+        },
+        {
+          "label": "New Hampshire",
+          "value": "NH"
+        },
+        {
+          "label": "New Jersey",
+          "value": "NJ"
+        },
+        {
+          "label": "New Mexico",
+          "value": "NM"
+        },
+        {
+          "label": "New York",
+          "value": "NY"
+        },
+        {
+          "label": "North Carolina",
+          "value": "NC"
+        },
+        {
+          "label": "North Dakota",
+          "value": "ND"
+        },
+        {
+          "label": "Ohio",
+          "value": "OH"
+        },
+        {
+          "label": "Oklahoma",
+          "value": "OK"
+        },
+        {
+          "label": "Oregon",
+          "value": "OR"
+        },
+        {
+          "label": "Pennsylvania",
+          "value": "PA"
+        },
+        {
+          "label": "Rhode Island",
+          "value": "RI"
+        },
+        {
+          "label": "South Carolina",
+          "value": "SC"
+        },
+        {
+          "label": "South Dakota",
+          "value": "SD"
+        },
+        {
+          "label": "Tennessee",
+          "value": "TN"
+        },
+        {
+          "label": "Texas",
+          "value": "TX"
+        },
+        {
+          "label": "Utah",
+          "value": "UT"
+        },
+        {
+          "label": "Vermont",
+          "value": "VT"
+        },
+        {
+          "label": "Virginia",
+          "value": "VA"
+        },
+        {
+          "label": "Washington",
+          "value": "WA"
+        },
+        {
+          "label": "West Virginia",
+          "value": "WV"
+        },
+        {
+          "label": "Wisconsin",
+          "value": "WI"
+        },
+        {
+          "label": "Wyoming",
+          "value": "WY"
+        },
+        {
+          "label": "American Samoa",
+          "value": "AS"
+        },
+        {
+          "label": "Federated States of Micronesia",
+          "value": "FM"
+        },
+        {
+          "label": "Guam",
+          "value": "GU"
+        },
+        {
+          "label": "Marshall Islands",
+          "value": "MH"
+        },
+        {
+          "label": "Northern Mariana Islands",
+          "value": "MP"
+        },
+        {
+          "label": "Palau",
+          "value": "PW"
+        },
+        {
+          "label": "Puerto Rico",
+          "value": "PR"
+        },
+        {
+          "label": "Virgin Islands",
+          "value": "VI"
+        },
+        {
+          "label": "Armed Forces Africa",
+          "value": "AE"
+        },
+        {
+          "label": "Armed Forces Americas",
+          "value": "AA"
+        },
+        {
+          "label": "Armed Forces Canada",
+          "value": "AE"
+        },
+        {
+          "label": "Armed Forces Europe",
+          "value": "AE"
+        },
+        {
+          "label": "Armed Forces Middle East",
+          "value": "AE"
+        },
+        {
+          "label": "Armed Forces Pacific",
+          "value": "AP"
+        }
+      ],
+      "eligibilityDetailsSubheadings": {
+        "military": "Military(active duty, former / separated / retired / disabled, surviving spouse)",
+        "spouse": "Current Military Spouse",
+        "child": "Child of current or former Armed Forces Insurance member"
+      },
+      "eligibilityDetailsFirstNameLabels": {
+        "military": "First Name",
+        "spouse": "First Name of Spouse in military",
+        "child": "First Name of parent that is current or former AFI member"
+      },
+      "eligibilityDetailsLastNameLabels": {
+        "military": "Last Name",
+        "spouse": "Last Name of Spouse in military",
+        "child": "Last Name of parent that is current or former AFI member"
+      },
+      "militaryRanksArmy": [
+        {
+          "label": "E-1 Private",
+          "value": "E-1 Private"
+        },
+        {
+          "label": "E-2 Private",
+          "value": "E-2 Private"
+        },
+        {
+          "label": "E-3 Private First Class",
+          "value": "E-3 Private First Class"
+        },
+        {
+          "label": "E-4 Specialist 4",
+          "value": "E-4 Specialist 4"
+        },
+        {
+          "label": "E-4 Corporal",
+          "value": "E-4 Corporal"
+        },
+        {
+          "label": "E-5 Sergeant",
+          "value": "E-5 Sergeant"
+        },
+        {
+          "label": "E-6 Staff Sergeant",
+          "value": "E-6 Staff Sergeant"
+        },
+        {
+          "label": "E-7 Platoon Sergeant",
+          "value": "E-7 Platoon Sergeant"
+        },
+        {
+          "label": "E-7 Sergeant First Class",
+          "value": "E-7 Sergeant First Class"
+        },
+        {
+          "label": "E-8 First Sergeant",
+          "value": "E-8 First Sergeant"
+        },
+        {
+          "label": "E-8 Master Sergeant",
+          "value": "E-8 Master Sergeant"
+        },
+        {
+          "label": "E-9 Sergeant Major of the Army",
+          "value": "E-9 Sergeant Major of the Army"
+        },
+        {
+          "label": "E-9 Command Sergeant Major",
+          "value": "E-9 Command Sergeant Major"
+        },
+        {
+          "label": "E-9 Sergeant Major",
+          "value": "E-9 Sergeant Major"
+        },
+        {
+          "label": "O-1 Second Lieutenant",
+          "value": "O-1 Second Lieutenant"
+        },
+        {
+          "label": "O-2 First Lieutenant",
+          "value": "O-2 First Lieutenant"
+        },
+        {
+          "label": "O-3 Captain",
+          "value": "O-3 Captain"
+        },
+        {
+          "label": "O-4 Major",
+          "value": "O-4 Major"
+        },
+        {
+          "label": "O-5 Lieutenant Colonel",
+          "value": "O-5 Lieutenant Colonel"
+        },
+        {
+          "label": "O-6 Colonel",
+          "value": "O-6 Colonel"
+        },
+        {
+          "label": "O-7 Brigadier General",
+          "value": "O-7 Brigadier General"
+        },
+        {
+          "label": "O-8 Major General",
+          "value": "O-8 Major General"
+        },
+        {
+          "label": "O-9 Lieutenant General",
+          "value": "O-9 Lieutenant General"
+        },
+        {
+          "label": "O-10 General",
+          "value": "O-10 General"
+        },
+        {
+          "label": "O-11 General of the Army",
+          "value": "O-11 General of the Army"
+        },
+        {
+          "label": "W-1 Warrant Officer",
+          "value": "W-1 Warrant Officer"
+        },
+        {
+          "label": "W-2 Chief Warrant Officer",
+          "value": "W-2 Chief Warrant Officer"
+        },
+        {
+          "label": "W-3 Chief Warrant Officer",
+          "value": "W-3 Chief Warrant Officer"
+        },
+        {
+          "label": "W-4 Chief Warrant Officer",
+          "value": "W-4 Chief Warrant Officer"
+        },
+        {
+          "label": "W-5 Master Warrant Officer",
+          "value": "W-5 Master Warrant Officer"
+        }
+      ],
+      "militaryRanksNationalGuard": [
+        {
+          "label": "E-1 Private",
+          "value": "E-1 Private"
+        },
+        {
+          "label": "E-2 Private",
+          "value": "E-2 Private"
+        },
+        {
+          "label": "E-3 Private First Class",
+          "value": "E-3 Private First Class"
+        },
+        {
+          "label": "E-4 Specialist 4",
+          "value": "E-4 Specialist 4"
+        },
+        {
+          "label": "E-4 Corporal",
+          "value": "E-4 Corporal"
+        },
+        {
+          "label": "E-5 Sergeant",
+          "value": "E-5 Sergeant"
+        },
+        {
+          "label": "E-6 Staff Sergeant",
+          "value": "E-6 Staff Sergeant"
+        },
+        {
+          "label": "E-7 Platoon Sergeant",
+          "value": "E-7 Platoon Sergeant"
+        },
+        {
+          "label": "E-7 Sergeant First Class",
+          "value": "E-7 Sergeant First Class"
+        },
+        {
+          "label": "E-8 First Sergeant",
+          "value": "E-8 First Sergeant"
+        },
+        {
+          "label": "E-8 Master Sergeant",
+          "value": "E-8 Master Sergeant"
+        },
+        {
+          "label": "E-9 Sergeant Major of the Army",
+          "value": "E-9 Sergeant Major of the Army"
+        },
+        {
+          "label": "E-9 Command Sergeant Major",
+          "value": "E-9 Command Sergeant Major"
+        },
+        {
+          "label": "E-9 Sergeant Major",
+          "value": "E-9 Sergeant Major"
+        },
+        {
+          "label": "O-1 Second Lieutenant",
+          "value": "O-1 Second Lieutenant"
+        },
+        {
+          "label": "O-2 First Lieutenant",
+          "value": "O-2 First Lieutenant"
+        },
+        {
+          "label": "O-3 Captain",
+          "value": "O-3 Captain"
+        },
+        {
+          "label": "O-4 Major",
+          "value": "O-4 Major"
+        },
+        {
+          "label": "O-5 Lieutenant Colonel",
+          "value": "O-5 Lieutenant Colonel"
+        },
+        {
+          "label": "O-6 Colonel",
+          "value": "O-6 Colonel"
+        },
+        {
+          "label": "O-7 Brigadier General",
+          "value": "O-7 Brigadier General"
+        },
+        {
+          "label": "O-8 Major General",
+          "value": "O-8 Major General"
+        },
+        {
+          "label": "O-9 Lieutenant General",
+          "value": "O-9 Lieutenant General"
+        },
+        {
+          "label": "O-10 General",
+          "value": "O-10 General"
+        },
+        {
+          "label": "O-11 General of the Army",
+          "value": "O-11 General of the Army"
+        },
+        {
+          "label": "W-1 Warrant Officer",
+          "value": "W-1 Warrant Officer"
+        },
+        {
+          "label": "W-2 Chief Warrant Officer",
+          "value": "W-2 Chief Warrant Officer"
+        },
+        {
+          "label": "W-3 Chief Warrant Officer",
+          "value": "W-3 Chief Warrant Officer"
+        },
+        {
+          "label": "W-4 Chief Warrant Officer",
+          "value": "W-4 Chief Warrant Officer"
+        },
+        {
+          "label": "W-5 Master Warrant Officer",
+          "value": "W-5 Master Warrant Officer"
+        }
+      ],
+      "militaryRanksAirForce": [
+        {
+          "label": "E-1 Airman Basic",
+          "value": "E-1 Airman Basic"
+        },
+        {
+          "label": "E-2 Airman",
+          "value": "E-2 Airman"
+        },
+        {
+          "label": "E-3 Airman First Class",
+          "value": "E-3 Airman First Class"
+        },
+        {
+          "label": "E-4 Sergeant",
+          "value": "E-4 Sergeant"
+        },
+        {
+          "label": "E-4 Senior Airman",
+          "value": "E-4 Senior Airman"
+        },
+        {
+          "label": "E-5 Staff Sergeant",
+          "value": "E-5 Staff Sergeant"
+        },
+        {
+          "label": "E-6 Technical Sergeant",
+          "value": "E-6 Technical Sergeant"
+        },
+        {
+          "label": "E-7 Master Sergeant",
+          "value": "E-7 Master Sergeant"
+        },
+        {
+          "label": "E-8 First Sergeant",
+          "value": "E-8 First Sergeant"
+        },
+        {
+          "label": "E-8 Senior Master Sergeant",
+          "value": "E-8 Senior Master Sergeant"
+        },
+        {
+          "label": "E-9 Chief Master Sergeant",
+          "value": "E-9 Chief Master Sergeant"
+        },
+        {
+          "label": "E-9 Command Chief Master Sergeant",
+          "value": "E-9 Command Chief Master Sergeant"
+        },
+        {
+          "label": "E-9 Chief Master Sergeant of the Air Force",
+          "value": "E-9 Chief Master Sergeant of the Air Force"
+        },
+        {
+          "label": "O-1 Second Lieutenant",
+          "value": "O-1 Second Lieutenant"
+        },
+        {
+          "label": "O-2 First Lieutenant",
+          "value": "O-2 First Lieutenant"
+        },
+        {
+          "label": "O-3 Captain",
+          "value": "O-3 Captain"
+        },
+        {
+          "label": "O-4 Major",
+          "value": "O-4 Major"
+        },
+        {
+          "label": "O-5 Lieutenant Colonel",
+          "value": "O-5 Lieutenant Colonel"
+        },
+        {
+          "label": "O-6 Colonel",
+          "value": "O-6 Colonel"
+        },
+        {
+          "label": "O-7 Brigadier General",
+          "value": "O-7 Brigadier General"
+        },
+        {
+          "label": "O-8 Major General",
+          "value": "O-8 Major General"
+        },
+        {
+          "label": "O-9 Lieutenant General",
+          "value": "O-9 Lieutenant General"
+        },
+        {
+          "label": "O-10 General",
+          "value": "O-10 General"
+        },
+        {
+          "label": "O-11 General of the Air Force",
+          "value": "O-11 General of the Air Force"
+        },
+        {
+          "label": "W-1 Warrant Officer",
+          "value": "W-1 Warrant Officer"
+        },
+        {
+          "label": "W-2 Chief Warrant Officer",
+          "value": "W-2 Chief Warrant Officer"
+        },
+        {
+          "label": "W-3 Chief Warrant Officer",
+          "value": "W-3 Chief Warrant Officer"
+        },
+        {
+          "label": "W-4 Chief Warrant Officer",
+          "value": "W-4 Chief Warrant Officer"
+        }
+      ],
+      "militaryRanksAirNationalGuard": [
+        {
+          "label": "E-1 Airman Basic",
+          "value": "E-1 Airman Basic"
+        },
+        {
+          "label": "E-2 Airman",
+          "value": "E-2 Airman"
+        },
+        {
+          "label": "E-3 Airman First Class",
+          "value": "E-3 Airman First Class"
+        },
+        {
+          "label": "E-4 Sergeant",
+          "value": "E-4 Sergeant"
+        },
+        {
+          "label": "E-4 Senior Airman",
+          "value": "E-4 Senior Airman"
+        },
+        {
+          "label": "E-5 Staff Sergeant",
+          "value": "E-5 Staff Sergeant"
+        },
+        {
+          "label": "E-6 Technical Sergeant",
+          "value": "E-6 Technical Sergeant"
+        },
+        {
+          "label": "E-7 Master Sergeant",
+          "value": "E-7 Master Sergeant"
+        },
+        {
+          "label": "E-8 First Sergeant",
+          "value": "E-8 First Sergeant"
+        },
+        {
+          "label": "E-8 Senior Master Sergeant",
+          "value": "E-8 Senior Master Sergeant"
+        },
+        {
+          "label": "E-9 Chief Master Sergeant",
+          "value": "E-9 Chief Master Sergeant"
+        },
+        {
+          "label": "E-9 Command Chief Master Sergeant",
+          "value": "E-9 Command Chief Master Sergeant"
+        },
+        {
+          "label": "E-9 Chief Master Sergeant of the Air Force",
+          "value": "E-9 Chief Master Sergeant of the Air Force"
+        },
+        {
+          "label": "O-1 Second Lieutenant",
+          "value": "O-1 Second Lieutenant"
+        },
+        {
+          "label": "O-2 First Lieutenant",
+          "value": "O-2 First Lieutenant"
+        },
+        {
+          "label": "O-3 Captain",
+          "value": "O-3 Captain"
+        },
+        {
+          "label": "O-4 Major",
+          "value": "O-4 Major"
+        },
+        {
+          "label": "O-5 Lieutenant Colonel",
+          "value": "O-5 Lieutenant Colonel"
+        },
+        {
+          "label": "O-6 Colonel",
+          "value": "O-6 Colonel"
+        },
+        {
+          "label": "O-7 Brigadier General",
+          "value": "O-7 Brigadier General"
+        },
+        {
+          "label": "O-8 Major General",
+          "value": "O-8 Major General"
+        },
+        {
+          "label": "O-9 Lieutenant General",
+          "value": "O-9 Lieutenant General"
+        },
+        {
+          "label": "O-10 General",
+          "value": "O-10 General"
+        },
+        {
+          "label": "O-11 General of the Air Force",
+          "value": "O-11 General of the Air Force"
+        },
+        {
+          "label": "W-1 Warrant Officer",
+          "value": "W-1 Warrant Officer"
+        },
+        {
+          "label": "W-2 Chief Warrant Officer",
+          "value": "W-2 Chief Warrant Officer"
+        },
+        {
+          "label": "W-3 Chief Warrant Officer",
+          "value": "W-3 Chief Warrant Officer"
+        },
+        {
+          "label": "W-4 Chief Warrant Officer",
+          "value": "W-4 Chief Warrant Officer"
+        }
+      ],
+      "militaryRanksCoastGuard": [
+        {
+          "label": "E-1 Seaman Recruit",
+          "value": "E-1 Seaman Recruit"
+        },
+        {
+          "label": "E-2 Seaman Apprentice",
+          "value": "E-2 Seaman Apprentice"
+        },
+        {
+          "label": "E-3 Seaman",
+          "value": "E-3 Seaman"
+        },
+        {
+          "label": "E-4 Petty Officer 3rd Class",
+          "value": "E-4 Petty Officer 3rd Class"
+        },
+        {
+          "label": "E-5 Petty Officer 2nd Class",
+          "value": "E-5 Petty Officer 2nd Class"
+        },
+        {
+          "label": "E-6 Petty Officer 1st Class",
+          "value": "E-6 Petty Officer 1st Class"
+        },
+        {
+          "label": "E-7 Chief Petty Officer",
+          "value": "E-7 Chief Petty Officer"
+        },
+        {
+          "label": "E-8 Senior Chief Petty Officer",
+          "value": "E-8 Senior Chief Petty Officer"
+        },
+        {
+          "label": "E-9 Master Chief Petty Officer",
+          "value": "E-9 Master Chief Petty Officer"
+        },
+        {
+          "label": "O-1 Ensign",
+          "value": "O-1 Ensign"
+        },
+        {
+          "label": "O-2 Lieutenant Junior Grade",
+          "value": "O-2 Lieutenant Junior Grade"
+        },
+        {
+          "label": "O-3 Lieutenant",
+          "value": "O-3 Lieutenant"
+        },
+        {
+          "label": "O-4 Lieutenant Commander",
+          "value": "O-4 Lieutenant Commander"
+        },
+        {
+          "label": "O-5 Commander",
+          "value": "O-5 Commander"
+        },
+        {
+          "label": "O-6 Captain",
+          "value": "O-6 Captain"
+        },
+        {
+          "label": "O-7 Rear Admiral",
+          "value": "O-7 Rear Admiral"
+        },
+        {
+          "label": "O-7 Commodore",
+          "value": "O-7 Commodore"
+        },
+        {
+          "label": "O-8 Rear Admiral",
+          "value": "O-8 Rear Admiral"
+        },
+        {
+          "label": "O-9 Vice Admiral",
+          "value": "O-9 Vice Admiral"
+        },
+        {
+          "label": "O-10 Admiral",
+          "value": "O-10 Admiral"
+        },
+        {
+          "label": "O-11 Fleet Admiral",
+          "value": "O-11 Fleet Admiral"
+        },
+        {
+          "label": "W-1 Warrant Officer",
+          "value": "W-1 Warrant Officer"
+        },
+        {
+          "label": "W-2 Chief Warrant Officer",
+          "value": "W-2 Chief Warrant Officer"
+        },
+        {
+          "label": "W-3 Chief Warrant Officer",
+          "value": "W-3 Chief Warrant Officer"
+        },
+        {
+          "label": "W-4 Chief Warrant Officer",
+          "value": "W-4 Chief Warrant Officer"
+        }
+      ],
+      "militaryRanksMarines": [
+        {
+          "label": "E-1 Private",
+          "value": "E-1 Private"
+        },
+        {
+          "label": "E-2 Private First Class",
+          "value": "E-2 Private First Class"
+        },
+        {
+          "label": "E-3 Lance Corporal",
+          "value": "E-3 Lance Corporal"
+        },
+        {
+          "label": "E-4 Corporal",
+          "value": "E-4 Corporal"
+        },
+        {
+          "label": "E-5 Sergeant",
+          "value": "E-5 Sergeant"
+        },
+        {
+          "label": "E-6 Staff Sergeant",
+          "value": "E-6 Staff Sergeant"
+        },
+        {
+          "label": "E-7 Gunnery Sergeant",
+          "value": "E-7 Gunnery Sergeant"
+        },
+        {
+          "label": "E-8 First Sergeant",
+          "value": "E-8 First Sergeant"
+        },
+        {
+          "label": "E-8 Master Sergeant",
+          "value": "E-8 Master Sergeant"
+        },
+        {
+          "label": "E-9 Sergeant Major of the Marine Corps",
+          "value": "E-9 Sergeant Major of the Marine Corps"
+        },
+        {
+          "label": "E-9 Sergeant Major",
+          "value": "E-9 Sergeant Major"
+        },
+        {
+          "label": "E-9 Master Gunnery Sergeant",
+          "value": "E-9 Master Gunnery Sergeant"
+        },
+        {
+          "label": "O-1 Second Lieutenant",
+          "value": "O-1 Second Lieutenant"
+        },
+        {
+          "label": "O-2 First Lieutenant",
+          "value": "O-2 First Lieutenant"
+        },
+        {
+          "label": "O-3 Captain",
+          "value": "O-3 Captain"
+        },
+        {
+          "label": "O-4 Major",
+          "value": "O-4 Major"
+        },
+        {
+          "label": "O-5 Lieutenant Colonel",
+          "value": "O-5 Lieutenant Colonel"
+        },
+        {
+          "label": "O-6 Colonel",
+          "value": "O-6 Colonel"
+        },
+        {
+          "label": "O-7 Brigadier General",
+          "value": "O-7 Brigadier General"
+        },
+        {
+          "label": "O-8 Major General",
+          "value": "O-8 Major General"
+        },
+        {
+          "label": "O-9 Lieutenant General",
+          "value": "O-9 Lieutenant General"
+        },
+        {
+          "label": "O-10 General",
+          "value": "O-10 General"
+        },
+        {
+          "label": "W-1 Warrant Officer",
+          "value": "W-1 Warrant Officer"
+        },
+        {
+          "label": "W-2 Chief Warrant Officer",
+          "value": "W-2 Chief Warrant Officer"
+        },
+        {
+          "label": "W-3 Chief Warrant Officer",
+          "value": "W-3 Chief Warrant Officer"
+        },
+        {
+          "label": "W-4 Chief Warrant Officer",
+          "value": "W-4 Chief Warrant Officer"
+        },
+        {
+          "label": "W-5 Master Warrant Officer",
+          "value": "W-5 Master Warrant Officer"
+        }
+      ],
+      "militaryRanksNavy": [
+        {
+          "label": "E-1 Seaman Recruit",
+          "value": "E-1 Seaman Recruit"
+        },
+        {
+          "label": "E-2 Seaman Apprentice",
+          "value": "E-2 Seaman Apprentice"
+        },
+        {
+          "label": "E-3 Seaman",
+          "value": "E-3 Seaman"
+        },
+        {
+          "label": "E-4 Petty Officer 3rd Class",
+          "value": "E-4 Petty Officer 3rd Class"
+        },
+        {
+          "label": "E-5 Petty Officer 2nd Class",
+          "value": "E-5 Petty Officer 2nd Class"
+        },
+        {
+          "label": "E-6 Petty Officer 1st Class",
+          "value": "E-6 Petty Officer 1st Class"
+        },
+        {
+          "label": "E-7 Chief Petty Officer",
+          "value": "E-7 Chief Petty Officer"
+        },
+        {
+          "label": "E-8 Senior Chief Petty Officer",
+          "value": "E-8 Senior Chief Petty Officer"
+        },
+        {
+          "label": "E-9 Master Chief Petty Officer of the Navy",
+          "value": "E-9 Master Chief Petty Officer of the Navy"
+        },
+        {
+          "label": "E-9 Master Chief Petty Officer",
+          "value": "E-9 Master Chief Petty Officer"
+        },
+        {
+          "label": "O-1 Ensign",
+          "value": "O-1 Ensign"
+        },
+        {
+          "label": "O-2 Lieutenant Junior Grade",
+          "value": "O-2 Lieutenant Junior Grade"
+        },
+        {
+          "label": "O-3 Lieutenant",
+          "value": "O-3 Lieutenant"
+        },
+        {
+          "label": "O-4 Lieutenant Commander",
+          "value": "O-4 Lieutenant Commander"
+        },
+        {
+          "label": "O-5 Commander",
+          "value": "O-5 Commander"
+        },
+        {
+          "label": "O-6 Captain",
+          "value": "O-6 Captain"
+        },
+        {
+          "label": "O-7 Rear Admiral",
+          "value": "O-7 Rear Admiral"
+        },
+        {
+          "label": "O-7 Rear Admiral (Lower Half)",
+          "value": "O-7 Rear Admiral (Lower Half)"
+        },
+        {
+          "label": "O-8 Rear Admiral (Upper Half)",
+          "value": "O-8 Rear Admiral (Upper Half)"
+        },
+        {
+          "label": "O-9 Vice Admiral",
+          "value": "O-9 Vice Admiral"
+        },
+        {
+          "label": "O-10 Admiral",
+          "value": "O-10 Admiral"
+        },
+        {
+          "label": "O-11 Fleet Admiral",
+          "value": "O-11 Fleet Admiral"
+        },
+        {
+          "label": "W-1 Warrant Officer",
+          "value": "W-1 Warrant Officer"
+        },
+        {
+          "label": "W-2 Chief Warrant Officer",
+          "value": "W-2 Chief Warrant Officer"
+        },
+        {
+          "label": "W-3 Chief Warrant Officer",
+          "value": "W-3 Chief Warrant Officer"
+        },
+        {
+          "label": "W-4 Chief Warrant Officer",
+          "value": "W-4 Chief Warrant Officer"
+        }
+      ],
+      "militaryRanksNoaa": [
+        {
+          "label": "E-1 Seaman Recruit",
+          "value": "E-1 Seaman Recruit"
+        },
+        {
+          "label": "E-2 Seaman Apprentice",
+          "value": "E-2 Seaman Apprentice"
+        },
+        {
+          "label": "E-3 Seaman",
+          "value": "E-3 Seaman"
+        },
+        {
+          "label": "E-4 Petty Officer 3rd Class",
+          "value": "E-4 Petty Officer 3rd Class"
+        },
+        {
+          "label": "E-5 Petty Officer 2nd Class",
+          "value": "E-5 Petty Officer 2nd Class"
+        },
+        {
+          "label": "E-6 Petty Officer 1st Class",
+          "value": "E-6 Petty Officer 1st Class"
+        },
+        {
+          "label": "E-7 Chief Petty Officer",
+          "value": "E-7 Chief Petty Officer"
+        },
+        {
+          "label": "E-8 Senior Chief Petty Officer",
+          "value": "E-8 Senior Chief Petty Officer"
+        },
+        {
+          "label": "E-9 Master Chief Petty Officer",
+          "value": "E-9 Master Chief Petty Officer"
+        },
+        {
+          "label": "O-1 Ensign",
+          "value": "O-1 Ensign"
+        },
+        {
+          "label": "O-2 Lieutenant Junior Grade",
+          "value": "O-2 Lieutenant Junior Grade"
+        },
+        {
+          "label": "O-3 Lieutenant",
+          "value": "O-3 Lieutenant"
+        },
+        {
+          "label": "O-4 Lieutenant Commander",
+          "value": "O-4 Lieutenant Commander"
+        },
+        {
+          "label": "O-5 Commander",
+          "value": "O-5 Commander"
+        },
+        {
+          "label": "O-6 Captain",
+          "value": "O-6 Captain"
+        },
+        {
+          "label": "O-7 Rear Admiral",
+          "value": "O-7 Rear Admiral"
+        },
+        {
+          "label": "O-7 Commodore",
+          "value": "O-7 Commodore"
+        },
+        {
+          "label": "O-8 Rear Admiral",
+          "value": "O-8 Rear Admiral"
+        },
+        {
+          "label": "O-9 Vice Admiral",
+          "value": "O-9 Vice Admiral"
+        },
+        {
+          "label": "O-10 Admiral",
+          "value": "O-10 Admiral"
+        },
+        {
+          "label": "O-11 Fleet Admiral",
+          "value": "O-11 Fleet Admiral"
+        },
+        {
+          "label": "W-1 Warrant Officer",
+          "value": "W-1 Warrant Officer"
+        },
+        {
+          "label": "W-2 Chief Warrant Officer",
+          "value": "W-2 Chief Warrant Officer"
+        },
+        {
+          "label": "W-3 Chief Warrant Officer",
+          "value": "W-3 Chief Warrant Officer"
+        },
+        {
+          "label": "W-4 Chief Warrant Officer",
+          "value": "W-4 Chief Warrant Officer"
+        }
+      ],
+      "militaryRanksPhs": [
+        {
+          "label": "O-1 Ensign",
+          "value": "O-1 Ensign"
+        },
+        {
+          "label": "O-1 JRA",
+          "value": "O-1 JRA"
+        },
+        {
+          "label": "O-2 Lieutenant Junior Grade",
+          "value": "O-2 Lieutenant Junior Grade"
+        },
+        {
+          "label": "O-2 ASST",
+          "value": "O-2 ASST"
+        },
+        {
+          "label": "O-3 Lieutenant",
+          "value": "O-3 Lieutenant"
+        },
+        {
+          "label": "O-3 SRA",
+          "value": "O-3 SRA"
+        },
+        {
+          "label": "O-4 Full",
+          "value": "O-4 Full"
+        },
+        {
+          "label": "O-4 Lieutenant Commander",
+          "value": "O-4 Lieutenant Commander"
+        },
+        {
+          "label": "O-5 SR",
+          "value": "O-5 SR"
+        },
+        {
+          "label": "O-6 DIR",
+          "value": "O-6 DIR"
+        },
+        {
+          "label": "O-6 Captain",
+          "value": "O-6 Captain"
+        },
+        {
+          "label": "O-7 Rear Admiral",
+          "value": "O-7 Rear Admiral"
+        },
+        {
+          "label": "O-7 Commodore",
+          "value": "O-7 Commodore"
+        },
+        {
+          "label": "O-7 AST",
+          "value": "O-7 AST"
+        },
+        {
+          "label": "O-8 Rear Admiral",
+          "value": "O-8 Rear Admiral"
+        },
+        {
+          "label": "O-8 ASG",
+          "value": "O-8 ASG"
+        }
+      ],
+      "insuranceCompanies": [
+        {
+          "label": "None",
+          "value": "None"
+        },
+        {
+          "label": "AIG",
+          "value": "AIG"
+        },
+        {
+          "label": "Allied",
+          "value": "Allied"
+        },
+        {
+          "label": "Allstate",
+          "value": "Allstate"
+        },
+        {
+          "label": "American Family",
+          "value": "American Family"
+        },
+        {
+          "label": "Chubb",
+          "value": "Chubb"
+        },
+        {
+          "label": "Farmers",
+          "value": "Farmers"
+        },
+        {
+          "label": "Geico",
+          "value": "Geico"
+        },
+        {
+          "label": "Hartford",
+          "value": "Hartford"
+        },
+        {
+          "label": "Liberty Mutual",
+          "value": "Liberty Mutual"
+        },
+        {
+          "label": "Nationwide",
+          "value": "Nationwide"
+        },
+        {
+          "label": "Progressive",
+          "value": "Progressive"
+        },
+        {
+          "label": "Safeco",
+          "value": "Safeco"
+        },
+        {
+          "label": "State Farm",
+          "value": "State Farm"
+        },
+        {
+          "label": "Travelers",
+          "value": "Travelers"
+        },
+        {
+          "label": "USAA",
+          "value": "USAA"
+        },
+        {
+          "label": "Other",
+          "value": "Other"
+        }
+      ],
+      "residenceStatuses": [
+        {
+          "label": "Homeowner",
+          "value": "Homeowner"
+        },
+        {
+          "label": "Renter",
+          "value": "Renter"
+        },
+        {
+          "label": "Government Housing",
+          "value": "Government Housing"
+        },
+        {
+          "label": "Own Mobile Home",
+          "value": "Own Mobile Home"
+        },
+        {
+          "label": "Other",
+          "value": "Other"
+        }
+      ]
+    },
+    "sections": [
+      {
+        "id": "elegibility",
+        "wayfinderId": "",
+        "heading": "Eligibility for insurance",
+        "subheading": "",
+        "description": [
+          "We specialize in providing insurance to current, former and retired military members, their spouses, current and retired. Department of Defense employees and children of current or former AFI members.",
+          "However, we can still be your agent and provide you with quotes from our partners if you do not fall into one of these categories."
+        ],
+        "disclaimer": "",
+        "sidebar": null,
+        "fields": [
+          {
+            "id": "eligibilityStatus",
+            "label": "Select your status below:",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "Military (active duty, former / separated / retired / disabled, surviving spouse)",
+                "value": "military"
+              },
+              {
+                "label": "Current Military Spouse",
+                "value": "spouse"
+              },
+              {
+                "label": "Current or Retired Department of Defense Employee",
+                "value": "dod"
+              },
+              {
+                "label": "Child of current or former Armed Forces Insurance member",
+                "value": "child"
+              },
+              {
+                "label": "Non-military (We can provide you with quotes from our partners)",
+                "value": "nonMilitary"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "eligibilityDetails",
+        "wayfinderId": "",
+        "heading": "Eligibility for insurance",
+        "subheading": "",
+        "description": [
+          ""
+        ],
+        "disclaimer": "",
+        "sidebar": {
+          "heading": "Tips",
+          "content": [
+            {
+              "heading": "heading 1",
+              "content": "content 1"
+            },
+            {
+              "heading": "heading 2",
+              "content": "content 2"
+            }
+          ]
+        },
+        "fields": [
+          {
+            "id": "eligibilityFirstName",
+            "label": "",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "eligibilityLastName",
+            "label": "",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "branchOfService",
+            "label": "Branch Of Service",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "Army",
+                "value": "Army"
+              },
+              {
+                "label": "Army National Guard",
+                "value": "Army National Guard"
+              },
+              {
+                "label": "Air Force",
+                "value": "Air Force"
+              },
+              {
+                "label": "Air National Guard",
+                "value": "Air National Guard"
+              },
+              {
+                "label": "Coast Guard",
+                "value": "Coast Guard"
+              },
+              {
+                "label": "Marine Corps",
+                "value": "Marine Corps"
+              },
+              {
+                "label": "Navy",
+                "value": "Navy"
+              },
+              {
+                "label": "NOAA",
+                "value": "NOAA"
+              },
+              {
+                "label": "PHS",
+                "value": "PHS"
+              }
+            ]
+          },
+          {
+            "id": "militaryStatus",
+            "label": "Military Status",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "Active Duty",
+                "value": "Active Duty"
+              },
+              {
+                "label": "Reserved",
+                "value": "Reserved"
+              },
+              {
+                "label": "Separated",
+                "value": "Separated"
+              },
+              {
+                "label": "Retired",
+                "value": "Retired"
+              }
+            ]
+          },
+          {
+            "id": "militaryRank",
+            "label": "Rank",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          }
+        ]
+      },
+      {
+        "id": "saveQuote",
+        "wayfinderId": "",
+        "heading": "Save Your Quote",
+        "subheading": "",
+        "description": [
+          "This email will be used to send you a link to finish your quote at a later time."
+        ],
+        "disclaimer": "",
+        "sidebar": null,
+        "fields": [
+          {
+            "id": "saveQuoteEmailAddress",
+            "label": "Provide us with your email address.",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          }
+        ]
+      },
+      {
+        "id": "productUnavailable",
+        "wayfinderId": "",
+        "heading": "Product Unvailable",
+        "subheading": "",
+        "description": [
+          "We don't currently offer insurance in your area.",
+          "If you have questions about our coverage areas and would like to talk with an agent please call 1-800-495-8234."
+        ],
+        "disclaimer": "",
+        "sidebar": null,
+        "fields": []
+      },
+      {
+        "id": "policyHolder",
+        "wayfinderId": "driverInfo",
+        "heading": "Policy Holder Information",
+        "subheading": "",
+        "description": [
+          ""
+        ],
+        "disclaimer": "",
+        "sidebar": {
+          "heading": "Tips",
+          "content": [
+            {
+              "heading": "heading 1",
+              "content": "content 1"
+            },
+            {
+              "heading": "heading 2",
+              "content": "content 2"
+            }
+          ]
+        },
+        "fields": [
+          {
+            "id": "policyHolderFirstName",
+            "label": "First Name",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "policyHolderLastName",
+            "label": "Last Name",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "policyHolderSuffix",
+            "label": "Suffix",
+            "note": "Optional",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "policyHolderMailingAddress",
+            "label": "Mailing Address",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "policyHolderCity",
+            "label": "City",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "policyHolderState",
+            "label": "State",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "policyHolderZip",
+            "label": "Zip Code",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "policyHolderSsn",
+            "label": "Social Security Number",
+            "note": "Optional",
+            "placeholder": "123-45-6789",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "policyHolderDob",
+            "label": "Date of Birth",
+            "note": "",
+            "placeholder": "MM/DD/YYYY",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "policyHolderGender",
+            "label": "Gender",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "policyHolderMaritalStatus",
+            "label": "Marital Status",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "policyHolderEmail",
+            "label": "Email Address",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "policyHolderPhoneType",
+            "label": "Phone Type",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "policyHolderPhoneNumber",
+            "label": "Phone Number",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "policyHolderResidenceStatus",
+            "label": "Residence Status",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "policyHolderAgeWhenLicensed",
+            "label": "Age when licensed",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          }
+        ]
+      },
+      {
+        "id": "addDriver",
+        "wayfinderId": "driverInfo",
+        "heading": "",
+        "subheading": "",
+        "description": [
+          ""
+        ],
+        "disclaimer": "",
+        "sidebar": {
+          "heading": "heading",
+          "content": [
+            {
+              "heading": "heading 1",
+              "content": "content 1"
+            },
+            {
+              "heading": "heading 2",
+              "content": "content 2"
+            }
+          ]
+        },
+        "fields": [
+          {
+            "id": "spouseFirstName'",
+            "label": "First Name",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "spouseLastName",
+            "label": "Last Name",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "cohabitantSuffix",
+            "label": "Suffix",
+            "note": "Optional",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "spouseSsn",
+            "label": "Social Security Number",
+            "note": "Optional",
+            "placeholder": "xxx-xx-1234",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "spouseDob",
+            "label": "Date of Birth",
+            "note": "",
+            "placeholder": "MM/DD/YYYY",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "spouseGender",
+            "label": "Gender",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "spouseIsOperator",
+            "label": "Spouse is an Operator",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "N",
+                "value": "N"
+              },
+              {
+                "label": "Y",
+                "value": "Y"
+              }
+            ]
+          },
+          {
+            "id": "spouseOperatingExperience",
+            "label": "Operating Experience in Years",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "additionalDriver0FirstName",
+            "label": "First Name",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "additionalDriver0LastName",
+            "label": "Last Name",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "additionalDriver0Dob",
+            "label": "Date of Birth",
+            "note": "",
+            "placeholder": "MM/DD/YYYY",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "additionalDriver0Gender",
+            "label": "Gender",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "additionalDriver0MaritalStatus",
+            "label": "Marital Status",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "Married",
+                "value": "Married"
+              },
+              {
+                "label": "Cohabitant",
+                "value": "Cohabitant"
+              },
+              {
+                "label": "Divorced",
+                "value": "Divorced"
+              },
+              {
+                "label": "Widowed",
+                "value": "Widowed"
+              },
+              {
+                "label": "Single",
+                "value": "Single"
+              },
+              {
+                "label": "Civil Union/Domestic Partner",
+                "value": "Civil Union/Domestic Partner"
+              }
+            ]
+          },
+          {
+            "id": "additionalDriver0OperatingExperience",
+            "label": "Operating Experience (years)",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "additionalDriver0SafetyCourseCompleted",
+            "label": "Safety course completed in the past 3 years?",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "N",
+                "value": "N"
+              },
+              {
+                "label": "Y",
+                "value": "Y"
+              }
+            ]
+          },
+          {
+            "id": "additionalDriver1FirstName",
+            "label": "First Name",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "additionalDriver0LastName",
+            "label": "Last Name",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "additionalDriver1Dob",
+            "label": "Date of Birth",
+            "note": "",
+            "placeholder": "MM/DD/YYYY",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "additionalDriver1Gender",
+            "label": "Gender",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "additionalDriver1MaritalStatus",
+            "label": "Marital Status",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "Married",
+                "value": "Married"
+              },
+              {
+                "label": "Cohabitant",
+                "value": "Cohabitant"
+              },
+              {
+                "label": "Divorced",
+                "value": "Divorced"
+              },
+              {
+                "label": "Widowed",
+                "value": "Widowed"
+              },
+              {
+                "label": "Single",
+                "value": "Single"
+              },
+        {
+          "label": "Civil Union Or Domestic Partner",
+          "value": "Civil Union Or Domestic Partner"
+        }
+            ]
+          },
+          {
+            "id": "additionalDriver1OperatingExperience",
+            "label": "Operating Experience (years)",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "additionalDriver0SafetyCourseCompleted",
+            "label": "Safety course completed in the past 3 years?",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "N",
+                "value": "N"
+              },
+              {
+                "label": "Y",
+                "value": "Y"
+              }
+            ]
+          },
+          {
+            "id": "additionalDriver2FirstName",
+            "label": "First Name",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "additionalDriver2LastName",
+            "label": "Last Name",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "additionalDriver2Dob",
+            "label": "Date of Birth",
+            "note": "",
+            "placeholder": "MM/DD/YYYY",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "additionalDriver2Gender",
+            "label": "Gender",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "additionalDriver2MaritalStatus",
+            "label": "Marital Status",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "Married",
+                "value": "Married"
+              },
+              {
+                "label": "Cohabitant",
+                "value": "Cohabitant"
+              },
+              {
+                "label": "Divorced",
+                "value": "Divorced"
+              },
+              {
+                "label": "Widowed",
+                "value": "Widowed"
+              },
+              {
+                "label": "Single",
+                "value": "Single"
+              },
+        {
+          "label": "Civil Union Or Domestic Partner",
+          "value": "Civil Union Or Domestic Partner"
+        }
+            ]
+          },
+          {
+            "id": "additionalDriver2OperatingExperience",
+            "label": "Operating Experience (years)",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "additionalDriver0SafetyCourseCompleted",
+            "label": "Safety course completed in the past 3 years?",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "N",
+                "value": "N"
+              },
+              {
+                "label": "Y",
+                "value": "Y"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "driverSummary",
+        "wayfinderId": "driverInfo",
+        "heading": "Your policy has ",
+        "subheading": "",
+        "description": [
+          ""
+        ],
+        "disclaimer": "",
+        "sidebar": null,
+        "fields": []
+      },
+      {
+        "id": "vehicle",
+        "wayfinderId": "vehicleInfo",
+        "heading": "Vehicle Information",
+        "subheading": "",
+        "description": [
+          ""
+        ],
+        "disclaimer": "",
+        "sidebar": {
+          "heading": "Tips",
+          "content": [
+            {
+              "heading": "heading 1",
+              "content": "content 1"
+            },
+            {
+              "heading": "heading 2",
+              "content": "content 2"
+            }
+          ]
+        },
+        "fields": [
+          {
+            "id": "vehicle0Year",
+            "label": "Year",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle1Year",
+            "label": "Year",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle2Year",
+            "label": "Year",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle3Year",
+            "label": "Year",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle4Year",
+            "label": "Year",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle0Make",
+            "label": "Make",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle1Make",
+            "label": "Make",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle2Make",
+            "label": "Make",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle3Make",
+            "label": "Make",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle4Make",
+            "label": "Make",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle0Model",
+            "label": "Model",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle1Model",
+            "label": "Model",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle2Model",
+            "label": "Model",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle3Model",
+            "label": "Model",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle4Model",
+            "label": "Model",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle0Type",
+            "label": "Type of Vehicle",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle1Type",
+            "label": "Type of Vehicle",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle2Type",
+            "label": "Type of Vehicle",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle3Type",
+            "label": "Type of Vehicle",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle4Type",
+            "label": "Type of Vehicle",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle0CCSize",
+            "label": "CC Size",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle1CCSize",
+            "label": "CC Size",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle2CCSize",
+            "label": "CC Size",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle3CCSize",
+            "label": "CC Size",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle4CCSize",
+            "label": "CC Size",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle0Value",
+            "label": "Value of Vehicle",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle1Value",
+            "label": "Value of Vehicle",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle2Value",
+            "label": "Value of Vehicle",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle3Value",
+            "label": "Value of Vehicle",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle4Value",
+            "label": "Value of Vehicle",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          }
+        ]
+      },
+      {
+        "id": "garanging",
+        "wayfinderId": "vehicleInfo",
+        "heading": "Vehicle Information",
+        "subheading": "Tell us where this vehicle is garaged.",
+        "description": [
+          ""
+        ],
+        "disclaimer": "",
+        "sidebar": {
+          "heading": "Tips",
+          "content": [
+            {
+              "heading": "heading 1",
+              "content": "content 1"
+            },
+            {
+              "heading": "heading 2",
+              "content": "content 2"
+            }
+          ]
+        },
+        "fields": [
+          {
+            "id": "vehicle0AddressSameAsMailing",
+            "label": "",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "My garaging address is the same as mailing address",
+                "value": ""
+              }
+            ]
+          },
+          {
+            "id": "vehicle1AddressSameAsMailing",
+            "label": "",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "My garaging address is the same as mailing address",
+                "value": ""
+              }
+            ]
+          },
+          {
+            "id": "vehicle2AddressSameAsMailing",
+            "label": "",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "My garaging address is the same as mailing address",
+                "value": ""
+              }
+            ]
+          },
+          {
+            "id": "vehicle3AddressSameAsMailing",
+            "label": "",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "My garaging address is the same as mailing address",
+                "value": ""
+              }
+            ]
+          },
+          {
+            "id": "vehicle4AddressSameAsMailing",
+            "label": "",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "My garaging address is the same as mailing address",
+                "value": ""
+              }
+            ]
+          },
+          {
+            "id": "vehicle0Address",
+            "label": "Address",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle1Address",
+            "label": "Address",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle2Address",
+            "label": "Address",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle3Address",
+            "label": "Address",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle4Address",
+            "label": "Address",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle0City",
+            "label": "City",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle0City",
+            "label": "City",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle2City",
+            "label": "City",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle3City",
+            "label": "City",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle3City",
+            "label": "City",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle0State",
+            "label": "State",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle1State",
+            "label": "State",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle2State",
+            "label": "State",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle3State",
+            "label": "State",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle3State",
+            "label": "State",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle0Zip",
+            "label": "Zip",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle1Zip",
+            "label": "Zip",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle2Zip",
+            "label": "Zip",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle3Zip",
+            "label": "Zip",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "vehicle4Zip",
+            "label": "Zip",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          }
+        ]
+      },
+      {
+        "id": "vehicleSummary",
+        "wayfinderId": "vehicleInfo",
+        "heading": "Vehicles",
+        "subheading": "",
+        "description": [
+          ""
+        ],
+        "disclaimer": "",
+        "sidebar": null,
+        "fields": []
+      },
+      {
+        "id": "householdViolations",
+        "wayfinderId": "coverages",
+        "heading": "Household violations",
+        "subheading": "",
+        "description": [
+          ""
+        ],
+        "disclaimer": "",
+        "sidebar": {
+          "heading": "Tips",
+          "content": [
+            {
+              "heading": "heading 1",
+              "content": "content 1"
+            },
+            {
+              "heading": "heading 2",
+              "content": "content 2"
+            }
+          ]
+        },
+        "fields": [
+          {
+            "id": "householdViolationsPreviousClaims",
+            "label": "Has any household member had any moving violations accidents, or auto insurance claims in the last 5 years",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "Yes",
+                "value": "Yes"
+              },
+              {
+                "label": "No",
+                "value": "No"
+              }
+            ]
+          },
+          {
+            "id": "householdViolations0Driver",
+            "label": "Driver",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "householdViolations0Type",
+            "label": "Type",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "householdViolations0Date",
+            "label": "Date",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "householdViolations1Driver",
+            "label": "Driver",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "householdViolations1Type",
+            "label": "Type",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "householdViolations1Date",
+            "label": "Date",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "householdViolations2Driver",
+            "label": "Driver",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "householdViolations2Type",
+            "label": "Type",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "householdViolations2Date",
+            "label": "Date",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "householdViolations3Driver",
+            "label": "Driver",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "householdViolations3Type",
+            "label": "Type",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "householdViolations3Date",
+            "label": "Date",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "householdViolations4Date",
+            "label": "Date",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "householdViolations4Driver",
+            "label": "Driver",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "householdViolations4Type",
+            "label": "Type",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          }
+        ]
+      },
+      {
+        "id": "coveragesSummary",
+        "wayfinderId": "coverages",
+        "heading": "Your overall policy coverage",
+        "subheading": "",
+        "description": [
+          ""
+        ],
+        "disclaimer": "",
+        "sidebar": null,
+        "fields": [
+          {
+            "id": "bodilyInjuryLiability",
+            "label": "Bodily Injury Liability",
+            "note": "per person/per accident",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "100/300",
+                "value": "100/300"
+              },
+              {
+                "label": "25/50",
+                "value": "25/50"
+              },
+              {
+                "label": "250/500",
+                "value": "250/500"
+              },
+              {
+                "label": "50/100",
+                "value": "50/100"
+              },
+              {
+                "label": "State Minimum",
+                "value": "State Minimum"
+              }
+            ]
+          },
+          {
+            "id": "personalInjuryProtection",
+            "label": "Personal Injury Protection (PIP)",
+            "note": "per person/per accident",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "propertyDamageLiability",
+            "label": "Property Damage Liability",
+            "note": "per person/per accident",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "10,000",
+                "value": "10,000"
+              },
+              {
+                "label": "100,000",
+                "value": "100,000"
+              },
+              {
+                "label": "25,000",
+                "value": "25,000"
+              },
+              {
+                "label": "50,000",
+                "value": "50,000"
+              }
+            ]
+          },
+          {
+            "id": "medicalPayment",
+            "label": "Medical Payment",
+            "note": "per person/per accident",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "1,000",
+                "value": "1,000"
+              },
+              {
+                "label": "10,000",
+                "value": "10,000"
+              },
+              {
+                "label": "2,000",
+                "value": "2,000"
+              },
+              {
+                "label": "5,000",
+                "value": "5,000"
+              },
+              {
+                "label": "None",
+                "value": "None"
+              }
+            ]
+          },
+          {
+            "id": "uninsuredMotoristBodilyInjury",
+            "label": "Uninsured Motorist Bodily Injury",
+            "note": "per person/per accident",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "100/300",
+                "value": "100/300"
+              },
+              {
+                "label": "25/50",
+                "value": "25/50"
+              },
+              {
+                "label": "250/500",
+                "value": "250/500"
+              },
+              {
+                "label": "50/100",
+                "value": "50/100"
+              },
+              {
+                "label": "None",
+                "value": "None"
+              },
+              {
+                "label": "State Minimum",
+                "value": "State Minimum"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "physicalDamageCoverages",
+        "wayfinderId": "coverages",
+        "heading": "Physical damage coverage for",
+        "subheading": "",
+        "description": [
+          ""
+        ],
+        "disclaimer": "",
+        "sidebar": {
+          "heading": "Tips",
+          "content": [
+            {
+              "heading": "heading 1",
+              "content": "content 1"
+            },
+            {
+              "heading": "heading 2",
+              "content": "content 2"
+            }
+          ]
+        },
+        "fields": [
+          {
+            "id": "vehicle0LiabilityOnlyCoverage",
+            "label": "Liability Only Coverage",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "No",
+                "value": "No"
+              },
+              {
+                "label": "Yes",
+                "value": "Yes"
+              }
+            ]
+          },
+          {
+            "id": "vehicle0ComprehensiveDeductible",
+            "label": "Comprehensive Deductible",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "100",
+                "value": "100"
+              },
+              {
+                "label": "1000",
+                "value": "1000"
+              },
+              {
+                "label": "250",
+                "value": "250"
+              },
+              {
+                "label": "500",
+                "value": "500"
+              },
+              {
+                "label": "No Coverage",
+                "value": "No Coverage"
+              }
+            ]
+          },
+          {
+            "id": "vehicle0CollisionDeductible",
+            "label": "Collision Deductible",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "100",
+                "value": "100"
+              },
+              {
+                "label": "1000",
+                "value": "1000"
+              },
+              {
+                "label": "250",
+                "value": "250"
+              },
+              {
+                "label": "500",
+                "value": "500"
+              },
+              {
+                "label": "No Coverage",
+                "value": "No Coverage"
+              }
+            ]
+          },
+          {
+            "id": "vehicle1LiabilityOnlyCoverage",
+            "label": "Liability Only Coverage",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "No",
+                "value": "No"
+              },
+              {
+                "label": "Yes",
+                "value": "Yes"
+              }
+            ]
+          },
+          {
+            "id": "vehicle1ComprehensiveDeductible",
+            "label": "Comprehensive Deductible",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "100",
+                "value": "100"
+              },
+              {
+                "label": "1000",
+                "value": "1000"
+              },
+              {
+                "label": "250",
+                "value": "250"
+              },
+              {
+                "label": "500",
+                "value": "500"
+              },
+              {
+                "label": "No Coverage",
+                "value": "No Coverage"
+              }
+            ]
+          },
+          {
+            "id": "vehicle1CollisionDeductible",
+            "label": "Collision Deductible",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "100",
+                "value": "100"
+              },
+              {
+                "label": "1000",
+                "value": "1000"
+              },
+              {
+                "label": "250",
+                "value": "250"
+              },
+              {
+                "label": "500",
+                "value": "500"
+              },
+              {
+                "label": "No Coverage",
+                "value": "No Coverage"
+              }
+            ]
+          },
+          {
+            "id": "vehicle2LiabilityOnlyCoverage",
+            "label": "Liability Only Coverage",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "No",
+                "value": "No"
+              },
+              {
+                "label": "Yes",
+                "value": "Yes"
+              }
+            ]
+          },
+          {
+            "id": "vehicle2ComprehensiveDeductible",
+            "label": "Comprehensive Deductible",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "100",
+                "value": "100"
+              },
+              {
+                "label": "1000",
+                "value": "1000"
+              },
+              {
+                "label": "250",
+                "value": "250"
+              },
+              {
+                "label": "500",
+                "value": "500"
+              },
+              {
+                "label": "No Coverage",
+                "value": "No Coverage"
+              }
+            ]
+          },
+          {
+            "id": "vehicle2CollisionDeductible",
+            "label": "Collision Deductible",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "100",
+                "value": "100"
+              },
+              {
+                "label": "1000",
+                "value": "1000"
+              },
+              {
+                "label": "250",
+                "value": "250"
+              },
+              {
+                "label": "500",
+                "value": "500"
+              },
+              {
+                "label": "No Coverage",
+                "value": "No Coverage"
+              }
+            ]
+          },
+          {
+            "id": "vehicle3LiabilityOnlyCoverage",
+            "label": "Liability Only Coverage",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "No",
+                "value": "No"
+              },
+              {
+                "label": "Yes",
+                "value": "Yes"
+              }
+            ]
+          },
+          {
+            "id": "vehicle3ComprehensiveDeductible",
+            "label": "Comprehensive Deductible",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "100",
+                "value": "100"
+              },
+              {
+                "label": "1000",
+                "value": "1000"
+              },
+              {
+                "label": "250",
+                "value": "250"
+              },
+              {
+                "label": "500",
+                "value": "500"
+              },
+              {
+                "label": "No Coverage",
+                "value": "No Coverage"
+              }
+            ]
+          },
+          {
+            "id": "vehicle3CollisionDeductible",
+            "label": "Collision Deductible",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "100",
+                "value": "100"
+              },
+              {
+                "label": "1000",
+                "value": "1000"
+              },
+              {
+                "label": "250",
+                "value": "250"
+              },
+              {
+                "label": "500",
+                "value": "500"
+              },
+              {
+                "label": "No Coverage",
+                "value": "No Coverage"
+              }
+            ]
+          },
+          {
+            "id": "vehicle4LiabilityOnlyCoverage",
+            "label": "Liability Only Coverage",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "No",
+                "value": "No"
+              },
+              {
+                "label": "Yes",
+                "value": "Yes"
+              }
+            ]
+          },
+          {
+            "id": "vehicle4ComprehensiveDeductible",
+            "label": "Comprehensive Deductible",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "100",
+                "value": "100"
+              },
+              {
+                "label": "1000",
+                "value": "1000"
+              },
+              {
+                "label": "250",
+                "value": "250"
+              },
+              {
+                "label": "500",
+                "value": "500"
+              },
+              {
+                "label": "No Coverage",
+                "value": "No Coverage"
+              }
+            ]
+          },
+          {
+            "id": "vehicle4CollisionDeductible",
+            "label": "Collision Deductible",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "100",
+                "value": "100"
+              },
+              {
+                "label": "1000",
+                "value": "1000"
+              },
+              {
+                "label": "250",
+                "value": "250"
+              },
+              {
+                "label": "500",
+                "value": "500"
+              },
+              {
+                "label": "No Coverage",
+                "value": "No Coverage"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "coverageHistory",
+        "wayfinderId": "coverages",
+        "heading": "Coverage History",
+        "subheading": "",
+        "description": [
+          ""
+        ],
+        "disclaimer": "",
+        "sidebar": {
+          "heading": "Tips",
+          "content": [
+            {
+              "heading": "heading 1",
+              "content": "content 1"
+            },
+            {
+              "heading": "heading 2",
+              "content": "content 2"
+            }
+          ]
+        },
+        "fields": [
+          {
+            "id": "currentInsuranceCompany",
+            "label": "Current Insurance Company",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "otherInsuranceCompany",
+            "label": "Insurance Company Name",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "policyRenewalDate",
+            "label": "Policy Renewal Date",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": null
+          },
+          {
+            "id": "policyRenewalType",
+            "label": "Policy Renewal Type",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "Expires",
+                "value": "Expires"
+              },
+              {
+                "label": "Renews",
+                "value": "Renews"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "submitQuote",
+        "wayfinderId": "quote",
+        "heading": "We will contact you as soon as we have your quote ready",
+        "subheading": "How should we contact you?",
+        "description": [
+          ""
+        ],
+        "disclaimer": "To offer you an accurate quote and/or policy, we (AFI and AFI affiliates) may collect information from consumer reporting agencies, such as credit history. Future reports may be used to update or renew your insurance. By completing this quote, you agree to receive marketing materials from Armed Forces Insurance. You can request removal at any time. Please review our Privacy Policy - Information Gathering.",
+        "sidebar": null,
+        "fields": [
+          {
+            "id": "submitQuoteContactMethod",
+            "label": "How should we contact you?",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "Email",
+                "value": "Email"
+              },
+              {
+                "label": "Phone",
+                "value": "Phone"
+              }
+            ]
+          },
+          {
+            "id": "submitQuoteMoreInfo",
+            "label": "Yes, I am interested in learning more about saving money and other insurance with AFI.",
+            "note": "",
+            "placeholder": "",
+            "value": "",
+            "options": [
+              {
+                "label": "Y",
+                "value": "Y"
+              },
+              {
+                "label": "N",
+                "value": "N"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,43 @@
+﻿@using Sitecore.Mvc
+@using Sitecore
+@using Sitecore.Data.Fields
+@using Sitecore.Resources.Media
+@using Sitecore.Data.Items
+@using Sitecore.Mvc.Presentation
+@using AFI.Feature.Identifiers
+@*@using Elision.Foundation.Kernel*@
+@using AFI.Foundation.Helper
+@using Templates = AFI.Feature.Identifiers.Templates
+@using Content = AFI.Foundation.Helper.FeatureTemplate
+
+
+@model RenderingModel
+
+@{
+    var imageSide = false;
+    var img = (Sitecore.Data.Fields.ImageField)RenderingContext.Current.Rendering.Item.Fields[Content.SingleImageTextBlock.Fields.Image];
+    if (!string.IsNullOrEmpty(RenderingContext.Current.Rendering.Parameters[Templates.Single_Image_Text_Block_Rendering.FieldNames.Image_Right]))
+    {
+
+        imageSide = true;
+    }
+}
+<section class="content-panel content-panel--single-image @(imageSide ? "content-panel--single-image-reversed":"")">
+    @if (Sitecore.Context.PageMode.IsExperienceEditor)
+    {
+        @Html.Sitecore().Field(Content.SingleImageTextBlock.Fields.Image.ToString())
+    }
+    else
+    {
+        <div class="content-panel__image-wrapper">
+            <img data-lazy class="content-panel__image" data-src="@img.ImageUrl()" alt="@img.Alt">
+        </div>
+    }
+    <div class="content-panel__content-wrapper">
+        <div class="content-panel__content-inner-wrapper">
+            <h1 class="heading-blue">@Html.Sitecore().Field(Content.SingleImageTextBlock.Fields.Title.ToString())</h1>
+            <p>@Html.Sitecore().Field(Content.SingleImageTextBlock.Fields.RichTextEditor.ToString())</p>
+            @Html.Sitecore().Field(Content.SingleImageTextBlock.Fields.Link.ToString(), new { @class = "arrow-link" })
+        </div>
+    </div>
+</section>

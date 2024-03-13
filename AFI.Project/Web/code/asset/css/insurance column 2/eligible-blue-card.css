@@ -1,0 +1,50 @@
+.auto_section__container {
+  max-width: 1150px;
+  margin: auto;
+  justify-content: space-between;
+}
+
+.not__eligible__blue {
+  background: #004976;
+  border: none;
+  padding: 1.5rem;
+  border: 1px solid var(--afi-grey-700);
+  border-radius: 4px;
+  color: #fff;
+    padding: 26px !important;
+}
+
+.not__eligible__blue h2 {
+  color: #bbddf1;
+  font-size: 1.5rem;
+  font-weight: normal;
+  margin: 0;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.not__eligible__blue p {
+  font-size: 1rem;
+  margin: 0;
+  line-height: 1.5rem;
+  color: #fff;
+}
+
+.not__eligible__blue .button {
+  color: #fff;
+  background-color: #cb2c30 !important;
+  border-color: #cb2c30 !important;
+}
+
+.not__eligible__blue .button__container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+/* add by nahid */
+
+.not__eligible__blue .button:hover {
+    background-color: #0570c5 !important;
+    border-color: #0570c5 !important;
+}

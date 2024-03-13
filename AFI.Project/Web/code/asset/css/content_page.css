@@ -1,0 +1,38 @@
+.interior__title {
+  background: linear-gradient(120deg, #cb2c30e6, #881b26e6);
+  height: 15.625rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  margin-bottom: 20px;
+  min-height: 10rem;
+}
+
+.interior__title_h1 {
+  margin: 0 !important;
+  margin-top: 4rem !important;
+  color: #fff !important;
+  border: none !important;
+  cursor: none !important;
+}
+
+.paragraph__container {
+  margin: 20px 0;
+}
+
+
+/* unsubscription page  */
+.unsubscribed-page {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.unsubscribed-page ul.unsub-options {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

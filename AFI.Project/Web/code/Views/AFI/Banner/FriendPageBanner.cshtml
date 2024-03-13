@@ -1,0 +1,132 @@
+﻿@using Sitecore.Mvc
+@using Sitecore
+@using Sitecore.Data.Fields
+@using Sitecore.Resources.Media
+@using Sitecore.Data.Items
+@using Sitecore.Mvc.Presentation
+@using AFI.Foundation.Helper
+@{
+    var rendering = RenderingContext.Current.Rendering.Item;
+    Sitecore.Data.Fields.MultilistField multiselectField = rendering.Fields[FeatureTemplate.DropdownQuoteForm.Fields.InsuranceTypeList];
+    Sitecore.Data.Items.Item[] items = multiselectField.GetItems();
+
+    var _position = RenderingContext.Current.Rendering.Parameters["DropDownPosition"];
+    var _CTAcolor = RenderingContext.Current.Rendering.Parameters["DropDownCTAcolor"];
+    var _from_position = "";
+    var _quote_selector = "";
+    var _colorbtn = "";
+
+    if (_position == "Left")
+    {
+        _from_position = "container position-relative";
+        _quote_selector = "quote-selector__left";
+    }
+    else if (_position == "Right")
+    {
+        _from_position = "container position-relative";
+        _quote_selector = "quote-selector__right";
+    }
+    if (_CTAcolor == "Yollow")
+    {
+        _colorbtn = "yellow__btn";
+    }
+    else
+    {
+        _colorbtn = " ";
+    }
+}
+
+@if (Sitecore.Context.PageMode.IsExperienceEditor)
+{
+    <section class="hero_section">
+        <div class="hero-and-quote-selector-wrapper mw-100">
+            <section class="hero__wrapper">
+                <picture class="hero__image">
+                    @Html.Sitecore().Field(FeatureTemplate.DropdownQuoteForm.Fields.Image.ToString())
+                </picture>
+            </section>
+            <div class="@_from_position">
+                <section class="quote-selector text-center @_quote_selector">
+                    <fieldset class="quote-selector__form quote-selector_friend_form" id="quote-selector__form">
+                        <h1 class="quote-selector_friend_heading">@Html.Sitecore().Field(FeatureTemplate.DropdownQuoteForm.Fields.Title.ToString())</h1>
+                        <div class="quote-selector__types">
+                            <div class="input_field">
+                                <label for="quoteSelector" class="label ">@Html.Sitecore().Field(FeatureTemplate.DropdownQuoteForm.Fields.InsuranceTypeText.ToString())</label>
+                                <select class="input" id="quoteSelector" name="quoteSelector" required aria-required="true">
+                                    @if (items.Length > 0)
+                                    {
+                                        <option value="">Please Select</option>
+                                        foreach (Sitecore.Data.Items.Item item in items)
+                                        {
+                                            <option value="@item.Fields[FeatureTemplate.InsuranceType.Fields.InsuranceType.ToString()]">@item.Fields[FeatureTemplate.InsuranceType.Fields.Title.ToString()]</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <option value="">No insurance types have been selected</option>
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
+                        <button id="submit-quote" class="button button--large-text Click-here @_colorbtn" type="button">@Html.Sitecore().Field(FeatureTemplate.DropdownQuoteForm.Fields.ButtonText.ToString())</button>
+                    </fieldset>
+                </section>
+            </div>
+        </div>
+    </section>
+}
+
+else
+{
+
+    <section class="hero_section">
+        <div class="hero-and-quote-selector-wrapper mw-100">
+            <section class="hero__wrapper">
+                @{string bgImageUrl = "";
+                    ImageField bgimgField = rendering.Fields[FeatureTemplate.DropdownQuoteForm.Fields.Image];
+                    if (bgimgField.MediaItem != null)
+                    {
+                        bgImageUrl = MediaManager.GetMediaUrl(bgimgField.MediaItem);
+                    }
+                }
+                <picture class="hero__image">
+                    <source srcset="@bgImageUrl" media="(min-width: 1025px)">
+                    @Html.Sitecore().Field(FeatureTemplate.DropdownQuoteForm.Fields.Image.ToString())
+                </picture>
+            </section>
+            <div class="@_from_position">
+                <section class="quote-selector @_quote_selector">
+                    @using (Html.BeginRouteForm(Sitecore.Mvc.Configuration.MvcSettings.SitecoreRouteName, FormMethod.Post, htmlAttributes: new { @class = "quote-selector__form quote-selector_friend_form", @id = "quote-selector__form" }))
+                    {
+                        @Html.Sitecore().FormHandler("QuoteForm", "HomepageQuoteFormSubmit")
+                        <fieldset>
+                            <h1 class="quote-selector_friend_heading">@Html.Sitecore().Field(FeatureTemplate.DropdownQuoteForm.Fields.Title.ToString())</h1>
+                            <input type="hidden" name="gclid" value="TeSter-123" />
+                            <div class="quote-selector__types">
+                                <div class="input_field">
+                                    <label for="type" class="label ">@Html.Sitecore().Field(FeatureTemplate.DropdownQuoteForm.Fields.InsuranceTypeText.ToString())</label>
+                                    <select class="input" id="quoteSelector" name="type" required aria-required="true">
+                                        <option value="">@Html.Sitecore().Field(FeatureTemplate.DropdownQuoteForm.Fields.FieldDefaultText.ToString())</option>
+                                        @foreach (Sitecore.Data.Items.Item item in items)
+                                        {
+                                            <option value="@item.ID">@item.Fields[FeatureTemplate.InsuranceType.Fields.Title.ToString()]</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="quote-selector__controls" style="display:none;">
+                                    <div class="field" style="display:none;">
+                                        <input class="input js-shortzip-mask" id="quote-zip" name="quote-zip" type="text" value="" required aria-required="true" />
+                                        <label for="zip" class="label">@Html.Sitecore().Field(FeatureTemplate.DropdownQuoteForm.Fields.PlaceHolderText.ToString())</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <button id="submit-quote" class="button button--large-text Click-here @_colorbtn" type="button">@Html.Sitecore().Field(FeatureTemplate.DropdownQuoteForm.Fields.ButtonText.ToString())</button>
+                        </fieldset>
+                    }
+
+                </section>
+            </div>
+        </div>
+    </section>
+}

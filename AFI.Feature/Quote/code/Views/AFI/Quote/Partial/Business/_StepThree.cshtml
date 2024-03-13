@@ -1,0 +1,84 @@
+﻿@model AFI.Feature.QuoteForm.Areas.AFIQuoteForm.Models.BusinessForm.BusinessForm
+@using AFI.Feature.QuoteForm.Areas.AFIWEB.Models.Form_Models
+
+<section class="form_section multi__step_3 policy_coverage_options">
+    <div class="container">
+
+        @{
+            int i = 1;
+            var stepsCount = Model.wayfinder.steps.Count;
+        }
+
+        <div class="step__container">
+            <ul class="steps__list">
+                @foreach (var step in Model.wayfinder.steps)
+                {
+                    <li class="step @(i <= 3 ? "active_step" : "")" data-text="@step.label">@i</li>
+                    @Html.Raw(i != stepsCount ? "<li class='line'></li>" : "")
+                    i++;
+                }
+            </ul>
+        </div>
+
+        <div class="quote_request__section_wrapper">
+            @{
+                Section data = Model.form.sections.Where(x => x.id == "policyCoverage").SingleOrDefault();
+            }
+            <div class="form_container">
+
+
+                <h2 class="quote_request_heading">@data.heading</h2>
+
+                <!-- Policy Coverage Options -->
+                <div class="fields-row">
+                    <div class="field field--full field--stacked cover_options_wrapper">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[0].id">
+                                @data.fields[0].label
+                            </label>
+                        </div>
+                        @foreach (Options opt in data.fields[0].options)
+                        {
+                            <div class="field-group">
+                                <div class="field__input-wrapper">
+                                    <input class="field__input"
+                                           id="@opt.value.Replace(' ','_')"
+                                           name="typeOfInsurance"
+                                           data-name="typeOfInsurance"
+                                           type="checkbox"
+                                           value="@opt.value" /><label class="field__label" for="@opt.value.Replace(' ','_')">@opt.label</label>
+                                    </div>
+                                </div>
+                            }
+
+                        <!-- error message -->
+                        <div class="field_message">This field is required</div>
+                    </div>
+                </div>
+            </div>
+
+            @if (data.sidebar != null && data.sidebar.content.Count > 0)
+            {
+                <aside class="quote_request_aside">
+                    <h2 class="quote_request_sidebar__heading">
+                        @data.sidebar.heading
+                    </h2>
+                    <div class="quote_request_sidebar__content">
+                        @foreach (SideBarContent sideContent in data.sidebar.content)
+                        {
+                            <div class="quote_request_sidebar__item">
+                                <h3 class="quote_request_sidebar__item_heading">
+                                    @sideContent.heading
+                                </h3>
+                                <p class="quote_request_sidebar__item_description">
+                                    @sideContent.content
+                                </p>
+                            </div>
+                        }
+                    </div>
+
+                </aside>
+            }
+        </div>
+    </div>
+</section>

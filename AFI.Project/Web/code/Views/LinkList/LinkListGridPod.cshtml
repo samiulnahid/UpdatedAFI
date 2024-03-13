@@ -1,0 +1,126 @@
+﻿@using Sitecore.Mvc
+@model Sitecore.XA.Foundation.RenderingVariants.Models.VariantListsRenderingModel
+@using Sitecore.Data.Items
+@using Sitecore.XA.Foundation.MarkupDecorator.Extensions
+@using Sitecore.XA.Foundation.RenderingVariants.Extensions
+@using Sitecore.XA.Foundation.RenderingVariants.Fields
+@using Sitecore.XA.Foundation.SitecoreExtensions.Extensions
+@using Sitecore.XA.Foundation.Variants.Abstractions.Fields
+@using System.Text;
+
+@{
+    int index = 0;
+}
+
+<section class="content-pod-group">
+    <div class="container overflow__hidden">
+        <div class="grid_wrapper mySwiper">
+            <div class="grid js-carousel swiper-wrapper">
+                <div @Html.Sxa().Component(Model.Rendering.RenderingCssClass ?? "link-list", Model.Attributes)>
+                    <div class="component-content">
+                        @Html.Sxa().RenderHeading(Model.HeadingTag, Model.DataSourceItem, "Title", Model.GetRenderingWebEditingParams())
+                        @if (Model.Rendering.DataSourceItem == null)
+                        {
+                            @Model.MessageIsEmpty
+                        }
+                        @if (!Model.Items.Any() && Model.Rendering.DataSourceItem != null)
+                        {
+                            using (Html.Sxa().BeginEditFrame(Html.Sitecore().CurrentRendering.DataSource, "Link Empty", Model.IsControlEditable))
+                            {
+                                @Model.MessageIsEmpty
+                            }
+                        }
+                        <ul>
+                            @foreach (Item item in @Model.Items)
+                            {
+                                StringBuilder sb = new StringBuilder();
+
+                                foreach (BaseVariantField variantField in Model.VariantFields)
+                                {
+                                    sb.Append(Html.RenderingVariants().RenderVariant(variantField, item, Model.RenderingWebEditingParams, Model));
+                                }
+
+                                if (sb.Length > 0)
+                                {
+                                    <li class="@ListsHelper.BuildCssClass(index, Model.Items.Count())">
+                                        @using (Html.Sxa().BeginEditFrame(item.ID.ToString(), "Link", Model.IsControlEditable))
+                                        {
+                                            @Html.Raw(sb.ToString());
+                                        }
+                                    </li>
+                                    index++;
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+
+
+                <!-- Item 01 -->
+                <!--<div class="grid__item swiper-slide">
+                    <div class="content-pod js-carousel-slide">
+                        <img src="./img//card-group/Home_gridpod.jpg" class="content-pod__image" alt="Home Insurance">
+                        <div class="content-pod__content">
+                            <h2 class="content-pod__heading">Home</h2>
+                            <p class="content-pod__description js-peekaboo-text">
+                                Like all service members, you've worked hard for what you
+                                earned, and your home is often your biggest investment.
+                            </p>
+                            <a class="button button--small-text" href="#">Learn More</a>
+                        </div>
+                    </div>
+                </div>-->
+
+                <!-- Item 02 -->
+                <!--<div class="grid__item swiper-slide">
+                    <div class="content-pod js-carousel-slide">
+                        <img src="./img//card-group/Renter_gridpod.jpg" class="content-pod__image" alt="Renter Insurance">
+                        <div class="content-pod__content">
+                            <h2 class="content-pod__heading">Renter</h2>
+                            <p class="content-pod__description js-peekaboo-text">
+                                Renter insurance covers damages to your possessions when
+                                you rent and includes liability insurance should someone
+                                get hurt at your residence.
+                            </p>
+                            <a class="button button--small-text" href="#">Learn More</a>
+                        </div>
+                    </div>
+                </div>-->
+
+                <!-- Item 03 -->
+                <!--<div class="grid__item swiper-slide">
+                    <div class="content-pod js-carousel-slide">
+                        <img src="./img//card-group/Auto_gridpod.jpg" class="content-pod__image" alt="Auto Insurance">
+                        <div class="content-pod__content">
+                            <h2 class="content-pod__heading">Auto</h2>
+                            <p class="content-pod__description js-peekaboo-text">
+                                Armed Forces Insurance agents will work closely with our
+                                select partner companies to find an affordable auto policy
+                                that fits your needs.
+                            </p>
+                            <a class="button button--small-text" href="#">Learn More</a>
+                        </div>
+                    </div>
+                </div>-->
+
+                <!-- Item 04 -->
+                <!--<div class="grid__item swiper-slide">
+                    <div class="content-pod js-carousel-slide">
+                        <img src="./img//card-group/Business_gridpod.jpg" class="content-pod__image" alt="Business Insurance">
+                        <div class="content-pod__content">
+                            <h2 class="content-pod__heading">Business</h2>
+                            <p class="content-pod__description js-peekaboo-text">
+                                We are military specialists who provide exceptional and
+                                highly personalized care and offer insurance solutions for
+                                many different types of businesses.
+                            </p>
+                            <a class="button button--small-text" href="#">Learn More</a>
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+</section>

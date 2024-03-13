@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/WebConsole.DatabaseConnector.Entities" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/WebConsole.DatabaseConnector.Entities" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfPROC_CNTC_DUPLICATE_SEL_NEW_Result">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PROC_CNTC_DUPLICATE_SEL_NEW_Result" nillable="true" type="tns:PROC_CNTC_DUPLICATE_SEL_NEW_Result" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPROC_CNTC_DUPLICATE_SEL_NEW_Result" nillable="true" type="tns:ArrayOfPROC_CNTC_DUPLICATE_SEL_NEW_Result" />
+  <xs:complexType name="PROC_CNTC_DUPLICATE_SEL_NEW_Result">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ADDR_CITY" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ADDR_LINE1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ADDR_LINE2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ADDR_POSTAL_CODE" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AFI_STATE_ABREV" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AFI_STATE_ID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="CNTC_CLIENT_TYPE_DESC" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CNTC_CONTACT_BUSINESS_NAME1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CNTC_CONTACT_BUSINESS_NAME2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CNTC_CONTACT_BUSINESS_TAXID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CNTC_CONTACT_DOB" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CNTC_CONTACT_FIRST_NAME" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CNTC_CONTACT_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="CNTC_CONTACT_LAST_NAME" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CNTC_CONTACT_MIDDLE_NAME" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CNTC_CONTACT_NAME_SUFFIX" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CNTC_CONTACT_SSN" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CNTC_GROUP_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="CNTC_LEGACY_NUM" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CNTC_LEGACY_SUFFIX" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CNTC_STAT_TYPE_DESC" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CNTC_STAT_TYPE_ID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PROC_CNTC_DUPLICATE_SEL_NEW_Result" nillable="true" type="tns:PROC_CNTC_DUPLICATE_SEL_NEW_Result" />
+  <xs:complexType name="ArrayOfPROC_GET_PARTNER_EMPLOYEES_FOR_WEB_Result">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PROC_GET_PARTNER_EMPLOYEES_FOR_WEB_Result" nillable="true" type="tns:PROC_GET_PARTNER_EMPLOYEES_FOR_WEB_Result" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPROC_GET_PARTNER_EMPLOYEES_FOR_WEB_Result" nillable="true" type="tns:ArrayOfPROC_GET_PARTNER_EMPLOYEES_FOR_WEB_Result" />
+  <xs:complexType name="PROC_GET_PARTNER_EMPLOYEES_FOR_WEB_Result">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AFI_PARTNER_EMPLOYEE_ADDRESS_1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AFI_PARTNER_EMPLOYEE_ADDRESS_2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AFI_PARTNER_EMPLOYEE_CITY" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AFI_PARTNER_EMPLOYEE_CODE" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AFI_PARTNER_EMPLOYEE_EFF_DATE" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="AFI_PARTNER_EMPLOYEE_EMAIL" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AFI_PARTNER_EMPLOYEE_FAX" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AFI_PARTNER_EMPLOYEE_FIRST_NAME" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AFI_PARTNER_EMPLOYEE_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="AFI_PARTNER_EMPLOYEE_LAST_NAME" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AFI_PARTNER_EMPLOYEE_MIDDLE_INITIAL" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AFI_PARTNER_EMPLOYEE_PHONE" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AFI_PARTNER_EMPLOYEE_PHONE_EXT" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AFI_PARTNER_EMPLOYEE_STATE" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AFI_PARTNER_EMPLOYEE_TERM_DATE" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="AFI_PARTNER_EMPLOYEE_ZIP" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AFI_PARTNER_LIST_ID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="SelectOptions" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PROC_GET_PARTNER_EMPLOYEES_FOR_WEB_Result" nillable="true" type="tns:PROC_GET_PARTNER_EMPLOYEES_FOR_WEB_Result" />
+</xs:schema>

@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Sitecore.XConnect.DataTools.Xmgmt.Core</name>
+    </assembly>
+    <members>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Core.ExceptionResources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Core.ExceptionResources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Core.ExceptionResources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Core.ExceptionResources.AliasShouldNotBeNullOrWhiteSpace">
+            <summary>
+              Looks up a localized string similar to Alias should not be null, empty or white space..
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Core.ExceptionResources.DateTimeValueMustBeUtc">
+            <summary>
+              Looks up a localized string similar to DateTime value must be UTC..
+            </summary>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Core.Filters.ValidateModelAttribute">
+            <summary>
+            Attribute that is used to validate model that is passed to an controller action.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Core.Filters.ValidateModelAttribute.OnActionExecuting(System.Web.Http.Controllers.HttpActionContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.ISamplingModel">
+            <summary>
+            Defines model for sampling options.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.ISamplingModel.StartPercentile">
+            <summary>
+            Gets or sets the start percentile.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.ISamplingModel.EndPercentile">
+            <summary>
+            Gets or sets the end percentile.
+            </summary>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.MaxStringCollectionLengthAttribute">
+            <summary>
+            Attribute that is used to validation max length of ICollection
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.MaxStringCollectionLengthAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.MaxStringCollectionLengthAttribute" /> class.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.MaxStringCollectionLengthAttribute.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.MaxStringCollectionLengthAttribute" /> class.
+            </summary>
+            <param name="length">The maximum length the collection to be checked with.</param>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.MaxStringCollectionLengthAttribute.Length">
+            <summary>
+            Gets the maximum length the collection to be checked with.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.MaxStringCollectionLengthAttribute.IsValid(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.MaxStringCollectionLengthAttribute.FormatErrorMessage(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.SamplingModelExtensions">
+            <summary>
+            Extensions for <see cref="T:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.ISamplingModel"/>.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.SamplingModelExtensions.BuildSamplingOptions(Sitecore.XConnect.DataTools.Xmgmt.Core.Models.ISamplingModel)">
+            <summary>
+            Converts <see cref="T:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.ISamplingModel"/> to <see cref="T:Sitecore.XConnect.SamplingOptions"/>.
+            </summary>
+            <param name="samplingModel">The model to convert.</param>
+            <returns><see cref="T:Sitecore.XConnect.SamplingOptions"/></returns>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.SamplingModelExtensions.Validate(Sitecore.XConnect.DataTools.Xmgmt.Core.Models.ISamplingModel)">
+            <summary>
+            Determines whether the specified sampling model is valid.
+            </summary>
+            <param name="samplingModel">The sampling model to validate.</param>
+            <returns>
+            A collection that holds failed-validation information.
+            </returns>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.ValidationExtensions">
+            <summary>
+            Extensions used to create <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/>.
+            </summary>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.ValidationExtensions.ShouldBeSpecified(System.String)">
+            <summary>
+            Creates <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> for the required member validation.
+            </summary>
+            <param name="memberName">The name of the member.</param>
+            <returns><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/></returns>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.ValidationExtensions.ShouldBeLessThan(System.String,System.String)">
+            <summary>
+            Creates <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> for the two members comparison validation.
+            </summary>
+            <param name="memberName1">The name of the member1.</param>
+            <param name="memberName2">The name of the member2.</param>
+            <returns><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/></returns>
+        </member>
+        <member name="M:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.ValidationExtensions.ShouldHaveMaxLength(System.String,System.Int32,System.String,System.Int32)">
+            <summary>
+            Creates <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> for the member length validation.
+            </summary>
+            <param name="memberName">The name of the member.</param>
+            <param name="memberValue">The value of the member.</param>
+            <param name="maxLength">The max length the member is allowed to.</param>
+            <param name="shortenMemberValueLength">The length the <paramref name="memberValue"/> will be shorten to.</param>
+            <returns><see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/></returns>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.ValidationResources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.ValidationResources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.ValidationResources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.ValidationResources.MaxStringCollectionLengthAttributeInvalidMaxLengthErrorMessage">
+            <summary>
+              Looks up a localized string similar to MaxCollectionLengthAttribute must have a Length value that is greater than zero. Use MaxCollectionLength() without parameters to indicate that the string or array can have the maximum allowable length..
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.ValidationResources.MaxStringCollectionLengthAttributeValidationError">
+            <summary>
+              Looks up a localized string similar to The field {0} must be an array type with a maximum length of &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.ValidationResources.ValueShouldBeLessThanFormatMessage">
+            <summary>
+              Looks up a localized string similar to {0} should be less than {1}..
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.ValidationResources.ValueShouldBeSpecifiedFormatMessage">
+            <summary>
+              Looks up a localized string similar to {0} should be specified..
+            </summary>
+        </member>
+        <member name="P:Sitecore.XConnect.DataTools.Xmgmt.Core.Models.ValidationResources.ValueShouldHaveMaxLengthFormatMessage">
+            <summary>
+              Looks up a localized string similar to The field &apos;{0}&apos; with value &apos;{1}&apos; must be a string with a maximum length of {2}..
+            </summary>
+        </member>
+        <member name="T:Sitecore.XConnect.DataTools.Xmgmt.Core.SitecoreRoles">
+            <summary>
+            Represents names of Sitecore roles.
+            </summary>
+        </member>
+        <member name="F:Sitecore.XConnect.DataTools.Xmgmt.Core.SitecoreRoles.XConnectDataAdmin">
+            <summary>
+            The name of XConnect Data Administrator role.
+            </summary>
+        </member>
+    </members>
+</doc>

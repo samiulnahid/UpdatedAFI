@@ -1,0 +1,185 @@
+.refer-a-member__heading {
+    text-align: center;
+}
+
+.refer-a-member__form {
+    background-color: #f6f6f6;
+    background-color: var(--color-gray-10);
+    padding: 2rem;
+    margin: 2rem 0 1rem;
+}
+
+.refer-a-member__wrapper {
+    display: flex !important;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.refer-a-member__number-fields {
+    margin-bottom: 0;
+}
+
+.refer-a-member label {
+    display: block;
+    margin-bottom: .25rem;
+}
+
+.refer-a-member__form .button-bare {
+    background-color: transparent;
+    border: 0;
+    border-radius: 0;
+    color: #004976;
+    color: var(--color-blue-30);
+    cursor: pointer;
+    display: inline;
+    font-size: 1rem;
+    margin: 0;
+    outline: none;
+    padding: 0;
+}
+
+.refer-a-member hr {
+    margin: 2rem 0;
+}
+
+.refer-a-member__name-fields.grid__no-wrap {
+    flex-wrap: wrap;
+}
+
+.refer-a-member .grid__item--50 {
+    width: 100%;
+}
+
+.refer-a-member .field {
+    margin-bottom: 2rem;
+}
+
+.refer-a-member label {
+    display: block;
+    margin-bottom: .25rem;
+}
+
+.refer-a-member input[type=email],
+.refer-a-member input[type=number],
+.refer-a-member input[type=text] {
+    width: 100%;
+}
+
+.refer-a-member select {
+    background-color: #fff;
+    background-color: var(--color-white);
+    height: 2rem;
+    width: 100%;
+    min-height: 38px;
+}
+
+.refer-a-member__name-fields.grid__no-wrap .field:nth-child(2) {
+    margin-bottom: .25rem;
+}
+
+.refer-a-member .field-group__label {
+    color: inherit;
+    font-weight: inherit;
+}
+
+.refer-a-member .field-list {
+    list-style-type: none;
+}
+
+.refer-a-member .field-list__item .refer-a-member__radio {
+    display: inline;
+    margin-bottom: .25rem;
+}
+
+.refer-a-member__wrapper .button.js-submit-button {
+    transform: none !important;
+}
+
+.refer-a-member__member-info {
+    margin-bottom: .25rem;
+}
+
+.refer-a-member .field-list__item {
+    margin-bottom: 0;
+}
+
+.refer-a-member__prefs {
+    margin-top: 2rem;
+}
+
+
+@media screen and (min-width: 48em) {
+    .refer-a-member fieldset {
+        display: grid !important;
+        grid-template-columns: 33% 67%;
+    }
+
+    .refer-a-member fieldset.field-group {
+        display: block !important;
+
+    }
+
+    .refer-a-member .field {
+        margin-bottom: 1rem;
+    }
+
+    .refer-a-member__prefs {
+        margin-top: 0;
+    }
+
+    .refer-a-member .grid__item {
+        padding-right: 2rem;
+    }
+
+    .refer-a-member .grid__item--50 {
+        width: 50%;
+    }
+
+    .refer-a-member .grid__item--50 {
+        width: 50%;
+    }
+
+    .grid__no-wrap {
+        display: flex;
+        flex-wrap: nowrap;
+    }
+}
+
+/* Errors */
+.field .validation-field__errors {
+    color: #cb2c30;
+    color: var(--color-red-10);
+}
+
+.field.has-errors input,
+.field.has-errors select,
+.field.has-errors textarea {
+    background-color: #fee8e9;
+    background-color: var(--color-pink-10);
+}
+
+.refer-a-member__name-fields .field,
+.refer-a-member__wrapper--your-info .field.refer-a-member__member-info.js-member-number-field.grid__item.grid__item--50 {
+    margin-bottom: 2rem;
+}
+
+.field.js-member-name-field,
+.refer-a-member__member-info {
+    margin-bottom: .25rem !important;
+}
+
+#referForm .is-hide {
+    display: none !important;
+}
+
+/* Chrome, Safari, Edge, Opera */
+#referForm input::-webkit-outer-spin-button,
+#referForm input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+#referForm input[type=number] {
+    -moz-appearance: textfield;
+}

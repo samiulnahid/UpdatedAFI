@@ -1,0 +1,44 @@
+.articles__container .resources__header {
+  text-align: center;
+}
+
+.article-img-outer-container {
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 0.25rem;
+}
+
+.article-img-inner-container {
+  width: 100%;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform;
+  transition-duration: 500ms;
+  transition-timing-function: ease-in-out;
+}
+
+.article-img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center;
+}
+
+.article-content {
+  margin-top: 0.75rem;
+}
+
+.article-content h1 {
+  color: #004976;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: 0.025em;
+}
+
+.article-content p {
+  margin-top: 0;
+  line-height: 1.5;
+  font-size: 1rem;
+}

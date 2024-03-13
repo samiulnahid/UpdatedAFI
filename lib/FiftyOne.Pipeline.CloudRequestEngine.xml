@@ -1,0 +1,1041 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FiftyOne.Pipeline.CloudRequestEngine</name>
+    </assembly>
+    <members>
+        <member name="T:FiftyOne.Pipeline.CloudRequestEngine.CloudRequestException">
+            <summary>
+            Contains details about exceptions that occur when making 
+            requests to the cloud service.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.CloudRequestException.HttpStatusCode">
+            <summary>
+            The HTTP status code from the response.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.CloudRequestException.ResponseHeaders">
+            <summary>
+            All HTTP headers that were present in the response.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.CloudRequestException.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.CloudRequestException.#ctor(System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.CloudRequestException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.CloudRequestException.#ctor(System.String,System.Int32,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message"></param>
+            <param name="httpStatusCode"></param>
+            <param name="responseHeaders"></param>
+        </member>
+        <member name="T:FiftyOne.Pipeline.CloudRequestEngine.Constants">
+            <summary>
+            Cloud request engine constants.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.CloudRequestEngine.Constants.FOD_CLOUD_API_URL">
+            <summary>
+            This is the environment variable key which can be used to specify 
+            the  URL for the cloud service.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.CloudRequestEngine.Constants.CLOUD_URI_DEFAULT">
+            <summary>
+            Default URL and API path for the cloud service.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.CloudRequestEngine.Constants.DATA_FILENAME">
+            <summary>
+            Default filename for the data endpoint.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.CloudRequestEngine.Constants.PROPERTIES_FILENAME">
+            <summary>
+            Default filename for the properties endpoint.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.CloudRequestEngine.Constants.EVIDENCE_KEYS_FILENAME">
+            <summary>
+            Default filename for the evidence keys endpoint.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.CloudRequestEngine.Constants.DATA_ENDPOINT_DEFAULT">
+            <summary>
+            Default data endpoint for cloud service.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.CloudRequestEngine.Constants.PROPERTIES_ENDPOINT_DEFAULT">
+            <summary>
+            Default properties endpoint for cloud service.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.CloudRequestEngine.Constants.EVIDENCE_KEYS_ENDPOINT_DEFAULT">
+            <summary>
+            Default evidence keys endpoint for cloud service.
+            </summary>
+        </member>
+        <member name="F:FiftyOne.Pipeline.CloudRequestEngine.Constants.ORIGIN_HEADER_NAME">
+            <summary>
+            The name of the origin HTTP header
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.CloudRequestEngine.Data.CloudJsonConverter">
+            <summary>
+            Custom JsonConverter for use when deserialising data from 51Degrees
+            cloud service.
+            The converter converts integer values to Int32 instead of Int64 and
+            converts Json arrays to <![CDATA[List<string>]]>.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.Data.CloudJsonConverter.CanConvert(System.Type)">
+            <summary>
+            Returns true if the converter can convert objects of the 
+            supplied type.
+            </summary>
+            <param name="objectType">
+            The type to check against.
+            </param>
+            <returns>
+            True if the converter can convert the supplied type.
+            False if not.
+            </returns>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.Data.CloudJsonConverter.CanWrite">
+            <summary>
+            If true then this converter can be used for writing as well
+            as reading JSON.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.Data.CloudJsonConverter.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            Convert the data from the given reader.
+            </summary>
+            <param name="reader">
+            The reader to read from.
+            </param>
+            <param name="objectType">
+            The type of the object to return.
+            </param>
+            <param name="existingValue">
+            ??
+            </param>
+            <param name="serializer">
+            The serializer to use when reading the JSON.
+            </param>
+            <returns>
+            The data object.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if a required parameter is null.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.Data.CloudJsonConverter.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            Write the given value to JSON
+            </summary>
+            <param name="writer">
+            The writer to use when writing the output.
+            </param>
+            <param name="value">
+            The value to be converted to JSON
+            </param>
+            <param name="serializer">
+            Not used.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if one of the supplied parameters is null.
+            </exception>
+        </member>
+        <member name="T:FiftyOne.Pipeline.CloudRequestEngine.Data.CloudRequestData">
+            <summary>
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IElementData"/> class for 
+            <see cref="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine"/>.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.Data.CloudRequestData.JsonResponse">
+            <summary>
+            The raw JSON response returned by the 51Degrees cloud service. 
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.Data.CloudRequestData.ProcessStarted">
+            <summary>
+            Flag to confirm that the CloudRequestEngine has started processing.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.Data.CloudRequestData.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Engines.Data.AspectDataBase},FiftyOne.Pipeline.Core.FlowElements.IPipeline,FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger">
+            The logger for this instance
+            </param>
+            <param name="pipeline">
+            The pipeline this instance was created by.
+            </param>
+            <param name="engine">
+            The engine that created this instance.
+            </param>
+        </member>
+        <member name="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudAspectEngineBase`1">
+            <summary>
+            Base class for 51Degrees cloud aspect engines. 
+            </summary>
+            <typeparam name="T">
+            The type of data that the engine will return. Must implement 
+            <see cref="T:FiftyOne.Pipeline.Engines.Data.IAspectData"/>.
+            </typeparam>
+        </member>
+        <member name="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudAspectEngineBase`1.RequestEngineAccessor">
+            <summary>
+            Internal class that is used to retrieve the
+            <see cref="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine"/> instance that will be making
+            requests on behalf of this engine.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudAspectEngineBase`1.RequestEngineAccessor.#ctor(System.Func{System.Collections.Generic.IReadOnlyList{FiftyOne.Pipeline.Core.FlowElements.IPipeline}},FiftyOne.Pipeline.Core.FlowElements.IFlowElement)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="pipelinesAccessor">
+            A function that returns the list of pipelines associated 
+            with the parent engine.
+            </param>
+            <param name="currentElement">
+            The <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IFlowElement"/> this instance of 
+            RequestEngineAccessor was created by.
+            </param>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudAspectEngineBase`1.RequestEngineAccessor.Instance">
+            <summary>
+            Get the <see cref="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine"/> that will be making
+            requests on behalf of this engine.
+            </summary>
+            
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudAspectEngineBase`1.RequestEngineAccessor.GetInstance">
+            <summary>
+            Get the <see cref="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine"/> that will be making
+            requests on behalf of this engine.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudAspectEngineBase`1.DataSourceTier">
+            <summary>
+            The 'tier' of the source data used to service this request.
+            For 51Degrees cloud, this means the name for the set of
+            properties that are accessible to the license key(s) 
+            associated with the resource key that is used.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudAspectEngineBase`1.RequestEngine">
+            <summary>
+            Used to access the <see cref="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine"/> that will
+            be making requests on behalf of this engine.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudAspectEngineBase`1.Properties">
+            <summary>
+            Get property meta-data for properties populated by this engine
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudAspectEngineBase`1.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBase{`0,FiftyOne.Pipeline.Engines.Data.IAspectPropertyMetaData}},System.Func{FiftyOne.Pipeline.Core.FlowElements.IPipeline,FiftyOne.Pipeline.Core.FlowElements.FlowElementBase{`0,FiftyOne.Pipeline.Engines.Data.IAspectPropertyMetaData},`0})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger">
+            The logger used by this instance.
+            </param>
+            <param name="aspectDataFactory">
+            The factory function to use when creating new data instances
+            of type <code>T</code>.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudAspectEngineBase`1.UnmanagedResourcesCleanup">
+            <summary>
+            Cleanup any unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudAspectEngineBase`1.LoadAspectProperties(FiftyOne.Pipeline.CloudRequestEngine.FlowElements.ICloudRequestEngine)">
+            <summary>
+            Get property meta data from the <see cref="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine"/> 
+            for properties relating to this engine instance.
+            This method will populate the <see cref="F:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudAspectEngineBase`1._aspectProperties"/>
+            field.
+            </summary>
+            <remarks>
+            There will be one <see cref="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine"/> in a
+            Pipeline that makes the actual web requests to the cloud service.
+            One or more cloud aspect engines will take the response from these
+            cloud requests and convert them into strongly typed objects.
+            Given this model, the cloud aspect engines have no knowledge
+            of which properties the <see cref="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine"/> can
+            return.
+            They must extract the properties relevant to them from the
+            meta-data for all properties that the 
+            <see cref="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine"/> exposes.
+            </remarks>
+            <param name="engine">
+            The <see cref="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine"/> from which to retrieve
+            property meta-data.
+            </param>
+            <returns>
+            True if the _aspectProperties has been successfully populated
+            with the relevant property meta-data.
+            False if something has gone wrong.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudAspectEngineBase`1.LoadProperty(FiftyOne.Pipeline.Core.Data.PropertyMetaData,System.Type)">
+            <summary>
+            Translate the specified property from <see cref="T:FiftyOne.Pipeline.Core.Data.PropertyMetaData"/>
+            to <see cref="T:FiftyOne.Pipeline.Engines.Data.AspectPropertyMetaData"/>.
+            </summary>
+            <param name="property">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.PropertyMetaData"/> instance to translate.
+            </param>
+            <param name="parentObjectType">
+            The type of the object on which this property exists.
+            </param>
+            <returns>
+            A new <see cref="T:FiftyOne.Pipeline.Engines.Data.AspectPropertyMetaData"/> instance, created from
+            the values in the supplied <see cref="T:FiftyOne.Pipeline.Core.Data.PropertyMetaData"/>.
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudAspectEngineBase`1.ProcessEngine(FiftyOne.Pipeline.Core.Data.IFlowData,`0)">
+            <summary>
+            Retrieve the raw JSON response from the 
+            <see cref="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine"/> in this pipeline, extract 
+            the data for this specific engine and populate the 
+            <code>TData</code> instance accordingly.
+            </summary>
+            <param name="data">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> to get the raw JSON data from.
+            </param>
+            <param name="aspectData">
+            The <code>TData</code> instance to populate with values.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if a required parameter is null.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudAspectEngineBase`1.ProcessCloudEngine(FiftyOne.Pipeline.Core.Data.IFlowData,`0,System.String)">
+            <summary>
+            A virtual method to be implemented by the derived class which
+            uses the JsonResponse from the CloudRequestEngine to populate the 
+            <code>T</code> instance accordingly.
+            </summary>
+            <param name="data">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> instance.
+            </param>
+            <param name="aspectData">
+            The <code>TData</code> instance to populate with values.
+            </param>
+            <param name="json">
+            The JSON response from the <see cref="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine"/>
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudAspectEngineBase`1.CreateAPVDictionary(System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.IReadOnlyList{FiftyOne.Pipeline.Core.Data.IElementPropertyMetaData})">
+            <summary>
+            Use the supplied cloud data to create a dictionary of 
+            <see cref="T:FiftyOne.Pipeline.Engines.Data.AspectPropertyValue`1"/> instances.
+            </summary>
+            <remarks>
+            This method uses the meta-data exposed by the 
+            <see cref="P:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudAspectEngineBase`1.Properties"/> collection to determine
+            if a given entry in the supplied cloudData should
+            be converted to an <see cref="T:FiftyOne.Pipeline.Engines.Data.AspectPropertyValue`1"/>
+            or not.
+            If not it will be output unchanged. If it is then a new
+            <see cref="T:FiftyOne.Pipeline.Engines.Data.AspectPropertyValue`1"/> instance will be created 
+            and the value from the cloud data assigned to it.
+            If the value is null then the code will look for a property
+            in the cloud data with the same name suffixed with 'nullreason'.
+            If it exists, then it's value will be used to set the 
+            noValueMessage on the new <see cref="T:FiftyOne.Pipeline.Engines.Data.AspectPropertyValue`1"/>.
+            </remarks>
+            <param name="cloudData">
+            The cloud data to be processed.
+            Keys are flat property names (i.e. no '.' separators).
+            Values are the property values.
+            </param>
+            <param name="propertyMetaData">
+            The meta-data for the properties in the data.
+            This will usually be the list from <see cref="P:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudAspectEngineBase`1.Properties"/>
+            but will be different if dealing with sub-properties.
+            </param>
+            <returns>
+            A dictionary containing the original values converted to 
+            <see cref="T:FiftyOne.Pipeline.Engines.Data.AspectPropertyValue`1"/> instances where needed.
+            Any entries in the source dictionary where the key ends 
+            with 'nullreason' will not appear in the output.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if a required parameter is null.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudAspectEngineBase`1.GetPropertyType(FiftyOne.Pipeline.Core.Data.PropertyMetaData,System.Type)">
+            <summary>
+            Try to get the type of a property from the information
+            returned by the cloud service. This should be overridden
+            if anything other than simple types are required.
+            </summary>
+            <param name="propertyMetaData">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.PropertyMetaData"/> instance to translate.
+            </param>
+            <param name="parentObjectType">
+            The type of the object on which this property exists.
+            </param>
+            <returns>
+            The type of the property determined from the Type field
+            of propertyMetaData.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudAspectEngineBuilderBase`2">
+            <summary>
+            Abstract base class that exposes the common options that all
+            51Degrees cloud engine builders should make use of.
+            </summary>
+            <typeparam name="TBuilder">
+            The specific builder type to use as the return type from the fluent 
+            builder methods.
+            </typeparam>
+            <typeparam name="TEngine">
+            The type of the engine that this builder will build
+            </typeparam>
+        </member>
+        <member name="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudPipelineBuilderBase`1">
+            <summary>
+            Base class for cloud pipeline builders. Sets the options required to
+            access the cloud service including endpoints and resource keys.
+            </summary>
+            <typeparam name="TBuilder"></typeparam>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudPipelineBuilderBase`1.HttpClient">
+            <summary>
+            The HTTP client to be used when making web requests
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudPipelineBuilderBase`1.Url">
+            <summary>
+            The base URL on the cloud service.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudPipelineBuilderBase`1.JsonEndpoint">
+            <summary>
+            The URL to the JSON resource on the cloud service.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudPipelineBuilderBase`1.PropertiesEndpoint">
+            <summary>
+            The URL for the AccessileProperties endpoint on the cloud service.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudPipelineBuilderBase`1.EvidenceKeysEndpoint">
+            <summary>
+            The URL for the EvidenceKeys endpoint on the cloud service.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudPipelineBuilderBase`1.ResourceKey">
+            <summary>
+            The resource key used to access the cloud service. This is required.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudPipelineBuilderBase`1.LicenceKey">
+            <summary>
+            Optional license keys for additional products.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudPipelineBuilderBase`1.CloudRequestOrigin">
+            <summary>
+            The value to set for the Origin header when making requests
+            to the cloud service.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudPipelineBuilderBase`1.#ctor(Microsoft.Extensions.Logging.ILoggerFactory,System.Net.Http.HttpClient)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="loggerFactory">
+            The logger factory to use.
+            </param>
+            <param name="httpClient">
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudPipelineBuilderBase`1.SetEndPoint(System.String)">
+            <summary>
+            Set the base path for the cloud service. This will update the URL 
+            for the JSON endpoint and the AccessileProperties endpoint.
+            </summary>
+            <param name="url">
+            The base URL to use.
+            </param>
+            <returns>This builder</returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudPipelineBuilderBase`1.SetEndPoint(System.Uri)">
+            <summary>
+            Set the base path for the cloud service. This will update the URL 
+            for the JSON endpoint and the AccessileProperties endpoint.
+            </summary>
+            <param name="url">
+            The base URL to use.
+            </param>
+            <returns>This builder</returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudPipelineBuilderBase`1.SetJSONEndpoint(System.String)">
+            <summary>
+            Set the URL to the JSON endpoint on the cloud service.
+            </summary>
+            <param name="url">
+            The URL which points to the JSON endpoint.
+            </param>
+            <returns>This builder</returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudPipelineBuilderBase`1.SetJSONEndpoint(System.Uri)">
+            <summary>
+            Set the URL to the JSON endpoint on the cloud service.
+            </summary>
+            <param name="url">
+            The URL which points to the JSON endpoint.
+            </param>
+            <returns>This builder</returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudPipelineBuilderBase`1.SetPropertiesEndpoint(System.String)">
+            <summary>
+            Set the URL to the AccessibleProperties endpoint on the cloud 
+            service.
+            </summary>
+            <param name="propertiesEndpoint">
+            The URL to use
+            </param>
+            <returns>This builder</returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudPipelineBuilderBase`1.SetEvidenceKeysEndpoint(System.String)">
+            <summary>
+            Set the URL to the EvidenceKeys endpoint on the cloud 
+            service.
+            </summary>
+            <param name="evidenceKeysEndpoint">
+            The URL to use
+            </param>
+            <returns>This builder</returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudPipelineBuilderBase`1.SetResourceKey(System.String)">
+            <summary>
+            Set the resource key which will be used to query the cloud service.
+            Obtain a resource key @ https://configure.51degrees.com
+            </summary>
+            <param name="key">The resource key to use</param>
+            <returns>This builder</returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudPipelineBuilderBase`1.SetLicenseKey(System.String)">
+            <summary>
+            Set the license key or keys to be used when querying the cloud 
+            service. This is an optional method to pass additional license keys
+            not configured when obtaining a resource key.
+            </summary>
+            <param name="key"></param>
+            <returns>This builder</returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudPipelineBuilderBase`1.SetCloudRequestOrigin(System.String)">
+            <summary>
+            The value to set for the Origin header when making requests
+            to the cloud service.
+            This is used by the cloud service to check that the request
+            is being made from a origin matching those allowed by the 
+            resource key.
+            For more detail, see the 'Request Headers' section in the 
+            <a href="https://cloud.51degrees.com/api-docs/index.html">cloud documentation</a>.
+            </summary>
+            <param name="cloudRequestOrigin">
+            The value to use for the Origin header.
+            </param>
+            <returns>
+            This builder
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudPipelineBuilderBase`1.Build">
+            <summary>
+            Create and return a new pipeline based on the configuration
+            so far.
+            </summary>
+            <returns>
+            A new <see cref="T:FiftyOne.Pipeline.Core.FlowElements.IPipeline"/>.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine">
+            <summary>
+            Engine that makes requests to the 51Degrees cloud service based 
+            on the details passed at creation and the evidence in the
+            FlowData instance.
+            The unprocessed JSON response is stored in the FlowData
+            for other engines to make use of.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.Engines.FlowElements.AspectEngineBase{FiftyOne.Pipeline.CloudRequestEngine.Data.CloudRequestData,FiftyOne.Pipeline.Engines.Data.IAspectPropertyMetaData}},System.Func{FiftyOne.Pipeline.Core.FlowElements.IPipeline,FiftyOne.Pipeline.Core.FlowElements.FlowElementBase{FiftyOne.Pipeline.CloudRequestEngine.Data.CloudRequestData,FiftyOne.Pipeline.Engines.Data.IAspectPropertyMetaData},FiftyOne.Pipeline.CloudRequestEngine.Data.CloudRequestData},System.Net.Http.HttpClient,System.String,System.String,System.String,System.String,System.String,System.Int32,System.Collections.Generic.List{System.String},System.String)">
+            <summary>
+            Default constructor.
+            </summary>
+            <param name="logger">
+            The logger for this instance
+            </param>
+            <param name="aspectDataFactory">
+            A factory function to use when creating new 
+            <see cref="T:FiftyOne.Pipeline.CloudRequestEngine.Data.CloudRequestData"/> instances.
+            </param>
+            <param name="httpClient">
+            The HttpClient instance to use when making requests
+            </param>
+            <param name="licenseKey">
+            The license key to use when making requests.
+            This parameter is obsolete, use resourceKey instead.
+            </param>
+            <param name="resourceKey">
+            The resource key to use when making requests.
+            A resource key encapsulates details such as any license keys,
+            the properties that should be returned and the domains that
+            requests are permitted from. A new resource key can be
+            generated for free at https://configure.51degrees.com
+            </param>
+            <param name="dataEndpoint">
+            The URL for the cloud endpoint that will take the supplied
+            evidence and return JSON formatted data.
+            </param>
+            <param name="propertiesEndpoint">
+            The URL for the cloud endpoint that will return meta-data
+            on properties that will be populated when the data endpoint 
+            is called using the given resource key.
+            </param>
+            <param name="evidenceKeysEndpoint">
+            The URL for the cloud endpoint that will return meta-data
+            on the evidence that will be used when the data endpoint 
+            is called using the given resource key.
+            </param>
+            <param name="timeout">
+            The timeout for HTTP requests in seconds.
+            </param>
+            <param name="requestedProperties">
+            Not currently used.
+            </param>
+            <param name="cloudRequestOrigin">
+            The value to use for the Origin header when making requests 
+            to cloud.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if a required parameter is null.
+            </exception>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine.Properties">
+            <summary>
+            A collection of the properties available in the aspect
+            data instance that is populated by this engine.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine.DataSourceTier">
+            <summary>
+            The 'tier' of the source data used to service this request.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine.ElementDataKey">
+            <summary>
+            The key for this element's data within an <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/>
+            instance.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine.EvidenceKeyFilter">
+            <summary>
+            A filter object that indicates the evidence keys that can be
+            used by this engine.
+            This will vary based on the supplied resource key so will
+            be populated after a call to the cloud service as part of 
+            object initialization.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine.PublicProperties">
+            <summary>
+            A collection of the properties that the cloud service can
+            populate in the JSON response.
+            Keyed on property name.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine.ProcessEngine(FiftyOne.Pipeline.Core.Data.IFlowData,FiftyOne.Pipeline.CloudRequestEngine.Data.CloudRequestData)">
+            <summary>
+            Send evidence to the cloud and get back a JSON result.
+            </summary>
+            <param name="data"></param>
+            <param name="aspectData"></param>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if a required parameter is null.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine.ProcessResponse(System.Net.Http.HttpResponseMessage,System.Boolean)">
+            <summary>
+            Validate the JSON response from the cloud service.
+            An exception will be throw if any type of error has 
+            occurred.
+            </summary>
+            <param name="response">
+            The JSON content that is returned from the cloud service.
+            </param>
+            <param name="checkForErrorMessages">
+            Set to false if the response will never contain error message
+            text.
+            </param>
+            <exception cref="T:System.AggregateException">
+            Thrown if there are multiple errors returned from the 
+            cloud service.
+            </exception>
+            <exception cref="T:FiftyOne.Pipeline.CloudRequestEngine.CloudRequestException">
+            Thrown if there is an error from the cloud service or
+            there is no data in the response.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine.GetContent(FiftyOne.Pipeline.Core.Data.IFlowData)">
+            <summary>
+            Generate the Content to send in the POST request. The evidence keys
+            e.g. 'query.' and 'header.' have an order of precedence. These are
+            added to the evidence in reverse order, if there is conflict then 
+            the queryData value is overwritten. 
+            
+            'query.' evidence should take precedence over all other evidence.
+            If there are evidence keys other than 'query.' that conflict then
+            this is unexpected so an error will be logged.
+            </summary>
+            <param name="data"></param>
+            <returns>Evidence in a FormUrlEncodedContent object</returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine.KeyHasPrefix(System.Collections.Generic.KeyValuePair{System.String,System.Object},System.String)">
+            <summary>
+            Check that the key of a KeyValuePair has the given prefix.
+            </summary>
+            <param name="item">The KeyValuePair to check.</param>
+            <param name="prefix">The prefix to check for.</param>
+            <returns>True if the key has the prefix.</returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine.AddQueryData(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object},System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}})">
+            <summary>
+            Add query data to the evidence.
+            </summary>
+            <param name="queryData">
+            The destination dictionary to add query data to.
+            </param>
+            <param name="allEvidence">
+            All evidence in the flow data. This is used to report which evidence
+            keys are conflicting.
+            </param>
+            <param name="evidence">
+            Evidence to add to the query Data.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine.UnmanagedResourcesCleanup">
+            <summary>
+            Cleanup any unmanaged resources
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine.GetCloudProperties">
+            <summary>
+            Get the properties that are available from the cloud service.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine.GetCloudEvidenceKeys">
+            <summary>
+            Get the evidence keys that are required by the cloud service.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine.AddCommonHeadersAndSend(System.Net.Http.HttpRequestMessage)">
+            <summary>
+            Add the common headers to the specified message and send it.
+            </summary>
+            <param name="request">
+            The request to send
+            </param>
+            <returns>
+            The response
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine.SendRequestAsync(System.Net.Http.HttpRequestMessage)">
+            <summary>
+            Send a request and handle any exception if one is thrown.
+            </summary>
+            <param name="request">
+            The request to send
+            </param>
+            <returns>
+            The response
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngineBuilder">
+            <summary>
+            A fluent builder for <see cref="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine"/> instances.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngineBuilder.#ctor(Microsoft.Extensions.Logging.ILoggerFactory,System.Net.Http.HttpClient)">
+            <summary>
+            Construct a new instance of the builder.
+            </summary>
+            <param name="loggerFactory">
+            Factory used to create loggers for the engine
+            </param>
+            <param name="httpClient">
+            HttpClient instance used to make http requests
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngineBuilder.SetEndPoint(System.String)">
+            <summary>
+            The root endpoint which the CloudRequestsEngine will query.
+            This will set the data, properties and evidence keys endpoints.
+            </summary>
+            <param name="uri"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown if a required parameter is null.
+            </exception>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngineBuilder.SetDataEndpoint(System.String)">
+            <summary>
+            The endpoint the CloudRequestEngine will query to get a processing
+            result.
+            </summary>
+            <param name="uri"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngineBuilder.SetPropertiesEndpoint(System.String)">
+            <summary>
+            The endpoint the cloudRequestEngine will query to get the available
+            properties.
+            </summary>
+            <param name="uri"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngineBuilder.SetEvidenceKeysEndpoint(System.String)">
+            <summary>
+            The endpoint the cloudRequestEngine will query to get the required
+            evidence keys.
+            </summary>
+            <param name="uri"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngineBuilder.SetResourceKey(System.String)">
+            <summary>
+            The resource key to query the endpoint with.
+            </summary>
+            <param name="resourceKey">
+            The resource key to use when making requests to the cloud service
+            </param>
+            <returns>
+            This builder
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngineBuilder.SetLicenseKey(System.String)">
+            <summary>
+            The license key to query the endpoint with.
+            </summary>
+            <param name="licenseKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngineBuilder.SetTimeOutSeconds(System.Int32)">
+            <summary>
+            Timeout in seconds for the request to the endpoint.
+            </summary>
+            <param name="timeout"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngineBuilder.SetCloudRequestOrigin(System.String)">
+            <summary>
+            The value to set for the Origin header when making requests
+            to the cloud service.
+            This is used by the cloud service to check that the request
+            is being made from a origin matching those allowed by the 
+            resource key.
+            For more detail, see the 'Request Headers' section in the 
+            <a href="https://cloud.51degrees.com/api-docs/index.html">cloud documentation</a>.
+            </summary>
+            <param name="cloudRequestOrigin">
+            The value to use for the Origin header.
+            </param>
+            <returns>
+            This builder
+            </returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngineBuilder.Build">
+            <summary>
+            Build and return a new <see cref="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine"/>
+            instance using the current configuration.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngineBuilder.NewEngine(System.Collections.Generic.List{System.String})">
+            <summary>
+            Create a new engine using the current configuration.
+            </summary>
+            <param name="properties">
+            The properties to populate.
+            </param>
+            <returns>
+            A new <see cref="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine"/> instance.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.ICloudRequestEngine">
+            <summary>
+            The interface for <see cref="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine"/>
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.ICloudRequestEngine.PublicProperties">
+            <summary>
+            A collection containing the meta-data for the properties that 
+            the cloud service will return values for when a request is
+            made using the supplied resource key.
+            Note that this is distinct from the 
+            <see cref="P:FiftyOne.Pipeline.Engines.FlowElements.IAspectEngine.Properties"/> collection, which returns
+            the meta-data for the properties that are populated by 
+            this engine in the <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/>.
+            The key is the 'product name' and is equivalent to the 
+            <see cref="P:FiftyOne.Pipeline.Core.FlowElements.IFlowElement.ElementDataKey"/>. For example, 'device'.
+            </summary>
+        </member>
+        <member name="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.PropertyKeyedCloudEngineBase`2">
+            <summary>
+            A specialised type of <see cref="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudAspectEngineBase`1"/>
+            that has functionality to support returning a list of matching 
+            <see cref="T:FiftyOne.Pipeline.Engines.Data.IAspectData"/> profiles rather than a single item.
+            </summary>
+            <typeparam name="TData">
+            The type of <see cref="T:FiftyOne.Pipeline.Engines.Data.IAspectData"/> returned by this engine.
+            </typeparam>
+            <typeparam name="TProfile">
+            The type of the items in the list returned by this engine.
+            </typeparam>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.PropertyKeyedCloudEngineBase`2.EvidenceKeyFilter">
+            <summary>
+            A filter object that indicates the evidence keys that can be
+            used by this engine.
+            </summary>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.PropertyKeyedCloudEngineBase`2.#ctor(Microsoft.Extensions.Logging.ILogger{FiftyOne.Pipeline.CloudRequestEngine.FlowElements.PropertyKeyedCloudEngineBase{`0,`1}},System.Func{FiftyOne.Pipeline.Core.FlowElements.IPipeline,FiftyOne.Pipeline.Core.FlowElements.FlowElementBase{`0,FiftyOne.Pipeline.Engines.Data.IAspectPropertyMetaData},`0})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="logger">
+            The logger used by this instance.
+            </param>
+            <param name="deviceDataFactory">
+            The factory function to use when creating new data instances
+            of type <code>TData</code>.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.PropertyKeyedCloudEngineBase`2.ProcessCloudEngine(FiftyOne.Pipeline.Core.Data.IFlowData,`0,System.String)">
+            <summary>
+            Retrieve the raw JSON response from the 
+            <see cref="T:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.CloudRequestEngine"/> in this pipeline, extract 
+            the data for this specific engine and populate the 
+            <code>TData</code> instance accordingly.
+            </summary>
+            <param name="data">
+            The <see cref="T:FiftyOne.Pipeline.Core.Data.IFlowData"/> to get the raw JSON data from.
+            </param>
+            <param name="aspectData">
+            The <code>TData</code> instance to populate with values.
+            </param>
+            <param name="json">
+            The JsonResponse populated by the CloudRequestEngine.
+            </param>
+        </member>
+        <member name="M:FiftyOne.Pipeline.CloudRequestEngine.FlowElements.PropertyKeyedCloudEngineBase`2.CreateProfileData">
+            <summary>
+            An abstract factory method that should return a new instance 
+            of the type that represents a single 'profile' in the list
+            of profiles returned by this engine.
+            </summary>
+            <returns>
+            A new <code>TProfile</code> instance.
+            </returns>
+        </member>
+        <member name="T:FiftyOne.Pipeline.CloudRequestEngine.Messages">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.Messages.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.Messages.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.Messages.ExceptionCloudComplexPropertyType">
+            <summary>
+              Looks up a localized string similar to Unable to determine the complex type associated with this property. No c# property found matching definition {0}.{1}..
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.Messages.ExceptionCloudError">
+            <summary>
+              Looks up a localized string similar to Error returned from 51Degrees cloud service: {0}.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.Messages.ExceptionCloudErrorsMultiple">
+            <summary>
+              Looks up a localized string similar to Multiple errors returned from 51Degrees cloud service. See inner exceptions for details..
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.Messages.ExceptionCloudPropertyType">
+            <summary>
+              Looks up a localized string similar to Unable to determine the type associated with this property. No c# property found matching definition {0}.{1} and json type &apos;{2}&apos; is not mapped.   .
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.Messages.ExceptionCloudResponseFailure">
+            <summary>
+              Looks up a localized string similar to Error waiting for response from the cloud service..
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.Messages.ExceptionFailedToLoadProperties">
+            <summary>
+              Looks up a localized string similar to Failed to load aspect properties for element &apos;{0}&apos;. This is because your resource key does not include access to any properties under &apos;{0}&apos;. For more details on resource keys, see our explainer: https://51degrees.com/documentation/_info__resource_keys.html.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.Messages.ExceptionResourceKeyNeeded">
+            <summary>
+              Looks up a localized string similar to A resource key is required to access the 51Degrees cloud service. Please use the &apos;SetResourceKey&apos; method to supply your resource key. You can obtain one for free from https://configure.51degrees.com.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.Messages.ExceptionTaskCanceledRequest">
+            <summary>
+              Looks up a localized string similar to Failed to send request. A TaskCanceledException was thrown. The likely cause of this would be a connection timeout..
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.Messages.MessageErrorCodeReturned">
+            <summary>
+              Looks up a localized string similar to Cloud service at &apos;{0}&apos; returned status code &apos;{1}&apos; with content {2}..
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.Messages.MessageNoDataInResponse">
+            <summary>
+              Looks up a localized string similar to No data in response from cloud service at &apos;{0}&apos;.
+            </summary>
+        </member>
+        <member name="P:FiftyOne.Pipeline.CloudRequestEngine.Messages.ProcessCloudEngineNotImplemented">
+            <summary>
+              Looks up a localized string similar to This method should be overridden in the class derived from CloudAspectEngineBase class. The implementation should use the &apos;json&apos; parameter to populate the &apos;aspectData&apos; accordingly. This method will be called by the CloudAspectEngine.ProcessEngine() method after it has successfully retrieved the JsonResponse from the CloudRequestEngine..
+            </summary>
+        </member>
+    </members>
+</doc>

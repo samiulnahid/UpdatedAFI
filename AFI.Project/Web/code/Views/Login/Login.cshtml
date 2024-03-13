@@ -1,0 +1,72 @@
+﻿@using Sitecore.XA.Foundation.MarkupDecorator.Extensions
+@using Sitecore.XA.Foundation.SitecoreExtensions.Extensions
+
+@model Sitecore.XA.Feature.Security.Models.LoginRenderingModel
+
+<div @Html.Sxa().Component(Model.Rendering.RenderingCssClass ?? "login", Model.Attributes)>
+    <div class="component-content">
+        @Model.MessageIsEmpty
+        @Html.Sxa().Field("Introduction", Model.DataSourceItem, !Model.IsControlEditable)
+        @if (Model.Visible)
+        {
+            using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <table>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(m => m.Username, @Model.UsernameLabel)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(m => m.Username)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td class="sxa-validation sxa-login-username">
+                            @Html.ValidationMessageFor(m => m.Username)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(m => m.Password, @Model.PasswordLabel)
+                        </td>
+                        <td>
+                            @Html.PasswordFor(m => m.Password)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td class="sxa-validation sxa-login-password">
+                            @Html.ValidationMessageFor(m => m.Password)
+                        </td>
+                    </tr>
+                    <tr>
+                        @if (Model.DisplayRememberMe)
+                        {
+                            <td colspan="2" class="sxa-remember-me">
+                                @Html.CheckBoxFor(m => m.RememberMe)
+                                @Html.LabelFor(m => m.RememberMe, @Model.RememberMeLabel)
+                            </td>
+                        }
+                    </tr>
+                    @if (Request[Sitecore.XA.Feature.Security.Constants.SuccessQueryKey] == "false")
+                    {
+                        <tr>
+                            <td colspan="2" class="sxa-login-failed">
+                                @Model.FailureText
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="2">
+                            <input type="hidden" name="sxaController" value="LoginController" />
+                            <input type="hidden" name="sxaAction" value="Login" />
+                            <input type="submit" value="@Model.LoginButtonCaption" />
+                        </td>
+                    </tr>
+                </table>
+            }
+        }
+    </div>
+</div>

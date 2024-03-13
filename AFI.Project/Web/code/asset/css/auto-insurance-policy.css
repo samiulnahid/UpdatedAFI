@@ -1,0 +1,16 @@
+.additional_coverages_container .right__content {
+  padding-right: 0;
+}
+
+.additional_coverages_container .who_is_covered {
+  margin-top: 2rem;
+}
+
+.additional_coverages_container .ul {
+  margin-bottom: 1.5rem;
+  margin-bottom: var(--spacing-vertical);
+  list-style: disc;
+  /* margin-left: 1.5rem; */
+  margin-left: 0 !important;
+  padding: 10px !important;
+}

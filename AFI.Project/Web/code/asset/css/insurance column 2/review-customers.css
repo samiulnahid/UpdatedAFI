@@ -1,0 +1,22 @@
+.customer_reviews {
+  background-image: linear-gradient(120deg, #cb2c30, #881b26);
+  background-image: linear-gradient(
+    120deg,
+    var(--color-red-10),
+    var(--color-red-20)
+  );
+  text-align: center;
+  padding: 2.5rem;
+  color: #fff;
+  color: var(--color-white);
+}
+
+.customer_review {
+  margin-bottom: 1.7rem;
+}
+
+.customer_review__citation,
+.customer_review__quote {
+  font-style: italic;
+  margin-bottom: 0.3rem !important;
+}
