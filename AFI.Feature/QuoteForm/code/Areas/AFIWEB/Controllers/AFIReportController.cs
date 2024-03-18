@@ -1424,5 +1424,351 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
                 return Json(finalJson, JsonRequestBehavior.AllowGet);
             }
         }
+
+        [HttpGet]
+        public JsonResult GetVotingPeriodById(string id)
+        {
+
+            try
+            {
+                int votingPeriodId = int.Parse(id);
+
+                var votingPeriod = _AFIReportRepository.GetVotingPeriodById(votingPeriodId);
+
+                if (votingPeriod != null)
+                {
+                    string finalJson = JsonConvert.SerializeObject(votingPeriod);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var response = new { Success = false, Message = $"Voting Period with ID {id} not found!" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                var response = new { Success = false, Message = $"Error retrieving Voting Period with ID {id}. Exception: {ex.Message}" };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult AddVotingPeriodData(VotingPeriod votingPeriod)
+        {
+            try
+            {
+
+                int count = _AFIReportRepository.CreateVotingPeriodData(votingPeriod);
+
+                var votingPeriodList = _AFIReportRepository.GetAllVotingPeriod();
+
+                if (count > 0 && votingPeriodList.Any())
+                {
+                    string finalJson = JsonConvert.SerializeObject(votingPeriodList);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+                else if (count == -1 )
+                {
+                    var response = new { Success = false, StatusCode = 400,  Message = $"Data Already Exist" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var response = new { Success = false, Message = $"Data Insert Unsuccessful" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                var response = new { Success = false, Message = $"Error Insert Item Message " + ex.InnerException };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+            }
+
+            // return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult UpdateVotingPeriodData(VotingPeriod votingPeriod)
+        {
+            try
+            {
+
+                int count = _AFIReportRepository.UpdateVotingPeriodData(votingPeriod);
+
+                var votingPeriodList = _AFIReportRepository.GetAllVotingPeriod();
+
+                if (count > 0 && votingPeriodList.Any())
+                {
+                    string finalJson = JsonConvert.SerializeObject(votingPeriodList);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var response = new { Success = false, Message = $"Data Update Unsuccessful" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                var response = new { Success = false, Message = $"Error Update. Item Message " + ex.InnerException };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+            }
+
+            // return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult DeleteVotingPeriodData(string id )
+        {
+            try
+            {
+                int votingPeriodId = int.Parse(id);
+                int count = _AFIReportRepository.DeleteVotingPeriodData(votingPeriodId);
+
+                var votingPeriodList = _AFIReportRepository.GetAllVotingPeriod();
+
+                if (count > 0 && votingPeriodList.Any())
+                {
+                    string finalJson = JsonConvert.SerializeObject(votingPeriodList);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var response = new { Success = false, Message = $"Data Delete Unsuccessful" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                var response = new { Success = false, Message = $"Error Delete. Item Message " + ex.InnerException };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+            }
+
+            // return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetAllCandidateData()
+        {
+
+            try
+            {
+                var candidateDataList = _AFIReportRepository.GetAllCandidateData();
+
+                if (candidateDataList.Any())
+                {
+                    string finalJson = JsonConvert.SerializeObject(candidateDataList);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var response = new { Success = false, Message = $"No Data Found!" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                var response = new { Success = false, Message = $"Error retrieving Candidate Data. Exception: {ex.Message}" };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public JsonResult GetCandidateById(string id)
+        {
+            try
+            {
+                int candidateId = int.Parse(id);
+
+                var candidate = _AFIReportRepository.GetCandidateById(candidateId);
+
+                if (candidate != null)
+                {
+                    string finalJson = JsonConvert.SerializeObject(candidate);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var response = new { Success = false, Message = $"Candidate with ID {id} not found!" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                var response = new { Success = false, Message = $"Error retrieving Candidate with ID {id}. Exception: {ex.Message}" };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+
+        [HttpPost]
+        public JsonResult AddCandidateData(VoteCandidate votingPeriod)
+        {
+            try
+            {
+                //VoteCandidate votingPeriod = new VoteCandidate
+                //{
+                //    VotingPeriodId = int.Parse(votingPeriodId),
+                //    Name = name,
+                //    Content = content
+                //};
+
+                int count = _AFIReportRepository.CreateCandidateData(votingPeriod);
+
+                var candidateDataList = _AFIReportRepository.GetAllCandidateData();
+
+                if (count > 0 && candidateDataList.Any())
+                {
+                    string finalJson = JsonConvert.SerializeObject(candidateDataList);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+                else if (count == -1)
+                {
+                    var response = new { Success = false, Message = $"Data Already Exist" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var response = new { Success = false, Message = $"Data Insert Unsuccessful" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                var response = new { Success = false, Message = $"Error Insert Item Message " + ex.InnerException };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        [HttpPost]
+        public JsonResult UpdateCandidateData(VoteCandidate votingPeriod)
+        {
+            try
+            {
+                //VoteCandidate votingPeriod = new VoteCandidate
+                //{
+                //    CandidateId = int.Parse(id),
+                //    VotingPeriodId = int.Parse(votingPeriodId),
+                //    Name = name,
+                //    Content = content
+                //};
+
+                int count = _AFIReportRepository.UpdateCandidateData(votingPeriod);
+                var candidateDataList = _AFIReportRepository.GetAllCandidateData();
+
+                if (count > 0 && candidateDataList.Any())
+                {
+                    string finalJson = JsonConvert.SerializeObject(candidateDataList);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var response = new { Success = false, Message = $"Data Update Unsuccessful" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                var response = new { Success = false, Message = $"Error Update. Item Message " + ex.InnerException };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        public JsonResult DeleteCandidateData(string id)
+        {
+            try
+            {
+                int CandidateId = int.Parse(id);
+                   
+
+                int count = _AFIReportRepository.DeleteCandidateData(CandidateId);
+                var candidateDataList = _AFIReportRepository.GetAllCandidateData();
+
+                if (count > 0 && candidateDataList.Any())
+                {
+                    string finalJson = JsonConvert.SerializeObject(candidateDataList);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var response = new { Success = false, Message = $"Data Delete Unsuccessful" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                var response = new { Success = false, Message = $"Error Delete. Item Message " + ex.InnerException };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        [HttpGet]
+        public JsonResult GetAllVotingMemberData(int page = 1, int pageSize = 50, int VotingPeriodId = 0 )
+        {
+
+            try
+            {
+                var data = _AFIReportRepository.GetAllVotingMemberData(page, pageSize, VotingPeriodId);
+
+                var totalCount = data.FirstOrDefault()?.TotalCount ?? 0;
+                var totalPages = (int)Math.Ceiling((decimal)totalCount / pageSize);
+
+                MemberPagination finalData = new MemberPagination
+                {
+                    CurrentPage = page,
+                    TotalItem = totalCount,
+                    TotalPages = totalPages,
+                    MemberList = data
+                };
+                if (finalData != null && data.Count() > 0)
+                {
+                    string finalJson = JsonConvert.SerializeObject(finalData);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var response = new { Success = false, Message = $"No Data Found!" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                var response = new { Success = false, Message = $"Error retrieving Candidate Data. Exception: {ex.Message}" };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+            }
+        }
+
     }
 }

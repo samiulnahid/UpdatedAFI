@@ -49,7 +49,19 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Repository
         IEnumerable<VoteReport> GetDemoVoteCountReportForResult();
         IEnumerable<VoteCandidate> GetVoteCandidateList(string periodId);
         IEnumerable<VotingPeriod> GetAllVotingPeriod();
-        
+        VotingPeriod GetVotingPeriodById(int votingPeriodId);
+        int CreateVotingPeriodData(VotingPeriod votingPeriod);
+        int UpdateVotingPeriodData(VotingPeriod votingPeriod);
+        int DeleteVotingPeriodData(int VotingPeriodId);
+        IEnumerable<VoteCandidate> GetAllCandidateData();
+        int CreateCandidateData(VoteCandidate voteCandidate);
+        int UpdateCandidateData(VoteCandidate voteCandidate);
+        int DeleteCandidateData(int CandidateId);
+        VoteCandidate GetCandidateById(int candidateId);
+
+        IEnumerable<VoteMember> GetAllVotingMemberData(int page, int pageSize, int VotingPeriodId);
+
+
     }
 
     public class AFIReportRepository : IAFIReportRepository
@@ -1173,7 +1185,7 @@ AND (qa.BodilyInjury IS NULL OR qa.PropertyDamage IS NULL OR qa.MedicalCoverage 
 FROM  
     [dbo].[Demo_MemberCandidateBallot] b 
 INNER JOIN 
-    [ProxyVote].[Candidate]  c ON b.CandidateId = c.CandidateId
+    [dbo].[Candidate]  c ON b.CandidateId = c.CandidateId
 GROUP BY 
     c.[Name];";
                 return db.Query<VoteReport>(sql);
@@ -1211,5 +1223,246 @@ GROUP BY
             }
         }
 
+        public VotingPeriod GetVotingPeriodById(int votingPeriodId)
+        {
+            using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
+            {
+                var sql = @"SELECT * FROM [dbo].[VotingPeriod] WHERE VotingPeriodId = @VotingPeriodId";
+                return db.QueryFirstOrDefault<VotingPeriod>(sql, new { VotingPeriodId = votingPeriodId });
+            }
+        }
+
+      
+        public int CreateVotingPeriodData(VotingPeriod votingPeriod)
+        {
+            using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
+            {
+                db.Open();
+                using (var transaction = db.BeginTransaction())
+                {
+                    try
+                    {
+                        var sql = @"
+                    IF NOT EXISTS (SELECT 1 FROM [dbo].[VotingPeriod] WHERE Title = @Title)
+                    BEGIN
+                        INSERT INTO [dbo].[VotingPeriod] (Start, [End], Title, [Content]) 
+                        VALUES (@Start, @End, @Title, @Content);
+                        SELECT SCOPE_IDENTITY();
+                    END
+                    ELSE
+                    BEGIN
+                        SELECT -1;
+                    END";
+
+                        var id = db.QueryFirstOrDefault<int>(sql, votingPeriod, transaction);
+                        if (id == -1)
+                        {
+                            return -1;
+                        }
+
+                        transaction.Commit();
+                        return id;
+                    }
+                    catch (System.Exception ex)
+                    {
+                        transaction.Rollback();
+                        return 0;
+                    }
+                }
+            }
+        }
+
+
+
+        public int UpdateVotingPeriodData(VotingPeriod votingPeriod)
+        {
+            using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
+            {
+                db.Open();
+                using (var transaction = db.BeginTransaction())
+                {
+                    try
+                    {
+                        var sql = @"UPDATE [dbo].[VotingPeriod] 
+                            SET Start = @Start, [End] = @End, Title = @Title, [Content] = @Content 
+                            WHERE VotingPeriodId = @VotingPeriodId";
+
+                        var rowsAffected = db.Execute(sql, votingPeriod, transaction);
+                        transaction.Commit();
+                        return rowsAffected;
+                    }
+                    catch (System.Exception ex)
+                    {
+                        transaction.Rollback();
+                        return 0;
+                    }
+                }
+            }
+        }
+
+        public int DeleteVotingPeriodData(int VotingPeriodId)
+        {
+            using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
+            {
+                db.Open();
+                using (var transaction = db.BeginTransaction())
+                {
+                    try
+                    {
+                        var sql = "DELETE FROM [dbo].[VotingPeriod] WHERE VotingPeriodId = @VotingPeriodId";
+                       
+                        var rowsAffected = db.Execute(sql, new { VotingPeriodId }, transaction);
+                        transaction.Commit();
+                        return rowsAffected;
+                    }
+                    catch (System.Exception ex)
+                    {
+                        transaction.Rollback();
+                        return 0;
+                    }
+                }
+            }
+        }
+        //public IEnumerable<VoteCandidate> GetAllCandidateData()
+        //{
+        //    using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
+        //    {
+        //        var sql = @"select * from [dbo].[Candidate] ";
+        //        return db.Query<VoteCandidate>(sql);
+        //    }
+        //}
+        public IEnumerable<VoteCandidate> GetAllCandidateData()
+        {
+            using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
+            {
+                var sql = @"SELECT c.*, v.Title AS VotingPeriodName 
+             FROM [dbo].[Candidate] c 
+             INNER JOIN [dbo].[VotingPeriod] v ON v.VotingPeriodId = c.VotingPeriodId 
+             ORDER BY c.VotingPeriodId DESC";
+                return db.Query<VoteCandidate>(sql);
+            }
+        }
+
+        public VoteCandidate GetCandidateById(int candidateId)
+        {
+            using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
+            {
+                var sql = @"SELECT * FROM [dbo].[Candidate] WHERE CandidateId = @CandidateId";
+                return db.QueryFirstOrDefault<VoteCandidate>(sql, new { CandidateId = candidateId });
+            }
+        }
+
+        public int CreateCandidateData(VoteCandidate voteCandidate)
+        {
+            using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
+            {
+                db.Open();
+                using (var transaction = db.BeginTransaction())
+                {
+                    try
+                    {
+                        
+                        var sql = @"
+                        IF NOT EXISTS (SELECT 1 FROM [dbo].[Candidate] WHERE Name = @Name)
+                        BEGIN
+                            INSERT INTO [dbo].[Candidate] (VotingPeriodId , Name, [Content]) 
+                            VALUES (@VotingPeriodId, @Name, @Content);
+                            SELECT SCOPE_IDENTITY();
+                        END
+                        ELSE
+                        BEGIN
+                            SELECT -1;
+                        END";
+
+                        var id = db.QueryFirstOrDefault<int>(sql, voteCandidate, transaction);
+                        transaction.Commit();
+                        return id;
+                    }
+                    catch (System.Exception ex)
+                    {
+                        transaction.Rollback();
+                        return 0;
+                    }
+                }
+            }
+        }
+
+        public int UpdateCandidateData(VoteCandidate voteCandidate)
+        {
+            using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
+            {
+                db.Open();
+                using (var transaction = db.BeginTransaction())
+                {
+                    try
+                    {
+                        var sql = @"UPDATE [dbo].[Candidate]
+                            SET VotingPeriodId = @VotingPeriodId, Name = @Name, [Content] = @Content 
+                            WHERE CandidateId = @CandidateId";
+
+                        var rowsAffected = db.Execute(sql, voteCandidate, transaction);
+                        transaction.Commit();
+                        return rowsAffected;
+                    }
+                    catch (System.Exception ex)
+                    {
+                        transaction.Rollback();
+                        return 0;
+                    }
+                }
+            }
+        }
+        public int DeleteCandidateData(int CandidateId)
+        {
+            using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
+            {
+                db.Open();
+                using (var transaction = db.BeginTransaction())
+                {
+                    try
+                    {
+                        var sql = "DELETE FROM [dbo].[Candidate] WHERE CandidateId = @CandidateId";
+                        var rowsAffected = db.Execute(sql, new { CandidateId }, transaction);
+                        transaction.Commit();
+                        return rowsAffected;
+
+                    }
+                    catch (System.Exception ex)
+                    {
+                        transaction.Rollback();
+                        return 0;
+                    }
+                }
+            }
+        }
+        public IEnumerable<VoteMember> GetAllVotingMemberData(int page, int pageSize, int VotingPeriodId)
+        {
+            int ofsetItem = (page - 1) * pageSize;
+
+            using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
+            {
+                var sql = " select *, COUNT(*) OVER() AS TotalCount from [dbo].[Member] WHERE 1 = 1";
+
+                if (VotingPeriodId > 0 )
+                {
+                    sql += " AND VotingPeriodId = @VotingPeriodId";
+                }
+
+
+                sql += " ORDER BY MemberId OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY ; ";
+
+                var parameters = new DynamicParameters();
+                parameters.Add("@Offset", ofsetItem);
+                parameters.Add("@PageSize", pageSize);
+
+                if (VotingPeriodId > 0)
+                {
+                    parameters.Add("@VotingPeriodId", VotingPeriodId);
+                }
+
+                return db.Query<VoteMember>(sql, parameters);
+
+            }
+        }
     }
 }
