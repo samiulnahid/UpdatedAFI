@@ -1,5 +1,4 @@
-﻿using AFI.Feature.SitecoreSend.Models;
-using AFI.Feature.SitecoreSend.Repositories;
+﻿
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,16 +8,14 @@ using Sitecore.Data;
 using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
-using static AFI.Feature.SitecoreSend.Constant;
+using static AFI.Feature.QuoteForm.Areas.AFIWEB.Constant;
 using System.Net.Http;
 
-namespace AFI.Feature.SitecoreSend.Job
+namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Job
 {
     public class Service
     {
 
-
-        AFIMoosendRepository repository = new AFIMoosendRepository();
         public async Task<string> MailingListCreate(dynamic data, Uri baseAddress, string SitecoreSendApiKey)
         {
 

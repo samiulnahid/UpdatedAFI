@@ -79,6 +79,7 @@ namespace AFI.Feature.SitecoreSend.Models
     {
         Subscriber,
         EmailList,
+        CustomField,
         SecurityKey
     }
 }

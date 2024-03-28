@@ -484,6 +484,7 @@
     <Compile Include="Areas\AFIQuoteForm\Repository\UmbrellaQuoteFormRepository.cs" />
     <Compile Include="Areas\AFIQuoteForm\Repository\WatercraftQuoteFormRepository.cs" />
     <Compile Include="Areas\AFIWEB\AFIWEBAreaRegistration.cs" />
+    <Compile Include="Areas\AFIWEB\Constant.cs" />
     <Compile Include="Areas\AFIWEB\Controllers\AFIReportController.cs" />
     <Compile Include="Areas\AFIWEB\Controllers\AFIWEBAPIController.cs" />
     <Compile Include="Areas\AFIWEB\Controllers\AFIWEBRoutes.cs" />
@@ -496,6 +497,8 @@
     <Compile Include="Areas\AFIWEB\Helpers\Configurations.cs" />
     <Compile Include="Areas\AFIWEB\Helpers\CryptoService.cs" />
     <Compile Include="Areas\AFIWEB\Helpers\Strings.cs" />
+    <Compile Include="Areas\AFIWEB\Job\Service.cs" />
+    <Compile Include="Areas\AFIWEB\Job\SyncVoteMemberToMoosend.cs" />
     <Compile Include="Areas\AFIWEB\Job\SurveyClaimMail.cs" />
     <Compile Include="Areas\AFIWEB\ModelBuilders\ContactUsEmailBuilder.cs" />
     <Compile Include="Areas\AFIWEB\ModelBuilders\ContactUsFormViewModelBuilder.cs" />
@@ -511,11 +514,13 @@
     <Compile Include="Areas\AFIWEB\Models\CustomSubmit.cs" />
     <Compile Include="Areas\AFIWEB\Models\Email.cs" />
     <Compile Include="Areas\AFIWEB\Models\EXMUnSubscription.cs" />
+    <Compile Include="Areas\AFIWEB\Models\FormBody.cs" />
     <Compile Include="Areas\AFIWEB\Models\HomePageAdvisorQuoteViewModel.cs" />
     <Compile Include="Areas\AFIWEB\Models\HomePageQuoteViewModel.cs" />
     <Compile Include="Areas\AFIWEB\Models\InsuranceApplication.cs" />
     <Compile Include="Areas\AFIWEB\Models\InsuranceType.cs" />
     <Compile Include="Areas\AFIWEB\Models\IPaginated.cs" />
+    <Compile Include="Areas\AFIWEB\Models\MoosendResponseModel.cs" />
     <Compile Include="Areas\AFIWEB\Models\MosendMailing.cs" />
     <Compile Include="Areas\AFIWEB\Models\NewsLetter.cs" />
     <Compile Include="Areas\AFIWEB\Models\NewsLetterList.cs" />
@@ -529,6 +534,7 @@
     <Compile Include="Areas\AFIWEB\Models\ProxyVoteVotingPeriod.cs" />
     <Compile Include="Areas\AFIWEB\Models\QHCSVReport.cs" />
     <Compile Include="Areas\AFIWEB\Models\QHReport.cs" />
+    <Compile Include="Areas\AFIWEB\Models\RadioListViewModel.cs" />
     <Compile Include="Areas\AFIWEB\Models\ReCaptchaVerifyResponse.cs" />
     <Compile Include="Areas\AFIWEB\Models\ReferralFormView.cs" />
     <Compile Include="Areas\AFIWEB\Models\ReportView.cs" />

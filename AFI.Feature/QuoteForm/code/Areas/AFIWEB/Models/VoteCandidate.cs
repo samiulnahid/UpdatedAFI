@@ -19,6 +19,6 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Models
         {
             get; set;
         }
-
+        public bool IsActive { get; set; }
     }
 }

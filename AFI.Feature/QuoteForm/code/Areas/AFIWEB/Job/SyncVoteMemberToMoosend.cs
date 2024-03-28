@@ -1,5 +1,4 @@
-﻿using AFI.Feature.SitecoreSend.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Sitecore.Common.HttpClient;
 using Sitecore.Data.Items;
 using Sitecore.DependencyInjection;
@@ -15,26 +14,31 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls;
 using Sitecore.Data;
-using AFI.Feature.SitecoreSend.Repositories;
-using static AFI.Feature.SitecoreSend.Constant;
 using System.Web.Mvc;
 using Newtonsoft.Json.Linq;
+using AFI.Feature.QuoteForm.Areas.AFIWEB.Repository;
+using AFI.Feature.QuoteForm.Areas.AFIWEB.Models;
+using static AFI.Feature.QuoteForm.Areas.AFIWEB.Constant;
 
-namespace AFI.Feature.SitecoreSend.Job
+namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Job
 {
-    public class SubscribersSyncToMoosend
+    public class SyncVoteMemberToMoosend
     {
 
         public static string api_key = string.Empty;
         public static string api_url = string.Empty;
 
         Service service = new Service();
-        AFIMoosendRepository repository = new AFIMoosendRepository();
 
+        private readonly IAFIReportRepository _AFIReportRepository;
+        public SyncVoteMemberToMoosend(IAFIReportRepository AFIReportRepository)
+        {
+            _AFIReportRepository = AFIReportRepository;
+        }
+       
         public void MoosendSettingItem()
         {
-
-            Item moosendSetting = Sitecore.Context.ContentDatabase.GetItem(Constant.MoosendSetting.MoosendSettingId);
+            Item moosendSetting = Sitecore.Context.Database.GetItem(Constant.MoosendSetting.MoosendSettingId);
             if (moosendSetting != null)
             {
                 api_key = GetFieldValue(moosendSetting, Constant.MoosendSetting.Fields.APIKEY);
@@ -56,29 +60,28 @@ namespace AFI.Feature.SitecoreSend.Job
         private Uri baseAddress;
         private string SitecoreSendApiKey;
         private string emailListID;
+     
 
-
-        public void Execute(Item[] items, Sitecore.Tasks.CommandItem command, Sitecore.Tasks.ScheduleItem schedule)
+        public bool Execute(string votingPeriodId)
         {
             MoosendSettingItem();
 
-            Sitecore.Diagnostics.Log.Info("AFI Sync Contact Sitecore scheduled task is being run!", this);
-
-            List<MoosendListSubscriber> dataList = repository.GetAllListSubscriberByIsSynced(false);// Load All IsSynced false data
-            var groupedItems = dataList.GroupBy(item => item.ListName);
+            var dataList = _AFIReportRepository.GetAllVotingMemberDatabyVotingPeriodId(votingPeriodId);// Load All Member Data
+            var groupedItems = dataList.GroupBy(item => item.VotingPeriodId);
 
             foreach (var group in groupedItems)
             {
                 string ResponseMessage = "";
 
+                var votingPeriod = _AFIReportRepository.GetVotingPeriodById(group.Key);
                 var listId = "";
-              var  exEmailListData = repository.GetEmailListDataBylistName(group.Key);
+                var exEmailListData = _AFIReportRepository.GetEmailListDataByVotingPeriod(votingPeriod.Title); 
 
                 if (exEmailListData == null)
                 {
                     var data = new
                     {
-                        Name = group.Key,
+                        Name = votingPeriod.Title,
                         ConfirmationPage = string.Empty,
                         RedirectAfterUnsubscribePage = string.Empty
                     };
@@ -89,20 +92,25 @@ namespace AFI.Feature.SitecoreSend.Job
                     if (!string.IsNullOrEmpty(response.Context))
                     {
                         EmailListData emailListData = new EmailListData();
-                        emailListData.ListName = group.Key;
+                        emailListData.ListName = votingPeriod.Title;
                         emailListData.ListId = response.Context;
                         emailListData.CreatedBy = "System";
+                        emailListData.CreatedDate = DateTime.Now;
                         ResponseMessage = MoosendMessage.Success;
 
-                        repository.InsertEmailListData(emailListData);
+                        _AFIReportRepository.InsertEmailListData(emailListData);
 
                         listId = response.Context;
 
-                        string logDescription = JsonFieldcombined(string.Empty, group.Key, string.Empty, emailListData.ListId, string.Empty, ResponseMessage);
+                        //string logDescription = JsonFieldcombined(string.Empty, group.Key, string.Empty, emailListData.ListId, string.Empty, ResponseMessage);
 
-                        repository.InserAFIMoosendtLog(logDescription, LogType.EmailList, data.ToString(), responseData);
+                        //repository.InserAFIMoosendtLog(logDescription, LogType.EmailList, data.ToString(), responseData);
                     }
-
+                    else
+                    {
+                        ResponseMessage = response.Error;
+                        return false;
+                    }
 
                 }
                 else
@@ -112,8 +120,52 @@ namespace AFI.Feature.SitecoreSend.Job
 
                 foreach (var item in group.Take(1))
                 {
+                    string jsonBody = "";
+                    if (item != null)
+                    {
+                        JObject jsonData = JObject.FromObject(new
+                        {
+                            MemberNumber = item.MemberNumber,
+                            PIN = item.PIN,
+                            VotingPeriodId = item.VotingPeriodId,
+                            ResidentialOccupied = item.ResidentialOccupied,
+                            ResidentialDwelling = item.ResidentialDwelling,
+                            Renters = item.Renters,
+                            Flood = item.Flood,
+                            Life = item.Life,
+                            PersonalLiabilityRenters = item.PersonalLiabilityRenters,
+                            PersonalLiabilityCatastrophy = item.PersonalLiabilityCatastrophy,
+                            RV = item.RV,
+                            Auto = item.Auto,
+                            Watercraft = item.Watercraft,
+                            Motorcycle = item.Motorcycle,
+                            Supplemental = item.Supplemental,
+                            AnnualReport = item.AnnualReport,
 
-                    JObject jsonObject = JObject.Parse(item.JsonBody);
+                            StatutoryFinancialStatements = item.StatutoryFinancialStatements,
+                            MobileHome = item.MobileHome,
+                            PetHealth = item.PetHealth,
+                            Business = item.Business,
+                            LongTermCare = item.LongTermCare,
+                            MailFinancials = item.MailFinancials,
+                            EmailFinancials = item.EmailFinancials
+
+                        });
+
+                        string name = (item.FullName) ?? string.Empty;
+
+                        JObject json = JObject.FromObject(new
+                        {
+                            Email = item.EmailAddress,
+                            Name = name,
+                            CustomFields = jsonData
+
+                        });
+                        jsonBody = JsonConvert.SerializeObject(json);
+
+                    }
+
+                    JObject jsonObject = JObject.Parse(jsonBody);
 
                     // Extract keys recursively
                     var keys = GetKeys(jsonObject);
@@ -121,7 +173,7 @@ namespace AFI.Feature.SitecoreSend.Job
                     {
                         string KeyResponseMessage = "";
                         Console.WriteLine(key);
-                        if (key != null && !new[] { "Email", "Name", "Mobile", "CustomFields" }.Contains(key.ToString()))
+                        if (key != null && !new[] { "Email", "Name", "CustomFields" }.Contains(key.ToString()))
                         {
                             var data = new
                             {
@@ -140,11 +192,12 @@ namespace AFI.Feature.SitecoreSend.Job
                             else
                             {
                                 KeyResponseMessage = response.Error;
+                                return false;
                             }
 
-                            string logDescription = JsonFieldcombined(string.Empty, group.Key, key, listId, string.Empty, KeyResponseMessage);
+                            //string logDescription = JsonFieldcombined(string.Empty, group.Key, key, listId, string.Empty, KeyResponseMessage);
 
-                            repository.InserAFIMoosendtLog(logDescription, LogType.CustomField, data.ToString(), responseData);
+                            //repository.InserAFIMoosendtLog(logDescription, LogType.CustomField, data.ToString(), responseData);
                         }
                     }
 
@@ -153,15 +206,60 @@ namespace AFI.Feature.SitecoreSend.Job
 
             foreach (var group in groupedItems)
             {
-                EmailListData emailListData = repository.GetEmailListDataBylistName(group.Key);
+                var votingPeriod = _AFIReportRepository.GetVotingPeriodById(group.Key);
+                EmailListData emailListData = _AFIReportRepository.GetEmailListDataByVotingPeriod(votingPeriod.Title);
 
                 foreach (var item in group)
                 {
                     string ResponseMessage = "";
                     string SubscriberId = "";
-                    bool isSynced = item.IsSynced;
+                  //  bool isSynced = item.IsSynced;
+                    string jsonBody = "";
+                    if (item != null)
+                    {
+                        JObject jsonData = JObject.FromObject(new
+                        {
+                            MemberNumber = item.MemberNumber,
+                            PIN = item.PIN,
+                            VotingPeriodId = item.VotingPeriodId,
+                            ResidentialOccupied = item.ResidentialOccupied,
+                            ResidentialDwelling = item.ResidentialDwelling,
+                            Renters = item.Renters,
+                            Flood = item.Flood,
+                            Life = item.Life,
+                            PersonalLiabilityRenters = item.PersonalLiabilityRenters,
+                            PersonalLiabilityCatastrophy = item.PersonalLiabilityCatastrophy,
+                            RV = item.RV,
+                            Auto = item.Auto,
+                            Watercraft = item.Watercraft,
+                            Motorcycle = item.Motorcycle,
+                            Supplemental = item.Supplemental,
+                            AnnualReport = item.AnnualReport,
 
-                    var currentData = JsonConvert.DeserializeObject<dynamic>(item.JsonBody);
+                            StatutoryFinancialStatements = item.StatutoryFinancialStatements,
+                            MobileHome = item.MobileHome,
+                            PetHealth = item.PetHealth,
+                            Business = item.Business,
+                            LongTermCare = item.LongTermCare,
+                            MailFinancials = item.MailFinancials,
+                            EmailFinancials = item.EmailFinancials
+
+                        });
+
+                        string name = (item.FullName) ?? string.Empty;
+
+                        JObject json = JObject.FromObject(new
+                        {
+                            Email = item.EmailAddress,
+                            Name = name,
+                            CustomFields = jsonData
+
+                        });
+                        jsonBody = JsonConvert.SerializeObject(json);
+
+                    }
+
+                    var currentData = JsonConvert.DeserializeObject<dynamic>(jsonBody);
                     var customFieldsList = new List<string>();
                     if (currentData.CustomFields != null)
                     {
@@ -180,32 +278,18 @@ namespace AFI.Feature.SitecoreSend.Job
                     {
                         SubscriberId = response.Context.ID;
                         ResponseMessage = MoosendMessage.Success;
-                        isSynced = true;
                     }
                     else
                     {
                         ResponseMessage = response.Error;
+                        return false;
                     }
-                    if (response.Error != null)
-                    {
-                        isSynced = false;
-                    }
-                    item.EmailListId = emailListData.Id;
-                    item.SendListId = emailListData.ListId;
-                    item.SubscriberId = SubscriberId;
-                    item.IsSynced = isSynced;
-                    item.SyncedTime = DateTime.Now;
-
-                    repository.ListSubscriberUpdate(item);
-
-                    string logDescription = JsonFieldcombined(item.JsonBody, group.Key, string.Empty, emailListData.ListId, SubscriberId, ResponseMessage);
-
-                    repository.InserAFIMoosendtLog(logDescription, LogType.Subscriber, item.JsonBody, responseData);
+                   
+                   
                 }
             }
 
-
-
+            return true;
         }
         private object CreateFinalData(dynamic currentData, bool hasExternalDoubleOptIn, List<string> customFields)
         {
@@ -213,7 +297,6 @@ namespace AFI.Feature.SitecoreSend.Job
             {
                 Name = currentData.Name,
                 Email = currentData.Email,
-                Mobile = currentData.Mobile,
                 HasExternalDoubleOptIn = hasExternalDoubleOptIn,
                 CustomFields = customFields
             };
@@ -278,95 +361,7 @@ namespace AFI.Feature.SitecoreSend.Job
             // Serialize the new data into a JSON string
 
         }
-        private void CustomStringValues(Dictionary<string, object> data, string listId)
-        {
-            foreach (var pair in data)
-            {
-
-
-                if (pair.Value is string)
-                {
-                    if (pair.Key != null && !new[] { "Email", "Name", "Mobile" }.Contains(pair.Key.ToString()))
-                    {
-
-                        var responseData = Task.Run(() => service.CustomCreate(pair.Key, listId, baseAddress, SitecoreSendApiKey)).Result;
-                        MoosendResponseModel response = JsonConvert.DeserializeObject<MoosendResponseModel>(responseData);
-                    }
-                }
-                else if (pair.Value is object)
-                {
-                    // Recursive call for nested objects
-                    CustomStringValues((Dictionary<string, object>)pair.Value, listId);
-                }
-
-            }
-        }
-
-        private async Task _multipleDataAsync(string item)
-        {
-            using (var httpClient = new HttpClient { BaseAddress = baseAddress })
-            {
-
-                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("accept", "application/json");
-
-                using (var content = new StringContent(item, System.Text.Encoding.Default, "application/json"))
-                {
-                    using (var response = await httpClient.PostAsync($"subscribers/{emailListID}/subscribe_many.json?apiKey={SitecoreSendApiKey}", content))
-                    {
-                        string responseData = await response.Content.ReadAsStringAsync();
-                    }
-                }
-            }
-        }
-
-        private async Task _sendDataAsync(string item)
-        {
-            using (var httpClient = new HttpClient { BaseAddress = baseAddress })
-            {
-
-                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("accept", "application/json");
-
-                using (var content = new StringContent(item, System.Text.Encoding.Default, "application/json"))
-                {
-                    using (var response = await httpClient.PostAsync($"subscribers/{emailListID}/subscribe.json?apiKey={SitecoreSendApiKey}", content))
-                    {
-                        string responseData = await response.Content.ReadAsStringAsync();
-                    }
-                }
-            }
-        }
-
-        private async Task<bool> ExecuteCall(string data)
-        {
-            try
-            {
-                using (var httpClient = new HttpClient { BaseAddress = baseAddress })
-                {
-                    httpClient.DefaultRequestHeaders.TryAddWithoutValidation("accept", "application/json");
-
-                    using (var content = new StringContent(data, Encoding.Default, "application/json"))
-                    {
-                        using (var response = await httpClient.PostAsync($"subscribers/{emailListID}/subscribe.json?apiKey={SitecoreSendApiKey}", content))
-                        {
-                            string response_ = await response.Content.ReadAsStringAsync();
-                            if (!string.IsNullOrEmpty(response_))
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                return false;
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex.Message.ToString(), "ExecuteCall");
-                return false;
-            }
-        }
+      
 
     }
 }

@@ -12,5 +12,6 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Models
         public string CandidateName { get; set; }
         public string VoteFor { get; set; }
         public string VoteAgainst { get; set; }
+        public int TotalVotes { get; set; }
     }
 }

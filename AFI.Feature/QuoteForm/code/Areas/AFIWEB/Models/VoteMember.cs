@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -14,6 +15,13 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Models
         public string EmailAddress { get; set; }
         public string FullName { get; set; }
         public int TotalCount { get; set; }
+
+        [NotMapped]
+        public string VotingPeriod
+        {
+            get; set;
+        }
+        public bool IsActive { get; set; }
     }
     public class MemberPagination
     {

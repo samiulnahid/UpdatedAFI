@@ -774,20 +774,22 @@ namespace AFI.Feature.SitecoreSend.Repositories
         //}
 
 
-        public void InserAFIMoosendtLog(string data, Enum name)
+        public void InserAFIMoosendtLog(string data, Enum name, string jsonBody, string responseContext)
         {
             using (SqlConnection db = new SqlConnection(AFIConnectionString))
             {
                 db.Open();
                 try
                 {
-                    var sql = "INSERT INTO [dbo].[AFIMoosend_Log] ([CreatedTime],[Logtype],[LogDescription]) VALUES(@CreatedTime, @Logtype, @LogDescription)";
+                    var sql = "INSERT INTO [dbo].[AFIMoosend_Log] ([CreatedTime],[Logtype],[LogDescription],[RequestBody],[ResponseBody]) VALUES(@CreatedTime, @Logtype, @LogDescription,@RequestBody ,@ResponseBody)";
 
                     using (SqlCommand cmd = new SqlCommand(sql, db))
                     {
                         cmd.Parameters.AddWithValue("@CreatedTime", DateTime.Now);
                         cmd.Parameters.AddWithValue("@Logtype", name.ToString());
-                        cmd.Parameters.AddWithValue("@LogDescription", data);
+                        cmd.Parameters.AddWithValue("@LogDescription", data.ToString());
+                        cmd.Parameters.AddWithValue("@RequestBody", jsonBody.ToString());
+                        cmd.Parameters.AddWithValue("@ResponseBody", responseContext.ToString());
 
 
                         cmd.ExecuteNonQuery();
