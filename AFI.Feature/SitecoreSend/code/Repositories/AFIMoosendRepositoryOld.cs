@@ -4,7 +4,6 @@ using Sitecore.Diagnostics;
 using Sitecore.Shell.Framework.Commands;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
@@ -13,18 +12,18 @@ using System.Web;
 
 namespace AFI.Feature.SitecoreSend.Repositories
 {
-    public class AFIMoosendRepository
+    public class AFIMoosendRepositoryOld
     {
 
         private readonly string AFIConnectionString;
 
-        public AFIMoosendRepository()
+        public AFIMoosendRepositoryOld()
         {
             AFIConnectionString = ConfigurationManager.ConnectionStrings["AFIDB"].ConnectionString;
         }
 
         #region Email List Subscribers
-        public int InsertNewEmailListData(EmailListData data)
+        public int InsertEmailListData(EmailListData data)
         {
             int insertedId = 0; // Initialize the variable to hold the inserted ID
             using (SqlConnection db = new SqlConnection(AFIConnectionString))
@@ -59,44 +58,7 @@ namespace AFI.Feature.SitecoreSend.Repositories
             return insertedId; // Return the inserted ID
         }
 
-        public EmailListData InsertEmailListData(EmailListData data)
-        {
-            EmailListData emailListData = new EmailListData();
-            int insertedId = 0; // Initialize the variable to hold the inserted ID
-            using (SqlConnection db = new SqlConnection(AFIConnectionString))
-            {
-                db.Open();
-                try
-                {
-                    var sql = "INSERT INTO [AFIMooSend_EmailList] ([ListName],[ListId],[SecurityKey],[CreatedBy],[CreatedDate]) OUTPUT INSERTED.Id VALUES(@ListName, @ListId, @SecurityKey, @CreatedBy, @CreatedDate)";
-
-                    using (SqlCommand cmd = new SqlCommand(sql, db))
-                    {
-                        cmd.Parameters.AddWithValue("@ListName", data.ListName);
-                        cmd.Parameters.AddWithValue("@ListId", data.ListId);
-                        cmd.Parameters.AddWithValue("@SecurityKey", (object)data.SecurityKey?? DBNull.Value); 
-                        cmd.Parameters.AddWithValue("@CreatedBy", data.CreatedBy);
-                        cmd.Parameters.AddWithValue("@CreatedDate", DateTime.Now);
-
-                        // Execute the query and retrieve the inserted ID
-                        insertedId = (int)cmd.ExecuteScalar();
-
-                        emailListData = GetEmailListDataById(insertedId);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log.Error("Error while attempting to insert EmailListData.", ex, this);
-                    // You may want to handle or log the exception accordingly
-                }
-                finally
-                {
-                    db.Close();
-                }
-            }
-            return emailListData; // Return the inserted ID
-        }
-
+       
         public List<EmailListData> GetAllEmailListData()
         {
             List<EmailListData> emailListDataList = new List<EmailListData>();
@@ -845,22 +807,19 @@ namespace AFI.Feature.SitecoreSend.Repositories
         }
         #endregion
 
+
         #region AFI Vote
 
-        public List<ProxyVoteMember> GetAllVotingMemberData() 
+        public List<ProxyVoteMember> GetAllVotingMemberData()
         {
             List<ProxyVoteMember> members = new List<ProxyVoteMember>();
 
             using (SqlConnection connection = new SqlConnection(AFIConnectionString))
             {
-                string query = $@" SELECT m.* 
-FROM [dbo].[Member] m
-WHERE m.VotingPeriodId = (
-    SELECT TOP 1 VotingPeriodId 
-    FROM dbo.VotingPeriod 
-    ORDER BY VotingPeriodId DESC
-)
-AND (m.EmailAddress IS NOT NULL AND m.EmailAddress <> '');";
+                string query = $@" SELECT m.*
+                                FROM [dbo].[Member] m
+                                INNER JOIN dbo.VotingPeriod v ON m.VotingPeriodId = v.VotingPeriodId
+                                WHERE v.VotingPeriodId = (SELECT TOP 1 VotingPeriodId FROM dbo.VotingPeriod ORDER BY VotingPeriodId DESC)"; 
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -879,12 +838,12 @@ AND (m.EmailAddress IS NOT NULL AND m.EmailAddress <> '');";
 
             return members;
         }
-
+    
         public string GetVotingPeriodTitleById(int votingPeriodId)
         {
             using (SqlConnection connection = new SqlConnection(AFIConnectionString))
             {
-                string query = @"SELECT Title FROM [ProxyVote].[VotingPeriod] WHERE VotingPeriodId = @VotingPeriodId";
+                string query = @"SELECT Title FROM [dbo].[VotingPeriod] WHERE VotingPeriodId = @VotingPeriodId";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -915,8 +874,6 @@ AND (m.EmailAddress IS NOT NULL AND m.EmailAddress <> '');";
             }
         }
 
-
-
         #endregion
 
 
@@ -936,12 +893,6 @@ AND (m.EmailAddress IS NOT NULL AND m.EmailAddress <> '');";
                 // Iterate over each property in the object and set its value based on the column in the reader
                 foreach (PropertyInfo property in typeof(T).GetProperties())
                 {
-                    // Skip properties with NotMapped attribute
-                    if (property.GetCustomAttributes(typeof(NotMappedAttribute), false).Any())
-                    {
-                        continue;
-                    }
-
                     if (!reader.IsDBNull(reader.GetOrdinal(property.Name)))
                     {
                         object value = reader[property.Name];

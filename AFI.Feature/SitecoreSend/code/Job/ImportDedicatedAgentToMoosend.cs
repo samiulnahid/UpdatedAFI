@@ -141,40 +141,7 @@ namespace AFI.Feature.SitecoreSend.Job
 
                         currentIndex += batchSize;
                     }
-                    // Multiple
-                    //var subscribers = new List<object>();
-
-                    //foreach (MarketingContact item in dataList)
-                    //{
-                    //    var customFields = new List<string>
-                    //    {
-                    //        $"MemberNumber={item.MemberNumber}",
-                    //        $"FirstName={item.FirstName}",
-                    //        $"LastName={item.LastName}",
-                    //        $"Salutation={item.Salutation}",
-                    //        $"AgentName={item.AgentName}",
-                    //        $"AgentEmail={item.AgentEmail}",
-                    //        $"AgentPhone={item.AgentPhone}",
-                    //        $"AgentExt={item.AgentExt}",
-                    //    };
-
-                    //    var subscriber = new
-                    //    {
-                    //        Name = $"{item.FirstName} {item.LastName}",
-                    //        Email = item.Email,
-                    //        CustomFields = customFields
-                    //    };
-
-                    //    subscribers.Add(subscriber);
-                    //}
-
-                    //var jsonContent = JsonConvert.SerializeObject(new
-                    //{
-                    //    HasExternalDoubleOptIn = true,
-                    //    Subscribers = subscribers
-                    //});
-
-                    //var _postList = _multipleDataAsync(jsonContent);
+                    
 
                     Sitecore.Diagnostics.Log.Info("AFI Import Contact Load completed  ", this);
                 }

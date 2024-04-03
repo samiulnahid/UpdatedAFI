@@ -16,26 +16,22 @@ using System.Web.UI.WebControls;
 using Sitecore.Data;
 using System.Web.Mvc;
 using Newtonsoft.Json.Linq;
-using AFI.Feature.QuoteForm.Areas.AFIWEB.Repository;
-using AFI.Feature.QuoteForm.Areas.AFIWEB.Models;
-using static AFI.Feature.QuoteForm.Areas.AFIWEB.Constant;
+using AFI.Feature.SitecoreSend.Repositories;
+using AFI.Feature.SitecoreSend.Models;
+using static AFI.Feature.SitecoreSend.Constant;
 
-namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Job
+namespace AFI.Feature.SitecoreSend.Job
 {
-    public class SyncVoteMemberToMoosend
+    public class SyncVoteMemberToMoosendCopy
     {
 
         public static string api_key = string.Empty;
         public static string api_url = string.Empty;
 
         Service service = new Service();
+        AFIMoosendRepository _AFIReportRepository = new AFIMoosendRepository();
 
-        private readonly IAFIReportRepository _AFIReportRepository;
-        public SyncVoteMemberToMoosend(IAFIReportRepository AFIReportRepository)
-        {
-            _AFIReportRepository = AFIReportRepository;
-        }
-       
+   
         public void MoosendSettingItem()
         {
             Item moosendSetting = Sitecore.Context.Database.GetItem(Constant.MoosendSetting.MoosendSettingId);
@@ -66,7 +62,6 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Job
         {
             MoosendSettingItem();
 
-          
             var dataList = _AFIReportRepository.GetAllVotingMemberData();// Load All Member Data
             var groupedItems = dataList.GroupBy(item => item.VotingPeriodId);
 
@@ -74,15 +69,15 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Job
             {
                 string ResponseMessage = "";
 
-                var votingPeriod = _AFIReportRepository.GetVotingPeriodById(group.Key);
+                var votingPeriodTitle = _AFIReportRepository.GetVotingPeriodTitleById(group.Key);
                 var listId = "";
-                var exEmailListData = _AFIReportRepository.GetEmailListDataByVotingPeriod(votingPeriod.Title); 
+                var exEmailListData = _AFIReportRepository.GetEmailListDataBylistName(votingPeriodTitle); 
 
                 if (exEmailListData == null)
                 {
                     var data = new
                     {
-                        Name = votingPeriod.Title,
+                        Name = votingPeriodTitle,
                         ConfirmationPage = string.Empty,
                         RedirectAfterUnsubscribePage = string.Empty
                     };
@@ -93,7 +88,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Job
                     if (!string.IsNullOrEmpty(response.Context))
                     {
                         EmailListData emailListData = new EmailListData();
-                        emailListData.ListName = votingPeriod.Title;
+                        emailListData.ListName = votingPeriodTitle;
                         emailListData.ListId = response.Context;
                         emailListData.CreatedBy = "System";
                         emailListData.CreatedDate = DateTime.Now;
@@ -145,17 +140,39 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Job
                             Business = item.Business,
                             LongTermCare = item.LongTermCare,
                             MailFinancials = item.MailFinancials,
-                            EmailFinancials = item.EmailFinancials
+                            EmailFinancials = item.EmailFinancials,
+
+                            IsEmailUpdated = item.IsEmailUpdated,
+                            Prefix = item.Prefix ?? string.Empty,
+                            Salutation = item.Salutation ?? string.Empty,
+                            InsuredFirstName = item.InsuredFirstName ?? string.Empty,
+                            InsuredLastName = item.InsuredLastName ?? string.Empty,
+                            ClientType = item.ClientType ?? string.Empty,
+                            ServiceStatus = item.ServiceStatus ?? string.Empty,
+                            MailingAddressLine1 = item.MailingAddressLine1 ?? string.Empty,
+                            MailingAddressLine2 = item.MailingAddressLine2 ?? string.Empty,
+                            MailingCityName = item.MailingCityName ?? string.Empty,
+                            MailingCountyName = item.MailingCountyName ?? string.Empty,
+                            MailingStateAbbreviation = item.MailingStateAbbreviation ?? string.Empty,
+                            MailingZip = item.MailingZip ?? string.Empty,
+                            MailingCountry = item.MailingCountry ?? string.Empty,
+                            MembershipDate = item.MembershipDate ?? string.Empty,
+                            YearsAsMember = item.YearsAsMember ?? string.Empty,
+                            Gender = item.Gender ?? string.Empty,
+                            Deceased = item.Deceased,
+                            CreateDate = item.CreateDate
 
                         });
 
                         string name = (item.FullName) ?? string.Empty;
                         string email = (item.EmailAddress) ?? string.Empty;
+                        string mobile = string.Empty;
 
                         JObject json = JObject.FromObject(new
                         {
                             Email = email,
                             Name = name,
+                            Mobile = mobile ,
                             CustomFields = jsonData
 
                         });
@@ -171,7 +188,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Job
                     {
                         string KeyResponseMessage = "";
                         Console.WriteLine(key);
-                        if (key != null && !new[] { "Email", "Name", "CustomFields" }.Contains(key.ToString()))
+                        if (key != null && !new[] { "Email", "Name", "Mobile", "CustomFields" }.Contains(key.ToString()))
                         {
                             var data = new
                             {
@@ -201,8 +218,8 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Job
 
             foreach (var group in groupedItems)
             {
-                var votingPeriod = _AFIReportRepository.GetVotingPeriodById(group.Key);
-                EmailListData emailListData = _AFIReportRepository.GetEmailListDataByVotingPeriod(votingPeriod.Title);
+                var votingPeriodTitle = _AFIReportRepository.GetVotingPeriodTitleById(group.Key);
+                EmailListData emailListData = _AFIReportRepository.GetEmailListDataBylistName(votingPeriodTitle);
 
                 foreach (var item in group)
                 {
@@ -215,8 +232,8 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Job
                         JObject jsonData = JObject.FromObject(new
                         {
                             MemberNumber = item.MemberNumber,
-                            PIN = item.PIN,
-                            VotingPeriodId = item.VotingPeriodId,
+                            PIN = item.PIN ?? string.Empty,
+                            VotingPeriodId = item.VotingPeriodId ,
                             ResidentialOccupied = item.ResidentialOccupied,
                             ResidentialDwelling = item.ResidentialDwelling,
                             Renters = item.Renters,
@@ -237,17 +254,39 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Job
                             Business = item.Business,
                             LongTermCare = item.LongTermCare,
                             MailFinancials = item.MailFinancials,
-                            EmailFinancials = item.EmailFinancials
+                            EmailFinancials = item.EmailFinancials,
+
+                            IsEmailUpdated = item.IsEmailUpdated,
+                            Prefix = item.Prefix ?? string.Empty,
+                            Salutation = item.Salutation ?? string.Empty,
+                            InsuredFirstName = item.InsuredFirstName ?? string.Empty,
+                            InsuredLastName = item.InsuredLastName ?? string.Empty,
+                            ClientType = item.ClientType ?? string.Empty,
+                            ServiceStatus = item.ServiceStatus ?? string.Empty,
+                            MailingAddressLine1 = item.MailingAddressLine1 ?? string.Empty,
+                            MailingAddressLine2 = item.MailingAddressLine2 ?? string.Empty,
+                            MailingCityName = item.MailingCityName ?? string.Empty,
+                            MailingCountyName = item.MailingCountyName ?? string.Empty,
+                            MailingStateAbbreviation = item.MailingStateAbbreviation ?? string.Empty,
+                            MailingZip = item.MailingZip ?? string.Empty,
+                            MailingCountry = item.MailingCountry ?? string.Empty,
+                            MembershipDate = item.MembershipDate ?? string.Empty,
+                            YearsAsMember = item.YearsAsMember ?? string.Empty,
+                            Gender = item.Gender ?? string.Empty,
+                            Deceased = item.Deceased,
+                            CreateDate = item.CreateDate
 
                         });
 
                         string name = (item.FullName) ?? string.Empty;
                         string email = (item.EmailAddress) ?? string.Empty;
+                        string mobile = string.Empty;
 
                         JObject json = JObject.FromObject(new
                         {
                             Email = email,
                             Name = name,
+                            Mobile = mobile,
                             CustomFields = jsonData
 
                         });
@@ -293,6 +332,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Job
             {
                 Name = currentData.Name,
                 Email = currentData.Email,
+                Mobile = currentData.Mobile,
                 HasExternalDoubleOptIn = hasExternalDoubleOptIn,
                 CustomFields = customFields
             };

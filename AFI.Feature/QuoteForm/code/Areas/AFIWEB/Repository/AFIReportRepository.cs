@@ -12,6 +12,8 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Diagnostics;
 using Sitecore.Diagnostics;
+using AFI.Feature.Data.Models;
+using AFI.Feature.Data.Repositories;
 
 namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Repository
 {
@@ -70,20 +72,24 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Repository
         bool GetCandidateVoteBallotStatus(string voatingPeriodId,string MemberId);
         string GetMemberEmailByMemberNumberAndPIN( string MemberNumber, string PIN);
         object GetTotalVoteCountDetailsForResult(string voatingPeriodId = "");
-        IEnumerable<ProxyVoteMember> GetAllVotingMemberDatabyVotingPeriodId(string votingPeriodId = "");
+        IEnumerable<ProxyVoteMember> GetAllVotingMemberData();
         EmailListData GetEmailListDataByVotingPeriod(string ListName);
         int InsertEmailListData(EmailListData EmailListData);
         IEnumerable<VoteMember> GetAllVotingMemberOnLatestVotingPeriod(int page, int pageSize);
+        object GetMemberInfoByMemberNumber(string MemberNumber);
+        void SubmitReferralForm(ReferralModel referralModel);
     }
 
     public class AFIReportRepository : IAFIReportRepository
     {
 
         private readonly IDbConnectionProvider _dbConnectionProvider;
+        private readonly IReferralRepository _referralRepository;
 
-        public AFIReportRepository(IDbConnectionProvider dbConnectionProvider)
+        public AFIReportRepository(IDbConnectionProvider dbConnectionProvider, IReferralRepository referralRepository)
         {
             _dbConnectionProvider = dbConnectionProvider;
+            _referralRepository = referralRepository;
         }
         public IEnumerable<ReportView> GetAll()
         {
@@ -1911,19 +1917,19 @@ GROUP BY
         }
         }
 
-        public IEnumerable<ProxyVoteMember> GetAllVotingMemberDatabyVotingPeriodId(string votingPeriodId)
+        public IEnumerable<ProxyVoteMember> GetAllVotingMemberData()
         {
             using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
             {
-                //   var sql = @"SELECT c.*, v.Title AS VotingPeriodName 
-                //FROM [dbo].[Candidate] c 
-                //INNER JOIN [dbo].[VotingPeriod] v ON v.VotingPeriodId = c.VotingPeriodId 
+
+                //var sql = $@"SELECT *
+                //            FROM [dbo].[Member]
+                //            WHERE EmailAddress IS NOT NULL 
+                //              AND EmailAddress <> '' 
+                //              AND votingPeriodId = {votingPeriodId}";
                 //ORDER BY c.VotingPeriodId DESC";
                 var sql = $@"SELECT *
-                            FROM [dbo].[Member]
-                            WHERE EmailAddress IS NOT NULL 
-                              AND EmailAddress <> '' 
-                              AND votingPeriodId = {votingPeriodId}";
+                            FROM [dbo].[Member]";
                 return db.Query<ProxyVoteMember>(sql);
             }
 
@@ -1957,7 +1963,7 @@ GROUP BY
         {
             using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
             {
-                var sql = @"SELECT TOP 1 EmailAddress FROM [dbo].[Member] WHERE MemberNumber = @MemberNumber AND PIN = @PIN AND VotingPeriodId = @VotingPeriodId";
+                var sql = @"SELECT TOP 1 EmailAddress FROM [dbo].[Member] WHERE MemberNumber = @MemberNumber AND PIN = @PIN AND VotingPeriodId = @VotingPeriodId ORDER BY MemberId DESC;";
                 var query_Vp = "SELECT TOP 1 VotingPeriodId  FROM dbo.VotingPeriod WHERE [Start] <= GETDATE() AND [End] >= GETDATE() ORDER BY VotingPeriodId DESC";
 
                 var VotingPeriodId = db.QueryFirstOrDefault<string>(query_Vp);
@@ -1972,7 +1978,30 @@ GROUP BY
                 return email;
             }
         }
+        public object GetMemberInfoByMemberNumber(string MemberNumber)
+        {
+            using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
+            {
+                var sql = @"
+            SELECT TOP 1 EmailAddress, PIN, FullName
+            FROM [dbo].[Member]
+            WHERE MemberNumber = @MemberNumber
+            AND VotingPeriodId = (
+                SELECT TOP 1 VotingPeriodId
+                FROM dbo.VotingPeriod
+                WHERE [Start] <= GETDATE()
+                AND [End] >= GETDATE()
+                ORDER BY VotingPeriodId DESC
+            )
+            ORDER BY MemberId DESC;";
 
-
+                var parameters = new { MemberNumber };
+                return db.Query(sql, parameters).FirstOrDefault();
+            }
+        }
+        public void SubmitReferralForm(ReferralModel form)
+        {
+            _referralRepository.InsertReferral(form.ToDataModel());
+        }
     }
 }

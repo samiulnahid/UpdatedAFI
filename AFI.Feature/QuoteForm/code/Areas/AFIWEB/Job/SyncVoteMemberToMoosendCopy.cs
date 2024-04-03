@@ -22,7 +22,7 @@ using static AFI.Feature.QuoteForm.Areas.AFIWEB.Constant;
 
 namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Job
 {
-    public class SyncVoteMemberToMoosend
+    public class SyncVoteMemberToMoosendCopy
     {
 
         public static string api_key = string.Empty;
@@ -31,7 +31,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Job
         Service service = new Service();
 
         private readonly IAFIReportRepository _AFIReportRepository;
-        public SyncVoteMemberToMoosend(IAFIReportRepository AFIReportRepository)
+        public SyncVoteMemberToMoosendCopy(IAFIReportRepository AFIReportRepository)
         {
             _AFIReportRepository = AFIReportRepository;
         }
@@ -66,7 +66,6 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Job
         {
             MoosendSettingItem();
 
-          
             var dataList = _AFIReportRepository.GetAllVotingMemberData();// Load All Member Data
             var groupedItems = dataList.GroupBy(item => item.VotingPeriodId);
 

@@ -17,6 +17,7 @@ using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using static AFI.Feature.SitecoreSend.Constant;
+using AFI.Feature.SitecoreSend.Job;
 
 namespace AFI.Feature.SitecoreSend.Controllers
 {
@@ -25,6 +26,7 @@ namespace AFI.Feature.SitecoreSend.Controllers
         public static string api_key = string.Empty;
         public static string api_url = string.Empty;
         AFIMoosendRepository repository = new AFIMoosendRepository();
+        SyncVoteMemberToMoosend _syncVoteMemberToMoosend = new SyncVoteMemberToMoosend();
 
         public void MoosendSettingItem()
         {
@@ -704,7 +706,7 @@ namespace AFI.Feature.SitecoreSend.Controllers
                 ListId = string.Empty
 
             };
-            insertedId = repository.InsertEmailListData(emailList);
+            insertedId = repository.InsertNewEmailListData(emailList);
             if (insertedId > 0)
             {
                 foreach (var subscriber in data.Subscribers)
@@ -737,6 +739,38 @@ namespace AFI.Feature.SitecoreSend.Controllers
 
 
         }
+        #endregion
+
+
+        #region AFI Vote
+        public JsonResult SyncVoteMemberToMoosend(string votingPeriodId = "")
+        {
+            try
+            {
+                bool MoosendResponse = _syncVoteMemberToMoosend.Execute();
+
+                if (MoosendResponse)
+                {
+                    var response = new { MoosendSuccess = true, Message = $"Custom Field Created Successfully" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var response = new { MoosendSuccess = false, Message = $"Response Error !" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                var response = new { Success = false, Message = $"Error Insert Item Message " + ex.InnerException };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
         #endregion
     }
 }

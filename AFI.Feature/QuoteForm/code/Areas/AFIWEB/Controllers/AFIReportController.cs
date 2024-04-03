@@ -27,7 +27,7 @@ using Org.BouncyCastle.Crypto;
 using context = System.Web.HttpContext;
 using System.Threading.Tasks;
 using AFI.Feature.WebQuoteService;
-
+using AFI.Feature.Data.Models;
 using System.Globalization;
 using Sitecore.Data.Items;
 using System.Net;
@@ -1288,7 +1288,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
         {
             var sb = new StringBuilder();
             var properties = typeof(T).GetProperties()
-                                       .Where(p => p.Name != "MemberId" && p.Name != "CandidateId"); // Exclude Id and UpdatedTime
+                                       .Where(p => p.Name != "MemberId" && p.Name != "CandidateId" && p.Name != "VotingPeriodId" && p.Name != "TotalCount" && p.Name != "IsActive" && p.Name != "IsEmailUpdated"); // Exclude Id and UpdatedTime
 
             // Write headers
             sb.AppendLine(string.Join(",", properties.Select(p => p.Name)));
@@ -1619,8 +1619,6 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
                 return Json(finalJson, JsonRequestBehavior.AllowGet);
             }
         }
-
-
 
         [HttpPost]
         public JsonResult AddCandidateData(VoteCandidate votingPeriod)
@@ -2051,7 +2049,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
         {
             try
             {
-                bool MoosendResponse = _syncVoteMemberToMoosend.Execute(votingPeriodId);
+                bool MoosendResponse = _syncVoteMemberToMoosend.Execute();
 
                 if (MoosendResponse)
                 {
@@ -2130,5 +2128,54 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
                 return File(errorBytes, "text/csv");
             }
         }
+
+        public JsonResult GetMemberInfoByMemberNumber(string memberNumber = "")
+        {
+            try
+            {
+                var MemberInfo = _AFIReportRepository.GetMemberInfoByMemberNumber(memberNumber);
+
+                if (MemberInfo == null )
+                {
+                    var response = new { Success = false, Message = $"No Data Found" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+                
+                else
+                {
+                    
+                    string finalJson = JsonConvert.SerializeObject(MemberInfo);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                var response = new { Success = false, Message = $"Error Insert Item Message " + ex.InnerException };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult SubmitReferralForm(ReferralModel referralModel)
+        {
+            try
+            {
+
+                _formRepository.SubmitReferralForm(referralModel);
+
+                var response = new { Success = true, Message = $"Data Insert Success." };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+               
+            }
+            catch (Exception ex)
+            {
+                var response = new { Success = false, Message = $"Error Insert Item Message " + ex.InnerException };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        
     }
 }

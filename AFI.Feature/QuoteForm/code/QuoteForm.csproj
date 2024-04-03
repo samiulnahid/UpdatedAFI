@@ -498,6 +498,7 @@
     <Compile Include="Areas\AFIWEB\Helpers\CryptoService.cs" />
     <Compile Include="Areas\AFIWEB\Helpers\Strings.cs" />
     <Compile Include="Areas\AFIWEB\Job\Service.cs" />
+    <Compile Include="Areas\AFIWEB\Job\SyncVoteMemberToMoosendCopy.cs" />
     <Compile Include="Areas\AFIWEB\Job\SyncVoteMemberToMoosend.cs" />
     <Compile Include="Areas\AFIWEB\Job\SurveyClaimMail.cs" />
     <Compile Include="Areas\AFIWEB\ModelBuilders\ContactUsEmailBuilder.cs" />
