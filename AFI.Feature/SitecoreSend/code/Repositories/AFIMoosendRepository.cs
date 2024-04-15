@@ -737,7 +737,43 @@ namespace AFI.Feature.SitecoreSend.Repositories
 
             using (SqlConnection connection = new SqlConnection(AFIConnectionString))
             {
-                string query = "Select * From [AFIMoosend_ListSubscriber] where IsSynced = @IsSynced";
+                string query = "Select * From [AFIMoosend_ListSubscriber] where IsSynced = @IsSynced order by Id desc";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@IsSynced", isSynced);
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            MoosendListSubscriber data = RepositoryHelper.MapReaderToObject<MoosendListSubscriber>(reader);
+                            subscribers.Add(data);
+                        }
+                    }
+                }
+            }
+
+            return subscribers;
+        }
+
+        public List<MoosendListSubscriber> GetAllListSubscriberGroupByListName(bool isSynced)
+        {
+            List<MoosendListSubscriber> subscribers = new List<MoosendListSubscriber>();
+
+            using (SqlConnection connection = new SqlConnection(AFIConnectionString))
+            {
+                string query = @"SELECT *
+                                FROM[AFIMoosend_ListSubscriber] AS ls
+                                WHERE ls.IsSynced = 'false'
+                                AND ls.Id IN(
+                                    SELECT MAX(Id)
+                                    FROM [AFIMoosend_ListSubscriber]
+                                    WHERE IsSynced = 'false'
+                                    GROUP BY ListName
+                                )
+                                ORDER BY ls.Id DESC; ";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
