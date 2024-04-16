@@ -213,6 +213,7 @@
     <Compile Include="Job\ImportToMoosendTest.cs" />
     <Compile Include="Job\Service.cs" />
     <Compile Include="Job\SyncListNameAndCustomFieldAFIDBtoMoosend.cs" />
+    <Compile Include="Job\SyncSubscribersAFIDBtoMoosend_pagination.cs" />
     <Compile Include="Job\SyncSubscribersAFIDBtoMoosend.cs" />
     <Compile Include="Job\SubscribersSyncToMoosend.cs" />
     <Compile Include="Job\SyncVoteMemberToMoosendCopy.cs" />

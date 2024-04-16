@@ -737,11 +737,44 @@ namespace AFI.Feature.SitecoreSend.Repositories
 
             using (SqlConnection connection = new SqlConnection(AFIConnectionString))
             {
-                string query = "Select * From [AFIMoosend_ListSubscriber] where IsSynced = @IsSynced order by Id desc";
+                string query = "Select * From [AFIMoosend_ListSubscriber] where IsSynced = @IsSynced";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@IsSynced", isSynced);
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            MoosendListSubscriber data = RepositoryHelper.MapReaderToObject<MoosendListSubscriber>(reader);
+                            subscribers.Add(data);
+                        }
+                    }
+                }
+            }
+
+            return subscribers;
+        }
+
+        public List<MoosendListSubscriber> GetFilterSubscriberByIsSynced(bool isSynced )
+        {
+            //int ofsetItem = (page - 1) * pageSize;
+            int ofsetItem = 0;
+            int pageSize = 50;
+
+            List<MoosendListSubscriber> subscribers = new List<MoosendListSubscriber>();
+
+            using (SqlConnection connection = new SqlConnection(AFIConnectionString))
+            {
+                string query = "select * from [AFIMoosend_ListSubscriber] WHERE IsSynced = @IsSynced ORDER BY Id OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY ;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@IsSynced", isSynced);
+                    command.Parameters.AddWithValue("@Offset", ofsetItem);
+                    command.Parameters.AddWithValue("@PageSize", pageSize);
                     connection.Open();
 
                     using (SqlDataReader reader = command.ExecuteReader())
