@@ -64,7 +64,7 @@ namespace AFI.Feature.SitecoreSend.Job
 
             Sitecore.Diagnostics.Log.Info("AFI Sync Contact Sitecore scheduled task is being run!", this);
 
-            List<MoosendListSubscriber> dataList = repository.GetAllListSubscriberByIsSynced(false);// Load All IsSynced false data
+            List<MoosendListSubscriber> dataList = repository.GetAllListSubscriberGroupByListName(false);// Load All IsSynced false data
           //  var groupedItems = dataList.GroupBy(item => item.ListName);
 
             foreach (var group in dataList)
