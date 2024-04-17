@@ -22,6 +22,8 @@ using Newtonsoft.Json;
 using AFI.Feature.QuoteForm.Areas.AFIWEB.Helpers.Configurations;
 using Sitecore.Data.Items;
 using Sitecore.Data.Fields;
+using System.Net;
+using Sitecore.Data;
 
 namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
 {
@@ -374,5 +376,61 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
             return View("/Views/AFI/Forms/AfiEmailLog.cshtml", data);
         }
 
+
+        [EnableCors]
+        [HttpPost]
+        public JsonResult ProcessJsonArray(string urlList)
+        {
+            
+            List<string> urls = urlList.Split(',').Select(url => url.Trim()).ToList();
+            List<string> modifiedUrls = new List<string>();
+
+            foreach (var url in urls)
+            {
+                bool isValidUrl = false;
+
+                try
+                {
+                    if (url.Contains("link.aspx"))
+                    {
+                        string itemId = url.Split(new[] { "id=" }, StringSplitOptions.RemoveEmptyEntries)[1].Split('&')[0];
+                        // Ensure that the item ID is in the correct format (GUID)
+                        if (Guid.TryParseExact(itemId, "N", out Guid itemIdGuid))
+                        {
+                            // Attempt to retrieve the Sitecore item
+                            Item item = Sitecore.Context.Database.GetItem(new ID(itemIdGuid));
+
+                            // Check if the item is found
+                            isValidUrl = (item != null);
+                        }
+                    }
+                    else
+                    {
+                        isValidUrl = Uri.TryCreate(url, UriKind.Absolute, out Uri uriResult) &&
+                                        (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+
+                        if (isValidUrl)
+                        {
+                            try
+                            {
+                                IPHostEntry hostEntry = Dns.GetHostEntry(uriResult.Host);
+                                isValidUrl = hostEntry.AddressList.Length > 0;
+                            }
+                            catch (Exception)
+                            {
+                                isValidUrl = false; // Host resolution failed, mark URL as invalid
+                            }
+                        }
+                    }
+                    modifiedUrls.Add(new { PostURl = url, ValidURL = isValidUrl }.ToString());
+                }
+                catch (Exception ex)
+                {
+                    modifiedUrls.Add(new { PostURl = url, Error = ex.Message }.ToString());
+                }
+            }
+
+            return Json(modifiedUrls);
+        }
     }
 }

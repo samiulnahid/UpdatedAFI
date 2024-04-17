@@ -496,6 +496,7 @@
     <Compile Include="Areas\AFIWEB\Enums\InsuranceTypes.cs" />
     <Compile Include="Areas\AFIWEB\Helpers\Configurations.cs" />
     <Compile Include="Areas\AFIWEB\Helpers\CryptoService.cs" />
+    <Compile Include="Areas\AFIWEB\Helpers\EnableCorsAttribute.cs" />
     <Compile Include="Areas\AFIWEB\Helpers\Strings.cs" />
     <Compile Include="Areas\AFIWEB\Job\Service.cs" />
     <Compile Include="Areas\AFIWEB\Job\SyncVoteMemberToMoosendCopy.cs" />
