@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 
 namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Models
 {
@@ -12,6 +14,9 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Models
         public int CandidateId { get; set; }
         public int VotingPeriodId { get; set; }
         public string Name { get; set; }
+        public string ImagePath { get; set; }
+
+        [AllowHtml]
         public string Content { get; set; }
 
         [NotMapped]
@@ -19,6 +24,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Models
         {
             get; set;
         }
+        public HttpPostedFileBase Image { get; set; }
         public bool IsActive { get; set; }
     }
 }

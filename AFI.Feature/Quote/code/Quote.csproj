@@ -306,6 +306,7 @@
     <Compile Include="Helpers\Enums.cs" />
     <Compile Include="Helpers\Links.cs" />
     <Compile Include="Helpers\Strings.cs" />
+    <Compile Include="Job\CreateCsvAFIIpLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -536,6 +536,7 @@
     <Compile Include="Areas\AFIWEB\Models\ProxyVoteVotingPeriod.cs" />
     <Compile Include="Areas\AFIWEB\Models\QHCSVReport.cs" />
     <Compile Include="Areas\AFIWEB\Models\QHReport.cs" />
+    <Compile Include="Areas\AFIWEB\Models\RadioButtonSubmitAction.cs" />
     <Compile Include="Areas\AFIWEB\Models\RadioListViewModel.cs" />
     <Compile Include="Areas\AFIWEB\Models\ReCaptchaVerifyResponse.cs" />
     <Compile Include="Areas\AFIWEB\Models\ReferralFormView.cs" />

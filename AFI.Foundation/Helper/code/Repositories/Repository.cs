@@ -347,7 +347,72 @@ namespace AFI.Foundation.Helper.Repositories
 
             return null; // Return null if not found
         }
-       
+
+        public List<IpLog> GetUniqueIPAddressCount(string country = null, DateTime? fromDate = null, DateTime? toDate = null)
+        {
+
+            List<IpLog> ipAddressInfos = new List<IpLog>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT IP,Country,City,State, PostalCode, COUNT(*) AS TotalCount FROM AFI_IP_Log WHERE 1 = 1";
+
+                if (!string.IsNullOrEmpty(country))
+                {
+                    query += " AND Country = @Country";
+                }
+
+                if (fromDate != null)
+                {
+                    query += " AND CONVERT(date, AddedDate) >= @FromDate"; // Convert AddedDate to date only
+                }
+
+                if (toDate != null)
+                {
+                    query += " AND CONVERT(date, AddedDate) <= @ToDate"; // Convert AddedDate to date only
+                }
+
+                query += " GROUP BY IP,Country,City,State, PostalCode Order By TotalCount DESC;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    if (!string.IsNullOrEmpty(country))
+                    {
+                        command.Parameters.AddWithValue("@Country", country);
+                    }
+
+                    if (fromDate != null)
+                    {
+                        command.Parameters.AddWithValue("@FromDate", fromDate.Value.Date); // Use Date property to get only the date
+                    }
+
+                    if (toDate != null)
+                    {
+                        command.Parameters.AddWithValue("@ToDate", toDate.Value.Date); // Use Date property to get only the date
+                    }
+
+
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        IpLog data = new IpLog();
+                        data.IP = reader["IP"].ToString();
+                        data.Country = reader["Country"].ToString();
+                        data.City = reader["City"].ToString();
+                        data.State = reader["State"].ToString();
+                        data.PostalCode = reader["PostalCode"].ToString();
+                        data.TotalCount = reader["TotalCount"].ToString();
+                        ipAddressInfos.Add(data);
+                    }
+                }
+            }
+
+            return ipAddressInfos;
+
+
+        }
         #endregion
         public static class RepositoryHelper
         {

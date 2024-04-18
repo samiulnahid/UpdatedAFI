@@ -37,6 +37,9 @@ using Sitecore.Data;
 using Sitecore.Configuration;
 using Sitecore.Analytics.Data.Bulk;
 using AFI.Feature.QuoteForm.Areas.AFIWEB.Job;
+using System.IO;
+using Sitecore.ApplicationCenter.Applications;
+using System.Web;
 
 namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
 {
@@ -1621,16 +1624,10 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddCandidateData(VoteCandidate votingPeriod)
+        public JsonResult AddCandidateData2(VoteCandidate votingPeriod)
         {
             try
             {
-                //VoteCandidate votingPeriod = new VoteCandidate
-                //{
-                //    VotingPeriodId = int.Parse(votingPeriodId),
-                //    Name = name,
-                //    Content = content
-                //};
 
                 int count = _AFIReportRepository.CreateCandidateData(votingPeriod);
 
@@ -1664,18 +1661,101 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
 
         }
 
+     
+
+        [HttpPost, ValidateInput(false)]
+        public JsonResult AddCandidateData(VoteCandidate votingPeriod)
+        {
+            try
+            {
+                //if (votingPeriod.Image != null && votingPeriod.Image.ContentLength > 0)
+                //{
+
+                //    string fileName = Path.GetFileName(votingPeriod.Image.FileName);
+                //    string fileExtension = Path.GetExtension(fileName).ToLower();
+                //    // Define a list of allowed file extensions
+                //    List<string> allowedExtensions = new List<string> { ".jpg", ".jpeg", ".png" };
+
+                //    if (!allowedExtensions.Contains(fileExtension))
+                //    {
+                //        var response = new { Success = false, Message = "Invalid file type. Only .jpg, .jpeg, and .png files are allowed." };
+                //        string finalJson = JsonConvert.SerializeObject(response);
+                //        return Json(finalJson, JsonRequestBehavior.AllowGet);
+                //    }
+
+                //    string imageFolderPath = Sitecore.IO.FileUtil.MapPath("/upload/Images");
+
+                //    if (!Directory.Exists(imageFolderPath))
+                //    {
+                //        Directory.CreateDirectory(imageFolderPath);
+                //    }
+
+                //    string imagePath = Path.Combine(imageFolderPath, fileName);
+                //    votingPeriod.Image.SaveAs(imagePath);
+
+                //    votingPeriod.ImagePath = imagePath;
+                //}
+                string imagePath = UploadImage(votingPeriod.Image);
+
+                if (imagePath == "ExtentionError")
+                {
+                    var response = new { Success = false, Message = "Invalid file type. Only .jpg, .jpeg, and .png files are allowed." };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    votingPeriod.ImagePath = imagePath;
+                }
+
+                int count = _AFIReportRepository.CreateCandidateData(votingPeriod);
+
+                var candidateDataList = _AFIReportRepository.GetAllCandidateData();
+
+                if (count > 0 && candidateDataList.Any())
+                {
+                    string finalJson = JsonConvert.SerializeObject(candidateDataList);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+                else if (count == -1)
+                {
+                    var response = new { Success = false, Message = $"Data Already Exists" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var response = new { Success = false, Message = $"Data Insertion Unsuccessful" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                var response = new { Success = false, Message = $"Error Inserting Item: {ex.Message}" };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
         [HttpPost]
         public JsonResult UpdateCandidateData(VoteCandidate votingPeriod)
         {
             try
             {
-                //VoteCandidate votingPeriod = new VoteCandidate
-                //{
-                //    CandidateId = int.Parse(id),
-                //    VotingPeriodId = int.Parse(votingPeriodId),
-                //    Name = name,
-                //    Content = content
-                //};
+                string imagePath = UploadImage(votingPeriod.Image);
+
+                if (imagePath == "ExtentionError")
+                {
+                    var response = new { Success = false, Message = "Invalid file type. Only .jpg, .jpeg, and .png files are allowed." };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    votingPeriod.ImagePath = imagePath;
+                }
 
                 int count = _AFIReportRepository.UpdateCandidateData(votingPeriod);
                 var candidateDataList = _AFIReportRepository.GetAllCandidateData();
@@ -1763,7 +1843,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
                 var data = _AFIReportRepository.GetAllVotingMemberData(page, pageSize, VotingId, IsEmail);
 
                 var totalCount = data.FirstOrDefault()?.TotalCount ?? 0;
-                 var totalPages = (int)Math.Ceiling((decimal)totalCount / pageSize);
+                    var totalPages = (int)Math.Ceiling((decimal)totalCount / pageSize);
 
                 MemberPagination finalData = new MemberPagination
                 {
@@ -1872,7 +1952,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
                 return Json(finalJson, JsonRequestBehavior.AllowGet);
     }
 
-}
+    }
 
         [HttpPost]
         public ActionResult UpdateMemberData(VoteMember voteMember, int page = 1, int pageSize = 50, int VotingId = 0,string IsEmail = "")
@@ -1971,7 +2051,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
 
                 if (detailsList != null)
                 {
-                   string finalJson = JsonConvert.SerializeObject(detailsList);
+                    string finalJson = JsonConvert.SerializeObject(detailsList);
                     return Json(finalJson, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -2176,6 +2256,37 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
             }
         }
 
-        
+        public string UploadImage(HttpPostedFileBase image)
+        {
+            if (image != null && image.ContentLength > 0)
+            {
+
+                string fileName = Path.GetFileName(image.FileName);
+                string fileExtension = Path.GetExtension(fileName).ToLower();
+                // Define a list of allowed file extensions
+                List<string> allowedExtensions = new List<string> { ".jpg", ".jpeg", ".png" };
+
+                if (!allowedExtensions.Contains(fileExtension))
+                {
+                    return "ExtentionError";
+                }
+
+                string imageFolderPath = Sitecore.IO.FileUtil.MapPath("/upload/Images");
+
+                if (!Directory.Exists(imageFolderPath))
+                {
+                    Directory.CreateDirectory(imageFolderPath);
+                }
+
+                string imagePath = Path.Combine(imageFolderPath, fileName);
+                image.SaveAs(imagePath);
+
+                return imagePath;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

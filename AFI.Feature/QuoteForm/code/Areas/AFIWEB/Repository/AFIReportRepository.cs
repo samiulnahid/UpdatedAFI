@@ -1449,8 +1449,8 @@ GROUP BY
                         var sql = @"
                         IF NOT EXISTS (SELECT 1 FROM [dbo].[Candidate] WHERE Name = @Name)
                         BEGIN
-                            INSERT INTO [dbo].[Candidate] (VotingPeriodId , Name, [Content]) 
-                            VALUES (@VotingPeriodId, @Name, @Content);
+                            INSERT INTO [dbo].[Candidate] (VotingPeriodId , Name, ImagePath, [Content]) 
+                            VALUES (@VotingPeriodId, @Name, @ImagePath, @Content);
                             SELECT SCOPE_IDENTITY();
                         END
                         ELSE
@@ -1481,7 +1481,7 @@ GROUP BY
                     try
                     {
                         var sql = @"UPDATE [dbo].[Candidate]
-                            SET VotingPeriodId = @VotingPeriodId, Name = @Name, [Content] = @Content 
+                            SET VotingPeriodId = @VotingPeriodId, Name = @Name, ImagePath = @ImagePath, [Content] = @Content 
                             WHERE CandidateId = @CandidateId";
 
                         var rowsAffected = db.Execute(sql, voteCandidate, transaction);
