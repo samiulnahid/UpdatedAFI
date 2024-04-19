@@ -25,7 +25,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Models
                 string radiobuttonValue = HttpContext.Current.Request.Form[radiobuttonName];
 
 
-                SelectedValues selectedValues = new SelectedValues() { Name = item.Name, Value = item.Value, IsCheckedFor = (radiobuttonValue == "For"), IsCheckedAgainst = (radiobuttonValue == "Against") };
+                SelectedValues selectedValues = new SelectedValues() { Name = item.Name, Value = item.Value, IsCheckedFor = (radiobuttonValue == "For"), IsCheckedAgainst = (radiobuttonValue == "Against"), IsCheckedAbstain = (radiobuttonValue == "Abstain") };
                 selectedItems.Add(selectedValues);
             }
             return selectedItems;
@@ -54,5 +54,6 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Models
         public string Name { get; set; }
         public bool IsCheckedFor { get; set; } = false;
         public bool IsCheckedAgainst { get; set; } = false;
+        public bool IsCheckedAbstain { get; set; } = false;
     }
 }

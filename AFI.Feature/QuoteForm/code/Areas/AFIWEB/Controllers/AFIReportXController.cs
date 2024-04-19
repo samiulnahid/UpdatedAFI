@@ -27,7 +27,7 @@ using Org.BouncyCastle.Crypto;
 using context = System.Web.HttpContext;
 using System.Threading.Tasks;
 using AFI.Feature.WebQuoteService;
-
+using AFI.Feature.Data.Models;
 using System.Globalization;
 using Sitecore.Data.Items;
 using System.Net;
@@ -36,18 +36,19 @@ using System.Net.Http;
 using Sitecore.Data;
 using Sitecore.Configuration;
 using Sitecore.Analytics.Data.Bulk;
-using Microsoft.Ajax.Utilities;
+using AFI.Feature.QuoteForm.Areas.AFIWEB.Job;
 using System.IO;
-using AFI.Feature.QuoteForm.Areas.AFIWEB.Models;
-using AFI.Feature.QuoteForm.ExperienceForms;
-using Sitecore.Web.UI.HtmlControls;
-using AFI.Feature.Data.Repositories;
-using Sitecore.Diagnostics;
+using Sitecore.ApplicationCenter.Applications;
+using System.Web;
+//using iText.Kernel.Pdf;
+//using iText.Kernel.Pdf.Canvas.Parser;
+//using iTextSharp.text.pdf;
+//using iTextSharp.text.pdf.parser;
 
 namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
 {
 
-    public class AFIReportController : Controller
+    public class AFIReportXController : Controller
     {
         private readonly IAFIReportRepository _AFIReportRepository;
         private readonly ICorviasFormRepository _CorviasFormRepository;
@@ -55,8 +56,9 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
         private readonly IEmailService _emailService;
         private readonly IHillAFBFormRepository _HillAFBFormRepository;
         private readonly IFormRepository _formRepository;
+        private readonly SyncVoteMemberToMoosend _syncVoteMemberToMoosend;
 
-        public AFIReportController(IAFIReportRepository AFIReportRepository, IEmailService emailService, ICorviasFormRepository corviasFormRepository, IUCFormRepository uCFormRepository, IHillAFBFormRepository hillAFBFormRepository, IFormRepository formRepository)
+        public AFIReportXController(IAFIReportRepository AFIReportRepository, IEmailService emailService, ICorviasFormRepository corviasFormRepository, IUCFormRepository uCFormRepository, IHillAFBFormRepository hillAFBFormRepository, IFormRepository formRepository, SyncVoteMemberToMoosend syncVoteMemberToMoosend)
         {
             _AFIReportRepository = AFIReportRepository;
             _emailService = emailService;
@@ -64,6 +66,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
             _UCFormRepository = uCFormRepository;
             _HillAFBFormRepository = hillAFBFormRepository;
             _formRepository = formRepository;
+            _syncVoteMemberToMoosend = syncVoteMemberToMoosend;
         }
         public ActionResult Report()
         {
@@ -239,7 +242,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
 
             return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", "report.csv");
         }
-
+   
         public ActionResult AutoReport()
         {
             var data = _AFIReportRepository.GetAllAutoReport();
@@ -1201,7 +1204,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
             mappingKeys.Add("ssn", cm.SSN != "" ? cm.SSN : "");
 
             mappingKeys.Add("coverage", cm.CoverageType != "" ? cm.CoverageType : "");
-            mappingKeys.Add("coverageprice", cm.CoverageMonth != "" ? cm.CoverageMonth : "" + " " + cm.CoverageYear != "" ? cm.CoverageYear : "");
+            mappingKeys.Add("coverageprice", cm.CoverageMonth != "" ? cm.CoverageMonth : "" + " " + cm.CoverageYear!=""? cm.CoverageYear:"");
             mappingKeys.Add("branchofservice", cm.BranchOfService != "" ? cm.BranchOfService : "");
             mappingKeys.Add("militarystatus", cm.MilitaryStatus != "" ? cm.MilitaryStatus : "");
             mappingKeys.Add("militaryrank", cm.MilitaryRank != "" ? cm.MilitaryRank : "");
@@ -1232,62 +1235,6 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
             var data = _formRepository.GetSurveyReport(startDate, endDate);
             return View("/Areas/AFIWEB/Views/AFIReport/SurveyFormReport.cshtml", data);
         }
-        [HttpGet]
-        public JsonResult GetVoteCountReportForResult(string voatingPeriodId = "")
-        {
-            try
-            {
-                var coverageDetailsList = _AFIReportRepository.GetVoteCountReportForResult(voatingPeriodId);
-
-                if (coverageDetailsList.Any())
-                {
-                    string finalJson = JsonConvert.SerializeObject(coverageDetailsList);
-                    return Json(finalJson, JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    var response = new { Success = false, Message = $"No Data Found!" };
-                    string finalJson = JsonConvert.SerializeObject(response);
-                    return Json(finalJson, JsonRequestBehavior.AllowGet);
-                }
-            }
-            catch (Exception ex)
-            {
-                var response = new { Success = false, Message = $"Error Insert Item Message " + ex.InnerException };
-                string finalJson = JsonConvert.SerializeObject(response);
-                return Json(finalJson, JsonRequestBehavior.AllowGet);
-            }
-        }
-        public FileContentResult DownloadVoteReportAsCSV(string voatingPeriodId = "")
-        {
-
-            try
-            {
-
-                var coverageDetailsList = _AFIReportRepository.GetVoteCountReportForResult(voatingPeriodId);
-
-                if (coverageDetailsList.Any())
-                {
-                    string csvData = ConvertToCSV(coverageDetailsList);
-
-                    byte[] bytes = Encoding.UTF8.GetBytes(csvData);
-                    Response.Headers.Add("Content-Disposition", "attachment; filename=VoteReport.csv");
-                    return File(bytes, "text/csv");
-
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                byte[] errorBytes = Encoding.UTF8.GetBytes($"Error: {ex.Message}");
-                Response.Headers.Add("Content-Disposition", "attachment; filename=Error_Report.csv");
-                return File(errorBytes, "text/csv");
-            }
-        }
-
         [HttpGet]
         public JsonResult GetPrevVoteCountReportForResult()
         {
@@ -1348,7 +1295,8 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
         {
             var sb = new StringBuilder();
             var properties = typeof(T).GetProperties()
-                                          .Where(p => p.Name != "MemberId" && p.Name != "CandidateId" && p.Name != "VotingPeriodId" && p.Name != "TotalCount" && p.Name != "IsActive" && p.Name != "IsEmailUpdated"); // Exclude Id and UpdatedTime
+                                       .Where(p => p.Name != "MemberId" && p.Name != "CandidateId" && p.Name != "VotingPeriodId" && p.Name != "TotalCount" && p.Name != "IsActive" && p.Name != "IsEmailUpdated"); // Exclude Id and UpdatedTime
+
             // Write headers
             sb.AppendLine(string.Join(",", properties.Select(p => p.Name)));
 
@@ -1373,33 +1321,6 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
             }
 
             return sb.ToString();
-        }
-        [HttpGet]
-        public JsonResult GetAllVotingPeriod()
-        {
-
-            try
-            {
-                var votingPeriodList = _AFIReportRepository.GetAllVotingPeriod();
-
-                if (votingPeriodList.Any())
-                {
-                    string finalJson = JsonConvert.SerializeObject(votingPeriodList);
-                    return Json(finalJson, JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    var response = new { Success = false, Message = $"No Data Found!" };
-                    string finalJson = JsonConvert.SerializeObject(response);
-                    return Json(finalJson, JsonRequestBehavior.AllowGet);
-                }
-            }
-            catch (Exception ex)
-            {
-                var response = new { Success = false, Message = $"Error Item Message " + ex.InnerException };
-                string finalJson = JsonConvert.SerializeObject(response);
-                return Json(finalJson, JsonRequestBehavior.AllowGet);
-            }
         }
 
         [HttpPost]
@@ -1444,21 +1365,13 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
 
                                     if (newItem != null)
                                     {
-                                        string _candidate = $@"
-                                    <div class='candidate-item-name'>
-                                        <p>{candidate.Name}</p>
-                                        <p>
-                                            <button type='button' class='btn btn-link p-0' data-id='{candidate.CandidateId}'  data-name='{candidate.Name}'>
-                                                View Profile
-                                            </button>
-                                        </p>
-                                    </div>
-                                     ";
-                                        string _name = string.Format("<a href='{0}' target='_blank'>{1}</a>", candidate.Content, candidate.Name);
+                                        string _name = string.Format("<a href='https://afi.org/about-afi/leadership/subscribers-advisory-committee/{0}' target='_blank'>{1}</a>", candidate.Name, candidate.Name);
                                         // Set the title field to the candidate name
                                         newItem.Editing.BeginEdit();
-                                        newItem["Title"] = _candidate;
-                                        newItem["Value"] = candidate.CandidateId.ToString();                                      
+                                        newItem["Name"] = _name;
+                                        newItem["ForLabel"] = "For";
+                                        newItem["AgainstLabel"] = "Against";
+                                        newItem["MappedField"] = candidate.Name;
                                         newItem.Editing.EndEdit();
                                     }
                                 }
@@ -1488,102 +1401,40 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
                 return Json(response);
             }
         }
-       
+
         // Method to remove special characters from a string
         private string RemoveSpecialCharacters(string str)
         {
             return Regex.Replace(str, "[^a-zA-Z0-9]+", "", RegexOptions.Compiled);
         }
 
-        [HttpPost]
-        public JsonResult SubmitMemberVote()
+        [HttpGet]
+        public JsonResult GetAllVotingPeriod()
         {
+
             try
             {
-                var httpRequest = HttpContext.Request;
-                var dropdownValue = httpRequest.Form["dropdownValue"];
+                var votingPeriodList = _AFIReportRepository.GetAllVotingPeriod();
 
-                var file = httpRequest.Files["file"];
-                if (file != null && file.ContentLength > 0)
+                if (votingPeriodList.Any())
                 {
-                    using (var reader = new StreamReader(file.InputStream))
-                    {
-                        // Skip header row if exists
-                        reader.ReadLine();
-
-                        while (!reader.EndOfStream)
-                        {
-                            var line = reader.ReadLine();
-                            var values = line.Split(',');
-                            Log.Error($" Import Member csv data >" + values, this);
-                            var _created =DateTime.Now;
-                            //if (!string.IsNullOrEmpty(values[19]))
-                            //{
-                            //    _created = Convert.ToDateTime(values[19]);
-                            //}
-                        
-                            string randomNumber = GenerateRandomPIN();
-
-                            // Map CSV columns to Member model properties
-                            var member = new ProxyVoteMember
-                            {
-                                MemberNumber = values[0], // 1st column
-                                EmailAddress = values[1], // 2nd column
-                                Prefix = values[2], // 3rd column
-                                Salutation= values[3],
-                                InsuredFirstName= values[4],
-                                InsuredLastName= values[5],
-                                ClientType= values[6],
-                                ServiceStatus= values[7],
-                                MailingAddressLine1= values[8],
-                                MailingAddressLine2 = values[9],
-                                MailingCityName = values[10],
-                                MailingCountyName = values[11],
-                                MailingStateAbbreviation = values[12],
-                                MailingZip = values[13],
-                                MailingCountry = values[14],
-                                MembershipDate = values[15],
-                                YearsAsMember = values[16],
-                                Gender = values[17],
-                                Deceased = values[18],
-                                CreateDate = _created,
-
-                                FullName= CultureInfo.CurrentCulture.TextInfo.ToTitleCase(values[3].ToLower())  +' '+ CultureInfo.CurrentCulture.TextInfo.ToTitleCase(values[4].ToLower()),
-                                VotingPeriodId = dropdownValue != null ? Convert.ToInt32(dropdownValue) : 0,
-                                Enabled=true,
-                              
-                                IsEmailUpdated= false,
-                                PIN= randomNumber,
-                                // Set other properties to default values or null
-                            };
-                            var _insert = _AFIReportRepository.InsertMemberVote(member);
-
-
-                        }
-                    }
-
-                    return Json(new { success = true, message = "Members imported successfully." });
+                    string finalJson = JsonConvert.SerializeObject(votingPeriodList);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
-                    return Json(new { success = false, message = "No file uploaded." });
+                    var response = new { Success = false, Message = $"No Data Found!" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = "Error occurred while importing members.", error = ex.Message });
+                var response = new { Success = false, Message = $"Error Item Message " + ex.InnerException };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
             }
-
         }
-
-
-        private string GenerateRandomPIN()
-        {
-            Random rand = new Random();
-            int randomNumber = rand.Next(100000, 999999);
-            return randomNumber.ToString();
-        }
-
 
         [HttpGet]
         public JsonResult GetVotingPeriodById(string id)
@@ -1630,9 +1481,9 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
                     string finalJson = JsonConvert.SerializeObject(votingPeriodList);
                     return Json(finalJson, JsonRequestBehavior.AllowGet);
                 }
-                else if (count == -1)
+                else if (count == -1 )
                 {
-                    var response = new { Success = false, Message = $"Data Already Exist" };
+                    var response = new { Success = false, StatusCode = 400,  Message = $"Data Already Exist" };
                     string finalJson = JsonConvert.SerializeObject(response);
                     return Json(finalJson, JsonRequestBehavior.AllowGet);
                 }
@@ -1687,7 +1538,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
             // return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult DeleteVotingPeriodData(string id)
+        public JsonResult DeleteVotingPeriodData(string id )
         {
             try
             {
@@ -1776,7 +1627,45 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult AddCandidateData2(VoteCandidate votingPeriod)
+        {
+            try
+            {
 
+                int count = _AFIReportRepository.CreateCandidateData(votingPeriod);
+
+                var candidateDataList = _AFIReportRepository.GetAllCandidateData();
+
+                if (count > 0 && candidateDataList.Any())
+                {
+                    string finalJson = JsonConvert.SerializeObject(candidateDataList);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+                else if (count == -1)
+                {
+                    var response = new { Success = false, Message = $"Data Already Exist" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var response = new { Success = false, Message = $"Data Insert Unsuccessful" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                var response = new { Success = false, Message = $"Error Insert Item Message " + ex.InnerException };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+     
 
         [HttpPost]
         public JsonResult AddCandidateData(VoteCandidate voteCandidate)
@@ -1861,6 +1750,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
             }
         }
 
+
         [HttpPost]
         public JsonResult UpdateCandidateData(VoteCandidate voteCandidate)
         {
@@ -1907,7 +1797,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
                     voteCandidate.Image.SaveAs(imagePath);
                     string relativeImagePath = imagePath.Replace(Server.MapPath("~"), "");
                     voteCandidate.ImagePath = relativeImagePath;
-
+                    
                 }
                 int id = _AFIReportRepository.UpdateCandidateData(voteCandidate);
                 var candidateDataList = _AFIReportRepository.GetAllCandidateData();
@@ -1939,7 +1829,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
             try
             {
                 int CandidateId = int.Parse(id);
-
+                   
 
                 int count = _AFIReportRepository.DeleteCandidateData(CandidateId);
                 var candidateDataList = _AFIReportRepository.GetAllCandidateData();
@@ -1967,7 +1857,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetAllVotingMemberData(int page = 1, int pageSize = 50, int VotingId = 0, string IsEmail = "")
+        public JsonResult GetAllVotingMemberData(int page = 1, int pageSize = 50, int VotingId = 0, string IsEmail = "" )
         {
 
             try
@@ -1995,7 +1885,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
                 var data = _AFIReportRepository.GetAllVotingMemberData(page, pageSize, VotingId, IsEmail);
 
                 var totalCount = data.FirstOrDefault()?.TotalCount ?? 0;
-                var totalPages = (int)Math.Ceiling((decimal)totalCount / pageSize);
+                    var totalPages = (int)Math.Ceiling((decimal)totalCount / pageSize);
 
                 MemberPagination finalData = new MemberPagination
                 {
@@ -2024,62 +1914,22 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
             }
         }
 
-        [HttpGet]
-        public JsonResult GetMemberVoteCount(int memberId, int votingPeriodId)
-        {
-
-            try
-            {
-                var totalCount = _AFIReportRepository.GetMemberVoteCountByMemberIdAndVotePeriodId(memberId, votingPeriodId);
-
-
-                var response = new { Success = true, Total = totalCount };
-                string finalJson = JsonConvert.SerializeObject(response);
-                return Json(finalJson, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                var response = new { Success = false, Message = $"Error retrieving Candidate Data. Exception: {ex.Message}" };
-                string finalJson = JsonConvert.SerializeObject(response);
-                return Json(finalJson, JsonRequestBehavior.AllowGet);
-            }
-        }
-        
-
-        public ActionResult GetVoteCandidates()
-        {
-            var parentItem = Sitecore.Context.Database.GetItem(new ID("{499F27E7-C557-44B1-A86F-FF32E269E3C9}")); // Parent ID
-            var model = new AFI.Feature.QuoteForm.ExperienceForms.CustomRadioButtonListViewModel
-            {
-                PreloadedOptions = GetDataSourceOptions(parentItem)
-            };
-
-            return View("~/Views/FormBuilder/FieldTemplates/VoteCandidateRadioButtonList.cshtml", model);
-        }
-
         [HttpPost]
-        public ActionResult InsertMembereData(VoteMember voteMember, int page = 1, int pageSize = 50, int VotingId = 0, string IsEmail="")
+        public ActionResult AddMembereData(VoteMember voteMember, int page = 1, int pageSize = 50, int VotingId = 0, string IsEmail = "")
         {
-            try
-            {
-                var member = new ProxyVoteMember
-                {
-                    MemberNumber = voteMember.MemberNumber,
-                    PIN = voteMember.PIN,
-                    FullName = voteMember.FullName,
-                    VotingPeriodId = Convert.ToInt32(voteMember.VotingPeriodId),
-                    Enabled=true,
-                    EmailAddress = voteMember.EmailAddress,
+            //try
+            //{
+                
 
-                };
-                var _insert = _AFIReportRepository.InsertMemberVote(member);
+                int count = _AFIReportRepository.InsertVotingMember(voteMember);
 
+              
 
-                if (_insert > 0)
+                if (count > 0)
                 {
                     return RedirectToAction("GetAllVotingMemberData", new { page, pageSize, VotingId, IsEmail });
                 }
-                else if (_insert == -1)
+                else if (count == -1)
                 {
                     var response = new { Success = false, Message = $"Data Already Exist" };
                     string finalJson = JsonConvert.SerializeObject(response);
@@ -2091,27 +1941,71 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
                     string finalJson = JsonConvert.SerializeObject(response);
                     return Json(finalJson, JsonRequestBehavior.AllowGet);
                 }
-            }
-            catch (Exception ex)
-            {
+            //}
+            //catch (Exception ex)
+            //{
 
-                var response = new { Success = false, Message = $"Error Insert Item Message " + ex.InnerException };
-                string finalJson = JsonConvert.SerializeObject(response);
-                return Json(finalJson, JsonRequestBehavior.AllowGet);
-            }
+            //    var response = new { Success = false, Message = $"Error Insert Item Message " + ex.InnerException };
+            //    string finalJson = JsonConvert.SerializeObject(response);
+            //    return Json(finalJson, JsonRequestBehavior.AllowGet);
+            //}
 
         }
 
         [HttpPost]
-        public ActionResult UpdateMemberData(VoteMember voteMember, int page = 1, int pageSize = 50, int VotingId = 0, string IsEmail="")
+        public ActionResult InsertMembereData(VoteMember voteMember, int page = 1, int pageSize = 50, int VotingId = 0, string IsEmail = "")
+        {
+            try
+            {
+                var member = new ProxyVoteMember
+                {
+                    MemberNumber = voteMember.MemberNumber,
+                    PIN = voteMember.PIN,
+                    FullName = voteMember.FullName,
+                    EmailAddress = voteMember.EmailAddress,
+                    VotingPeriodId = Convert.ToInt32(voteMember.VotingPeriodId) ,
+                   
+                };
+                var _insert = _AFIReportRepository.InsertMemberVote(member);
+
+
+            if (_insert > 0)
+            {
+                return RedirectToAction("GetAllVotingMemberData", new { page, pageSize, VotingId, IsEmail });
+            }
+            else if (_insert == -1)
+            {
+                var response = new { Success = false, Message = $"Data Already Exist" };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var response = new { Success = false, Message = $"Data Insert Unsuccessful" };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+            }
+        }
+            catch (Exception ex)
+            {
+
+                var response = new { Success = false, Message = $"Error Insert Item Message " + ex.InnerException };
+        string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+    }
+
+    }
+
+        [HttpPost]
+        public ActionResult UpdateMemberData(VoteMember voteMember, int page = 1, int pageSize = 50, int VotingId = 0,string IsEmail = "")
         {
             try
             {
 
                 int count = _AFIReportRepository.UpdateMemberData(voteMember);
+              
 
-
-                if (count > 0)
+                if (count > 0 )
                 {
                     return RedirectToAction("GetAllVotingMemberData", new { page, pageSize, VotingId, IsEmail });
                 }
@@ -2132,7 +2026,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
 
         }
 
-        public ActionResult DeleteMemberData(string id, int page = 1, int pageSize = 50, int VotingId = 0, string IsEmail = "")
+        public ActionResult DeleteMemberData(string id, int page = 1, int pageSize = 50, int VotingId = 0, string IsEmail="")
         {
             try
             {
@@ -2140,9 +2034,9 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
 
 
                 int count = _AFIReportRepository.DeleteMemberData(MemberId);
+                
 
-
-                if (count > 0)
+                if (count > 0 )
                 {
                     return RedirectToAction("GetAllVotingMemberData", new { page, pageSize, VotingId, IsEmail });
                 }
@@ -2162,21 +2056,22 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
             }
 
         }
-        public JsonResult GetCandidateVoteBallotStatus(string votingPeriodId = "", string memberId = "")
+
+        [HttpGet]
+        public JsonResult GetVoteCountReportForResult(string voatingPeriodId = "")
         {
             try
             {
-                bool voteStatus = _AFIReportRepository.GetCandidateVoteBallotStatus(votingPeriodId, memberId);
+                var coverageDetailsList = _AFIReportRepository.GetVoteCountReportForResult(voatingPeriodId);
 
-                if (voteStatus)
+                if (coverageDetailsList.Any())
                 {
-                    var response = new { VoteStatus = true, Message = $"Vote already submitted !" };
-                    string finalJson = JsonConvert.SerializeObject(response);
+                    string finalJson = JsonConvert.SerializeObject(coverageDetailsList);
                     return Json(finalJson, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
-                    var response = new { VoteStatus = false, Message = $"Please Submit the Vote" };
+                    var response = new { Success = false, Message = $"No Data Found!" };
                     string finalJson = JsonConvert.SerializeObject(response);
                     return Json(finalJson, JsonRequestBehavior.AllowGet);
                 }
@@ -2188,7 +2083,6 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
                 return Json(finalJson, JsonRequestBehavior.AllowGet);
             }
         }
-
 
         [HttpGet]
         public JsonResult GetTotalVotingDetails(string voatingPeriodId = "")
@@ -2216,30 +2110,95 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
                 return Json(finalJson, JsonRequestBehavior.AllowGet);
             }
         }
-        public IEnumerable<OptionItem> GetDataSourceOptions(Item parentItem)
+        public FileContentResult DownloadVoteReportAsCSV(string voatingPeriodId = "")
         {
-            var options = new List<OptionItem>();
 
-            if (parentItem != null)
+            try
             {
-                foreach (Item childItem in parentItem.Children)
+
+                var coverageDetailsList = _AFIReportRepository.GetVoteCountReportForResult(voatingPeriodId);
+
+                if (coverageDetailsList.Any())
                 {
-                    options.Add(new OptionItem
-                    {
-                        Text = childItem["CandidateName"], // Assuming CandidateName is the field for radio button label
-                        Value = "SomeValue" // Set value as needed
-                    });
+                    string csvData = ConvertToCSV(coverageDetailsList);
+
+                    byte[] bytes = Encoding.UTF8.GetBytes(csvData);
+                    Response.Headers.Add("Content-Disposition", "attachment; filename=VoteReport.csv");
+                    return File(bytes, "text/csv");
+
+                }
+                else
+                {
+                    return null;
                 }
             }
-
-            return options;
+            catch (Exception ex)
+            {
+                byte[] errorBytes = Encoding.UTF8.GetBytes($"Error: {ex.Message}");
+                Response.Headers.Add("Content-Disposition", "attachment; filename=Error_Report.csv");
+                return File(errorBytes, "text/csv");
+            }
         }
 
-        public JsonResult GetMemberEmailByMemberNumberAndPIN(string memberNumber = "", string pin = "")
+        public JsonResult GetCandidateVoteBallotStatus(string votingPeriodId = "", string memberId = "")
         {
             try
             {
-                string email = _AFIReportRepository.GetMemberEmailByMemberNumberAndPIN(memberNumber, pin);
+                bool voteStatus = _AFIReportRepository.GetCandidateVoteBallotStatus(votingPeriodId, memberId);
+
+                if (voteStatus)
+                {
+                    var response = new { VoteStatus = true, Message = $"Vote already submitted !" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var response = new { VoteStatus = false, Message = $"Please Submit the Vote" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                var response = new { Success = false, Message = $"Error Insert Item Message " + ex.InnerException };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult SyncVoteMemberToMoosend(string votingPeriodId = "")
+        {
+            try
+            {
+                bool MoosendResponse = _syncVoteMemberToMoosend.Execute();
+
+                if (MoosendResponse)
+                {
+                    var response = new { MoosendSuccess = true, Message = $"Custom Field Created Successfully" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var response = new { MoosendSuccess = false, Message = $"Response Error !" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                var response = new { Success = false, Message = $"Error Insert Item Message " + ex.InnerException };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult GetMemberEmailByMemberNumberAndPIN( string memberNumber = "", string pin = "")
+        {
+            try
+            {
+                string email = _AFIReportRepository.GetMemberEmailByMemberNumberAndPIN( memberNumber, pin);
 
                 if (string.IsNullOrEmpty(email))
                 {
@@ -2267,7 +2226,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
 
             try
             {
-
+               
                 var data = _AFIReportRepository.GetAllVotingMemberData(0, 0, VotingId, IsEmail);
 
                 if (data.Any())
@@ -2291,22 +2250,23 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
                 return File(errorBytes, "text/csv");
             }
         }
+
         public JsonResult GetMemberInfoByMemberNumber(string memberNumber = "")
         {
             try
             {
                 var MemberInfo = _AFIReportRepository.GetMemberInfoByMemberNumber(memberNumber);
 
-                if (MemberInfo == null)
+                if (MemberInfo == null )
                 {
                     var response = new { Success = false, Message = $"No Data Found" };
                     string finalJson = JsonConvert.SerializeObject(response);
                     return Json(finalJson, JsonRequestBehavior.AllowGet);
                 }
-
+                
                 else
                 {
-
+                    
                     string finalJson = JsonConvert.SerializeObject(MemberInfo);
                     return Json(finalJson, JsonRequestBehavior.AllowGet);
                 }
@@ -2317,6 +2277,74 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
                 string finalJson = JsonConvert.SerializeObject(response);
                 return Json(finalJson, JsonRequestBehavior.AllowGet);
             }
+        }
+        public JsonResult SubmitReferralForm(ReferralModel referralModel)
+        {
+            try
+            {
+
+                _formRepository.SubmitReferralForm(referralModel);
+
+                var response = new { Success = true, Message = $"Data Insert Success." };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+               
+            }
+            catch (Exception ex)
+            {
+                var response = new { Success = false, Message = $"Error Insert Item Message " + ex.InnerException };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public string UploadImage(HttpPostedFileBase image)
+        {
+            string imagePath = "";
+
+            if (image == null || image.ContentLength == 0)
+            {
+                // If votingPeriod.Image is null or has no content, check if the default image exists
+                string defaultImagePath = Sitecore.IO.FileUtil.MapPath("/upload/Images/default_image.png");
+                imagePath = "upload/Images/default_image.png";
+                return imagePath;
+            }
+            else
+            {
+
+                string fileName = Path.GetFileName(image.FileName);
+                string fileExtension = Path.GetExtension(fileName).ToLower();
+                // Define a list of allowed file extensions
+                List<string> allowedExtensions = new List<string> { ".jpg", ".jpeg", ".png" };
+
+                if (!allowedExtensions.Contains(fileExtension))
+                {
+                    return "ExtentionError";
+                }
+
+                string imageFolderPath = Sitecore.IO.FileUtil.MapPath("/upload/Images");
+
+                if (!Directory.Exists(imageFolderPath))
+                {
+                    Directory.CreateDirectory(imageFolderPath);
+                }
+
+                imagePath = Path.Combine(imageFolderPath, fileName);
+                image.SaveAs(imagePath);
+                string relativeImagePath = imagePath.Replace(Server.MapPath("~"), "");
+                //imagePath = relativeImagePath;
+
+                return relativeImagePath;
+            }
+        }
+      
+        private string CleanUpExtractedText(string text)
+        {
+            // Remove extra spaces, newlines, and HTML tags
+            //text = System.Text.RegularExpressions.Regex.Replace(text, @"\s+", " ");
+            //text = System.Text.RegularExpressions.Regex.Replace(text, @"<[^>]+>|&nbsp;", "").Trim();
+
+            return text;
         }
     }
 }

@@ -25,6 +25,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Models
             get; set;
         }
         public HttpPostedFileBase Image { get; set; }
+        public HttpPostedFileBase Txt { get; set; }
         public bool IsActive { get; set; }
     }
 }

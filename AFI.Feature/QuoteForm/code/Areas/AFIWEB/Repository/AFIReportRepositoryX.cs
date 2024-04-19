@@ -10,14 +10,14 @@ using Sitecore.ExperienceForms.Samples.SubmitActions;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
-using AFI.Feature.Data.Repositories;
 using System.Diagnostics;
 using Sitecore.Diagnostics;
-using AFI.Feature.QuoteForm.Areas.AFIWEB.Models;
+using AFI.Feature.Data.Models;
+using AFI.Feature.Data.Repositories;
 
 namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Repository
 {
-    public interface IAFIReportRepository
+    public interface IAFIReportRepositoryX
     {
         IEnumerable<ReportView> GetAll();
         IEnumerable<ReportView> GetAllAutoReport();
@@ -51,48 +51,45 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Repository
         EXMUnSubscription CheckStatus(string email);
         int InsertData(EXMUnSubscription entity);
         IEnumerable<VoteReport> GetDemoVoteCountReportForResult();
+        IEnumerable<VoteReport> GetVoteCountReportForResult(string voatingPeriodId = "");
         IEnumerable<VoteCandidate> GetVoteCandidateList(string periodId);
         IEnumerable<VotingPeriod> GetAllVotingPeriod();
-
-        int InsertMemberVote(ProxyVoteMember entity);
-
-        int InsertVotingMember(VoteMember voteMember);
         VotingPeriod GetVotingPeriodById(int votingPeriodId);
         int CreateVotingPeriodData(VotingPeriod votingPeriod);
         int UpdateVotingPeriodData(VotingPeriod votingPeriod);
         int DeleteVotingPeriodData(int VotingPeriodId);
-
         IEnumerable<VoteCandidate> GetAllCandidateData();
         int CreateCandidateData(VoteCandidate voteCandidate);
         int UpdateCandidateData(VoteCandidate voteCandidate);
         int DeleteCandidateData(int CandidateId);
         VoteCandidate GetCandidateById(int candidateId);
+
         IEnumerable<VoteMember> GetAllVotingMemberData(int page, int pageSize, int VotingPeriodId, string IsEmail);
-
-
-        IEnumerable<VoteReport> GetVoteCountReportForResult(string voatingPeriodId = "");
-
         int DeleteMemberData(int MemberId);
         int UpdateMemberData(VoteMember voteMember);
-
-        int GetMemberVoteCountByMemberIdAndVotePeriodId(int memberId, int votingPeriodId);
-
-        bool GetCandidateVoteBallotStatus(string voatingPeriodId, string MemberId);
+        int InsertVotingMember(VoteMember voteMember);
+        int InsertMemberVote(ProxyVoteMember entity);
+        bool GetCandidateVoteBallotStatus(string voatingPeriodId,string MemberId);
+        string GetMemberEmailByMemberNumberAndPIN( string MemberNumber, string PIN);
         object GetTotalVoteCountDetailsForResult(string voatingPeriodId = "");
-
-        string GetMemberEmailByMemberNumberAndPIN(string MemberNumber, string PIN);
-
+        IEnumerable<ProxyVoteMember> GetAllVotingMemberData();
+        EmailListData GetEmailListDataByVotingPeriod(string ListName);
+        int InsertEmailListData(EmailListData EmailListData);
+        IEnumerable<VoteMember> GetAllVotingMemberOnLatestVotingPeriod(int page, int pageSize);
         object GetMemberInfoByMemberNumber(string MemberNumber);
+        void SubmitReferralForm(ReferralModel referralModel);
     }
 
-    public class AFIReportRepository : IAFIReportRepository
+    public class AFIReportRepositoryX : IAFIReportRepositoryX
     {
 
         private readonly IDbConnectionProvider _dbConnectionProvider;
+        private readonly IReferralRepository _referralRepository;
 
-        public AFIReportRepository(IDbConnectionProvider dbConnectionProvider)
+        public AFIReportRepositoryX(IDbConnectionProvider dbConnectionProvider, IReferralRepository referralRepository)
         {
             _dbConnectionProvider = dbConnectionProvider;
+            _referralRepository = referralRepository;
         }
         public IEnumerable<ReportView> GetAll()
         {
@@ -292,7 +289,7 @@ Drop table  #TempTable
                 }
                 else
                 {
-
+                   
                     var sql = string.Format(@"
 
 SELECT * INTO #TempTable
@@ -373,7 +370,7 @@ Drop table  #TempTable ", startDate, endDate);
 
                 if (string.IsNullOrEmpty(startDate))
                 {
-
+               
                     var sql = string.Format(@"SELECT * FROM(
 SELECT
 qra.InsIdRiskState AS RiskState
@@ -432,7 +429,7 @@ ORDER BY a.CreatedDate");
                 }
                 else
                 {
-                    var sql = string.Format(@"SELECT * FROM(
+                  var sql = string.Format(@"SELECT * FROM(
 SELECT
 qra.InsIdRiskState AS RiskState
 ,GWNTxn.LOB
@@ -784,14 +781,14 @@ sum(case when[QuoteStatus] = 'InCompleted' then 1 else 0 end) as Quotes_Abandone
                 if (string.IsNullOrEmpty(startDate))
                 {
 
-                    var sql = @"select CoverageType,FormState, count(*) AS Total from [dbo].[QuoteMarketingDetails] Where CoverageType='" + coverageType + "' group by FormState,CoverageType";
+                    var sql = @"select CoverageType,FormState, count(*) AS Total from [dbo].[QuoteMarketingDetails] Where CoverageType='"+ coverageType + "' group by FormState,CoverageType";
 
                     return db.Query<ReportView>(sql, null, null, true, 500);
                 }
                 else
                 {
-
-                    var sql = string.Format(@"select CoverageType,FormState, count(*) AS Total from [dbo].[QuoteMarketingDetails] Where CoverageType='" + coverageType + "' AND CreatedOn >='{0}' AND CreatedOn <='{1}' group by FormState,CoverageType", startDate, endDate);
+              
+                    var sql = string.Format(@"select CoverageType,FormState, count(*) AS Total from [dbo].[QuoteMarketingDetails] Where CoverageType='"+ coverageType + "' AND CreatedOn >='{0}' AND CreatedOn <='{1}' group by FormState,CoverageType", startDate, endDate);
                     return db.Query<ReportView>(sql, null, null, true, 500);
                 }
 
@@ -952,7 +949,7 @@ AND (qa.BodilyInjury IS NULL OR qa.PropertyDamage IS NULL OR qa.MedicalCoverage 
         {
             using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
             {
-                var sql = @"Select * from EXMUnSubscription where Email= '" + email + "'";
+                var sql = @"Select * from EXMUnSubscription where Email= '" + email+"'";
 
                 return db.QueryFirstOrDefault<EXMUnSubscription>(sql);
             }
@@ -969,15 +966,15 @@ AND (qa.BodilyInjury IS NULL OR qa.PropertyDamage IS NULL OR qa.MedicalCoverage 
                         var sql = "insert into EXMUnSubscription ([Email],[MemberID], [Campaign], [Status], [Date]) " +
                             "values (@Email,@MemberID, @Campaign, @Status, @Date); select scope_identity();";
                         var id = db.QueryFirstOrDefault<int>(sql, entity, transaction);
-                        transaction.Commit();
+                        transaction.Commit();                      
                         return id;
                     }
                     catch (System.Exception ex)
-                    {
-                        transaction.Rollback();
+                    {                       
+                        transaction.Rollback();                      
                         return 0;
                     }
-                }
+                }               
             }
         }
         public AFIReportView GetStepWiseBusinessReport()
@@ -1206,12 +1203,62 @@ AND (qa.BodilyInjury IS NULL OR qa.PropertyDamage IS NULL OR qa.MedicalCoverage 
 FROM  
     [dbo].[Demo_MemberCandidateBallot] b 
 INNER JOIN 
-    [ProxyVote].[Candidate]  c ON b.CandidateId = c.CandidateId
+    [dbo].[Candidate]  c ON b.CandidateId = c.CandidateId
 GROUP BY 
     c.[Name];";
                 return db.Query<VoteReport>(sql);
             }
         }
+        public IEnumerable<VoteReport> GetVoteCountReportForResult(string voatingPeriodId = "")
+        {
+            using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
+            {
+                if (string.IsNullOrEmpty(voatingPeriodId))
+                {
+                    voatingPeriodId = "(Select top 1 VotingPeriodId from dbo.VotingPeriod Order by 1 desc)";
+                }
+                var sql = @"SELECT 
+                            c.[Name] AS CandidateName,
+                            SUM(CASE WHEN b.Ballot='For' THEN 1 ELSE 0 END) AS VoteFor, 
+                            SUM(CASE WHEN b.Ballot='Against' THEN 1 ELSE 0 END) AS VoteAgainst,
+                             COUNT(*) AS TotalVotes
+                        FROM  
+                            [dbo].[MemberCandidateBallot] b 
+                        INNER JOIN 
+                            [dbo].[Candidate]  c ON b.CandidateId = c.CandidateId
+                        Where b.VotingPeriodId= " + voatingPeriodId + "GROUP BY c.[Name];";
+
+                return db.Query<VoteReport>(sql);
+            }
+        }
+
+
+        public object GetTotalVoteCountDetailsForResult(string voatingPeriodId = "")
+        {
+            if (string.IsNullOrEmpty(voatingPeriodId))
+            {
+                voatingPeriodId = "(SELECT TOP 1 VotingPeriodId FROM dbo.VotingPeriod ORDER BY 1 DESC)";
+            }
+
+            var sql = @"
+                SELECT 
+                    (SELECT COUNT(*) FROM Member WHERE Enabled = 1 AND VotingPeriodId = " + voatingPeriodId + @") AS TotalEnabledMembers,
+                    (SELECT COUNT(*) FROM Member WHERE Enabled = 0 AND VotingPeriodId = " + voatingPeriodId + @") AS TotalDisabledMembers,
+                    (SELECT COUNT(*) FROM Member WHERE VotingPeriodId = " + voatingPeriodId + @") AS TotalMembersInVotingPeriod,
+                    vp.VotingPeriodId,
+                    vp.Title
+                FROM 
+                    votingPeriod vp
+                WHERE 
+                    vp.VotingPeriodId = " + voatingPeriodId + ";";
+
+            using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
+            {
+                return db.Query(sql).FirstOrDefault();
+            }
+        }
+
+
 
         public IEnumerable<VoteCandidate> GetVoteCandidateList(string periodId)
         {
@@ -1238,187 +1285,28 @@ GROUP BY
         {
             using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
             {
-                var sql = @"SELECT *,
-       CASE
-           WHEN GETDATE() >= [Start] AND CAST(GETDATE() AS DATE) <= CAST([End] AS DATE) AND [End] >= CAST(GETDATE() AS DATE) THEN 'true'
-           ELSE 'false'
-       END AS IsActive
-FROM [ProxyVote].[VotingPeriod]
-ORDER BY VotingPeriodId DESC;";
+                //var sql = @"select * from [dbo].[VotingPeriod] order by VotingPeriodId desc";
+                var sql = @"SELECT*,
+                           CASE
+                               WHEN GETDATE() BETWEEN[Start] AND[End] THEN 'true'
+                               ELSE 'false'
+                           END AS IsActive
+                    FROM[dbo].[VotingPeriod]
+                            ORDER BY VotingPeriodId DESC;";
                 return db.Query<VotingPeriod>(sql);
             }
         }
-
-        public int InsertMemberVote(ProxyVoteMember entity)
-        {
-            //if(!string.IsNullOrEmpty(entity.EmailAddress))
-            //{
-            //    entity.IsEmailUpdated = true;
-            //}
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
-            {
-                db.Open();
-                using (var transaction = db.BeginTransaction())
-                {
-                    try
-                    {
-                       
-                        // Check if the record already exists
-                        var existingRecord = db.QueryFirstOrDefault<ProxyVoteMember>("SELECT Top 1 * FROM [ProxyVote].[Member] WHERE MemberNumber = @MemberNumber Order by 1 DESC", new
-                        {
-                            entity.MemberNumber
-                        }, transaction);
-
-                        if (existingRecord !=null)
-                        {
-                            Log.Error($"{nameof(QuoteRepository)}: Existing Member Found >."+ existingRecord.MemberNumber,  this);
-                            if (existingRecord.VotingPeriodId==entity.VotingPeriodId)
-                            {
-                                Log.Error($"{nameof(QuoteRepository)}: Existing Member VotingPeriodId Found >." + existingRecord.MemberNumber, this);
-                                return -1;
-                            }
-                            else
-                            {
-                                entity.PIN = existingRecord.PIN;
-                            }
-                            
-                            // Record already exists, return its MemberId
-                           
-                        }
-
-                        var sql = @"
-                    INSERT INTO [ProxyVote].[Member] 
-                    (
-                        [MemberNumber],
-                        [PIN],
-                        [VotingPeriodId],
-                        [Enabled],
-                        [EmailAddress],
-                        [FullName],
-                        [ResidentialOccupied],
-                        [ResidentialDwelling],
-                        [Renters],
-                        [Flood],
-                        [Life],
-                        [PersonalLiabilityRenters],
-                        [PersonalLiabilityCatastrophy],
-                        [Auto],
-                        [RV],
-                        [Watercraft],
-                        [Motorcycle],
-                        [Supplemental],
-                        [AnnualReport],
-                        [StatutoryFinancialStatements],
-                        [MobileHome],
-                        [PetHealth],
-                        [Business],
-                        [LongTermCare],
-                        [MailFinancials],
-                        [EmailFinancials],
-                        [IsEmailUpdated]
- ,[Prefix]
-           ,[Salutation]
-           ,[InsuredFirstName]
-           ,[InsuredLastName]
-           ,[ClientType]
-           ,[ServiceStatus]
-           ,[MailingAddressLine1]
-           ,[MailingAddressLine2]
-           ,[MailingCityName]
-           ,[MailingCountyName]
-           ,[MailingStateAbbreviation]
-           ,[MailingZip]
-           ,[MailingCountry]
-           ,[MembershipDate]
-           ,[YearsAsMember]
-           ,[Gender]
-           ,[Deceased]
-           ,[CreateDate]
-                    )
-                    VALUES 
-                    (
-                        @MemberNumber,
-                        @PIN,
-                        @VotingPeriodId,
-                        @Enabled,
-                        @EmailAddress,
-                        @FullName,
-                        @ResidentialOccupied,
-                        @ResidentialDwelling,
-                        @Renters,
-                        @Flood,
-                        @Life,
-                        @PersonalLiabilityRenters,
-                        @PersonalLiabilityCatastrophy,
-                        @Auto,
-                        @RV,
-                        @Watercraft,
-                        @Motorcycle,
-                        @Supplemental,
-                        @AnnualReport,
-                        @StatutoryFinancialStatements,
-                        @MobileHome,
-                        @PetHealth,
-                        @Business,
-                        @LongTermCare,
-                        @MailFinancials,
-                        @EmailFinancials,
-                        @IsEmailUpdated,
- @Prefix,
-           @Salutation,
-           @InsuredFirstName,
-           @InsuredLastName,
-           @ClientType,
-           @ServiceStatus,
-           @MailingAddressLine1,
-           @MailingAddressLine2,
-           @MailingCityName,
-           @MailingCountyName,
-           @MailingStateAbbreviation,
-           @MailingZip,
-           @MailingCountry,
-           @MembershipDate,
-           @YearsAsMember,
-           @Gender,
-           @Deceased,
-           @CreateDate
-                    );
-                ";
-
-                        // Execute the SQL query using Dapper
-                        var newId = db.Execute(sql, entity, transaction);
-                        transaction.Commit();
-                        sw.Stop();
-                        Sitecore.Diagnostics.Log.Info("STOPWATCH: create Member " + sw.Elapsed, "stopwatch");
-
-                        return newId;
-                    }
-                    catch (System.Exception ex)
-                    {
-                        Log.Error($"{nameof(QuoteRepository)}: Error while attempting to insert Member.", ex, this);
-                        transaction.Rollback();
-                        sw.Stop();
-                        Sitecore.Diagnostics.Log.Info("STOPWATCH: create Member" + sw.Elapsed, "stopwatch");
-                        return 0;
-                    }
-                }
-            }
-        }
-
-       
 
         public VotingPeriod GetVotingPeriodById(int votingPeriodId)
         {
             using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
             {
-                var sql = @"SELECT * FROM [ProxyVote].[VotingPeriod] WHERE VotingPeriodId = @VotingPeriodId";
+                var sql = @"SELECT * FROM [dbo].[VotingPeriod] WHERE VotingPeriodId = @VotingPeriodId";
                 return db.QueryFirstOrDefault<VotingPeriod>(sql, new { VotingPeriodId = votingPeriodId });
             }
         }
 
-
+      
         public int CreateVotingPeriodData(VotingPeriod votingPeriod)
         {
             using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
@@ -1429,9 +1317,9 @@ ORDER BY VotingPeriodId DESC;";
                     try
                     {
                         var sql = @"
-                    IF NOT EXISTS (SELECT 1 FROM [ProxyVote].[VotingPeriod] WHERE Title = @Title)
+                    IF NOT EXISTS (SELECT 1 FROM [dbo].[VotingPeriod] WHERE Title = @Title)
                     BEGIN
-                        INSERT INTO [ProxyVote].[VotingPeriod] (Start, [End], Title, [Content]) 
+                        INSERT INTO [dbo].[VotingPeriod] (Start, [End], Title, [Content]) 
                         VALUES (@Start, @End, @Title, @Content);
                         SELECT SCOPE_IDENTITY();
                     END
@@ -1458,56 +1346,6 @@ ORDER BY VotingPeriodId DESC;";
             }
         }
 
-        public int InsertVotingMember(VoteMember voteMember)
-        {
-
-            using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
-            {
-                db.Open();
-                using (var transaction = db.BeginTransaction())
-                {
-                    //try
-                    //{
-
-                    var sql = @"IF NOT EXISTS (SELECT 1 FROM MemberId FROM [dbo].[Member] WHERE MemberNumber = @MemberNumber AND PIN = @PIN AND VotingPeriodId = @VotingPeriodId)
-                        BEGIN
-                            INSERT INTO [dbo].[Member] 
-                            (
-                                [MemberNumber],
-                                [PIN],
-                                [VotingPeriodId],
-                                [EmailAddress],
-                                [FullName]
-                            )
-                            VALUES 
-                            (
-                                @MemberNumber,
-                                @PIN,
-                                @VotingPeriodId,
-                                @EmailAddress,
-                                @FullName
-                            );
-                            SELECT SCOPE_IDENTITY();
-                        END
-                        ELSE
-                        BEGIN
-                            SELECT -1;
-                        END";
-
-
-                    var id = db.QueryFirstOrDefault<int>(sql, voteMember, transaction);
-                    transaction.Commit();
-                    return id;
-
-                    //}
-                    //catch (System.Exception ex)
-                    //{
-                    //    transaction.Rollback();
-                    //    return 0;
-                    //}
-                }
-            }
-        }
 
 
         public int UpdateVotingPeriodData(VotingPeriod votingPeriod)
@@ -1519,7 +1357,7 @@ ORDER BY VotingPeriodId DESC;";
                 {
                     try
                     {
-                        var sql = @"UPDATE [ProxyVote].[VotingPeriod] 
+                        var sql = @"UPDATE [dbo].[VotingPeriod] 
                             SET Start = @Start, [End] = @End, Title = @Title, [Content] = @Content 
                             WHERE VotingPeriodId = @VotingPeriodId";
 
@@ -1545,8 +1383,8 @@ ORDER BY VotingPeriodId DESC;";
                 {
                     try
                     {
-                        var sql = "DELETE FROM [ProxyVote].[VotingPeriod] WHERE VotingPeriodId = @VotingPeriodId";
-
+                        var sql = "DELETE FROM [dbo].[VotingPeriod] WHERE VotingPeriodId = @VotingPeriodId";
+                       
                         var rowsAffected = db.Execute(sql, new { VotingPeriodId }, transaction);
                         transaction.Commit();
                         return rowsAffected;
@@ -1559,43 +1397,44 @@ ORDER BY VotingPeriodId DESC;";
                 }
             }
         }
+        //public IEnumerable<VoteCandidate> GetAllCandidateData()
+        //{
+        //    using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
+        //    {
+        //        var sql = @"select * from [dbo].[Candidate] ";
+        //        return db.Query<VoteCandidate>(sql);
+        //    }
+        //}
         public IEnumerable<VoteCandidate> GetAllCandidateData()
         {
             using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
             {
+             //   var sql = @"SELECT c.*, v.Title AS VotingPeriodName 
+             //FROM [dbo].[Candidate] c 
+             //INNER JOIN [dbo].[VotingPeriod] v ON v.VotingPeriodId = c.VotingPeriodId 
+             //ORDER BY c.VotingPeriodId DESC";
                 var sql = @"SELECT c.*,
                             v.Title AS VotingPeriodName,
                             CASE
-           WHEN GETDATE() >= [Start] AND CAST(GETDATE() AS DATE) <= CAST([End] AS DATE) AND [End] >= CAST(GETDATE() AS DATE) THEN 'true'
-           ELSE 'false'
+                                WHEN GETDATE() BETWEEN v.[Start] AND v.[End] THEN 'true'
+                                ELSE 'false' 
                             END AS IsActive
-                    FROM [ProxyVote].[Candidate] c
-                    INNER JOIN[ProxyVote].[VotingPeriod] v ON v.VotingPeriodId = c.VotingPeriodId
+                    FROM [dbo].[Candidate] c
+                    INNER JOIN[dbo].[VotingPeriod] v ON v.VotingPeriodId = c.VotingPeriodId
                     ORDER BY c.VotingPeriodId DESC";
-
                 return db.Query<VoteCandidate>(sql);
             }
         }
+
+
         public VoteCandidate GetCandidateById(int candidateId)
         {
             using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
             {
-                var sql = @"SELECT * FROM [ProxyVote].[Candidate] WHERE CandidateId = @CandidateId";
+                var sql = @"SELECT * FROM [dbo].[Candidate] WHERE CandidateId = @CandidateId";
                 return db.QueryFirstOrDefault<VoteCandidate>(sql, new { CandidateId = candidateId });
             }
         }
-        public int GetMemberVoteCountByMemberIdAndVotePeriodId(int memberId, int votingPeriodId)
-        {
-            using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
-            {
-                var sql = @"SELECT COUNT(*) 
-                    FROM [ProxyVote].[MemberCandidateBallot] AS mcb 
-                    INNER JOIN [ProxyVote].[Candidate] AS c ON mcb.CandidateId = c.CandidateId 
-                    WHERE mcb.MemberId = @MemberId AND mcb.VotingPeriodId = @VotingPeriodId";
-                return db.QueryFirstOrDefault<int>(sql, new { MemberId = memberId, VotingPeriodId = votingPeriodId });
-            }
-        }
-
 
         public int CreateCandidateData(VoteCandidate voteCandidate)
         {
@@ -1606,11 +1445,11 @@ ORDER BY VotingPeriodId DESC;";
                 {
                     try
                     {
-
+                        
                         var sql = @"
-                        IF NOT EXISTS (SELECT 1 FROM [ProxyVote].[Candidate] WHERE Name = @Name AND VotingPeriodId=@VotingPeriodId)
+                        IF NOT EXISTS (SELECT 1 FROM [dbo].[Candidate] WHERE Name = @Name AND VotingPeriodId=@VotingPeriodId)
                         BEGIN
-                          INSERT INTO [ProxyVote].[Candidate] (VotingPeriodId , Name, ImagePath, [Content]) 
+                            INSERT INTO [dbo].[Candidate] (VotingPeriodId , Name, ImagePath, [Content]) 
                             VALUES (@VotingPeriodId, @Name, @ImagePath, @Content);
                             SELECT SCOPE_IDENTITY();
                         END
@@ -1640,9 +1479,13 @@ ORDER BY VotingPeriodId DESC;";
                 using (var transaction = db.BeginTransaction())
                 {
                     try
-                    {                    
+                    {
 
-                        var sql = @"UPDATE [ProxyVote].[Candidate]
+                        //var sql = @"UPDATE [dbo].[Candidate]
+                        //    SET VotingPeriodId = @VotingPeriodId, Name = @Name, ImagePath = @ImagePath, [Content] = @Content 
+                        //    WHERE CandidateId = @CandidateId";
+
+                        var sql = @"UPDATE [dbo].[Candidate]
                             SET VotingPeriodId = @VotingPeriodId, Name = @Name, ";
 
                         if (voteCandidate.ImagePath != null && voteCandidate.ImagePath != string.Empty)
@@ -1673,7 +1516,7 @@ ORDER BY VotingPeriodId DESC;";
                 {
                     try
                     {
-                        var sql = "DELETE FROM [ProxyVote].[Candidate] WHERE CandidateId = @CandidateId";
+                        var sql = "DELETE FROM [dbo].[Candidate] WHERE CandidateId = @CandidateId";
                         var rowsAffected = db.Execute(sql, new { CandidateId }, transaction);
                         transaction.Commit();
                         return rowsAffected;
@@ -1687,15 +1530,13 @@ ORDER BY VotingPeriodId DESC;";
                 }
             }
         }
-        //public IEnumerable<VoteMember> GetAllVotingMemberData(int page, int pageSize, int VotingPeriodId, string IsEmail)
+        //public IEnumerable<VoteMember> GetAllVotingMemberData(int page, int pageSize, int VotingPeriodId)
         //{
         //    int ofsetItem = (page - 1) * pageSize;
 
         //    using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
         //    {
-        //        // var sql = " select *, COUNT(*) OVER() AS TotalCount from [ProxyVote].[Member] WHERE 1 = 1";
-        //        // var sql = " select m.MemberId, m.PIN,m.MemberNumber,m.FullName,m.EmailAddress,m.VotingPeriodId,v.Title AS VotingPeriod, COUNT(*) OVER() AS TotalCount from \r\n[ProxyVote].[Member] AS m INNER JOIN [ProxyVote].[VotingPeriod] v ON v.VotingPeriodId=m.VotingPeriodId  WHERE 1 = 1";
-
+              
         //        var sql = @"SELECT m.MemberId, 
         //                   m.PIN,
         //                   m.MemberNumber,
@@ -1708,17 +1549,16 @@ ORDER BY VotingPeriodId DESC;";
         //                        WHEN GETDATE() BETWEEN v.[Start] AND v.[End] THEN 'true'
         //                        ELSE 'false'
         //                   END AS IsActive
-        //            FROM[ProxyVote].[Member] AS m
-        //            INNER JOIN[ProxyVote].[VotingPeriod] v ON v.VotingPeriodId = m.VotingPeriodId
+        //            FROM[dbo].[Member] AS m
+        //            INNER JOIN[dbo].[VotingPeriod] v ON v.VotingPeriodId = m.VotingPeriodId
         //            WHERE 1 = 1 ";
 
-        //        if (VotingPeriodId > 0)
+        //        if (VotingPeriodId > 0 )
         //        {
-        //            sql += " AND m.VotingPeriodId = @VotingPeriodId";
+        //            sql += " AND v.VotingPeriodId = @VotingPeriodId";
         //        }
 
-
-        //        sql += " ORDER BY m.MemberId OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY ; ";
+        //        sql += " ORDER BY MemberId OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY ; ";
 
         //        var parameters = new DynamicParameters();
         //        parameters.Add("@Offset", ofsetItem);
@@ -1733,7 +1573,6 @@ ORDER BY VotingPeriodId DESC;";
 
         //    }
         //}
-
         public IEnumerable<VoteMember> GetAllVotingMemberData(int page, int pageSize, int VotingPeriodId, string IsEmail)
         {
             int ofsetItem = (page - 1) * pageSize;
@@ -1749,20 +1588,20 @@ ORDER BY VotingPeriodId DESC;";
                            v.Title AS VotingPeriod,
                            COUNT(*) OVER() AS TotalCount,
                            CASE
-           WHEN GETDATE() >= [Start] AND CAST(GETDATE() AS DATE) <= CAST([End] AS DATE) AND [End] >= CAST(GETDATE() AS DATE) THEN 'true'
-           ELSE 'false'
+                                WHEN GETDATE() BETWEEN v.[Start] AND v.[End] THEN 'true'
+                                ELSE 'false'
                            END AS IsActive
-                    FROM[ProxyVote].[Member] AS m
-                    INNER JOIN[ProxyVote].[VotingPeriod] v ON v.VotingPeriodId = m.VotingPeriodId
+                    FROM[dbo].[Member] AS m
+                    INNER JOIN[dbo].[VotingPeriod] v ON v.VotingPeriodId = m.VotingPeriodId
                     WHERE 1 = 1 ";
 
                 if (VotingPeriodId == 0)
                 {
                     // Condition 1: Get the latest voting period data
-                    sql += @"AND v.VotingPeriodId = (SELECT TOP 1 VotingPeriodId FROM ProxyVote.VotingPeriod ORDER BY VotingPeriodId DESC) ";
+                    sql += @"AND v.VotingPeriodId = (SELECT TOP 1 VotingPeriodId FROM dbo.VotingPeriod ORDER BY VotingPeriodId DESC) ";
 
                     // Check if the latest voting period has no member data
-                    if (!db.Query("SELECT TOP 1 1 FROM ProxyVote.Member WHERE VotingPeriodId = (SELECT TOP 1 VotingPeriodId FROM ProxyVote.VotingPeriod ORDER BY VotingPeriodId DESC)").Any())
+                    if (!db.Query("SELECT TOP 1 1 FROM dbo.Member WHERE VotingPeriodId = (SELECT TOP 1 VotingPeriodId FROM dbo.VotingPeriod ORDER BY VotingPeriodId DESC)").Any())
                     {
                         // Condition 2: Get all member data if the latest voting period has no members
                         sql = @"SELECT m.MemberId, 
@@ -1773,12 +1612,12 @@ ORDER BY VotingPeriodId DESC;";
                                 m.VotingPeriodId,
                                 v.Title AS VotingPeriod,
                                 COUNT(*) OVER() AS TotalCount,
-                               CASE
-           WHEN GETDATE() >= [Start] AND CAST(GETDATE() AS DATE) <= CAST([End] AS DATE) AND [End] >= CAST(GETDATE() AS DATE) THEN 'true'
-           ELSE 'false'
+                                CASE
+                                    WHEN GETDATE() BETWEEN v.[Start] AND v.[End] THEN 'true'
+                                    ELSE 'false'
                                 END AS IsActive
-                        FROM[ProxyVote].[Member] AS m
-                        INNER JOIN[ProxyVote].[VotingPeriod] v ON v.VotingPeriodId = m.VotingPeriodId ";
+                        FROM[dbo].[Member] AS m
+                        INNER JOIN[dbo].[VotingPeriod] v ON v.VotingPeriodId = m.VotingPeriodId ";
                     }
                 }
                 else if (VotingPeriodId == 99999999)
@@ -1831,29 +1670,92 @@ ORDER BY VotingPeriodId DESC;";
             }
         }
 
-        public IEnumerable<VoteReport> GetVoteCountReportForResult(string voatingPeriodId = "")
+        public IEnumerable<VoteMember> GetAllVotingMemberOnLatestVotingPeriod(int page, int pageSize)
         {
+            int ofsetItem = (page - 1) * pageSize;
+
             using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
             {
-                if (string.IsNullOrEmpty(voatingPeriodId))
-                {
-                    voatingPeriodId = "(Select top 1 VotingPeriodId from [ProxyVote].[VotingPeriod] Order by 1 desc)";
-                }
-                var sql = @"SELECT 
-                            c.[Name] AS CandidateName,
-                            SUM(CASE WHEN b.Ballot='For' THEN 1 ELSE 0 END) AS VoteFor, 
-                            SUM(CASE WHEN b.Ballot='Against' THEN 1 ELSE 0 END) AS VoteAgainst ,
-SUM(CASE WHEN b.Ballot='Abstain' THEN 1 ELSE 0 END) AS VoteAbstain ,
-COUNT(*) AS TotalVotes
-                        FROM  
-                            [ProxyVote].[MemberCandidateBallot] b 
-                        INNER JOIN 
-                            [ProxyVote].[Candidate]  c ON b.CandidateId = c.CandidateId
-                        Where b.VotingPeriodId= " + voatingPeriodId + "GROUP BY c.[Name];";
+                
+                var sql = @"SELECT m.MemberId, 
+                           m.PIN,
+                           m.MemberNumber,
+                           m.FullName,
+                           m.EmailAddress,
+                           m.VotingPeriodId,
+                           v.Title AS VotingPeriod,
+                           COUNT(*) OVER() AS TotalCount,
+                           CASE
+                                WHEN GETDATE() BETWEEN v.[Start] AND v.[End] THEN 'true'
+                                ELSE 'false'
+                           END AS IsActive
+                    FROM[dbo].[Member] AS m
+                    INNER JOIN[dbo].[VotingPeriod] v ON v.VotingPeriodId = m.VotingPeriodId
+                    WHERE 1 = 1 AND v.VotingPeriodId =  (SELECT TOP 1 VotingPeriodId FROM dbo.VotingPeriod ORDER BY 1 DESC) ";
 
-                return db.Query<VoteReport>(sql);
+                sql += " ORDER BY MemberId OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY ; ";
+
+                var parameters = new DynamicParameters();
+                parameters.Add("@Offset", ofsetItem);
+                parameters.Add("@PageSize", pageSize);
+
+                return db.Query<VoteMember>(sql, parameters);
+
             }
         }
+
+        public int InsertVotingMember(VoteMember voteMember)
+        {
+           
+            using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
+            {
+                db.Open();
+                using (var transaction = db.BeginTransaction())
+                {
+                    //try
+                    //{
+                        
+                        var sql = @"IF NOT EXISTS (SELECT 1 FROM MemberId FROM [dbo].[Member] WHERE MemberNumber = @MemberNumber AND PIN = @PIN AND VotingPeriodId = @VotingPeriodId)
+                        BEGIN
+                            INSERT INTO [dbo].[Member] 
+                            (
+                                [MemberNumber],
+                                [PIN],
+                                [VotingPeriodId],
+                                [EmailAddress],
+                                [FullName]
+                            )
+                            VALUES 
+                            (
+                                @MemberNumber,
+                                @PIN,
+                                @VotingPeriodId,
+                                @EmailAddress,
+                                @FullName
+                            );
+                            SELECT SCOPE_IDENTITY();
+                        END
+                        ELSE
+                        BEGIN
+                            SELECT -1;
+                        END";
+
+
+                        var id = db.QueryFirstOrDefault<int>(sql, voteMember, transaction);
+                        transaction.Commit();
+                        return id;
+
+                    //}
+                    //catch (System.Exception ex)
+                    //{
+                    //    transaction.Rollback();
+                    //    return 0;
+                    //}
+                }
+            }
+        }
+
+
         public int UpdateMemberData(VoteMember voteMember)
         {
             using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
@@ -1863,17 +1765,9 @@ COUNT(*) AS TotalVotes
                 {
                     try
                     {
-                        var sql = @"UPDATE [ProxyVote].[Member]
-                            SET MemberNumber = @MemberNumber, 
-                                PIN = @PIN, 
-                                VotingPeriodId = @VotingPeriodId, 
-                                EmailAddress = @EmailAddress, 
-                                FullName = @FullName,
-                                IsEmailUpdated = @IsEmailUpdated
+                        var sql = @"UPDATE [dbo].[Member]
+                            SET  MemberNumber = @MemberNumber, PIN = @PIN, VotingPeriodId = @VotingPeriodId, EmailAddress = @EmailAddress, FullName = @FullName
                             WHERE MemberId = @MemberId";
-
-                        // Check if the email address is updated, then set IsEmailUpdated to true
-                        voteMember.IsEmailUpdated = !string.IsNullOrEmpty(voteMember.EmailAddress);
 
                         var rowsAffected = db.Execute(sql, voteMember, transaction);
                         transaction.Commit();
@@ -1882,14 +1776,11 @@ COUNT(*) AS TotalVotes
                     catch (System.Exception ex)
                     {
                         transaction.Rollback();
-                        // Log or handle the exception as needed
-                        // You might want to re-throw the exception here depending on your requirements
-                        return 0; // Return 0 to indicate failure
+                        return 0;
                     }
                 }
             }
         }
-
         public int DeleteMemberData(int MemberId)
         {
             using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
@@ -1899,7 +1790,7 @@ COUNT(*) AS TotalVotes
                 {
                     try
                     {
-                        var sql = "DELETE FROM [ProxyVote].[Member] WHERE MemberId = @MemberId";
+                        var sql = "DELETE FROM [dbo].[Member] WHERE MemberId = @MemberId";
                         var rowsAffected = db.Execute(sql, new { MemberId }, transaction);
                         transaction.Commit();
                         return rowsAffected;
@@ -1914,35 +1805,116 @@ COUNT(*) AS TotalVotes
             }
         }
 
-        public object GetTotalVoteCountDetailsForResult(string voatingPeriodId = "")
+        public int InsertMemberVote(ProxyVoteMember entity)
         {
-            if (string.IsNullOrEmpty(voatingPeriodId))
-            {
-                voatingPeriodId = "(SELECT TOP 1 VotingPeriodId FROM [ProxyVote].VotingPeriod ORDER BY 1 DESC)";
-            }
-
-            var sql = @"
-                SELECT 
-                    (SELECT COUNT(*) FROM [ProxyVote].[Member] WHERE Enabled = 0 AND VotingPeriodId = " + voatingPeriodId + @") AS TotalEnabledMembers,
-                    (SELECT COUNT(*) FROM [ProxyVote].[Member] WHERE Enabled = 1 AND VotingPeriodId = " + voatingPeriodId + @") AS TotalDisabledMembers,
-                    (SELECT COUNT(*) FROM [ProxyVote].[Member] WHERE VotingPeriodId = " + voatingPeriodId + @") AS TotalMembersInVotingPeriod,
-                    vp.VotingPeriodId,
-                    vp.Title
-                FROM 
-                    [ProxyVote].votingPeriod vp
-                WHERE 
-                    vp.VotingPeriodId = " + voatingPeriodId + ";";
-
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
             {
-                return db.Query(sql).FirstOrDefault();
+                db.Open();
+                using (var transaction = db.BeginTransaction())
+                {
+                    try
+                    {
+                        // Check if the record already exists
+                        var existingRecord = db.QueryFirstOrDefault<int>("SELECT MemberId FROM [dbo].[Member] WHERE MemberNumber = @MemberNumber AND PIN = @PIN AND VotingPeriodId = @VotingPeriodId", new
+                        {
+                            entity.MemberNumber,
+                            entity.PIN,
+                            entity.VotingPeriodId
+                        }, transaction);
+
+                        if (existingRecord > 0)
+                        {
+                            // Record already exists, return its MemberId
+                            return -1;
+                        }
+
+                        var sql = @"
+                    INSERT INTO [dbo].[Member] 
+                    (
+                        [MemberNumber],
+                        [PIN],
+                        [VotingPeriodId],
+                        [Enabled],
+                        [EmailAddress],
+                        [FullName],
+                        [ResidentialOccupied],
+                        [ResidentialDwelling],
+                        [Renters],
+                        [Flood],
+                        [Life],
+                        [PersonalLiabilityRenters],
+                        [PersonalLiabilityCatastrophy],
+                        [Auto],
+                        [RV],
+                        [Watercraft],
+                        [Motorcycle],
+                        [Supplemental],
+                        [AnnualReport],
+                        [StatutoryFinancialStatements],
+                        [MobileHome],
+                        [PetHealth],
+                        [Business],
+                        [LongTermCare],
+                        [MailFinancials],
+                        [EmailFinancials]
+                    )
+                    VALUES 
+                    (
+                        @MemberNumber,
+                        @PIN,
+                        @VotingPeriodId,
+                        @Enabled,
+                        @EmailAddress,
+                        @FullName,
+                        @ResidentialOccupied,
+                        @ResidentialDwelling,
+                        @Renters,
+                        @Flood,
+                        @Life,
+                        @PersonalLiabilityRenters,
+                        @PersonalLiabilityCatastrophy,
+                        @Auto,
+                        @RV,
+                        @Watercraft,
+                        @Motorcycle,
+                        @Supplemental,
+                        @AnnualReport,
+                        @StatutoryFinancialStatements,
+                        @MobileHome,
+                        @PetHealth,
+                        @Business,
+                        @LongTermCare,
+                        @MailFinancials,
+                        @EmailFinancials
+                    );
+                ";
+
+                        // Execute the SQL query using Dapper
+                        var newId = db.Execute(sql, entity, transaction);
+                        transaction.Commit();
+                        sw.Stop();
+                        Sitecore.Diagnostics.Log.Info("STOPWATCH: create Member " + sw.Elapsed, "stopwatch");
+
+                        return newId;
+                    }
+                    catch (System.Exception ex)
+                    {
+                        //Log.Error($"{nameof(QuoteRepository)}: Error while attempting to insert Member.", ex, this);
+                        transaction.Rollback();
+                        sw.Stop();
+                        Sitecore.Diagnostics.Log.Info("STOPWATCH: create Member" + sw.Elapsed, "stopwatch");
+                        return 0;
+                    }
+                }
             }
         }
         public bool GetCandidateVoteBallotStatus(string votingPeriodId, string memberId)
         {
             using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
             {
-
+                
                 var sql = $@"SELECT COUNT(*) 
                         FROM [ProxyVote].[MemberCandidateBallot] AS mcb 
                         INNER JOIN [ProxyVote].[Candidate] AS c ON mcb.CandidateId = c.CandidateId 
@@ -1951,20 +1923,63 @@ COUNT(*) AS TotalVotes
                 var rowCount = db.QueryFirstOrDefault<int>(sql);
 
                 return rowCount > 0;
-
-
-            }
+                
+               
         }
-        public string GetMemberEmailByMemberNumberAndPIN(string MemberNumber, string PIN)
+        }
+
+        public IEnumerable<ProxyVoteMember> GetAllVotingMemberData()
         {
             using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
             {
-                var sql = @"SELECT TOP 1 EmailAddress FROM [ProxyVote].[Member] WHERE MemberNumber = @MemberNumber AND PIN = @PIN AND VotingPeriodId = @VotingPeriodId";
-                var query_Vp = "SELECT TOP 1 VotingPeriodId  FROM ProxyVote.VotingPeriod WHERE [Start] <= GETDATE() AND [End] >=  DATEADD(DAY, DATEDIFF(DAY, 0, GETDATE()), 1) - 1 ORDER BY VotingPeriodId DESC";
+
+                //var sql = $@"SELECT *
+                //            FROM [dbo].[Member]
+                //            WHERE EmailAddress IS NOT NULL 
+                //              AND EmailAddress <> '' 
+                //              AND votingPeriodId = {votingPeriodId}";
+                //ORDER BY c.VotingPeriodId DESC";
+                var sql = $@"SELECT *
+                            FROM [dbo].[Member]";
+                return db.Query<ProxyVoteMember>(sql);
+            }
+
+        }
+        public EmailListData GetEmailListDataByVotingPeriod(string ListName)
+        {
+            using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
+            {
+                var sql = @"SELECT * FROM [AFIMooSend_EmailList] WHERE ListName = @ListName";
+                return db.QueryFirstOrDefault<EmailListData>(sql, new { ListName = ListName });
+            }
+        }
+        public int InsertEmailListData(EmailListData EmailListData)
+        {
+            using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
+            {
+                db.Open();
+                using (var transaction = db.BeginTransaction())
+                {
+                    var sql = @"INSERT INTO [AFIMooSend_EmailList] ([ListName],[ListId],[SecurityKey],[CreatedBy],[CreatedDate]) OUTPUT INSERTED.Id VALUES(@ListName, @ListId, @SecurityKey, @CreatedBy, @CreatedDate)";
+                    var id = db.QueryFirstOrDefault<int>(sql, EmailListData, transaction);
+                    transaction.Commit();
+                    return id;
+                }
+            }
+
+        }
+
+
+        public string GetMemberEmailByMemberNumberAndPIN( string MemberNumber, string PIN)
+        {
+            using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
+            {
+                var sql = @"SELECT TOP 1 EmailAddress FROM [dbo].[Member] WHERE MemberNumber = @MemberNumber AND PIN = @PIN AND VotingPeriodId = @VotingPeriodId ORDER BY MemberId DESC;";
+                var query_Vp = "SELECT TOP 1 VotingPeriodId  FROM dbo.VotingPeriod WHERE [Start] <= GETDATE() AND [End] >= GETDATE() ORDER BY VotingPeriodId DESC";
 
                 var VotingPeriodId = db.QueryFirstOrDefault<string>(query_Vp);
 
-                var parameters = new { MemberNumber, PIN, VotingPeriodId };
+                var parameters = new { MemberNumber, PIN, VotingPeriodId};
                 var email = db.QueryFirstOrDefault<string>(sql, parameters);
                 if (string.IsNullOrEmpty(email))
                 {
@@ -1980,13 +1995,13 @@ COUNT(*) AS TotalVotes
             {
                 var sql = @"
             SELECT TOP 1 EmailAddress, PIN, FullName
-            FROM [ProxyVote].[Member]
+            FROM [dbo].[Member]
             WHERE MemberNumber = @MemberNumber
             AND VotingPeriodId = (
                 SELECT TOP 1 VotingPeriodId
-                FROM ProxyVote.VotingPeriod
-                WHERE [Start] <= CAST(GETDATE() AS DATE)
-                AND [End] >= CAST(GETDATE() AS DATE)
+                FROM dbo.VotingPeriod
+                WHERE [Start] <= GETDATE()
+                AND [End] >= GETDATE()
                 ORDER BY VotingPeriodId DESC
             )
             ORDER BY MemberId DESC;";
@@ -1994,6 +2009,10 @@ COUNT(*) AS TotalVotes
                 var parameters = new { MemberNumber };
                 return db.Query(sql, parameters).FirstOrDefault();
             }
+        }
+        public void SubmitReferralForm(ReferralModel form)
+        {
+            _referralRepository.InsertReferral(form.ToDataModel());
         }
     }
 }

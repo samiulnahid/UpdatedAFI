@@ -35,6 +35,7 @@ using AFI.Feature.WebQuoteService.Repositories;
 using Sitecore.ExperienceForms.Data.Entities;
 using Sitecore.Reflection;
 using Microsoft.Ajax.Utilities;
+using Highsoft.Web.Mvc.Charts;
 
 namespace Sitecore.ExperienceForms.Samples.SubmitActions
 {
@@ -106,7 +107,7 @@ namespace Sitecore.ExperienceForms.Samples.SubmitActions
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
-                    var query_Vp = "SELECT TOP 1 VotingPeriodId  FROM ProxyVote.VotingPeriod WHERE [Start] <= GETDATE() AND [End] >= GETDATE() ORDER BY VotingPeriodId DESC";
+                    var query_Vp = "SELECT TOP 1 VotingPeriodId  FROM ProxyVote.VotingPeriod WHERE [Start] <= GETDATE() AND [End] >=  DATEADD(DAY, DATEDIFF(DAY, 0, GETDATE()), 1) - 1 ORDER BY VotingPeriodId DESC";
                     using (SqlCommand commandVp = new SqlCommand(query_Vp, connection))
                     {
                         // Execute the query and get the result
@@ -116,22 +117,21 @@ namespace Sitecore.ExperienceForms.Samples.SubmitActions
                         if (result != null)
                         {
                             votingPeriodId = result.ToString();
-                            Console.WriteLine("VotingPeriodId: " + votingPeriodId);
+                            Log.Error($" VotingPeriodId: " + votingPeriodId, this);
                         }
                         else
                         {
-                            Console.WriteLine("No VotingPeriodId found.");
+                            Log.Error($" No VotingPeriodId found: " + votingPeriodId, this);
                         }
                     }
 
-                    string query = string.Format("SELECT TOP 1 m.* FROM ProxyVote.Member m INNER JOIN (SELECT TOP 1 * FROM ProxyVote.VotingPeriod" +
-                        " WHERE [Start] <= GETDATE() AND [End] >= GETDATE() ORDER BY VotingPeriodId DESC) vp ON vp.VotingPeriodId = m.VotingPeriodId" +
+                    string query = string.Format("SELECT TOP 1 m.* FROM ProxyVote.Member m INNER JOIN (SELECT TOP 1 VotingPeriodId  FROM ProxyVote.VotingPeriod WHERE [Start] <= GETDATE() AND [End] >=  DATEADD(DAY, DATEDIFF(DAY, 0, GETDATE()), 1) - 1 ORDER BY VotingPeriodId DESC) vp ON vp.VotingPeriodId = m.VotingPeriodId" +
                         " WHERE m.MemberNumber = '{0}' AND m.PIN = '{1}' ORDER BY vp.VotingPeriodId DESC;", memberNumber, pINNumber);
                     // SqlCommand command = new SqlCommand(@"Select top 1* from ProxyVote.Member Where MemberNumber='" + memberNumber + "' and PIN='" + pINNumber + "' and VotingPeriodId=" + votingPeriodId, connection);
                     SqlCommand command = new SqlCommand(query, connection);
-                    try 
+                    try
                     {
-                      
+
                         SqlDataReader reader = command.ExecuteReader();
                         member = UtilityManager.DataReaderMap<ProxyVoteMember>(reader);
                         reader.Close();
@@ -238,7 +238,7 @@ Where mcb.MemberId = " + member.MemberId + " And mcb.VotingPeriodId=" + member.V
                 {
                     foreach (IViewModel postedField in formSubmitContext.Fields)
                     {
-                        AddFieldData(postedField, new FormEntry { FormItemId = formSubmitContext.FormId, FormEntryId = formSubmitContext.SessionId, Fields = new List<FieldData>() },memberId, votingPeriodId);
+                        AddFieldData(postedField, new FormEntry { FormItemId = formSubmitContext.FormId, FormEntryId = formSubmitContext.SessionId, Fields = new List<FieldData>() }, memberId, votingPeriodId);
                     }
                     #region OldCode
                     //if (formSubmitContext.Fields.Count > 0)
@@ -380,55 +380,76 @@ Where mcb.MemberId = " + member.MemberId + " And mcb.VotingPeriodId=" + member.V
 
             return true;
         }
-        protected  void AddFieldData(IViewModel postedField, FormEntry formEntry, int memberId, int votingPeriodId)
+        protected void AddFieldData(IViewModel postedField, FormEntry formEntry, int memberId, int votingPeriodId)
         {
             List<SelectedValues> fieldValues = GetFieldValue(postedField);
-            if(fieldValues.Any())
+            if (fieldValues.Any())
             {
                 foreach (var fieldValue in fieldValues)
                 {
-                    if(!string.IsNullOrEmpty(fieldValue.Value))
+                    if (!string.IsNullOrEmpty(fieldValue.Value))
                     {
                         using (SqlConnection connection = new SqlConnection(ConnectionString))
                         {
                             connection.Open();
 
-                            string _ballot = fieldValue.IsCheckedAgainst ? "Against" : "For";
-                                Sitecore.Diagnostics.Log.Info($"Ballot Start", "Mehedi");
-                                ProxyVoteMemberCandidateBallot proxyVote = new ProxyVoteMemberCandidateBallot();
-                                proxyVote.Ballot = _ballot;
-                                proxyVote.CandidateId = System.Convert.ToInt32(fieldValue.Value);
-                                proxyVote.DateTimeCast = DateTime.Now;
-                                proxyVote.MemberId = memberId;
-                                proxyVote.VotingPeriodId = votingPeriodId;
-
-                                SqlCommand command = new SqlCommand(@"insert into [ProxyVote].[MemberCandidateBallot]([MemberId], [CandidateId], [VotingPeriodId], [Ballot], [DateTimeCast]) values(@MemberId, @CandidateId, @VotingPeriodId, @Ballot, @DateTimeCast); select scope_identity()", connection);
-                                foreach (var vote in proxyVote.GetType().GetProperties())
-                                {
-
-                                    string name = vote.Name;
-                                    var value = vote.GetValue(proxyVote, null);
-
-                                    command.Parameters.Add(new SqlParameter("@" + name, value == null ? DBNull.Value : value));
-
-                                }
-                                try
-                                {
-                                    command.ExecuteNonQuery();
-                                }
-                                catch (Exception e)
-                                {
-                                    //throw new Exception("Exception retrieving reviews. " + e.Message);
-
-                                }
-                                finally
-                                {
-                                    connection.Close();
-                                }
-                                Sitecore.Diagnostics.Log.Info($"Ballot End", "Mehedi");
+                            //string _ballot = fieldValue.IsCheckedAgainst ? "Against" : "For";
+                            string _ballot="";
+                            if (fieldValue.IsCheckedAgainst)
+                            {
+                                _ballot = "Against";
                             }
-                           
-                        
+                            else if (fieldValue.IsCheckedFor)
+                            {
+                                _ballot = "For";
+                            }
+                            else if (fieldValue.IsCheckedAbstain)
+                            {
+                                _ballot = "Abstain";
+                            }
+                            else
+                            {
+                                _ballot = "For";
+                            }
+                            Sitecore.Diagnostics.Log.Info($"Ballot Start ", "Mehedi");
+                            Sitecore.Diagnostics.Log.Info($"Ballot Start CandidateId "+ fieldValue.Value, "Mehedi");
+                            Sitecore.Diagnostics.Log.Info($"Ballot Start MemberId " + memberId, "Mehedi");
+                            Sitecore.Diagnostics.Log.Info($"Ballot Start VotingPeriodId " + votingPeriodId, "Mehedi");
+                            ProxyVoteMemberCandidateBallot proxyVote = new ProxyVoteMemberCandidateBallot();
+                            proxyVote.Ballot = _ballot;
+                            proxyVote.CandidateId = System.Convert.ToInt32(fieldValue.Value);
+                            proxyVote.DateTimeCast = DateTime.Now;
+                            proxyVote.MemberId = memberId;
+                            proxyVote.VotingPeriodId = votingPeriodId;
+
+                            SqlCommand command = new SqlCommand(@"insert into [ProxyVote].[MemberCandidateBallot]([MemberId], [CandidateId], [VotingPeriodId], [Ballot], [DateTimeCast]) values(@MemberId, @CandidateId, @VotingPeriodId, @Ballot, @DateTimeCast); select scope_identity()", connection);
+                            foreach (var vote in proxyVote.GetType().GetProperties())
+                            {
+
+                                string name = vote.Name;
+                                var value = vote.GetValue(proxyVote, null);
+
+                                command.Parameters.Add(new SqlParameter("@" + name, value == null ? DBNull.Value : value));
+
+                            }
+                            try
+                            {
+                                command.ExecuteNonQuery();
+                            }
+                            catch (Exception e)
+                            {
+                                Sitecore.Diagnostics.Log.Info($"Ballot error "+ e.InnerException + e.Message, "Mehedi");
+                                //throw new Exception("Exception retrieving reviews. " + e.Message);
+
+                            }
+                            finally
+                            {
+                                connection.Close();
+                            }
+                            Sitecore.Diagnostics.Log.Info($"Ballot End", "Mehedi");
+                        }
+
+
                     }
 
                 }
@@ -456,8 +477,11 @@ Where mcb.MemberId = " + member.MemberId + " And mcb.VotingPeriodId=" + member.V
                         {
                             command.ExecuteNonQuery();
 
+                            string voteTestMail = ConfigurationManager.AppSettings["VoteTestMail"];
+                            if (!string.IsNullOrEmpty(voteTestMail))
+                                email_To = voteTestMail;
 
-                            //#region EMAIL                                    
+                            #region EMAIL                                    
                             Sitecore.Diagnostics.Log.Info($"Email Start " + email_To + " " + memberId, "Mehedi");
                             Sitecore.Data.Items.Item emailtemplate = Sitecore.Context.Database.GetItem(ProxyVoteMail.Email_ItemId);
                             string email_Subject = emailtemplate[ProxyVoteMail.Email_Subject];
@@ -472,11 +496,12 @@ Where mcb.MemberId = " + member.MemberId + " And mcb.VotingPeriodId=" + member.V
                                 _emailService.Send(email);
                                 Sitecore.Diagnostics.Log.Info($"Email End", "Mehedi");
                             }
-                            //#endregion
+                            #endregion
 
                         }
                         catch (Exception e)
                         {
+                            Sitecore.Diagnostics.Log.Info($"Exception UPDATE Member"+e.InnerException, "Mehedi");
                             //  throw new Exception("Exception retrieving reviews. " + e.Message);
 
                         }
@@ -503,7 +528,7 @@ Where mcb.MemberId = " + member.MemberId + " And mcb.VotingPeriodId=" + member.V
             return newURL;
         }
 
-        public  Email BuildConfirmationEmail(string fromEmail, string toEmail, string emailSubject, string consumerMessageBody)
+        public Email BuildConfirmationEmail(string fromEmail, string toEmail, string emailSubject, string consumerMessageBody)
         {
             var email = new Email();
             email.IsBodyHtml = true;
@@ -879,7 +904,7 @@ WHERE MemberId=" + memberId, connection);
 
     public class SubmitLead : SubmitActionBase<string>
     {
-       
+
         private readonly IEmailService _emailService;
         private readonly IDbConnectionProvider _dbConnectionProvider;
         //  private readonly IAFIFormsSentToRepository _afiFormsSentToRepository;
@@ -958,7 +983,7 @@ WHERE MemberId=" + memberId, connection);
 
                 var txtState = formSubmitContext.Fields.FirstOrDefault(f => f.Name.Equals("state"));
                 if (txtState != null)
-                {              
+                {
                     state = GetDDLValue(txtState);
                 }
 
@@ -1010,7 +1035,7 @@ WHERE MemberId=" + memberId, connection);
                     afiForm.UpdatedDate = DateTime.Now;
                     Sitecore.Diagnostics.Log.Info($"End Load AFIForm Data", "Mehedi");
 
-                   // sw.Restart();
+                    // sw.Restart();
                     //Sitecore.Diagnostics.Log.Info($"Load AFIForm Data", "Mehedi");
                     //AFIFormsSentTo sentTo = new AFIFormsSentTo();
                     //sentTo.CreateDate = DateTime.Now;
@@ -1018,12 +1043,12 @@ WHERE MemberId=" + memberId, connection);
                     //sentTo.QuoteType = CoverageTypes.LeadGeneration;
                     //_afiFormsSentToRepository.Create(sentTo);
                     //Sitecore.Diagnostics.Log.Info($"Load AFIForm Data", "Mehedi");
-                   // sw.Stop();
-                   // Sitecore.Diagnostics.Log.Info("WS ProcessSubmitInformationToAFI Create afiFormsSentToRepository time elapsed" + sw.ElapsedMilliseconds, AFIConstants.QUOTE_FORMS_LOGGER_NAME);
+                    // sw.Stop();
+                    // Sitecore.Diagnostics.Log.Info("WS ProcessSubmitInformationToAFI Create afiFormsSentToRepository time elapsed" + sw.ElapsedMilliseconds, AFIConstants.QUOTE_FORMS_LOGGER_NAME);
 
                     sw.Restart();
                     _partnerAdvisorRepository.InsertAFIForm(afiForm);
-                  
+
                 }
                 catch (Exception ex)
                 {
@@ -1061,7 +1086,7 @@ WHERE MemberId=" + memberId, connection);
                         mappingKeys.Add("zip", zip);
                         mappingKeys.Add("coveragetype", CoverageTypes.LeadGeneration);
 
-                        if(!string.IsNullOrEmpty(admin_email_Subject) && !string.IsNullOrEmpty(admin_email_Body) && !string.IsNullOrEmpty(email_To))
+                        if (!string.IsNullOrEmpty(admin_email_Subject) && !string.IsNullOrEmpty(admin_email_Body) && !string.IsNullOrEmpty(email_To))
                         {
                             string bodyParsed = re.ReplaceTokens(admin_email_Body, mappingKeys);
                             Sitecore.Diagnostics.Log.Info($"Mehedi Email Map end", "Mehedi");
@@ -1071,7 +1096,7 @@ WHERE MemberId=" + memberId, connection);
                             _emailService.Send(send_email);
                             Sitecore.Diagnostics.Log.Info($"Admin Email End", "Mehedi");
                         }
-                      
+
                         // Send to Client
                         string subject_client = re.ReplaceTokens(client_email_Subject, mappingKeys);
                         string body_client = re.ReplaceTokens(client_email_Body, mappingKeys);
@@ -1087,10 +1112,10 @@ WHERE MemberId=" + memberId, connection);
                 }
                 catch (Exception ex)
                 {
-                    Sitecore.Diagnostics.Log.Info($"Mehedi email Exception "+ex.Message, "Mehedi");
+                    Sitecore.Diagnostics.Log.Info($"Mehedi email Exception " + ex.Message, "Mehedi");
 
                 }
-                
+
 
                 Logger.Info(Invariant($"Form {formSubmitContext.FormId} submitted successfully."), this);
             }

@@ -37,5 +37,27 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Models
 		public bool LongTermCare { get; set; }
 		public bool MailFinancials { get; set; }
 		public bool EmailFinancials { get; set; }
-	}
+
+		public bool IsEmailUpdated { get; set; }
+
+		public string Prefix { get; set; }
+		public string Salutation { get; set; }
+		public string InsuredFirstName { get; set; }
+		public string InsuredLastName { get; set; }
+		public string ClientType { get; set; }
+		public string ServiceStatus { get; set; }
+		public string MailingAddressLine1 { get; set; }
+		public string MailingAddressLine2 { get; set; }
+		public string MailingCityName { get; set; }
+		public string MailingCountyName { get; set; }
+		public string MailingStateAbbreviation { get; set; }
+		public string MailingZip { get; set; }
+		public string MailingCountry { get; set; }
+		public string MembershipDate { get; set; }
+		public string YearsAsMember { get; set; }
+		public string Gender { get; set; }
+		public string Deceased { get; set; }
+		public DateTime CreateDate { get; set; } = DateTime.Now;
+
+    }
 }

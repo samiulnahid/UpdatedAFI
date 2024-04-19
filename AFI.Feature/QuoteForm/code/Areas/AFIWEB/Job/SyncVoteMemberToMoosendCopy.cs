@@ -30,8 +30,8 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Job
 
         Service service = new Service();
 
-        private readonly IAFIReportRepository _AFIReportRepository;
-        public SyncVoteMemberToMoosendCopy(IAFIReportRepository AFIReportRepository)
+        private readonly IAFIReportRepositoryX _AFIReportRepository;
+        public SyncVoteMemberToMoosendCopy(IAFIReportRepositoryX AFIReportRepository)
         {
             _AFIReportRepository = AFIReportRepository;
         }
