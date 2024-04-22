@@ -1746,6 +1746,33 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
                 return Json(finalJson, JsonRequestBehavior.AllowGet);
             }
         }
+        [HttpGet]
+        public JsonResult GetAllLatestVotingPeriodCandidateData()
+        {
+
+            try
+            {
+                var candidateDataList = _AFIReportRepository.GetAllLatestVotingPeriodCandidateData();
+
+                if (candidateDataList.Any())
+                {
+                    string finalJson = JsonConvert.SerializeObject(candidateDataList);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var response = new { Success = false, Message = $"No Data Found!" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                var response = new { Success = false, Message = $"Error retrieving Candidate Data. Exception: {ex.Message}" };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+            }
+        }
 
         [HttpGet]
         public JsonResult GetCandidateById(string id)

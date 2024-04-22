@@ -83,6 +83,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Repository
         string GetMemberEmailByMemberNumberAndPIN(string MemberNumber, string PIN);
 
         object GetMemberInfoByMemberNumber(string MemberNumber);
+        IEnumerable<VoteCandidate> GetAllLatestVotingPeriodCandidateData();
     }
 
     public class AFIReportRepository : IAFIReportRepository
@@ -1576,6 +1577,18 @@ ORDER BY VotingPeriodId DESC;";
                 return db.Query<VoteCandidate>(sql);
             }
         }
+
+        public IEnumerable<VoteCandidate> GetAllLatestVotingPeriodCandidateData()
+        {
+            using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
+            {
+                var sql = @"select * FROM 
+[ProxyVote].[Candidate] where  VotingPeriodId = (SELECT TOP 1 VotingPeriodId FROM ProxyVote.VotingPeriod ORDER BY VotingPeriodId DESC)";
+
+                return db.Query<VoteCandidate>(sql);
+            }
+        }
+
         public VoteCandidate GetCandidateById(int candidateId)
         {
             using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
