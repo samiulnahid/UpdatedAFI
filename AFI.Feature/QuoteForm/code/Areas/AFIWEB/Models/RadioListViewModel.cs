@@ -21,7 +21,8 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Models
             List<SelectedValues> selectedItems = new List<SelectedValues>();
             foreach (var item in RadioItems)
             {
-                string radiobuttonName = HttpContext.Current.Request.Form.AllKeys.First(x => x.Contains(item.Name));
+               // string radiobuttonName = HttpContext.Current.Request.Form.AllKeys.First(x => x.Contains(item.Name));
+                string radiobuttonName = HttpContext.Current.Request.Form.AllKeys.First(x => x.Contains(item.Value));
                 string radiobuttonValue = HttpContext.Current.Request.Form[radiobuttonName];
 
 

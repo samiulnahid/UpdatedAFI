@@ -521,7 +521,7 @@ textarea.field__input {
 .quote_request__action_buttons {
   width: 100%;
   background-color: #f1f1f1;
-  padding: 1rem 0;
+  padding: 1rem 0 !important;
   position: -webkit-sticky;
   position: sticky;
   bottom: 0;
@@ -730,4 +730,70 @@ button:disabled {
     padding-left: 10px;
     padding-right: 10px;
   }
+}
+
+
+
+/* *******************************************
+                SITECORE FORM
+******************************************** */
+/* .Eligibility__Form .field__input-wrapper {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+} */
+
+#Eligibility__Form form{
+  color: #000 !important;
+}
+
+#Eligibility__Form .field_label_wrapper label{
+  font-weight: 700 !important;
+    margin-bottom: 1.5rem;
+    color: #000;
+    font-size: 16px;
+}
+
+.Eligibility__Form .radio__form_section .field-group {
+  background-color: transparent;
+}
+
+.Eligibility__Form .field__input-wrapper label {
+  cursor: pointer;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 1.25rem 1rem 1.25rem 1rem;
+  width: 100%;
+  font-size: 16px;
+  color: #363636;
+  color: var(--color-gray-30);
+  margin-bottom: 0.3rem;
+  background-color: #f6f6f6;
+}
+
+#Eligibility__Form .checked__label {
+  background-color: #003864;
+  background-color: var(--color-blue-40);
+  color: #fff;
+  color: var(--color-white);
+}
+
+#Eligibility__Form .button {
+  background-color: #0570c5 !important;
+  border-color: #0570c5 !important;
+  color: #fff !important;
+  border-radius: 1.625rem !important;
+  border-style: solid !important;
+  cursor: pointer;
+  display: inline-block !important;
+  font-size: 1rem !important;
+  font-weight: 400;
+  width: 9.25rem;
+  opacity: 1;
+  /* padding: 8px 20px; */
+  padding: 12px 20px;
+  text-align: center !important;
+  transition: background-color 0.25s, border-color 0.25s, color 0.25s,
+  opacity 0.25s;
 }

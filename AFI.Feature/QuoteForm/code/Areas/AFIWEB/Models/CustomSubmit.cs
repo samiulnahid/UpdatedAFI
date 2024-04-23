@@ -203,7 +203,7 @@ Where mcb.MemberId = " + member.MemberId + " And mcb.VotingPeriodId=" + member.V
         {
             var property = field.GetType().GetProperty("Value");
             var data = property.GetValue(field);
-            return data.ToString();
+            return data == null ? "" : data.ToString();
         }
     }
 
@@ -394,7 +394,7 @@ Where mcb.MemberId = " + member.MemberId + " And mcb.VotingPeriodId=" + member.V
                             connection.Open();
 
                             //string _ballot = fieldValue.IsCheckedAgainst ? "Against" : "For";
-                            string _ballot="";
+                            string _ballot = "";
                             if (fieldValue.IsCheckedAgainst)
                             {
                                 _ballot = "Against";
@@ -412,7 +412,7 @@ Where mcb.MemberId = " + member.MemberId + " And mcb.VotingPeriodId=" + member.V
                                 _ballot = "For";
                             }
                             Sitecore.Diagnostics.Log.Info($"Ballot Start ", "Mehedi");
-                            Sitecore.Diagnostics.Log.Info($"Ballot Start CandidateId "+ fieldValue.Value, "Mehedi");
+                            Sitecore.Diagnostics.Log.Info($"Ballot Start CandidateId " + fieldValue.Value, "Mehedi");
                             Sitecore.Diagnostics.Log.Info($"Ballot Start MemberId " + memberId, "Mehedi");
                             Sitecore.Diagnostics.Log.Info($"Ballot Start VotingPeriodId " + votingPeriodId, "Mehedi");
                             ProxyVoteMemberCandidateBallot proxyVote = new ProxyVoteMemberCandidateBallot();
@@ -438,7 +438,7 @@ Where mcb.MemberId = " + member.MemberId + " And mcb.VotingPeriodId=" + member.V
                             }
                             catch (Exception e)
                             {
-                                Sitecore.Diagnostics.Log.Info($"Ballot error "+ e.InnerException + e.Message, "Mehedi");
+                                Sitecore.Diagnostics.Log.Info($"Ballot error " + e.InnerException + e.Message, "Mehedi");
                                 //throw new Exception("Exception retrieving reviews. " + e.Message);
 
                             }
@@ -470,6 +470,7 @@ Where mcb.MemberId = " + member.MemberId + " And mcb.VotingPeriodId=" + member.V
                     {
                         string email_To = HttpContext.Current.Session["txt_email"] != null ? HttpContext.Current.Session["txt_email"].ToString() : "";
 
+
                         Sitecore.Diagnostics.Log.Info($"Update Start", "Mehedi");
                         var uMemberQuery = string.Format("UPDATE [ProxyVote].[Member] SET  [Enabled] =0, [EmailAddress]='{0}' WHERE MemberId={1}", email_To, memberId);
                         command = new SqlCommand(uMemberQuery, connection);
@@ -481,27 +482,30 @@ Where mcb.MemberId = " + member.MemberId + " And mcb.VotingPeriodId=" + member.V
                             if (!string.IsNullOrEmpty(voteTestMail))
                                 email_To = voteTestMail;
 
-                            #region EMAIL                                    
-                            Sitecore.Diagnostics.Log.Info($"Email Start " + email_To + " " + memberId, "Mehedi");
-                            Sitecore.Data.Items.Item emailtemplate = Sitecore.Context.Database.GetItem(ProxyVoteMail.Email_ItemId);
-                            string email_Subject = emailtemplate[ProxyVoteMail.Email_Subject];
-                            // string email_To = HttpContext.Current.Session["txt_email"] != null ? HttpContext.Current.Session["txt_email"].ToString() : "";
-                            string email_From = emailtemplate[ProxyVoteMail.Email_Sender];
-                            string email_Body = emailtemplate[ProxyVoteMail.Email_Body];
+                            #region EMAIL    
                             if (!string.IsNullOrEmpty(email_To))
                             {
-                                Sitecore.Diagnostics.Log.Info($"Email Build", "Mehedi");
-                                var email = BuildConfirmationEmail(email_From, email_To, email_Subject, email_Body);
-                                Sitecore.Diagnostics.Log.Info($"Email Send", "Mehedi");
-                                _emailService.Send(email);
-                                Sitecore.Diagnostics.Log.Info($"Email End", "Mehedi");
+                                Sitecore.Diagnostics.Log.Info($"Email Start " + email_To + " " + memberId, "Mehedi");
+                                Sitecore.Data.Items.Item emailtemplate = Sitecore.Context.Database.GetItem(ProxyVoteMail.Email_ItemId);
+                                string email_Subject = emailtemplate[ProxyVoteMail.Email_Subject];
+                                // string email_To = HttpContext.Current.Session["txt_email"] != null ? HttpContext.Current.Session["txt_email"].ToString() : "";
+                                string email_From = emailtemplate[ProxyVoteMail.Email_Sender];
+                                string email_Body = emailtemplate[ProxyVoteMail.Email_Body];
+                                if (!string.IsNullOrEmpty(email_To))
+                                {
+                                    Sitecore.Diagnostics.Log.Info($"Email Build", "Mehedi");
+                                    var email = BuildConfirmationEmail(email_From, email_To, email_Subject, email_Body);
+                                    Sitecore.Diagnostics.Log.Info($"Email Send", "Mehedi");
+                                    _emailService.Send(email);
+                                    Sitecore.Diagnostics.Log.Info($"Email End", "Mehedi");
+                                }
                             }
                             #endregion
 
                         }
                         catch (Exception e)
                         {
-                            Sitecore.Diagnostics.Log.Info($"Exception UPDATE Member"+e.InnerException, "Mehedi");
+                            Sitecore.Diagnostics.Log.Info($"Exception UPDATE Member" + e.InnerException, "Mehedi");
                             //  throw new Exception("Exception retrieving reviews. " + e.Message);
 
                         }
@@ -510,6 +514,7 @@ Where mcb.MemberId = " + member.MemberId + " And mcb.VotingPeriodId=" + member.V
                             connection.Close();
 
                         }
+
                     }
 
                 }

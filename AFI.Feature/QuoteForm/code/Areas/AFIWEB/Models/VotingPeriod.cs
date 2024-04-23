@@ -13,6 +13,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Models
         public DateTime End { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
+        public bool IsValid {get; set;}
         public bool IsActive { get; set; }
 
     }

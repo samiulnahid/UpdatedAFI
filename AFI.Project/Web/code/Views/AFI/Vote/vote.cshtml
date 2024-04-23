@@ -4,236 +4,236 @@
 @Html.RenderFormStyles()
 @Html.RenderFormScripts()
 @{
+
     var name = HttpContext.Current.Session["membername"] != null ? HttpContext.Current.Session["membername"] : "";
+    var memberId = HttpContext.Current.Session["memberId"] != null ? HttpContext.Current.Session["memberId"] : "";
+    var votingPeriodId = HttpContext.Current.Session["votingPeriodId"] != null ? HttpContext.Current.Session["votingPeriodId"] : "";
 }
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style type="text/css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
 
-    .dv-content {
-        width: 750px;
-        margin: 50px auto;
-    }
+        $.ajax({
+            url: "/api/sitecore/AFIReport/GetAllVotingPeriod",
+            type: "GET",
+            success: function (data) {
+                const parsedData = JSON.parse(data);
+                console.log("Received data:", parsedData); // Log the received data
 
-    .dv-content-vote-bottom {
-        margin-left: 10%;
-        background: #fafafa;
-        padding: 10px 20px 25px;
-    }
+                // Check if data is an array and is not empty
+                if (Array.isArray(parsedData) && parsedData.length > 0) {
+                    // Check if IsActive is false for all parsedData
+                    var allInactive = parsedData.every(function (item) {
+                        return item.IsActive === false;
+                    });
 
-    .txt-no {
-        margin-bottom: 5px;
-    }
-
-    .txt-title {
-        font-weight: 600;
-        color: #014d8a;
-        margin-top: 15px;
-        margin-bottom: 5px;
-    }
-
-    .vote-header {
-        text-align: center;
-        font-weight: 600;
-        color: #014d8a;
-        margin-bottom: 5px;
-    }
-
-    .txt-candidate {
-        font-size: 14px;
-    }
-
-    .txt-bottom {
-        font-size: 14px;
-    }
-
-    .vote_subheader {
-        font-size: 17px;
-        text-align: center;
-        font-weight: 600;
-        color: #014d8a;
-        margin: 20px auto;
-    }
-
-    .form-field {
-        margin: auto;
-        width: 255px;
-    }
-
-        .form-field label {
-            width: 100%;
-            text-align: left;
-            font-size: 15px;
-            display: block;
-        }
-
-    .txt-box-small {
-        width: 100%;
-        border: 1px solid #cfd0d0 !important;
-        border-radius: 5px !important;
-        margin-bottom: 10px;
-    }
-
-    #chat-container {
-        height: 0px !important;
-    }
-
-    .m_pin {
-        width: 50%;
-        display: block;
-    }
-
-    .lblhide {
-        display: none !important;
-    }
-
-    .contbtn {
-        text-align: center;
-        margin-top: 1.25rem;
-    }
-
-    .continue {
-        background: #0070ab;
-        color: #fff;
-        border-radius: 16px;
-        border: none;
-        font-size: 16px;
-        padding: 9px 36px;
-        text-decoration: none;
-        width: auto;
-        margin: 20px 0 20px 5%;
-        cursor: pointer;
-    }
-
-    .txt-dear {
-        margin-top: 30px;
-    }
-
-    .rdo-lbl-st2 {
-        width: 60% !important;
-        text-align: left !important;
-        font-size: 15px;
-        display: inline-flex;
-        margin-bottom: 8px;
-    }
-
-    .rdo-css {
-        width: 100%;
-    }
-
-    .lbl-chk-main {
-        width: 100% !important;
-        text-align: left !important;
-        color: #000000;
-        font-weight: 500;
-    }
-
-    .st3 label {
-        width: 49% !important;
-        text-align: left;
-        font-size: 13px;
-    }
-
-
-    .field-validation-error {
-        color: red;
-        padding: 5px;
-        font-size: 12px;
-        display: block;
-    }
-
-    .validation-summary-errors {
-        color: red;
-        text-align: center;
-        padding-bottom: 5px;
-        font-size: 12px;
-    }
-
-        .validation-summary-errors ul {
-            display: inline-table;
-        }
-
-    .form-label label:not(:first-child) {
-        margin-top: 1.25rem;
-    }
-
-    .form-field .info_id {
-        display: contents;
-        float: left;
-    }
-
-    .mid_info:before {
-        content: "\f05a";
-        font-family: FontAwesome;
-    }
-
-    .form-field .info_pin {
-        display: contents;
-        float: left;
-    }
-
-    .pin_info:before {
-        content: "\f05a";
-        font-family: FontAwesome;
-    }
-
-    .mid_info, .pin_info {
-        margin-left: 7px;
-    }
-
-    .txt_mno, .txt_pin {
-        display: none;
-    }
-    @@media(max-width: 991.98px) {
-        .dv-content {
-            width: 100%;
-            margin: 50px auto;
-        }
-        .txtbody {
-            width: 90%;
-            margin: auto;
-        }
-        .rdo-lbl-st2 {
-            width: 45% !important;
-        }
-        .mid_info {            
-            position: relative;
-        }
-
-            .mid_info .title {
-                position: absolute;
-                top: 20px;
-                background: #e6e5e5;
-                padding: 4px;
-                right: -140px;
-                font-size: 12px;
-                border: 1px solid #ccc;
+                    // If all parsedData are inactive, redirect
+                    if (allInactive) {
+                        window.location.href = '/vote/closed';
+                    }
+                } else {
+                    // Handle case where data is not in the expected format or is empty
+                    console.error("Data is not in the expected format or is empty.");
+                }
+            },
+            error: function (xhr, status, error) {
+                // Handle error
+                console.error("Error occurred while fetching data:", error);
             }
+        });
+        // Get the current page URL
+        var currentPageUrl = window.location.pathname;
 
-        .pin_info {           
-            position: relative;
+        // Check if the current page URL is '/vote/step-two' and session name is null or empty
+        if (currentPageUrl.indexOf('/vote/step-two') !== -1 && ('@name' === '' || '@name' === null)) {
+            // Redirect to the '/vote' page
+            //window.location.href = '/vote';
         }
+          if (currentPageUrl.indexOf('/vote/step-two') !== -1 && ('@name' != '' || '@name' != null)) {
+     
+              const url = `/api/sitecore/AFIReport/GetCandidateVoteBallotStatus?votingPeriodId=@votingPeriodId&memberId=@memberId`;
 
-            .pin_info .title {
-                position: absolute;
-                top: 20px;
-                background: #e6e5e5;
-                padding: 4px;
-                right: -140px;
-                font-size: 12px;
-                border: 1px solid #ccc;
+              $.ajax({
+                  type: "GET",
+                  url: url,
+                  dataType: "json",
+                  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                  data: {},
+                  success: function (data) {
+                      // Parse the JSON data
+                      var jsonResponse = JSON.parse(data);
+                      //  Error Handle
+                      if (!jsonResponse?.Success) {
+                          if (jsonResponse?.VoteStatus == true) {
+                              window.location.href = '/vote/Message-Page';
+                          }
+                      }
+                    
+                  },
+                  error: function (xhr, status, error) {
+                      // Handle error
+                      console.error("Error occurred while fetching data:", error);
+                  }
+              });
+
+
+            // *************  To get all candidates data *************
+            const urlCandidates = `/api/sitecore/AFIReport/GetAllLatestVotingPeriodCandidateData`;
+
+              $.ajax({
+                  type: "GET",
+                  url: urlCandidates,
+                  dataType: "json",
+                  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                  data: {},
+                  success: function (data) {
+                      // Parse the JSON data
+                      var jsonResponse = JSON.parse(data);
+                     
+                     dynamicCandidateData(jsonResponse)
+                    
+                  },
+                  error: function (xhr, status, error) {
+                      // Handle error
+                      console.error("Error occurred while fetching data:", error);
+                  }
+              });
+
+              function dynamicCandidateData(data){
+                const candidatePopupContainer = document.getElementById("candidate-popup-container");
+                if(!candidatePopupContainer) return;
+
+                candidatePopupContainer.innerHTML = "";
+
+                if(data && data?.length > 0){
+                    data.forEach(candidate => {
+                        const section = document.createElement("section");
+                        section.className = `candidate-popup ${candidate?.CandidateId}`;
+                        section.setAttribute("data-id", candidate?.CandidateId);
+
+                        section.innerHTML = `
+                        <span class="outside"></span>
+                            <div class="popup-wrapper">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title"></h5>
+                                        <button type="button" class="btn-close"></button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="chair-bio">
+                                            <div class="chair-bio-content">
+
+                                            <h3 class="candidate-name">
+                                 ${candidate?.Name}
+                             </h3>
+
+                                                <div class="candidate-content">
+                                                    ${candidate?.Content}
+                                                </div>
+                                            </div>
+
+                                            <div class="chair-bio-image">
+                                                <img src="${location.origin}/${candidate?.ImagePath}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`
+
+                            /*<h3 class="candidate-name">
+                                 ${candidate?.Name}
+                             </h3>*/
+
+                            candidatePopupContainer.appendChild(section);
+
+                        // ********** Show Popup Functionality ***********
+                        const profileBtns  = document.querySelectorAll(".candidate-item-name button");
+                        const allPopup = document.querySelectorAll(".candidate-popup");
+
+                        profileBtns.forEach(button=>{
+                            button.addEventListener("click", ()=>{
+                                const targetId  = button.dataset?.id;
+
+                                const targetedPopup = document.querySelector(`.candidate-popup[data-id="${targetId}"]`)
+                                if(!targetedPopup) return alert("No data found!");
+                                allPopup.forEach(el=> el.classList.remove("show"));
+                                targetedPopup.classList.add("show");
+                                document.body.style.overflow = "hidden";
+                            })
+                        });
+
+                                // ********** Close Popup Functionality ***********
+                        
+
+                        allPopup.forEach(popup =>{
+                        const closeBtn =  popup.querySelector(".btn-close");
+                        const outside =  popup.querySelector(".outside");
+
+                            closeBtn.addEventListener("click", ()=>{
+                                popup.classList.remove("show");
+                                document.body.style.overflow = ""
+                            });
+                            
+                            outside.addEventListener("click", ()=>{
+                                popup.classList.remove("show");
+                                document.body.style.overflow = ""
+                            });
+                        });
+                    });
+                }
             }
-    }
-          
-</style>
+        }
+    });
+</script>
+
+<script>
+
+    $(document).ready(function() {
+        $('.VotetxtMemberNumber, .VotetxtPinNumber').on('input', function() {
+            var afiMemberNumber = $('.VotetxtMemberNumber').val();
+            var pin = $('.VotetxtPinNumber').val();
+
+            if (afiMemberNumber && pin) {
+                 const url = `/api/sitecore/AFIReport/GetMemberEmailByMemberNumberAndPIN?memberNumber=${afiMemberNumber}&pin=${pin}`;
+                $.ajax({
+                    type: 'GET',
+                    url:url,
+                    dataType: "json",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    data: {},
+                    success: function (data) {
+                      // Parse the JSON data
+                      var jsonResponse = JSON.parse(data);
+                      //  Error Handle
+                      if (!jsonResponse?.Success) {
+                           var email = jsonResponse.EmailAddress || '';
+                       $('.VotetxtEmail').val(email);
+                      }
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error
+                        console.error("Error occurred while fetching data:", error);
+                    }
+                });
+            }
+        });
+
+        
+    });
+</script>
+
 <section class="main offscreen__darken" role="main" id="main-content">
-    <div class="dv-content">
 
+
+    <div class="dv-content">
         @Html.Sitecore().Placeholder("step01")
         @Html.Sitecore().Placeholder("step02")
         @Html.Sitecore().Placeholder("step03")
-      
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
     <script type="text/javascript">
         $(".info_id").after("<span class='mid_info'></span>");
         var m_no_txt = $('.txt_mno').text();
@@ -242,15 +242,13 @@
         $(".info_pin").after("<span class='pin_info'></span>");
         $(".pin_info").attr('title', m_pin_txt);
 
-
         $(document).ready(function () {
-            $('.txt-dear').html('Dear ' +'@name' +', ');
+            $('.txt-dear').html('Dear ' + '@name' + ', ');
         });
 
-
         var url_last = window.location.pathname.split("/").pop();
-		
-		  if ($(window).width() < 991) {
+
+        if ($(window).width() < 991) {
             $(".mid_info").click(function () {
                 var $title = $(this).find(".title");
                 if (!$title.length) {
@@ -269,7 +267,5 @@
                 }
             });
         }
-
     </script>
-
 </section>

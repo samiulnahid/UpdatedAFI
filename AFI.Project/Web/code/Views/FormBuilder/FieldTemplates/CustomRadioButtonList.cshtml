@@ -1,0 +1,37 @@
+@using Sitecore.ExperienceForms.Mvc.Html
+@using AFI.Feature.QuoteForm.Areas.AFIWEB.Models
+@model AFI.Feature.QuoteForm.Areas.AFIWEB.Models.RadioListViewModel
+ 
+
+<section class="form___wrapper">
+@if (Sitecore.Context.Request.QueryString["sc_formmode"] != null)
+    {
+        <p style="background-color: #d5f7e4;padding: 10px;">Instruction: In the General Tab, navigate to the ListItem section and check the 'Dynamic' option. Then, select the data source '/sitecore/content/AFI/afi/Data/Proxy Vote/Proxy Vote Candidates'. After that, set the 'Value field' to 'Value' and the 'Text field' to 'Title' from the dropdown list.</p>
+    }
+    @for (int i = 0; i < Model.RadioItems.Count; i++)
+    {
+        <div class="person">
+            @Html.Raw(@HttpUtility.HtmlDecode(Html.DisplayFor(t => Model.RadioItems[i].Name).ToString())) 
+
+            <label class="rdo-css">  
+                @Html.RadioButton(Model.RadioItems[i].Name, "For")  
+                <span></span>      
+                For 
+            </label>
+
+            <label class="rdo-css">  
+                @Html.RadioButton(Model.RadioItems[i].Name, "Against")  
+                <span></span>      
+                Against 
+            </label>
+
+               <label class="rdo-css">  
+                @Html.RadioButton(Model.RadioItems[i].Name, "Abstain")  
+                <span></span>      
+                Abstain 
+            </label>
+
+        </div>
+    }
+
+</section>

@@ -47,6 +47,23 @@ window.addEventListener("DOMContentLoaded", () => {
       return false;
     }
   }
+
+  // Input Alphabet Only at name
+  function nameValidation(input) {
+    if (!input) return;
+
+    input?.addEventListener("input", (e) => {
+      e.target.value = e.target?.value.replace(/[^a-zA-Z\']+/g, ""); // /[^a-zA-z]/g
+    });
+  }
+
+  nameValidation(referForm.querySelector("#first-name"));
+  nameValidation(referForm.querySelector("#last-name"));
+  nameValidation(referForm.querySelector("#member-first-name"));
+  nameValidation(referForm.querySelector("#member-first-name"));
+  nameValidation(referForm.querySelector("#member-last-name"));
+
+  // check error is field parents
   referForm?.querySelectorAll(".field")?.forEach((fieldWrapper) => {
     const removeFieldError = () => {
       fieldWrapper?.classList.remove("has-errors");
@@ -169,8 +186,7 @@ window.addEventListener("DOMContentLoaded", () => {
     // if all OK
     try {
       btnSubmitting(true);
-
-      const url = "/api/sitecore/Forms/SubmitReferralForm";
+      const url = "/api/sitecore/AFIReport/SubmitReferralForm";
 
       const options = {
         method: "POST",
@@ -180,12 +196,18 @@ window.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify(result),
       };
 
+      // AJAX call
       const res = await fetch(url, options);
       if (!res.ok) throw new Error("Something is wrong! Please try again.");
 
       const data = await res?.json();
-      if (!data?.success) throw new Error(data?.message);
-      if (!data?.success === "failed") throw new Error(data?.message);
+
+      // // check Success from response
+      // if (!data?.Success) {
+      //   showResponseErrorMessage(data?.Message);
+      //   btnSubmitting(false);
+      //   return console.error(data?.Message);
+      // }
 
       // clear subject & message fields
       const clearFieldsEl = document.querySelectorAll(".input.input-field");

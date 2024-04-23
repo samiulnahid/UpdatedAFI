@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
+using System.Web;
 
 namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Models
 {
@@ -25,7 +25,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Models
             get; set;
         }
         public HttpPostedFileBase Image { get; set; }
-        public HttpPostedFileBase Txt { get; set; }
         public bool IsActive { get; set; }
+        public HttpPostedFileBase Txt { get; set; }
     }
 }

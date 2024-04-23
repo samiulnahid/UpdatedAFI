@@ -135,7 +135,7 @@ namespace AFI.Project.Web
             serviceCollection.AddTransient<IAFIWebServicesSaveHandler, AFIWebServicesSaveHandler>();
             serviceCollection.AddTransient<IAFIFormsMapRepository, AFIFormsMapRepository>();
             serviceCollection.AddTransient<IAFIFormsSentToRepository, AFIFormsSentToRepository>();
-            serviceCollection.AddTransient<IAFIReportRepository, AFIReportRepositoryX>();
+            serviceCollection.AddTransient<IAFIReportRepository, AFIReportRepository>();
             serviceCollection.AddTransient<ICorviasFormRepository, CorviasFormRepository>();
             serviceCollection.AddTransient<IUCFormRepository, UCFormRepository>();
             serviceCollection.AddTransient<IFormSaveHandler<CondoForm>, CondoFormSaveHandler>();
