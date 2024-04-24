@@ -1,5 +1,5 @@
-﻿@using AFI.Feature.QuoteForm.Areas.AFIWEB.Models.Form_Models
-@model AFI.Feature.QuoteForm.Areas.AFIQuoteForm.Models.HillAFBForm.HillAFBForm
+﻿@using AFI.Project.Web.Areas.AFIWEB.Models.Form_Models
+@model AFI.Project.Web.Areas.AFIQuoteForm.Models.HillAFBForm.HillAFBForm
 
 
 <!-- ************************************************ -->
@@ -14,8 +14,8 @@
             <!-- ******* FORM  *******-->
             <div class="form_container">
 
-                <button class="quote-request-sidebar__show-trigger" type="button">?</button>
-
+             <button class="quote-request-sidebar__show-trigger" type="button">?</button>
+             
                 <h2 class="quote_request_heading">@data.heading</h2>
 
                 <div class="fields-row name_suffix">
@@ -263,21 +263,21 @@
             @if (data.sidebar != null && data.sidebar.content.Count > 0)
             {
                 <!-- ******* ASIDE  *******-->
-                <aside class="quote_request_aside" style="max-width: 200px">
-                    <h2 class="quote_request_sidebar__heading"> @data.sidebar.heading</h2>
-                    @foreach (SideBarContent sideContent in data.sidebar.content)
-                    {
-                        <div class="quote_request_sidebar__item">
-                            <h3 class="quote_request_sidebar__item_heading">
-                                @sideContent.heading
-                            </h3>
-                            <p class="quote_request_sidebar__item_description">
-                                @sideContent.content
-                            </p>
-                        </div>
-                    }
-                    <button class="button button--reversed quote-request-sidebar__hide-trigger" type="button">Close</button>
-                </aside>
+        <aside class="quote_request_aside" style="max-width: 200px">
+            <h2 class="quote_request_sidebar__heading"> @data.sidebar.heading</h2>
+            @foreach (SideBarContent sideContent in data.sidebar.content)
+            {
+                <div class="quote_request_sidebar__item">
+                    <h3 class="quote_request_sidebar__item_heading">
+                        @sideContent.heading
+                    </h3>
+                    <p class="quote_request_sidebar__item_description">
+                        @sideContent.content
+                    </p>
+                </div>
+            }
+             <button class="button button--reversed quote-request-sidebar__hide-trigger" type="button">Close</button>
+        </aside>
             }
         </div>
     </div>

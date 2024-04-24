@@ -403,6 +403,12 @@
     <Content Include="Views\AFI\Contact\ContactUsForm.cshtml" />
     <Content Include="Views\AFI\Log\IpLog.cshtml" />
     <Content Include="Views\AFI\Log\IpLogSummary.cshtml" />
+    <Content Include="Views\AFI\Quote\HillAFBForm.cshtml" />
+    <Content Include="Views\AFI\Quote\ApplicationThankYou.cshtml" />
+    <Content Include="Views\AFI\Quote\HillAFBFormThanks.cshtml" />
+    <Content Include="Views\AFI\Quote\Partial\ReferralForm.cshtml" />
+    <Content Include="Views\AFI\Quote\PaymentFail.cshtml" />
+    <Content Include="Views\AFI\Quote\PaymentSucess.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

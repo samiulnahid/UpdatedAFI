@@ -1,5 +1,5 @@
-﻿@model AFI.Feature.QuoteForm.Areas.AFIQuoteForm.Models.BusinessForm.BusinessForm
-@using AFI.Feature.QuoteForm.Areas.AFIWEB.Models.Form_Models
+﻿@model AFI.Project.Web.Areas.AFIQuoteForm.Models.BusinessForm.BusinessForm
+@using AFI.Project.Web.Areas.AFIWEB.Models.Form_Models
 <section class="form_section multi__step_4 coverage_history_form">
     <div class="container">
 
@@ -90,27 +90,27 @@
 
             @if (data.sidebar != null && data.sidebar.content.Count > 0)
             {
-                <aside class="quote_request_aside">
-                    <h2 class="quote_request_sidebar__heading">
-                        @data.sidebar.heading
-                    </h2>
-                    <div class="quote_request_sidebar__content">
-                        @foreach (SideBarContent sideContent in data.sidebar.content)
-                        {
-                            <div class="quote_request_sidebar__item">
-                                <h3 class="quote_request_sidebar__item_heading">
-                                    @sideContent.heading
-                                </h3>
-                                <p class="quote_request_sidebar__item_description">
-                                    @sideContent.content
-                                </p>
-                            </div>
-                        }
+        <aside class="quote_request_aside">
+            <h2 class="quote_request_sidebar__heading">
+                @data.sidebar.heading
+            </h2>
+            <div class="quote_request_sidebar__content">
+                @foreach (SideBarContent sideContent in data.sidebar.content)
+                {
+                    <div class="quote_request_sidebar__item">
+                        <h3 class="quote_request_sidebar__item_heading">
+                            @sideContent.heading
+                        </h3>
+                        <p class="quote_request_sidebar__item_description">
+                            @sideContent.content
+                        </p>
                     </div>
-                    <!--Updated By  25.7.23 Start-->
-                    <button class="button button--reversed quote-request-sidebar__hide-trigger" type="button">Close</button>
-                    <!--Updated By 25.7.23 End-->
-                </aside>
+                }
+            </div>
+            <!--Updated By  25.7.23 Start-->
+            <button class="button button--reversed quote-request-sidebar__hide-trigger" type="button">Close</button>
+            <!--Updated By 25.7.23 End-->
+        </aside>
             }
 
         </div>
