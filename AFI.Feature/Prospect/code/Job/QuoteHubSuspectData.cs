@@ -21,74 +21,143 @@ namespace AFI.Feature.Prospect.Job
         {
             Sitecore.Diagnostics.Log.Info("Qhote Hub Suspect Sitecore scheduled task is being run!", this);
 
-            List<QuoteHub> quotes = new List<QuoteHub>();
+            // Fetching existing EntityIDs from AFI_Marketing_Suspect_Temp
+            List<int> entityIdList = new List<int>();
+            string entityType = "QH";
+            using (var db = new SqlConnection(AFIConnectionString))
+            {
+                var sql = "SELECT EntityID FROM [dbo].[AFI_Marketing_Suspect_Temp] WHERE EntityType = @EntityType";
+                entityIdList = db.Query<int>(sql, new { EntityType = entityType }).ToList();
+            }
 
+            // Fetching new quotes
+            List<QuoteHub> quotes = new List<QuoteHub>();
             using (var db = new SqlConnection(QHConnectionString))
             {
                 var sql = @"SELECT [QuoteHdr].*
-                            FROM [dbo].[QuoteHdr]
-                            LEFT JOIN [dbo].[PersonalInfo] ON [QuoteHdr].IdQuote = [PersonalInfo].IdQuote
-                            WHERE [PersonalInfo].IdQuote IS NULL;";
-
+                    FROM [dbo].[QuoteHdr]
+                    LEFT JOIN [dbo].[PersonalInfo] ON [QuoteHdr].IdQuote = [PersonalInfo].IdQuote
+                    WHERE [PersonalInfo].IdQuote IS NULL;";
                 quotes = db.Query<QuoteHub>(sql).ToList();
             }
 
-           
-
-            foreach (var data in quotes)
+            // Inserting new quotes into AFI_Marketing_Suspect_Temp
+            using (var db = new SqlConnection(AFIConnectionString))
             {
-                SuspectMarketingTemp entity = new SuspectMarketingTemp()
+                db.Open();
+                using (var transaction = db.BeginTransaction())
                 {
-                    FirstName = data.FirstName,
-                    LastName = data.LastName,
-                    Email = data.EmailId,
-                    Phone = "", 
-                    Address = data.MailingAddr1 + " " + data.MailingAddr2,
-                    City = data.MailingCity,
-                    State = data.MailingState,
-                    ZipCode = data.MailingZip,
-                    Country = data.MailingCountryName,
-                    DateOfBirth = data.DOB,
-                    Occupation = "",
-                    PreferredCoverage = "", 
-                    LeadSource = "",
-                    LeadStatus = "", 
-                    LeadOwner = "",
-                    LeadScore = 0,
-                    DateCreated = data.CreatedOn,
-                    LastUpdated = data.ModifiedOn,
-                    EntityType = "QH", 
-                    EntityID = data.IdQuote, 
-                    IsSynced = false,
-                    IsValid = true,
-                    IsBlockCountry = false,
-                    
-                };
-
-                using (var db = new SqlConnection(AFIConnectionString))
-                {
-                    db.Open();
-                    using (var transaction = db.BeginTransaction())
+                    try
                     {
-                        try
+                        foreach (var data in quotes)
                         {
-                           // entity.DateCreated = DateTime.Now;
+                            // Check if the EntityID already exists in the entityIdList
+                            if (!entityIdList.Contains(data.IdQuote))
+                            {
+                                SuspectMarketingTemp entity = new SuspectMarketingTemp()
+                                {
+                                    FirstName = data.FirstName,
+                                    LastName = data.LastName,
+                                    Email = data.EmailId,
+                                    Phone = "",
+                                    Address = data.MailingAddr1 + " " + data.MailingAddr2,
+                                    City = data.MailingCity,
+                                    State = data.MailingState,
+                                    ZipCode = data.MailingZip,
+                                    Country = data.MailingCountryName,
+                                    DateOfBirth = data.DOB,
+                                    Occupation = "",
+                                    PreferredCoverage = data.LOB,
+                                    LeadSource = "",
+                                    LeadStatus = "",
+                                    LeadOwner = "",
+                                    LeadScore = 0,
+                                    DateCreated = DateTime.Now,
+                                    LastUpdated = null,
+                                    EntityType = entityType,
+                                    EntityID = data.IdQuote,
+                                    IsSynced = false,
+                                    IsValid = true,
+                                    IsBlockCountry = false,
+                                };
 
-                            var sql = "insert into dbo.[AFI_Marketing_Suspect_Temp] ( [FirstName], [LastName], [Email], [Phone], [Address], [City], [State], [ZipCode], [Country], [DateOfBirth], [Occupation], [PreferredCoverage], [LeadSource], [LeadStatus], [LeadOwner], [LeadScore], [DateCreated], [LastUpdated], [EntityType], [EntityID], [IsSynced], [IsValid], [IsBlockCountry]) values (@FirstName, @LastName, @Email, @Phone, @Address, @City, @State, @ZipCode, @Country, @DateOfBirth, @Occupation, @PreferredCoverage, @LeadSource, @LeadStatus, @LeadOwner, @LeadScore, @DateCreated, @LastUpdated, @EntityType, @EntityID, @IsSynced, @IsValid, @IsBlockCountry)";
-                            db.Execute(sql, entity, transaction);
-                            transaction.Commit();
-                           
+                                var sqlInsert = @"INSERT INTO dbo.[AFI_Marketing_Suspect_Temp] 
+                                          ([FirstName], [LastName], [Email], [Phone], [Address], [City], [State], [ZipCode], [Country], [DateOfBirth], [Occupation], [PreferredCoverage], [LeadSource], [LeadStatus], [LeadOwner], [LeadScore], [DateCreated], [LastUpdated], [EntityType], [EntityID], [IsSynced], [IsValid], [IsBlockCountry]) 
+                                          VALUES 
+                                          (@FirstName, @LastName, @Email, @Phone, @Address, @City, @State, @ZipCode, @Country, @DateOfBirth, @Occupation, @PreferredCoverage, @LeadSource, @LeadStatus, @LeadOwner, @LeadScore, @DateCreated, @LastUpdated, @EntityType, @EntityID, @IsSynced, @IsValid, @IsBlockCountry)";
+                                db.Execute(sqlInsert, entity, transaction);
+                            }
                         }
-                        catch (System.Exception ex)
-                        {
-                            Sitecore.Diagnostics.Log.Info("Error while attempting to insert Marketing Suspect Temp.", this);
-                            Sitecore.Diagnostics.Log.Error($"{nameof(SuspectMarketingTemp)}: Error while attempting to insert Marketing Suspect Temp.", ex, this);
-                            transaction.Rollback();
-                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        Sitecore.Diagnostics.Log.Info("Error while attempting to insert Marketing Suspect Temp.", this);
+                        Sitecore.Diagnostics.Log.Error($"{nameof(SuspectMarketingTemp)}: Error while attempting to insert Marketing Suspect Temp.", ex, this);
+                        transaction.Rollback();
                     }
                 }
-               
             }
+
+
+            #region insert suspect
+
+            //foreach (var data in quotes)
+            //{
+            //    SuspectMarketingTemp entity = new SuspectMarketingTemp()
+            //    {
+            //        FirstName = data.FirstName,
+            //        LastName = data.LastName,
+            //        Email = data.EmailId,
+            //        Phone = "",
+            //        Address = data.MailingAddr1 + " " + data.MailingAddr2,
+            //        City = data.MailingCity,
+            //        State = data.MailingState,
+            //        ZipCode = data.MailingZip,
+            //        Country = data.MailingCountryName,
+            //        DateOfBirth = data.DOB,
+            //        Occupation = "",
+            //        PreferredCoverage = data.LOB,
+            //        LeadSource = "",
+            //        LeadStatus = "",
+            //        LeadOwner = "",
+            //        LeadScore = 0,
+            //        DateCreated = DateTime.Now,
+            //        EntityType = "QH",
+            //        EntityID = data.IdQuote,
+            //        IsSynced = false,
+            //        IsValid = true,
+            //        IsBlockCountry = false,
+
+            //    };
+
+            //    using (var db = new SqlConnection(AFIConnectionString))
+            //    {
+            //        db.Open();
+            //        using (var transaction = db.BeginTransaction())
+            //        {
+            //            try
+            //            {
+            //                // entity.DateCreated = DateTime.Now;
+
+            //                var sql = "insert into dbo.[AFI_Marketing_Suspect_Temp] ( [FirstName], [LastName], [Email], [Phone], [Address], [City], [State], [ZipCode], [Country], [DateOfBirth], [Occupation], [PreferredCoverage], [LeadSource], [LeadStatus], [LeadOwner], [LeadScore], [DateCreated], [LastUpdated], [EntityType], [EntityID], [IsSynced], [IsValid], [IsBlockCountry]) values (@FirstName, @LastName, @Email, @Phone, @Address, @City, @State, @ZipCode, @Country, @DateOfBirth, @Occupation, @PreferredCoverage, @LeadSource, @LeadStatus, @LeadOwner, @LeadScore, @DateCreated, @LastUpdated, @EntityType, @EntityID, @IsSynced, @IsValid, @IsBlockCountry)";
+            //                db.Execute(sql, entity, transaction);
+            //                transaction.Commit();
+
+            //            }
+            //            catch (System.Exception ex)
+            //            {
+            //                Sitecore.Diagnostics.Log.Info("Error while attempting to insert Marketing Suspect Temp.", this);
+            //                Sitecore.Diagnostics.Log.Error($"{nameof(SuspectMarketingTemp)}: Error while attempting to insert Marketing Suspect Temp.", ex, this);
+            //                transaction.Rollback();
+            //            }
+            //        }
+            //    }
+
+            //}
+
+            #endregion
+
 
         }
 
