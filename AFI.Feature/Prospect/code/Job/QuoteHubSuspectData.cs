@@ -39,38 +39,55 @@ namespace AFI.Feature.Prospect.Job
             {
                 SuspectMarketingTemp entity = new SuspectMarketingTemp()
                 {
-
+                    FirstName = data.FirstName,
+                    LastName = data.LastName,
+                    Email = data.EmailId,
+                    Phone = "", 
+                    Address = data.MailingAddr1 + " " + data.MailingAddr2,
+                    City = data.MailingCity,
+                    State = data.MailingState,
+                    ZipCode = data.MailingZip,
+                    Country = data.MailingCountryName,
+                    DateOfBirth = data.DOB,
+                    Occupation = "",
+                    PreferredCoverage = "", 
+                    LeadSource = "",
+                    LeadStatus = "", 
+                    LeadOwner = "",
+                    LeadScore = 0,
+                    DateCreated = data.CreatedOn,
+                    LastUpdated = data.ModifiedOn,
+                    EntityType = "QH", 
+                    EntityID = data.IdQuote, 
+                    IsSynced = false,
+                    IsValid = true,
+                    IsBlockCountry = false,
+                    
                 };
 
-                using (SqlConnection db = new SqlConnection(AFIConnectionString))
+                using (var db = new SqlConnection(AFIConnectionString))
                 {
                     db.Open();
-                    try
+                    using (var transaction = db.BeginTransaction())
                     {
-                        var sql = "insert into dbo.[AFI_Marketing_Suspect_Temp] ( [FirstName], [LastName], [Email], [Phone], [Address], [City], [State], [ZipCode], [Country], [DateOfBirth], [Occupation], [PreferredCoverage], [LeadSource], [LeadStatus], [LeadOwner], [LeadScore], [DateCreated], [LastUpdated], [EntityType], [EntityID], [IsSynced], [IsValid], [IsBlockCountry]) values (@FirstName, @LastName, @Email, @Phone, @Address, @City, @State, @ZipCode, @Country, @DateOfBirth, @Occupation, @PreferredCoverage, @LeadSource, @LeadStatus, @LeadOwner, @LeadScore, @DateCreated, @LastUpdated, @EntityType, @EntityID, @IsSynced, @IsValid, @IsBlockCountry)";
-
-                        using (SqlCommand cmd = new SqlCommand(sql, db))
+                        try
                         {
-                            cmd.Parameters.AddWithValue("@ListName", data.FirstName);
-                            cmd.Parameters.AddWithValue("@ListId", data.LastName);
-                            cmd.Parameters.AddWithValue("@CreatedDate", DateTime.Now);
+                           // entity.DateCreated = DateTime.Now;
 
-                            // Execute the query and retrieve the inserted ID
-                            cmd.ExecuteNonQuery();
-
+                            var sql = "insert into dbo.[AFI_Marketing_Suspect_Temp] ( [FirstName], [LastName], [Email], [Phone], [Address], [City], [State], [ZipCode], [Country], [DateOfBirth], [Occupation], [PreferredCoverage], [LeadSource], [LeadStatus], [LeadOwner], [LeadScore], [DateCreated], [LastUpdated], [EntityType], [EntityID], [IsSynced], [IsValid], [IsBlockCountry]) values (@FirstName, @LastName, @Email, @Phone, @Address, @City, @State, @ZipCode, @Country, @DateOfBirth, @Occupation, @PreferredCoverage, @LeadSource, @LeadStatus, @LeadOwner, @LeadScore, @DateCreated, @LastUpdated, @EntityType, @EntityID, @IsSynced, @IsValid, @IsBlockCountry)";
+                            db.Execute(sql, entity, transaction);
+                            transaction.Commit();
                            
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Error("Error while attempting to insert Suspect Temp Data.", ex, this);
-                        // You may want to handle or log the exception accordingly
-                    }
-                    finally
-                    {
-                        db.Close();
+                        catch (System.Exception ex)
+                        {
+                            Sitecore.Diagnostics.Log.Info("Error while attempting to insert Marketing Suspect Temp.", this);
+                            Sitecore.Diagnostics.Log.Error($"{nameof(SuspectMarketingTemp)}: Error while attempting to insert Marketing Suspect Temp.", ex, this);
+                            transaction.Rollback();
+                        }
                     }
                 }
+               
             }
 
         }
