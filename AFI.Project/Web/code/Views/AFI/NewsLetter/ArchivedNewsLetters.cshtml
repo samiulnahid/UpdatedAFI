@@ -1,0 +1,33 @@
+﻿
+
+@using AFI.Foundation.Helper
+@model AFI.Feature.NewsLetter.Models.ArchivedNewsLetters
+
+@if (Model == null)
+{
+    <p>No news letters available.</p>
+}
+else
+{
+    <section class="article-list">
+        <div class="wrapper">
+            <h1 class="is-vishidden">Archives</h1>
+            @foreach (var item in Model.ArchivedList)
+            {
+                <div class="article-list__group">
+                    <h2 class="article-list__group-heading">@item.Key.ToString(SitecoreHelper.GlobalConfigurations.DefaultDateformat)</h2>
+                    @foreach (var newsletter in Model.ArchivedList[item.Key])
+                    {
+                        <div class="article-list-item">
+                            <h2 class="article-list-item__heading">@newsletter.Title</h2>
+                            <p class="article-list-item__description">@Html.Raw(newsletter.ShortDescription)</p>
+                            <a class="arrow-link" href="@newsletter.Link">@RenderingContext.Current.Rendering.Parameters["Read More Text"] <i class="fa-solid fa-chevron-right"></i></a>
+                          
+                        </div>
+                    }
+                </div>
+            }
+            @Html.Partial("/Views/AFI/Navigation/Pagination.cshtml", Model)
+        </div>
+    </section>
+}

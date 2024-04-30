@@ -1,0 +1,62 @@
+﻿
+@model AFI.Project.Web.Areas.AFIQuoteForm.Models.BusinessForm.BusinessForm
+
+@foreach (var section in Model.form.sections)
+{
+    if (section.id == "eligibility")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/_InsuranceEligibility.cshtml", section)
+    }
+
+    if (section.id == "eligibilityDetails")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/_MilitaryInformation.cshtml", section)
+    }
+
+    if (section.id == "eligibilityDetailsParent")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/_ChildInformation.cshtml", section)
+    }
+
+    if (section.id == "eligibilityDetailsChild")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/_ParentInformation.cshtml", section)
+    }
+
+    if (section.id == "policyHolder")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/Business/_StepOne.cshtml", Model)
+    }
+    if (section.id == "businessInformation")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/Business/_StepTwo.cshtml", Model)
+    }
+    if (section.id == "policyCoverage")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/Business/_StepThree.cshtml", Model)
+    }
+    if (section.id == "coverageHistory")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/Business/_StepFour.cshtml", Model)
+    }
+}
+
+<div class="quote_request__action_buttons">
+    <div class="container d-flex">
+        <button id="businessBackBtn"
+                class="button button__back button__left hide"
+                type="button">
+            @Model.form.backButtonText
+        </button>
+        <button id="businessNextBtn"
+                class="button button__next button__right"
+                type="submit">
+            @Model.form.nextButtonText
+        </button>
+    </div>
+</div>
+
+<script>
+    var businessSuccessRedirection = "/Quote-Forms-Save-Success";
+</script>
+

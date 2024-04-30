@@ -1,0 +1,69 @@
+﻿@using Sitecore.Mvc
+@using Sitecore
+@using Sitecore.Data.Fields
+@using Sitecore.Data.Items
+@using System.Configuration
+@model AFI.Feature.Article.Models.ArticleSpotlight
+
+<!-- ******************************************************************** -->
+<!--                          CAROUSEL HTML                               -->
+<!-- ******************************************************************** -->
+<section id="article-carousel">
+    <div class="container">
+        <div class="mySwiper">
+            <div class="swiper-wrapper">
+         @if (Model != null)
+        {
+            if (Model.Articles.Count > 0)
+            {
+                foreach(var data in Model.Articles)
+                {
+                    <!-- Slide 01 -->
+                    <div class="swiper-slide slideItem">
+                        @if (!string.IsNullOrEmpty(data.ThumbImage))
+                        {
+                            <img class="slide_image"
+                                 src="@data.ThumbImage"
+                                 alt="" />
+                        }
+
+                        <section class="slide_content_wrapper">
+                            <h6 class="slide_category">@data.Category</h6>
+                            <h2 class="slide_title">
+                                @data.Title
+                            </h2>
+                            <p class="slide_description">
+                                @data.Description
+                            </p>
+                            <a href="@data.ArticlePageURL"
+                               class="button">@data.LinkText</a>
+                        </section>
+                    </div>
+
+                }
+                
+                }
+                   }
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<!-- Note: Swiper CDN for css, js already added in AFI Layout. Not need a add again. -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+<!-- ******* CAROUSEL JS ******* -->
+<script>
+    var artSwiper = new Swiper(".mySwiper", {
+        loop: true,
+        autoplay: {
+            delay: 4000,
+            disableOnInteraction: false,
+        },
+        // effect: "fade",
+    });
+</script>

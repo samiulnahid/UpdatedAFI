@@ -1,0 +1,63 @@
+﻿@using AFI.Project.Web.Areas.AFIWEB.Models.Form_Models
+@model AFI.Project.Web.Areas.AFIQuoteForm.Models.CollectorForm.CollectorVehicleForm
+
+@foreach (var Section in Model.form.sections)
+{
+    if (Section.id == "eligibility")
+    {
+
+        @Html.Partial("~/Views/AFI/Quote/Partial/_InsuranceEligibility.cshtml", Section);
+    }
+
+    if (Section.id == "eligibilityDetails")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/_MilitaryInformation.cshtml", Section)
+    }
+
+    if (Section.id == "eligibilityDetailsParent")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/_ChildInformation.cshtml", Section)
+    }
+
+    if (Section.id == "eligibilityDetailsChild")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/_ParentInformation.cshtml", Section)
+    }
+
+    if (Section.id == "policyHolder")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/CollectorVehicle/_StepOne.cshtml", Model)
+    }
+    if (Section.id == "vehicle")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/CollectorVehicle/_StepTwo.cshtml", Model)
+    }
+    if (Section.id == "householdViolations")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/CollectorVehicle/_StepThree.cshtml", Model)
+    }
+    if (Section.id == "coverageHistory")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/CollectorVehicle/_StepFour.cshtml", Model)
+    }
+}
+
+
+<section class="quote_request__action_buttons">
+    <div class="container d-flex">
+        <button id="vehicleBackBtn"
+                class="button button__back button__left hide"
+                type="button">
+            @Model.form.backButtonText
+        </button>
+        <button id="vehicleNextBtn"
+                class="button button__next button__right"
+                type="submit">
+            @Model.form.nextButtonText
+        </button>
+    </div>
+</section>
+
+<script>
+    var successRedirection = "/Quote-Forms-Save-Success";
+</script>

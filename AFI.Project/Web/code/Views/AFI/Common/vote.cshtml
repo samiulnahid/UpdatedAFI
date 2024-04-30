@@ -1,0 +1,275 @@
+﻿@using Sitecore.Mvc
+@using Sitecore.ExperienceForms.Mvc.Html
+
+@Html.RenderFormStyles()
+@Html.RenderFormScripts()
+@{
+    var name = HttpContext.Current.Session["membername"] != null ? HttpContext.Current.Session["membername"] : "";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style type="text/css">
+
+    /* .dv-content {
+        width: 750px;
+        margin: 50px auto;
+    }
+
+    .dv-content-vote-bottom {
+        margin-left: 10%;
+        background: #fafafa;
+        padding: 10px 20px 25px;
+    } */
+
+    .txt-no {
+        margin-bottom: 5px;
+    }
+
+    .txt-title {
+        font-weight: 600;
+        color: #014d8a;
+        margin-top: 15px;
+        margin-bottom: 5px;
+    }
+
+    .vote-header {
+        text-align: center;
+        font-weight: 600;
+        color: #014d8a;
+        margin-bottom: 5px;
+    }
+
+    .txt-candidate {
+        font-size: 14px;
+    }
+
+    .txt-bottom {
+        font-size: 14px;
+    }
+
+    .vote_subheader {
+        font-size: 17px;
+        text-align: center;
+        font-weight: 600;
+        color: #014d8a;
+        margin: 20px auto;
+    }
+
+    .form-field {
+        margin: auto;
+        width: 255px;
+    }
+
+        .form-field label {
+            width: 100%;
+            text-align: left;
+            font-size: 15px;
+            display: block;
+        }
+
+    .txt-box-small {
+        width: 100%;
+        border: 1px solid #cfd0d0 !important;
+        border-radius: 5px !important;
+        margin-bottom: 10px;
+    }
+
+    #chat-container {
+        height: 0px !important;
+    }
+
+    .m_pin {
+        width: 50%;
+        display: block;
+    }
+
+    .lblhide {
+        display: none !important;
+    }
+
+    .contbtn {
+        text-align: center;
+        margin-top: 1.25rem;
+    }
+
+    .continue {
+        background: #0070ab;
+        color: #fff;
+        border-radius: 16px;
+        border: none;
+        font-size: 16px;
+        padding: 9px 36px;
+        text-decoration: none;
+        width: auto;
+        margin: 20px 0 20px 5%;
+        cursor: pointer;
+    }
+
+    .txt-dear {
+        margin-top: 30px;
+    }
+
+    .rdo-lbl-st2 {
+        width: 60% !important;
+        text-align: left !important;
+        font-size: 15px;
+        display: inline-flex;
+        margin-bottom: 8px;
+    }
+
+    .rdo-css {
+        width: 100%;
+    }
+
+    .lbl-chk-main {
+        width: 100% !important;
+        text-align: left !important;
+        color: #000000;
+        font-weight: 500;
+    }
+
+    .st3 label {
+        width: 49% !important;
+        text-align: left;
+        font-size: 13px;
+    }
+
+
+    .field-validation-error {
+        color: red;
+        padding: 5px;
+        font-size: 12px;
+        display: block;
+    }
+
+    .validation-summary-errors {
+        color: red;
+        text-align: center;
+        padding-bottom: 5px;
+        font-size: 12px;
+    }
+
+        .validation-summary-errors ul {
+            display: inline-table;
+        }
+
+    .form-label label:not(:first-child) {
+        margin-top: 1.25rem;
+    }
+
+    .form-field .info_id {
+        display: contents;
+        float: left;
+    }
+
+    .mid_info:before {
+        content: "\f05a";
+        font-family: FontAwesome;
+    }
+
+    .form-field .info_pin {
+        display: contents;
+        float: left;
+    }
+
+    .pin_info:before {
+        content: "\f05a";
+        font-family: FontAwesome;
+    }
+
+    .mid_info, .pin_info {
+        margin-left: 7px;
+    }
+
+    .txt_mno, .txt_pin {
+        display: none;
+    }
+    @@media(max-width: 991.98px) {
+        .dv-content {
+            width: 100%;
+            margin: 50px auto;
+        }
+        .txtbody {
+            width: 90%;
+            margin: auto;
+        }
+        .rdo-lbl-st2 {
+            width: 45% !important;
+        }
+        .mid_info {            
+            position: relative;
+        }
+
+            .mid_info .title {
+                position: absolute;
+                top: 20px;
+                background: #e6e5e5;
+                padding: 4px;
+                right: -140px;
+                font-size: 12px;
+                border: 1px solid #ccc;
+            }
+
+        .pin_info {           
+            position: relative;
+        }
+
+            .pin_info .title {
+                position: absolute;
+                top: 20px;
+                background: #e6e5e5;
+                padding: 4px;
+                right: -140px;
+                font-size: 12px;
+                border: 1px solid #ccc;
+            }
+    }
+          
+</style>
+<section class="main offscreen__darken" role="main" id="main-content">
+    <div class="">
+
+        @Html.Sitecore().Placeholder("step01")
+        @Html.Sitecore().Placeholder("step02")
+        @Html.Sitecore().Placeholder("step03")
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(".info_id").after("<span class='mid_info'></span>");
+        var m_no_txt = $('.txt_mno').text();
+        $(".mid_info").attr('title', m_no_txt);
+        var m_pin_txt = $('.txt_pin').text();
+        $(".info_pin").after("<span class='pin_info'></span>");
+        $(".pin_info").attr('title', m_pin_txt);
+
+
+        $(document).ready(function () {
+            $('.txt-dear').html('Dear ' +'@name' +', ');
+        });
+
+
+        var url_last = window.location.pathname.split("/").pop();
+		
+		  if ($(window).width() < 991) {
+            $(".mid_info").click(function () {
+                var $title = $(this).find(".title");
+                if (!$title.length) {
+                    $(this).append('<span class="title">' + $(this).attr("title") + '</span>');
+                } else {
+                    $title.remove();
+                }
+            });
+
+            $(".pin_info").click(function () {
+                var $title = $(this).find(".title");
+                if (!$title.length) {
+                    $(this).append('<span class="title">' + $(this).attr("title") + '</span>');
+                } else {
+                    $title.remove();
+                }
+            });
+        }
+
+    </script>
+
+</section>

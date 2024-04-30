@@ -57,7 +57,13 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Models
 		public string YearsAsMember { get; set; }
 		public string Gender { get; set; }
 		public string Deceased { get; set; }
+		
+		public string MarketingCode { get; set; }
+		public string ProperFirstName { get; set; }
+		public string MiddleName { get; set; }
+		public string Suffix { get; set; }
 		public DateTime CreateDate { get; set; } = DateTime.Now;
 
-    }
+
+	}
 }

@@ -1,0 +1,57 @@
+﻿@model AFI.Project.Web.Areas.AFIQuoteForm.Models.CondoForm.CondoForm
+
+@foreach (var Section in Model.form.sections)
+{
+    if (Section.id == "eligibility")
+    {
+
+        @Html.Partial("~/Views/AFI/Quote/Partial/_InsuranceEligibility.cshtml", Section);
+    }
+
+    if (Section.id == "eligibilityDetails")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/_MilitaryInformation.cshtml", Section)
+    }
+
+    if (Section.id == "eligibilityDetailsParent")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/_ChildInformation.cshtml", Section)
+    }
+
+    if (Section.id == "eligibilityDetailsChild")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/_ParentInformation.cshtml", Section)
+    }
+
+    if (Section.id == "policyHolder")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/Condo/_StepOne.cshtml", Model)
+    }
+    if (Section.id == "mobileOfManufactured")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/Condo/_StepTwo.cshtml", Model)
+    }
+    if (Section.id == "coverageHistory")
+    {
+        @Html.Partial("~/Views/AFI/Quote/Partial/Condo/_StepThree.cshtml", Model)
+    }
+}
+<section class="quote_request__action_buttons">
+    <div class="container d-flex">
+        <button id="condoBackBtn"
+                class="button button__back button__left hide"
+                type="button">
+            @Model.form.backButtonText
+        </button>
+        <button id="condoNextBtn"
+                class="button button__next button__right"
+                type="submit">
+            @Model.form.nextButtonText
+        </button>
+    </div>
+</section>
+
+<script>
+    var condoSuccessRedirection = "/Quote-Forms-Save-Success";
+</script>
+

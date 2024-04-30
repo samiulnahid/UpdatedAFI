@@ -1,0 +1,87 @@
+﻿@using Sitecore.Mvc
+@using Sitecore
+@using Sitecore.Data.Fields
+@using Sitecore.Resources.Media
+@using Sitecore.Data.Items
+@using AFI.Foundation.Helper
+@using Sitecore.Mvc.Presentation
+@model RenderingModel
+@{
+    //var rendering = RenderingContext.Current.Rendering.Item;
+}
+<style>
+section.afi_carriers {
+    margin-bottom: 50px;
+    min-height: 125px;
+}
+.afi_carriers a,
+.afi_carriers h1{
+    line-height: 28px;
+}
+
+.customer-afi_carriers__heading {
+    font-size: 1rem !important;
+    font-family: 'Roboto' !important;
+    margin-bottom: 0 !important;
+}
+</style>
+
+<section class="afi_carriers">
+
+    @*Department Or Location Titile*@
+    <h1 class="afi_carriers__heading">
+        @* @RenderingContext.Current.Rendering.Item[FeatureTemplate.DepsOrLocTitle.Fields.Title] *@
+        @Html.Sitecore().Field(FeatureTemplate.DepsOrLocTitle.Fields.Title.ToString())
+    </h1>
+
+
+
+    @*Telephone Detail*@
+     
+    @if (!string.IsNullOrEmpty(RenderingContext.Current.Rendering.Item[FeatureTemplate.TelephoneDetail.Fields.TelephoneNumber]))
+        {
+         <div class="locations__listing-item" itemprop="telephone"><a href="tel:@Model.Item[FeatureTemplate.TelephoneDetail.Fields.TelephoneNumber]">@Html.Sitecore().Field(FeatureTemplate.TelephoneDetail.Fields.TelephoneNumber.ToString())</a></div>
+    }
+
+    @if (!string.IsNullOrEmpty(RenderingContext.Current.Rendering.Item[FeatureTemplate.TelephoneDetail.Fields.FaxNumber]))
+    {
+        <div class="locations__listing-item" itemprop="faxNumber">@Html.Sitecore().Field(FeatureTemplate.TelephoneDetail.Fields.FaxNumber.ToString()) @Html.Sitecore().Field(FeatureTemplate.TelephoneDetail.Fields.FaxText.ToString())</div>
+    }
+  
+
+
+    @*Email Detail*@
+    <div class="locations__listing-item" itemprop="email">@Html.Sitecore().Field(FeatureTemplate.EmailDetail.Fields.Email.ToString())</div>
+
+
+    @*Opening Time Detail*@
+    <div class="locations__listing-item">
+        @if (Sitecore.Context.PageMode.IsExperienceEditor)
+        {
+            <p> @Html.Sitecore().Field(FeatureTemplate.OpeningTimeDetail.Fields.OpeningHoursContentSchema.ToString()) </p>
+        }
+        else
+        {
+            <meta itemprop="openingHours" content="@Model.Item[FeatureTemplate.OpeningTimeDetail.Fields.OpeningHoursContentSchema]" />
+        }
+        <div class="locations__listing-item">@Html.Sitecore().Field(FeatureTemplate.OpeningTimeDetail.Fields.OpenDaysOfTheWeek.ToString())</div>
+        <div class="locations__listing-item">
+            <span><time datetime="@Model.Item[FeatureTemplate.OpeningTimeDetail.Fields.OpeningTime]">@Html.Sitecore().Field(FeatureTemplate.OpeningTimeDetail.Fields.OpeningTime.ToString())</time>- <time datetime="@Model.Item[FeatureTemplate.OpeningTimeDetail.Fields.ClosingTime]">@Html.Sitecore().Field(FeatureTemplate.OpeningTimeDetail.Fields.ClosingTime.ToString()) @Html.Sitecore().Field(FeatureTemplate.OpeningTimeDetail.Fields.TimeZone.ToString())</time></span>
+        </div>
+    </div>
+
+
+    @*Miscellaneous Detail*@
+    <div class="locations__listing-item">@Html.Sitecore().Field(FeatureTemplate.MiscellaneousDetail.Fields.Miscellaneous.ToString())</div>
+
+
+    @*Address Detail*@
+    <div class="locations__listing-item" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+        <div class="locations__listing-item" itemprop="streetAddress">@Html.Sitecore().Field(FeatureTemplate.AddressDetail.Fields.StreetAddress.ToString())</div>
+        <div class="locations__listing-item">
+            <span itemprop="addressLocality">@Html.Sitecore().Field(FeatureTemplate.AddressDetail.Fields.City.ToString())</span>
+            <span itemprop="addressRegion">@Html.Sitecore().Field(FeatureTemplate.AddressDetail.Fields.State.ToString())</span>
+            <span itemprop="postalCode">@Html.Sitecore().Field(FeatureTemplate.AddressDetail.Fields.Zip.ToString())</span>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,26 @@
+﻿@using Sitecore.Mvc
+@using Sitecore.ExperienceForms.Mvc.Html
+@using AFIWEBV2.Identifiers
+
+
+@Html.RenderFormStyles()
+@Html.RenderFormScripts()
+
+
+<link as="style" rel="stylesheet preload prefetch" href="~/Content/css/hill_form.css" crossorigin="anonymous">
+<div class="header_div">
+    <div class="header_div_l"> &nbsp;
+        @*<a class="logo__link" href="/">
+                <img src="https://afiweb-cm-beta.afi.org/-/media/corvias_logo.png" class="logo_cv" alt="corvias">
+            </a>*@
+    </div>
+    <div class="header_div_m">
+        <h1>@Sitecore.Globalization.Translate.Text("Hill AFB Title") </h1>
+    </div>
+    <div class="header_div_r">
+        <a class="logo__link" href="/">
+            <img src="https://afi.org/-/media/images/logo.ashx" class="logo" alt="Armed Forces Insurance Logo"
+                 width="156" height="85">
+        </a>
+    </div>
+</div>

@@ -1,0 +1,489 @@
+﻿@using Sitecore.Mvc
+@using Sitecore
+@using Sitecore.Data.Fields
+@using Sitecore.Resources.Media
+@using Sitecore.Data.Items
+@using AFI.Foundation.Helper
+@using Sitecore.Rules.Conditions
+@using Sitecore.Mvc.Presentation
+@{
+    var rendering = RenderingContext.Current.Rendering.Item;
+    Sitecore.Data.Fields.MultilistField multiselectField = rendering.Fields["InsuranceTypeList"];
+    Sitecore.Data.Items.Item[] items = multiselectField.GetItems();
+    var dataTypeUrl = "";
+    int i = 0;
+}
+
+@*<style>
+    .hero__wrapper {
+        display: none;
+    }
+
+    .hero-and-quote-selector-wrapper {
+        max-width: 1600px;
+        margin: 0 auto;
+    }
+
+    .quote-selector,
+    .quote-selector a {
+        color: #fff;
+        color: var(--color-white);
+    }
+
+    .hero_section .quote-selector {
+        background-image: linear-gradient(120deg, #cb2c30, #881b26);
+        background-image: linear-gradient(120deg, var(--color-red-10), var(--color-red-20));
+        padding: 3.125rem 0 2.5rem;
+        text-align: center;
+    }
+
+    .quote-selector__subheading {
+        display: block;
+        font-size: 1rem;
+        line-height: 1.625rem;
+        margin-bottom: 1.5rem;
+        max-width: 13.125rem;
+    }
+
+    .quote-selector__types {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 0 auto;
+        max-width: 20rem;
+    }
+
+    .quote-selector__type {
+        height: 6rem;
+        margin-bottom: 1rem;
+        min-width: 5.375rem;
+        position: relative;
+        text-align: center;
+    }
+
+    .hero_section input[type="radio"] {
+        width: 1rem;
+    }
+
+    .is-vishidden {
+        position: absolute;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        width: 1px;
+        margin: -1px;
+        padding: 0;
+        border: 0;
+    }
+
+    .quote-selector__type-label {
+        align-items: center;
+        border: 0.1875rem solid transparent;
+        border-radius: 0.625rem;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        font-size: 0.875rem;
+        height: 100%;
+        justify-content: flex-end;
+        transition: border-color 0.25s;
+        transition: border-color var(--anim-duration-half);
+    }
+
+    .quote-selector__icon {
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: -0.5rem;
+        width: 100%;
+        opacity: .8;
+    }
+
+        .quote-selector__icon img {
+            width: 100%;
+            margin: auto !important;
+        }
+
+        .quote-selector__icon.watercraft img {
+            width: 80%;
+        }
+
+        .quote-selector__icon img.normal {
+            display: block;
+        }
+
+        .quote-selector__icon img.animated {
+            display: none;
+        }
+
+        .quote-selector__icon.animation img.normal {
+            display: none;
+        }
+
+        .quote-selector__icon.animation img.animated {
+            display: block;
+        }
+
+    .quote-selector__type-label-text {
+        margin-bottom: 0.75rem;
+        margin-top: 0.375rem;
+    }
+
+    .hero_section svg {
+        width: 100%;
+        height: 100%;
+        transform: translate3d(0px, 0px, 0px);
+    }
+
+    .quote-selector__controls {
+        margin: 0 auto;
+        max-width: 14rem;
+        /* text-align: left; */
+    }
+
+        .quote-selector__controls .field {
+            margin-bottom: 1.375rem;
+            max-width: 11.25rem;
+            position: relative;
+        }
+
+            .quote-selector__controls .field input {
+                background: transparent;
+                border: 0;
+                border-bottom: 0.0625rem solid #fff;
+                border-bottom: 0.0625rem solid var(--color-white);
+                border-radius: 0;
+                caret-color: #fff;
+                caret-color: var(--color-white);
+                color: #fff;
+                color: var(--color-white);
+                font-size: 1.125rem;
+                height: 100%;
+                outline: none;
+                padding: 0.5rem 0;
+                width: 100%;
+            }
+
+                .quote-selector__controls .field input:empty + label {
+                    -webkit-transform: translateY(-50%);
+                    transform: translateY(-50%);
+                }
+
+            .quote-selector__controls .field label {
+                color: #fff;
+                color: var(--color-white);
+                cursor: text;
+                font-size: 1.125rem;
+                margin-top: 0;
+                position: absolute;
+                left: 0;
+                top: 50%;
+                -webkit-transform-origin: top left;
+                transform-origin: top left;
+                transition: color 0.25s, -webkit-transform 0.25s;
+                transition: transform 0.25s, color 0.25s;
+                transition: transform 0.25s, color 0.25s, -webkit-transform 0.25s;
+                transition: color var(--anim-duration-half), -webkit-transform var(--anim-duration-half);
+                transition: transform var(--anim-duration-half), color var(--anim-duration-half);
+                transition: transform var(--anim-duration-half), color var(--anim-duration-half), -webkit-transform var(--anim-duration-half);
+            }
+
+        .quote-selector__controls .button {
+            flex-basis: 10.75rem;
+        }
+
+    .button--large-text {
+        font-size: 1.125rem;
+    }
+
+    .quote-selector__type-input:checked + .quote-selector__type-label {
+        border-color: #fff;
+        border-color: var(--color-white);
+    }
+
+    .hero_section legend {
+        float: unset;
+    }
+
+    .quote-selector a {
+        color: #fff;
+        color: var(--color-white) !important;
+        text-decoration: underline !important;
+    }
+    /* ======================================================== */
+
+    @@media screen and (min-width: 35em) {
+        .hero_section .quote-selector {
+            padding: 3.125rem 0 2.5rem;
+        }
+
+        .quote-selector__subheading,
+        .quote-selector__types {
+            max-width: 100%;
+        }
+
+        .quote-selector__subheading,
+        .quote-selector__types {
+            max-width: 100%;
+        }
+
+        .quote-selector__controls {
+            justify-content: center;
+            display: flex;
+            max-width: 100%;
+        }
+
+            .quote-selector__controls .field {
+                flex-basis: 11rem;
+                margin-bottom: 0;
+                margin-right: 1rem;
+            }
+    }
+
+    /* ============ */
+    @@media screen and (min-width: 48em) {
+        .hero_section .quote-selector {
+            padding: 1.5rem 2rem;
+        }
+
+        .quote-selector__types {
+            flex-wrap: nowrap;
+        }
+
+        .quote-selector__type {
+            height: 7.125rem;
+            min-width: 6.3125rem;
+        }
+
+        .quote-selector__type-label-text {
+            margin-top: 1rem;
+        }
+    }
+
+    /* =============== */
+    @@media screen and (min-width: 64em) {
+        .hero-and-quote-selector-wrapper {
+            padding-bottom: 2.75rem;
+            position: relative;
+        }
+
+        .hero_section .hero__wrapper {
+            display: block;
+            height: 32.5rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero_section .quote-selector {
+            bottom: 0;
+            left: 50%;
+            width: 47.75rem;
+            position: absolute;
+            text-align: left;
+            -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+        }
+
+        .quote-selector__heading {
+            position: absolute;
+            left: 2.375rem;
+            margin-bottom: 0;
+        }
+
+        .quote-selector__subheading {
+            display: block;
+            font-size: 1.125rem;
+            line-height: 2.75rem;
+            margin-bottom: 0.5rem;
+            padding-left: 15.5rem;
+        }
+    }
+    /* ============ */
+
+    @@media screen and (max-width: 48em) {
+        /* Bike Hide */
+        .quote-selector__type:nth-child(1n + 7) {
+            display: none;
+        }
+    }
+
+    .js-animated-icon .normal {
+        display: block;
+    }
+
+    .js-animated-icon .animated {
+        display: none;
+    }
+
+    .js-animated-icon.hovered .normal {
+        display: none;
+    }
+
+    .js-animated-icon.hovered .animated {
+        display: block;
+    }
+</style>*@
+
+<section class="hero_section">
+    <div class="hero-and-quote-selector-wrapper">
+        <section class="hero__wrapper">
+            @{string bgImageUrl = "";
+                ImageField bgimgField = rendering.Fields["Image"];
+                if (bgimgField.MediaItem != null)
+                {
+                    bgImageUrl = MediaManager.GetMediaUrl(bgimgField.MediaItem);
+                }
+            }
+            <picture class="hero__image">
+                <source srcset="@bgImageUrl" media="(min-width: 1025px)">
+                @Html.Sitecore().Field("Image", rendering)
+            </picture>
+        </section>
+
+        <section class="quote-selector">
+            <h1 class="quote-selector__heading">@Html.Sitecore().Field("Title", rendering)</h1>
+            @using (Html.BeginRouteForm(Sitecore.Mvc.Configuration.MvcSettings.SitecoreRouteName, FormMethod.Post, htmlAttributes: new { @class = "quote-selector__form", @id = "quote-selector__form" }))
+            {
+                @Html.Sitecore().FormHandler("QuoteForm", "HomepageQuoteFormSubmit")
+                <fieldset>
+                    <legend class="quote-selector__subheading">@Html.Sitecore().Field("SubTitle", rendering) @Html.Sitecore().Field("Link", rendering)</legend>
+                    <div class="quote-selector__types">
+                        @if (items.Length > 0)
+                        {
+                            foreach (Sitecore.Data.Items.Item item in items)
+                            {
+                                string imageUrl = "";
+                                ImageField imgField = item.Fields["Image"];
+                                if (imgField.MediaItem != null)
+                                {
+                                    imageUrl = MediaManager.GetMediaUrl(imgField.MediaItem);
+                                }
+
+                                i++;
+                                <div class="field quote-selector__type">
+                                    <input alt="" class="quote-selector__type-input is-vishidden" id="quote-type-@item.Fields["InsuranceType"]" name="type" type="radio" value="@item.ID" @(i == 1 ? "checked" : " ")>
+                                    <label class="quote-selector__type-label js-animated-label" for="quote-type-@item.Fields["InsuranceType"]">
+                                        @if (!string.IsNullOrEmpty(item.Fields["AnimatedIcon"].Value))
+                                        {
+                                        <div class="quote-selector__icon js-animated-icon @item.Fields["InsuranceType"]" data-icon="@item.Fields["InsuranceType"]">
+
+                                            <div id="@item.Fields["InsuranceType"]-animation" class="animated"></div>
+                                            <img src="@imageUrl" alt="" class="normal" />
+                                        </div>
+                                        }
+                                        else
+                                        {
+                                           
+                                            <div class="quote-selector__icon js-animated-icon @item.Fields["InsuranceType"]" data-icon="@item.Fields["InsuranceType"]">
+                                                @*<div id="@item.Fields["InsuranceType"]-animation" class="animated"></div>*@
+                                                <img src="@imageUrl" alt="" class="animated" />
+                                                <img src="@imageUrl" alt="" class="normal" />
+
+                                            </div>
+
+                                                            @*<div class="quote-selector__icon "> <img class="custom-static-icon" src="@imageUrl" /> </div>*@
+                                        }
+                                        <span class="quote-selector__type-label-text">
+                                            @Html.Sitecore().Field("Title", item)
+
+                                        </span>
+                                    </label>
+                                </div>
+
+                            }
+                        }
+                        else
+                        {
+                            if (Sitecore.Context.PageMode.IsExperienceEditor)
+                            {
+                                <p>No insurance types have been selected</p>
+                            }
+                        }
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="quote-selector__controls">
+                        <div class="field" style="display:none;">
+
+                            <label for="zip" class="label">@Html.Sitecore().Field("PlaceHolderText", rendering)</label>
+                        </div>
+                        <button id="submit-quote" class="button button--large-text Click-here" type="button">@Html.Sitecore().Field("ButtonText", rendering)</button>
+                    </div>
+                </fieldset>
+            }
+
+        </section>
+
+    </div>
+</section>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"
+        integrity="sha512-jEnuDt6jfecCjthQAJ+ed0MTVA++5ZKmlUcmDGBv2vUI/REn6FuIdixLNnQT+vKusE2hhTk2is3cFvv5wA+Sgg=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+
+<script src="~/asset/js/animated/home.js"></script>
+<script src="~/asset/js/animated/auto.js"></script>
+<script src="~/asset/js/animated/business.js"></script>
+<script src="~/asset/js/animated/flood.js"></script>
+<script src="~/asset/js/animated/renter.js"></script>
+<script src="~/asset/js/animated/motorcycle.js"></script>
+<script src="~/asset/js/animated/umbrella.js"></script>
+
+<script>
+    const iconParents = document.querySelectorAll(".js-animated-icon");
+    iconParents.forEach((parent) => {
+        let timeout;
+
+        parent.addEventListener("mouseover", () => {
+            clearTimeout(timeout);
+            parent.classList.add("hovered");
+            timeout = setTimeout(() => parent.classList.remove("hovered"), 7000);
+        });
+    });
+
+    bodymovin.loadAnimation({
+        container: document.querySelector("#Home-animation"),
+        animationData: home,
+    });
+
+    bodymovin.loadAnimation({
+        container: document.querySelector("#Auto-animation"),
+        animationData: auto,
+    });
+
+    bodymovin.loadAnimation({
+        container: document.querySelector("#Business-animation"),
+        animationData: business,
+    });
+
+    bodymovin.loadAnimation({
+        container: document.querySelector("#Motorcycle-animation"),
+        animationData: motorcycle,
+    });
+
+    bodymovin.loadAnimation({
+        container: document.querySelector("#umbrella-animation"),
+        animationData: umbrella,
+    });
+
+    bodymovin.loadAnimation({
+        container: document.querySelector("#Renter-animation"),
+        animationData: renter,
+    });
+
+    bodymovin.loadAnimation({
+        container: document.querySelector("#Flood-animation"),
+        animationData: flood,
+    });
+</script>
+
+<script>
+    var submitButton = document.getElementById("submit-quote");
+    if (submitButton) {
+        submitButton.addEventListener("click", function () {
+            document.getElementById("quote-selector__form").submit();
+        });
+    }
+</script>

@@ -1,0 +1,122 @@
+﻿@using AFI.Foundation.Helper;
+@model AFI.Foundation.QuoteForm.Models.ContactUsFormViewModel
+
+
+<div class="container">
+    <!-- FORM -->
+    <form id="contact-us" method="post" class="contact-us-form contact-us__form js-form js-recaptcha-form" data-action="contactUsForm" novalidate="novalidate" data-sitekey="@Sitecore.Configuration.Settings.GetAppSetting("ReCaptcha.SiteKey")">
+    
+    <!-- Response Message -->
+    <div class="js-submit-message">
+        <!-- error -->
+        @Html.Raw(@Html.Sitecore().Field(FeatureTemplate.ContactUs.Fields.ErrorMessage.ToString()))
+        <!-- success -->
+        <div class="message is-success">
+            @Html.Raw(@Html.Sitecore().Field(FeatureTemplate.ContactUs.Fields.ConfirmationMessage.ToString()))
+            <button class="button js-submitAgain-button" type="button" style="width: auto">@Html.Sitecore().Field(FeatureTemplate.ContactUs.Fields.AnotherMessageSubmitButtonText.ToString())</button>
+        </div>
+    </div>
+
+
+
+        <section class="grid grid__no-wrap contact-us__wrapper js-formtoggle-wrapper">
+            <div class="grid__child--25 contact-us__headlines my-4 mb-5 my-lg-0">
+                <h2>@Html.Sitecore().Field(FeatureTemplate.ContactUs.Fields.Title.ToString())</h2>
+                <p>@Html.Sitecore().Field(FeatureTemplate.ContactUs.Fields.Subtitle.ToString())</p>
+                <div class="recaptcha__text">
+                    This site is protected by reCAPTCHA and the Google
+                    <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+                    <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+                </div>
+            </div>
+            <div class="grid__child grid__child--33">
+                <!-- Name -->
+                <div class="field js-validation-field" id="js-validation-field--4798895752091">
+                    <label for="name" class="label">@Html.Sitecore().Field(FeatureTemplate.ContactUs.Fields.NameLabel.ToString())</label>
+                    <input class="input field__input required alphabeticOnly"
+                           id="name"
+                           name="name"
+                           type="text"
+                           value=""
+                           required=""
+                           aria-required="true"
+                           maxlength="100"
+                           data-validation-field-id="js-validation-field--4798895752091" />
+                </div>
+
+                <!-- Email -->
+                <div class="field js-validation-field" id="js-validation-field--3087671307339">
+                    <label for="email" class="label">@Html.Sitecore().Field(FeatureTemplate.ContactUs.Fields.EmailLabel.ToString())</label>
+                    <input class="input field__input email required"
+                           id="email"
+                           name="email"
+                           type="email"
+                           value=""
+                           required=""
+                           aria-required="true"
+                           maxlength="100"
+                           data-validation-field-id="js-validation-field--3087671307339" />
+                </div>
+
+                <!-- Phone -->
+                <div class="field js-validation-field" data-validation-pattern-message="" id="js-validation-field--827782034791">
+                    <label for="phone" class="label">@Html.Sitecore().Field(FeatureTemplate.ContactUs.Fields.PhoneLabel.ToString())</label>
+                    <input class="input field__input phone required"
+                           id="phone"
+                           name="phone"
+                           type="text"
+                           value=""
+                           required=""
+                           aria-required="true"
+                           maxlength="20"
+                           pattern="^(\(\d{3}\))\s(\d{3})(\-)(\d{4})$"
+                           data-validation-field-id="js-validation-field--827782034791" />
+                    @if (Sitecore.Context.PageMode.IsExperienceEditor)
+                    {
+                        <div style="font-style:italic">Help Text: @Html.Sitecore().Field(FeatureTemplate.ContactUs.Fields.PhoneHelpText.ToString())</div>
+                    }
+                </div>
+            </div>
+
+            <!-- Subject -->
+            <div class="grid__child grid__child--33">
+                <div class="field js-validation-field" id="js-validation-field--12101197466764">
+                    <label for="subject" class="label">@Html.Sitecore().Field(FeatureTemplate.ContactUs.Fields.SubjectLabel.ToString())</label>
+                    <select class="input field__input js-clearoncomplete-input required"
+                            id="subject"
+                            name="subject"
+                            required=""
+                            aria-required="true"
+                            data-validation-field-id="js-validation-field--12101197466764">
+                        @foreach (var subject in Model.Subjects)
+                        {
+                            <option value="@subject.Value">@subject.Text</option>
+                        }
+                    </select>
+                </div>
+
+                <!-- Message -->
+                <div class="field js-validation-field" id="js-validation-field--4159378084683">
+                    <label for="message" class="label">@Html.Sitecore().Field(FeatureTemplate.ContactUs.Fields.MessageLabel.ToString())</label>
+                    <textarea class="input field__input js-clearoncomplete-input required"
+                              id="message"
+                              name="message"
+                              required=""
+                              aria-required="true"
+                              maxlength="500"
+                              rows="6"
+                              data-validation-field-id="js-validation-field--4159378084683"></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="button contact-us__button js-submit-button" data-submitting-text="Submitting">
+                    @Html.Sitecore().Field(FeatureTemplate.ContactUs.Fields.SubmitButtonText.ToString())
+                </button>
+            </div>
+        </section>
+    </form>
+</div>
+
+
+
+

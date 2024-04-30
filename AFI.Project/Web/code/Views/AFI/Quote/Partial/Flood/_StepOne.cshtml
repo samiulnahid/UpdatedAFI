@@ -1,0 +1,323 @@
+﻿@model AFI.Project.Web.Areas.AFIQuoteForm.Models.FloodForm.FloodForm
+@using AFI.Project.Web.Areas.AFIWEB.Models.Form_Models
+
+@{
+    int i = 1;
+    var stepsCount = Model.wayfinder.steps.Count;
+    int j = 1;
+}
+
+<!-- ************************************************ -->
+<!---------------------- MULTI-STEP 1 ------------------>
+<!-- ************************************************ -->
+<section class="form_section flood__step policyholder_form">
+    <div class="container">
+        <!-- ******** STEP ******** -->
+        <div class="step__container">
+            <ul class="steps__list">
+                @foreach (var step in Model.wayfinder.steps)
+                {
+                    <li class="step @(i == 1 ? "active_step" : "")" data-text="@step.label">@i</li>
+                    @Html.Raw(i != stepsCount ? "<li class='line'></li>" : "")
+                    i++;
+                }
+                @*<li class="step active_step" data-text="Policy Holder Info">1</li>
+                    <li class="line"></li>
+                    <li class="step" data-text="Property to be Quoted">2</li>
+                    <li class="line"></li>
+                    <li class="step" data-text="Quote">3</li>*@
+            </ul>
+        </div>
+
+        <div class="quote_request__section_wrapper">
+            <!-- ******* FORM  *******-->
+            @{
+                Section data = Model.form.sections.Where(x => x.id == "policyHolder").SingleOrDefault();
+            }
+            <div class="form_container">
+                <!--Updated By  25.7.23 Start-->
+                <button class="quote-request-sidebar__show-trigger" type="button">?</button>
+                <!--Updated By  25.7.23 End-->
+                <h2 class="quote_request_heading">@data.heading</h2>
+
+                <!-- First Name, Last Name, Suffix -->
+                <div class="fields-row">
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[0].id">@data.fields[0].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required alphabeticOnly"
+                                   id="@data.fields[0].id"
+                                   name="@data.fields[0].id"
+                                   data-name="@data.fields[0].id"
+                                   type="text"
+                                   pattern="^[a-zA-Z]+$"
+                                   maxlength="50"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[1].id">@data.fields[1].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required alphabeticOnly"
+                                   id="@data.fields[1].id"
+                                   name="@data.fields[1].id"
+                                   type="text"
+                                   pattern="^[a-zA-Z]+$"
+                                   maxlength="50"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+                    <div class="field field--small">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[2].id">@data.fields[2].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input"
+                                    id="@data.fields[2].id"
+                                    name="@data.fields[2].id"
+                                    type="select">
+                                <option value="">--</option>
+
+                                @foreach (Options opt in data.fields[2].options)
+                                {
+                                    <option value="@opt.value">@opt.label</option>
+                                }
+
+                                @*<option value="Jr.">Jr.</option>
+                        <option value="Sr.">Sr.</option>
+                        <option value="III">III</option>
+                        <option value="IV">IV</option>*@
+                            </select>
+                            <p class="field__note">@data.fields[2].note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mailing Address, City -->
+                <div class="fields-row">
+                    <div class="field field--xlarge extra_message_margin">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[3].id">
+                                @data.fields[3].label
+                            </label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required"
+                                   id="@data.fields[3].id"
+                                   name="@data.fields[3].id"
+                                   type="text"
+                                   maxlength="100"
+                                   autocomplete="none"
+                                   data-match="address" />
+                            <p class="field__note">@data.fields[3].note</p>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[4].id">@data.fields[4].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required"
+                                   id="@data.fields[4].id"
+                                   name="@data.fields[4].id"
+                                   type="text"
+                                   maxlength="50"
+                                   autocomplete="none"
+                                   data-match="city" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- State, Zip Code -->
+                <div class="fields-row">
+                    <div class="field field--xlarge">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[5].id">@data.fields[5].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input required"
+                                    id="@data.fields[5].id"
+                                    name="@data.fields[5].id"
+                                    type="select" data-match="state">
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="field field--medium">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[6].id">@data.fields[6].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required zip numberOnly"
+                                   id="@data.fields[6].id"
+                                   name="@data.fields[6].id"
+                                   type="text"
+                                   pattern="[0-9]{5}"
+                                   maxlength="5"
+                                   autocomplete="none"
+                                   data-match="zip" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Security Number,  Date of Birth-->
+                <div class="fields-row">
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[7].id">@data.fields[7].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input SSN"
+                                   id="@data.fields[7].id"
+                                   name="@data.fields[7].id"
+                                   type="text"
+                                   maxlength="11"
+                                   placeholder="@data.fields[7].placeholder"
+                                   value="" />
+                            <p class="field__note">@data.fields[7].note</p>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[8].id">@data.fields[8].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required date DOB checkAdult"
+                                   id="@data.fields[8].id"
+                                   name="@data.fields[8].id"
+                                   type="text"
+                                   pattern="\d{1,2}/\d{1,2}/\d{4}"
+                                   placeholder="@data.fields[8].placeholder"
+                                   value="" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gender,  Marital Status-->
+                <div class="fields-row">
+                    <div class="field field--large">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[9].id">@data.fields[9].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input required"
+                                    id="@data.fields[9].id"
+                                    name="@data.fields[9].id"
+                                    type="select">
+                                <option value="">--</option>
+                                @foreach (Options opt in data.fields[9].options)
+                                {
+                                    <option value="@opt.value">@opt.label</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field field--large">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[10].id">@data.fields[10].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input required"
+                                    id="@data.fields[10].id"
+                                    name="@data.fields[10].id"
+                                    type="select">
+
+                                <option value="">--</option>
+
+                                @foreach (Options opt in data.fields[10].options)
+                                {
+                                    <option value="@opt.value">@opt.label</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email Address, Phone Type, Phone Number-->
+                <div class="fields-row">
+                    <div class="field field--xlarge">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[11].id">@data.fields[11].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required email"
+                                   id="@data.fields[11].id"
+                                   name="@data.fields[11].id"
+                                   type="email"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+                    <div class="field field--medium">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[12].id">@data.fields[12].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input required"
+                                    id="@data.fields[12].id"
+                                    name="@data.fields[12].id"
+                                    type="select">
+                                <option value="">--</option>
+                                @foreach (Options opt in data.fields[12].options)
+                                {
+                                    <option value="@opt.value">@opt.label</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[13].id">@data.fields[13].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required numberOnly phone"
+                                   id="@data.fields[13].id"
+                                   name="@data.fields[13].id"
+                                   type="text"
+                                   pattern="\(\d\d\d\) \d\d\d-?\d\d\d\d"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Note -->
+                <p class="note">
+                    @Html.Raw(data.fields[14].note)
+                </p>
+            </div>
+            @if (data.sidebar != null && data.sidebar.content.Count > 0)
+            {
+                <!-- ******* ASIDE  *******-->
+        <aside class="quote_request_aside" style="max-width: 200px">
+            <h2 class="quote_request_sidebar__heading">
+                @data.sidebar.heading
+            </h2>
+            <div class="quote_request_sidebar__content">
+                @foreach (SideBarContent sideContent in data.sidebar.content)
+                {
+                    <div class="quote_request_sidebar__item">
+                        <h3 class="quote_request_sidebar__item_heading">
+                            @sideContent.heading
+                        </h3>
+                        <p class="quote_request_sidebar__item_description">
+                            @sideContent.content
+                        </p>
+                    </div>
+                }
+            </div>
+            <!--Updated By  25.7.23 Start-->
+            <button class="button button--reversed quote-request-sidebar__hide-trigger" type="button">Close</button>
+            <!--Updated By  25.7.23 End-->
+        </aside>
+            }
+
+        </div>
+    </div>
+</section>

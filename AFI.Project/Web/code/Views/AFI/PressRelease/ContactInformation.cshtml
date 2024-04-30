@@ -1,0 +1,51 @@
+﻿@using Sitecore.Mvc
+@using Sitecore
+@using Sitecore.Data.Fields
+@using Sitecore.Resources.Media
+@using Sitecore.Data.Items
+@using AFI.Foundation.Helper
+@using Sitecore.Mvc.Presentation
+@{
+        // Get Rendering Model
+        var rendering = RenderingContext.Current.Rendering.Item;
+        // Get All The Contact Information
+        var ContactName = rendering.Fields["ContactName"].ToString();
+        var ContactEmail = ((Sitecore.Data.Fields.LinkField)rendering.Fields["ContactEmail"]).GetFriendlyUrl();
+        var ContactEmailName = SitecoreHelper.GetLinkUrlName(rendering, rendering.Fields["ContactEmail"].ID);
+    var ContactTelephone = rendering.Fields["ContactTelephone"].ToString();
+}
+
+@if (Sitecore.Context.PageMode.IsExperienceEditor)
+{
+    <p>
+
+        <!-- <strong>Media Contact</strong> <br>-->
+
+        @Html.Sitecore().Field("ContactName", rendering)<br>
+        @Html.Sitecore().Field("ContactEmail", rendering)<br>
+        <a href="tel:+@ContactTelephone"> @Html.Sitecore().Field("ContactTelephone", rendering)</a>
+    </p>
+
+}
+else
+{
+    if (!string.IsNullOrEmpty(ContactName))
+    {
+<p>
+    <!-- <strong>Media Contact</strong> <br>-->
+
+    @ContactName<br>
+    @if (!string.IsNullOrEmpty(ContactEmail))
+    {
+        <a href="mailto:+@ContactEmail">@ContactEmailName</a><br>
+    }
+
+    @if (!string.IsNullOrEmpty(ContactTelephone))
+    {
+        <a href="tel:+@ContactTelephone">@ContactTelephone</a>
+    }
+
+</p>
+    }
+}
+

@@ -1,0 +1,231 @@
+﻿@using Sitecore.Mvc
+@model List<AFI.Foundation.QuoteForm.Areas.AFIWEB.Models.LogMail>
+<style>
+
+
+    #report-page .table-striped {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border: 1px solid #c1c1c13b;
+    }
+
+        #report-page .table-striped th {
+            text-align: left;
+            padding: 16px;
+            font-weight: 600;
+            background: #003864;
+            color: #fff;
+        }
+
+        #report-page .table-striped th, #report-page .table-striped td {
+            text-align: left;
+            padding: 16px;
+            border-bottom: 1px solid #c1c1c13b;
+        }
+
+        #report-page .table-striped tr:nth-of-type(odd) {
+            background: #c1c1c13b;
+        }
+
+    #report-page .table_header {
+        padding: 10px 20px;
+        font-size: 18px;
+        background: #2c2c2c;
+        color: #fff;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        text-align: center;
+    }
+
+    #report-page .table_row {
+        padding: 10px 20px;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        background: #eee;
+        text-align: center;
+        border-bottom: 1px solid #fff;
+    }
+
+    #report-page .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: -99999;
+        opacity: 0;
+        transition: opacity 0.3s;
+        display: block !important;
+    }
+
+        #report-page .modal.show_modal {
+            opacity: 1;
+            z-index: 99999;
+        }
+
+        #report-page .modal .modal_outer {
+            width: 100%;
+            height: 100vh;
+            background: hsla(0, 0%, 0%, 0.3);
+            position: relative;
+        }
+
+        #report-page .modal .modal_inner {
+            width: 50%;
+            height: 70%;
+            max-width: 800px;
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            padding: 30px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            overflow-y: auto;
+             z-index: 99999999;
+        }
+
+        #report-page .modal .closeBtn {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            display: grid;
+            place-content: center;
+            cursor: pointer;
+        }
+
+        #report-page .modal .modal_footer {
+            border-top: 1px solid #ccc;
+            padding-top: 20px;
+        }
+
+        #report-page .modal .modal_header {
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+    #report-page .modal_footer .btn_container {
+        text-align: right;
+    }
+
+    .modal-backdrop{
+        display: none !important;
+    }
+
+    .mobile__scroll{
+        margin-top: 20px !important;
+    }
+    @@media screen and (max-width:991px) {
+        .mobile__scroll {
+            overflow-x: auto;
+            white-space: nowrap;
+            width: 900px;
+            margin: 20 auto 0 !important;
+        }
+
+        #report-page{
+            width: 900px;
+        }
+
+        #report-page .table_header{
+            padding: 10px;
+        }
+
+        .total__count{
+            margin: 0 20px 10px;
+            text-align: left;
+        }
+
+        #report-page .table_header,
+        #report-page .table_row {
+            grid-template-columns: 1.1fr 1fr 2fr 1.2fr 1fr;
+        }
+
+        #report-page .modal .modal_inner {
+            width: 90%;
+            height: 75%;
+            max-width: 600px;
+            white-space: normal;
+            padding: 5%;
+        }
+
+        #report-page .modal .modal_inner table{
+            width: 100%;
+        }
+        #report-page .modal .modal_inner .modal-body{
+            padding: 0;
+        }
+        #report-page .modal .modal_inner .modal-body img{
+            width: auto !important;
+        }
+        #report-page .modal .modal_inner .modal_title{
+           text-align: left !important;
+        }
+
+    }
+</style>
+
+<div class="wrapper mobile__scroll">
+    <h2 style="text-align:center;">Claim Survey Email Log List</h2>
+    <div id="report-page">
+        <div class="total__count">Total Count: @Model.Count</div>
+        <div class="table_header">
+            <span>Show Email Body</span>
+            <span>ClaimNumber</span>
+            <span>ToEmail</span>
+            <span>CreatedDate</span>
+            <span>Source</span>
+        </div>
+        @foreach (var item in Model)
+        {
+            <div class="table_row">
+                <span><a href="#" data-toggle="modal" data-target=".modal-@item.Id" onclick="document.querySelector('.modal-@item.Id')?.classList.add('show_modal')">Click Here</a></span>
+                <span>@item.ClaimNumber</span>
+                <span>@item.To_Email</span>
+                <span>@item.CreatedDate.ToString("MM/dd/yyyy HH:mm:ss")</span>
+                <span>@item.Source</span>
+            </div>
+            <section id="@item.Id" class="modal modal-@item.Id" role="dialog">
+                <div class="modal_outer" onclick="closeModal('.modal-@item.Id')"></div>
+                   
+                    <div class="modal_inner">
+                        <div class="modal_header">
+                            <h4 class="modal_title">@item.Subject</h4>
+                            <div class="closeBtn" onclick="closeModal('.modal-@item.Id')">x</div>
+                        </div>
+                        <div class="modal-body">
+                            @Html.Raw(item.Body)
+                        </div>
+                        <div class="modal_footer">
+                            <div class="btn_container">
+                                <button type="button" class="btn btn_default" data-dismiss="modal" onclick="closeModal('.modal-@item.Id')">Close</button>
+                            </div>
+                        </div>
+                    </div>
+
+            </section>
+        }
+
+
+    </div>
+
+
+</div>
+
+<!-- jQuery library -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<script>
+function closeModal(modalSelector) {
+    document.querySelector(modalSelector)?.classList.remove('show_modal', "in");
+    document.body.classList.remove('modal-open');
+}
+</script>

@@ -1,0 +1,31 @@
+﻿@using Sitecore.Mvc
+@using Sitecore
+@using Sitecore.Data.Fields
+@using Sitecore.Data.Items
+@using System.Configuration
+@model AFI.Feature.Article.Models.ArticleSpotlight
+
+
+<section class="wrapper">
+    <div id="card__section" class="card-section bottom-section">
+        @if (Sitecore.Context.PageMode.IsExperienceEditor && Model.Articles == null)
+        {
+            <h4>Please set articles</h4>
+        }
+        else
+        {
+            foreach (var data in Model.Articles)
+            {
+                var bg = "#e1f1ff";
+                if (!string.IsNullOrEmpty(data.ThumbImage))
+                {
+                    bg = "url(" + @data.ThumbImage + ") no-repeat";
+                }
+                <article class="full-img" style="background: @bg">
+                    <a href="@data.CategoryPageURL" class="cat btn">@data.Category</a>
+                    <p class="bot-text"> <a href="@data.ArticlePageURL">@data.Title</a></p>
+                </article>
+            }
+        }
+    </div>
+</section>

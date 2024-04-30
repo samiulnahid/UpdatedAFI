@@ -1,0 +1,188 @@
+﻿@using AFI.Project.Web.Areas.AFIWEB.Models.Form_Models
+@model AFI.Project.Web.Areas.AFIQuoteForm.Models.CondoForm.CondoForm
+
+@{
+    int i = 1;
+    var stepsCount = Model.wayfinder.steps.Count;
+}
+
+
+<!-- ************************************************ -->
+<!---------------------- MULTI-STEP 3 ------------------>
+<!-- ************************************************ -->
+<!-- DISCOUNT FORM -->
+@{
+    Section data = Model.form.sections.Where(x => x.id == "discounts").SingleOrDefault();
+}
+<section class="form_section condo__step discount_form">
+    <div class="container">
+        <!-- ******** STEP ******** -->
+        <div class="step__container">
+            @*<ul class="steps__list">
+                    <li class="step active_step" data-text="Policy Holder">1</li>
+                    <li class="line"></li>
+
+                    <li class="step active_step" data-text="Property Info">2</li>
+                    <li class="line"></li>
+
+                    <li class="step active_step" data-text="Quote">3</li>
+                </ul>*@
+            <ul class="steps__list">
+                @foreach (var step in Model.wayfinder.steps)
+                {
+                    <li class="step @(i <= 3 ? "active_step" : "")" data-text="@step.label">@i</li>
+                    @Html.Raw(i != stepsCount ? "<li class='line'></li>" : "")
+                    i++;
+                }
+            </ul>
+        </div>
+
+        <div class="quote_request__section_wrapper">
+            <!-- ******* FORM  *******-->
+            <div class="form_container">
+                <!--Updated By  25.7.23 Start-->
+                <button class="quote-request-sidebar__show-trigger" type="button">?</button>
+                <!--Updated By  25.7.23 End-->
+                <h2 class="quote_request_heading">@data.heading</h2>
+                <!-- Leak Detection system -->
+                <div class="fields-row">
+                    <div class="field field--full">
+                        <div class="field-group field-group--inline">
+                            <div class="field__input-wrapper">
+                                @foreach (Options opt in data.fields[0].options)
+                                {
+                                    <input class="field__input"
+                                           id="@data.fields[0].id--@opt.value"
+                                           name="@data.fields[0].id"
+                                           type="radio"
+                                           value="@opt.value" /><label class="field__label"
+                                                                       for="@data.fields[0].id--@opt.value">@opt.label</label>
+                                                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- New Purchase Discount -->
+                <div class="fields-row">
+                    <div class="field field--full">
+                        <div class="field-group field-group--inline">
+                            <div class="field__input-wrapper">
+                                @foreach (Options opt in data.fields[1].options)
+                                {
+                                    <input class="field__input newPurchaseDiscount"
+                                           id="@data.fields[1].id--@opt.value"
+                                           name="@data.fields[1].id"
+                                           type="radio"
+                                           value="true" /><label class="field__label"
+                                                                 for="@data.fields[1].id--@opt.value">@opt.label</label>
+                                                            }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Anticipated Closing Date -->
+                <div class="fields-row">
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label"
+                                   for="newPurchaseDiscountAnticipatedClosingDate">@data.fields[2].label</label>
+                            </div>
+                            <div class="field__input-wrapper">
+                                <input class="field__input newPurchaseDiscountDate"
+                                       id="@data.fields[2].id"
+                                       name="@data.fields[2].id"
+                                       type="text"
+                                       pattern="\d{1,2}/\d{1,2}/\d{4}"
+                                       disabled
+                                       value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Non-Smoking Household -->
+                    <div class="fields-row">
+                        <div class="field field--full">
+                            <div class="field-group field-group--inline">
+                                <div class="field__input-wrapper">
+                                    @foreach (Options opt in data.fields[3].options)
+                                    {
+                                        <input class="field__input"
+                                               id="@data.fields[3].id--@opt.value"
+                                               name="@data.fields[3].id"
+                                               type="radio"
+                                               value="true" />
+                                        <label class="field__label"
+                                               for="@data.fields[3].id--@opt.value">
+                                            @opt.label
+                                        </label>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Occupation, Education -->
+                    <div class="fields-row">
+                        <div class="field">
+                            <div class="field__label-wrapper">
+                                <label class="field__label" for="occupation">@data.fields[4].label</label>
+                            </div>
+                            <div class="field__input-wrapper">
+                                <input class="field__input"
+                                       id="@data.fields[4].id"
+                                       name="@data.fields[4].id"
+                                       type="text"
+                                       maxlength="50"
+                                       value="" />
+                                <p class="field__note">@data.fields[4].note</p>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="field__label-wrapper">
+                                <label class="field__label" for="education">@data.fields[5].label</label>
+                            </div>
+                            <div class="field__input-wrapper">
+                                <select class="field__input"
+                                        id="@data.fields[5].id"
+                                        name="@data.fields[5].id"
+                                        type="select">
+                                    <option value="">Choose One</option>
+                                    @foreach (Options opt in data.fields[5].options)
+                                    {
+                                        <option value="@opt.value">@opt.label</option>
+                                    }
+                                </select>
+                                <p class="field__note">@data.fields[5].note</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ******* ASIDE  *******-->
+                @if (data.sidebar != null && data.sidebar.content.Count > 0)
+                {
+        <aside class="quote_request_aside">
+            <h2 class="quote_request_sidebar__heading">@data.sidebar.heading</h2>
+            <div class="quote_request_sidebar__content">
+                @foreach (SideBarContent sideContent in data.sidebar.content)
+                {
+                    <div class="quote_request_sidebar__item">
+                        <h3 class="quote_request_sidebar__item_heading">
+                            @sideContent.heading
+                        </h3>
+                        <p class="quote_request_sidebar__item_description">
+                            @sideContent.content
+                        </p>
+                    </div>
+                }
+
+            </div>
+            <!--Updated By  25.7.23 Start-->
+            <button class="button button--reversed quote-request-sidebar__hide-trigger" type="button">Close</button>
+            <!--Updated By  25.7.23 End-->
+        </aside>
+                }
+            </div>
+        </div>
+    </section>

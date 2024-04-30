@@ -1,0 +1,125 @@
+﻿@using AFI.Foundation.Helper;
+@model AFI.Feature.QuoteForm.Areas.AFIWEB.Models.ReferralFormView;
+
+
+<div class="wrapper">
+    <section class="refer-a-member" id="referForm" data-module="referMemberForm">
+        <div class="refer-a-member__heading">
+            <h1>  @RenderingContext.Current.Rendering.Parameters["Title"]</h1>
+            <p> @RenderingContext.Current.Rendering.Parameters["SubTitle"]</p>
+        </div>
+<form  class="refer-a-member__form js-form js-recaptcha-form" data-action="referralForm" data-sitekey="6LfR7R4gAAAAAJhdtt4xLoULHMVubpGhEYCN6SYR" novalidate="">
+            <fieldset>
+                <legend class="refer-a-member__legend">
+                    <h2> @RenderingContext.Current.Rendering.Parameters["Your Information Title Text"]</h2>
+                </legend>
+
+                <div class="grid refer-a-member__wrapper refer-a-member__wrapper--your-info">
+
+                    <div class="refer-a-member__number-fields js-togglesection">
+                        <div class="field refer-a-member__member-info js-member-number-field grid__item grid__item--50">
+                            <label for="member-number" class="label "> @RenderingContext.Current.Rendering.Parameters["Member Number Text"] </label>
+                            <input class="input input-field  js-ignore-disable js-membernumber-input" id="member-number" name="ReferringAFIMemberNumber" type="number" value=""  maxlength="7" />
+                            <div class="validation-field__errors "></div>
+                        </div>
+                        <button class="button-bare not__memNumber_btn js-togglesection-trigger" type="button" data-target="js-name-fields">@RenderingContext.Current.Rendering.Parameters["Member Number Helper Text"]</button>
+                    </div>
+
+                    
+                    <div class="grid__no-wrap refer-a-member__name-fields js-togglesection is-hide">
+                        <div class="field js-member-name-field grid__item grid__item--50">
+                            <label for="member-first-name" class="label ">@RenderingContext.Current.Rendering.Parameters["First Name Text"]</label>
+                            <input class="input input-field" id="member-first-name" name="ReferringFirstName" type="text" value=""  maxlength="50" disabled="true" />
+                            <div class="validation-field__errors "></div>
+                        </div>
+
+                        <div class="field js-member-name-field grid__item grid__item--50">
+                            <label for="member-last-name" class="label "> @RenderingContext.Current.Rendering.Parameters["Last Name Text"]</label>
+                            <input class="input input-field  " id="member-last-name" name="ReferringLastName" type="text" value=""  maxlength="50" disabled="true" />
+                            <div class="validation-field__errors "></div>
+                        </div>
+                        <button class="button-bare has__memNumber_btn js-togglesection-trigger" type="button" data-target="js-member-fields">Use my member number instead</button>
+                    </div>
+                </div>
+            </fieldset>
+
+            <hr>
+
+            <fieldset>
+                <legend class="refer-a-member__legend">
+                    <h2>@RenderingContext.Current.Rendering.Parameters["Referral Title"]</h2>
+                    <p>@RenderingContext.Current.Rendering.Parameters["Referral Subtitle"]</p>
+                    <div class="recaptcha__text">
+                        This site is protected by reCAPTCHA and the Google
+                        <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+                        <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+                    </div>
+                </legend>
+
+                <div class="refer-a-member__wrapper grid">
+                    <div class="grid__no-wrap refer-a-member__name-fields">
+                        <div class="field js-validation-field grid__item grid__item--50">
+                            <label for="first-name" class="label ">@RenderingContext.Current.Rendering.Parameters["First Name Text"]</label>
+                            <input class="input input-field  " id="first-name" name="FirstName" type="text" value=""  maxlength="50" />
+                            <div class="validation-field__errors "></div>
+                        </div>
+
+                        <div class="field js-validation-field grid__item grid__item--50">
+                            <label for="last-name" class="label ">@RenderingContext.Current.Rendering.Parameters["Last Name Text"]  </label>
+                            <input class="input input-field  " id="last-name" name="LastName" type="text" value=""  maxlength="50" />
+                            <div class="validation-field__errors "></div>
+                        </div>
+                    </div>
+
+                    <div class="grid__no-wrap refer-a-member__name-fields">
+                        <div class="field js-validation-field grid__item grid__item--50">
+                            <label for="prefix" class="label ">@RenderingContext.Current.Rendering.Parameters["Prefix Text"] </label>
+                            <select class="input input-field js-prefix-input " id="prefix" name="NamePrefix" >
+                                <option value="">@RenderingContext.Current.Rendering.Parameters["Default Prefix Text"]</option>
+                                @foreach (var prefix in Model.Prefixes)
+                                {
+                                    <option value="@prefix.Value">@prefix.Text</option>
+                                }
+                            </select>
+                            <div class="validation-field__errors "></div>
+                        </div>
+
+                        <div class="field js-rank-field grid__item grid__item--50">
+                            <label for="rank-field" class="label ">@RenderingContext.Current.Rendering.Parameters["Rank Text"]</label>
+                            <input class="input input-field  " id="rank-field" name="Rank" type="text" value=""  maxlength="50" />
+                            <div class="validation-field__errors "></div>
+                        </div>
+                    </div>
+
+                    <div class="grid__item grid__item--50 refer-a-member__prefs">
+                        <fieldset class="field-group ">
+                            <legend class="field-group__label">@RenderingContext.Current.Rendering.Parameters["Contact Title"]</legend>
+                            <ul class="field-list">
+                                <li class="field field-list__item">
+                                    <input class="input input-radio  refer-a-member__radio js-email-radio" id="best-contact-type-email" name="bestContactType" type="radio" value="email" checked="checked" />
+                                    <label for="best-contact-type-email" class="label refer-a-member__radio">@RenderingContext.Current.Rendering.Parameters["Email Text"]</label>
+                                    <input class="input input-radio  refer-a-member__radio js-phone-radio" id="best-contact-type-phone" name="bestContactType" type="radio" value="phone" />
+                                    <label for="best-contact-type-phone" class="label refer-a-member__radio">@RenderingContext.Current.Rendering.Parameters["Phone Number Text"]</label>
+                                </li>
+                            </ul>
+                        </fieldset>
+
+                        <div class="field js-email-field ">
+                            <label for="email" class="label is-hide">@RenderingContext.Current.Rendering.Parameters["Email Text"]</label>
+                            <input class="input input-field" id="email" name="email" type="email" value=""  maxlength="100" />
+                            <div class="validation-field__errors "></div>
+                        </div>
+                        
+                        <div class="field js-phone-field is-hide " data-validation-pattern-message="@RenderingContext.Current.Rendering.Parameters["Phone Number Text"]">
+                            <label for="phone" class="label is-hide">@RenderingContext.Current.Rendering.Parameters["Phone Number Helper Text"]</label>
+                            <input class="input input-field" id="phone" name="PhoneNumber" type="text" value=""  maxlength="20" pattern="^(\(\d{3}\))\s(\d{3})(\-)(\d{4})$" disabled/>
+                            <div class="validation-field__errors " disabled="true"></div>
+                        </div>
+
+                        <button type="submit" id="refer-submit-button" class="button js-submit-button">@RenderingContext.Current.Rendering.Parameters["Submit Text"]</button>
+                    </div>
+                </div>
+            </fieldset>
+     </form>
+    </section>
+</div>

@@ -85,6 +85,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Repository
         object GetMemberInfoByMemberNumber(string MemberNumber);
 
         IEnumerable<VoteCandidate> GetAllLatestVotingPeriodCandidateData();
+        IEnumerable<VotingMemberCSV> GetAllFilterVotingMemberData(int page, int pageSize, int VotingPeriodId, string IsEmail);
     }
 
     public class AFIReportRepository : IAFIReportRepository
@@ -1337,6 +1338,10 @@ ORDER BY VotingPeriodId DESC;";
            ,[YearsAsMember]
            ,[Gender]
            ,[Deceased]
+            ,[MarketingCode]
+           ,[ProperFirstName]
+           ,[MiddleName]
+           ,[Suffix]
            ,[CreateDate]
                     )
                     VALUES 
@@ -1385,6 +1390,10 @@ ORDER BY VotingPeriodId DESC;";
            @YearsAsMember,
            @Gender,
            @Deceased,
+           @MarketingCode,
+           @ProperFirstName,
+           @MiddleName,
+           @Suffix,
            @CreateDate
                     );
                 ";
@@ -2008,6 +2017,129 @@ COUNT(*) AS TotalVotes
                 }
             }
         }
+        public IEnumerable<VotingMemberCSV> GetAllFilterVotingMemberData(int page, int pageSize, int VotingPeriodId, string IsEmail)
+        {
+            int ofsetItem = (page - 1) * pageSize;
 
+            using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
+            {
+                var sql = @"SELECT m.MemberId, 
+                           m.MemberNumber,
+                           m.PIN,
+                           m.MarketingCode,
+                           m.Salutation,
+                           m.Prefix,
+                           m.ProperFirstName,
+                           m.InsuredFirstName,
+                           m.MiddleName,
+                           m.InsuredLastName,
+                           m.Suffix,
+                           m.ServiceStatus,
+                           m.MailingAddressLine1,
+                           m.MailingAddressLine2,
+                           m.MailingCityName,
+                           m.MailingStateAbbreviation,
+                           m.MailingZip,
+                           m.MailingCountry,
+                           m.VotingPeriodId,
+                           m.EmailAddress,
+                           v.Title AS VotingPeriod,
+                           COUNT(*) OVER() AS TotalCount,
+                           CASE
+           WHEN GETDATE() >= [Start] AND CAST(GETDATE() AS DATE) <= CAST([End] AS DATE) AND [End] >= CAST(GETDATE() AS DATE) THEN 'true'
+           ELSE 'false'
+                           END AS IsActive
+                    FROM[ProxyVote].[Member] AS m
+                    INNER JOIN[ProxyVote].[VotingPeriod] v ON v.VotingPeriodId = m.VotingPeriodId
+                    WHERE 1 = 1 ";
+
+                if (VotingPeriodId == 0)
+                {
+                    // Condition 1: Get the latest voting period data
+                    sql += @"AND v.VotingPeriodId = (SELECT TOP 1 VotingPeriodId FROM ProxyVote.VotingPeriod ORDER BY VotingPeriodId DESC) ";
+
+                    // Check if the latest voting period has no member data
+                    if (!db.Query("SELECT TOP 1 1 FROM ProxyVote.Member WHERE VotingPeriodId = (SELECT TOP 1 VotingPeriodId FROM ProxyVote.VotingPeriod ORDER BY VotingPeriodId DESC)").Any())
+                    {
+                        // Condition 2: Get all member data if the latest voting period has no members
+                        sql = @"SELECT m.MemberId, 
+                                m.MemberNumber,
+                                m.PIN,
+                                m.MarketingCode,
+                                m.Salutation,
+                                m.Prefix,
+                                m.ProperFirstName,
+                                m.InsuredFirstName,
+                                m.MiddleName,
+                                m.InsuredLastName,
+                                m.Suffix,
+                                m.ServiceStatus,
+                                m.MailingAddressLine1,
+                                m.MailingAddressLine2,
+                                m.MailingCityName,
+                                m.MailingStateAbbreviation,
+                                m.MailingZip,
+                                m.MailingCountry,
+                                m.VotingPeriodId,
+                                m.EmailAddress,
+                                v.Title AS VotingPeriod,
+                                COUNT(*) OVER() AS TotalCount,
+                               CASE
+           WHEN GETDATE() >= [Start] AND CAST(GETDATE() AS DATE) <= CAST([End] AS DATE) AND [End] >= CAST(GETDATE() AS DATE) THEN 'true'
+           ELSE 'false'
+                                END AS IsActive
+                        FROM[ProxyVote].[Member] AS m
+                        INNER JOIN[ProxyVote].[VotingPeriod] v ON v.VotingPeriodId = m.VotingPeriodId ";
+                    }
+                }
+                else if (VotingPeriodId == 99999999)
+                {
+                    // Condition 4: Get All member data 
+                    sql += " ";
+                }
+                else if (VotingPeriodId > 0)
+                {
+                    // Condition 3: Get data for a specific VotingPeriodId
+                    sql += " AND v.VotingPeriodId = @VotingPeriodId";
+                }
+
+                // Additional condition based on IsEmail parameter
+                if (IsEmail.ToLower() == "all")
+                {
+                    // Get all email or non-email members
+                    // No additional condition needed
+                }
+                else if (IsEmail.ToLower() == "hasemail")
+                {
+                    // Get members where email field has email
+                    sql += " AND m.EmailAddress IS NOT NULL AND m.EmailAddress != ''";
+                }
+                else if (IsEmail.ToLower() == "emptyemail")
+                {
+                    // Get members where email field is null or empty
+                    sql += " AND (m.EmailAddress IS NULL OR m.EmailAddress = '')";
+                }
+                // Check if pageSize is 0 to retrieve all data
+                if (pageSize == 0)
+                {
+                    sql = sql.Replace("OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY", "");
+                }
+                else
+                {
+                    sql += " ORDER BY MemberId OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY ; ";
+                }
+
+                var parameters = new DynamicParameters();
+                parameters.Add("@Offset", ofsetItem);
+                parameters.Add("@PageSize", pageSize);
+
+                if (VotingPeriodId > 0)
+                {
+                    parameters.Add("@VotingPeriodId", VotingPeriodId);
+                }
+
+                return db.Query<VotingMemberCSV>(sql, parameters);
+            }
+        }
     }
 }

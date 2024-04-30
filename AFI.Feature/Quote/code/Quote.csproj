@@ -375,7 +375,6 @@
     <Content Include="Views\AFI\Quote\MotorCycleForm.cshtml" />
     <Content Include="Views\AFI\Quote\MotorhomeForm.cshtml" />
     <Content Include="Views\AFI\Quote\WatercraftForm.cshtml" />
-    <Content Include="Views\AFI\Quote\AFB.cshtml" />
     <Content Include="Views\AFI\Quote\ReferralForm.cshtml" />
     <Content Include="Views\AFI\Quote\Partial\AFB\_StepOne.cshtml" />
     <Content Include="Views\AFI\Quote\Partial\AFB\_StepTwo.cshtml" />

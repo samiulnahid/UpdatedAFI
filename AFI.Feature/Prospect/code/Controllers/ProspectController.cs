@@ -213,11 +213,11 @@ namespace AFI.Feature.Prospect.Controllers
 
 
 
-        public JsonResult GetTempProspectData(int page = 1, int pageSize = 50, string leadStatus = null, string syncFilter = null, string coverage = null)
+        public JsonResult GetTempProspectData(int page = 1, int pageSize = 50, string leadStatus = null, string syncFilter = null, string coverage = null, string coverageType = null)
         {
             try
             {
-                var data = _tempProspectRepository.GetAllForMarketing(page, pageSize, leadStatus, syncFilter, coverage);
+                var data = _tempProspectRepository.GetAllForMarketing(page, pageSize, leadStatus, syncFilter, coverage, coverageType);
 
                 var totalCount = data.FirstOrDefault()?.TotalCount ?? 0;
                 var totalPages = (int)Math.Ceiling((decimal)totalCount / pageSize);
@@ -410,7 +410,7 @@ namespace AFI.Feature.Prospect.Controllers
             }
         }
 
-        public FileContentResult DownloadSuspectTempCSV(string leadStatus = null, string syncFilter = null, string coverage = null)
+        public FileContentResult DownloadSuspectTempCSV(string leadStatus = null, string syncFilter = null, string coverage = null, string coverageType = null)
         {
             try
             {
@@ -418,7 +418,7 @@ namespace AFI.Feature.Prospect.Controllers
             // Sample data
             IEnumerable<SuspectMarketingTemp> modelList = new List<SuspectMarketingTemp>();
 
-                modelList = _tempProspectRepository.GetAllForDownloadTempSuspect(leadStatus, syncFilter, coverage);
+                modelList = _tempProspectRepository.GetAllForDownloadTempSuspect(leadStatus, syncFilter, coverage, coverageType);
                 if (modelList.Count() > 0)
                 {
                     // Convert list to CSV string
@@ -477,7 +477,7 @@ namespace AFI.Feature.Prospect.Controllers
         {
             var sb = new StringBuilder();
             var properties = typeof(T).GetProperties()
-                                       .Where(p => p.Name != "ID" && p.Name != "EntityType" && p.Name != "EntityID"  && p.Name != "TotalCount"); // Exclude Id and UpdatedTime
+                                       .Where(p => p.Name != "ID" &&  p.Name != "EntityID"  && p.Name != "TotalCount"); // Exclude Id and UpdatedTime
 
             // Write headers
             sb.AppendLine(string.Join(",", properties.Select(p => p.Name)));

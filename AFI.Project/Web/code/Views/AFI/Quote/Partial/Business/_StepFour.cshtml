@@ -1,0 +1,118 @@
+﻿@model AFI.Project.Web.Areas.AFIQuoteForm.Models.BusinessForm.BusinessForm
+@using AFI.Project.Web.Areas.AFIWEB.Models.Form_Models
+<section class="form_section multi__step_4 coverage_history_form">
+    <div class="container">
+
+        @{
+            int i = 1;
+            var stepsCount = Model.wayfinder.steps.Count;
+        }
+
+        <div class="step__container">
+            <ul class="steps__list">
+                @foreach (var step in Model.wayfinder.steps)
+                {
+                    <li class="step @(i <= 4 ? "active_step" : "")" data-text="@step.label">@i</li>
+                    @Html.Raw(i != stepsCount ? "<li class='line'></li>" : "")
+                    i++;
+                }
+            </ul>
+        </div>
+
+        <div class="quote_request__section_wrapper">
+            @{
+                Section data = Model.form.sections.Where(x => x.id == "coverageHistory").SingleOrDefault();
+            }
+            <div class="form_container">
+                <!--Updated By  25.7.23 Start-->
+                <button class="quote-request-sidebar__show-trigger" type="button">?</button>
+                <!--Updated By  25.7.23 End-->
+                <h2 class="quote_request_heading">@data.heading</h2>
+
+                <!-- Current Insurance Company -->
+                <div class="fields-row">
+                    <div class="field field--xlarge">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[0].id">@data.fields[0].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input"
+                                    id="@data.fields[0].id"
+                                    name="@data.fields[0].id"
+                                    type="select">
+                                <option value="">Choose One</option>
+                                @foreach (Options opt in data.fields[0].options)
+                                {
+                                    <option value="@opt.value">@opt.label</option>
+                                }
+
+                            </select>
+                            <p class="field__note">@data.fields[0].note</p>
+                        </div>
+                    </div>
+
+                    <!-- Extent by select others -->
+                    <div class="field field--extended-label insuranceCompany conditionally_hidden_field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[1].id">@data.fields[1].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input"
+                                   id="@data.fields[1].id"
+                                   name="@data.fields[1].id"
+                                   type="text"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Policy Renewal Date -->
+                <div class="fields-row">
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[2].id">@data.fields[2].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input numberOnly"
+                                   id="@data.fields[2].id"
+                                   name="@data.fields[2].id"
+                                   type="text"
+                                   pattern="\d{1,2}/\d{1,2}/\d{4}"
+                                   placeholder="MM/DD/YYYY"
+                                   value="" />
+                            <p class="field__note">@data.fields[2].note</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            @if (data.sidebar != null && data.sidebar.content.Count > 0)
+            {
+        <aside class="quote_request_aside">
+            <h2 class="quote_request_sidebar__heading">
+                @data.sidebar.heading
+            </h2>
+            <div class="quote_request_sidebar__content">
+                @foreach (SideBarContent sideContent in data.sidebar.content)
+                {
+                    <div class="quote_request_sidebar__item">
+                        <h3 class="quote_request_sidebar__item_heading">
+                            @sideContent.heading
+                        </h3>
+                        <p class="quote_request_sidebar__item_description">
+                            @sideContent.content
+                        </p>
+                    </div>
+                }
+            </div>
+            <!--Updated By  25.7.23 Start-->
+            <button class="button button--reversed quote-request-sidebar__hide-trigger" type="button">Close</button>
+            <!--Updated By 25.7.23 End-->
+        </aside>
+            }
+
+        </div>
+    </div>
+</section>

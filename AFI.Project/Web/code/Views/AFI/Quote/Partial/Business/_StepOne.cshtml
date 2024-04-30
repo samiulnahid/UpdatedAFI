@@ -1,0 +1,159 @@
+﻿@model AFI.Project.Web.Areas.AFIQuoteForm.Models.BusinessForm.BusinessForm
+@using AFI.Project.Web.Areas.AFIWEB.Models.Form_Models
+<section class="form_section multi__step_1 policyholder_form">
+    <div class="container">
+
+
+        @{
+            int i = 1;
+            var stepsCount = Model.wayfinder.steps.Count;
+        }
+
+        <div class="step__container">
+            <ul class="steps__list">
+                @foreach (var step in Model.wayfinder.steps)
+                {
+                    <li class="step @(i == 1 ? "active_step" : "")" data-text="@step.label">@i</li>
+                    @Html.Raw(i != stepsCount ? "<li class='line'></li>" : "")
+                    i++;
+                }
+            </ul>
+        </div>
+        <div class="quote_request__section_wrapper">
+            @{
+                Section data = Model.form.sections.Where(x => x.id == "policyHolder").SingleOrDefault();
+            }
+            <!-- ******* FORM  *******-->
+            <div class="form_container business__owner__info">
+                <!--Updated By 25.7.23 Start-->
+                <button class="quote-request-sidebar__show-trigger" type="button">?</button>
+                <!--Updated By  25.7.23 End-->
+                <h2 class="quote_request_heading">@data.heading</h2>
+
+                <div class="fields-row">
+                    <!-- First Name -->
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[0].id">@data.fields[0].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required alphabeticOnly"
+                                   id="@data.fields[0].id"
+                                   name="@data.fields[0].id"
+                                   data-name="@data.fields[0].id"
+                                   type="text"
+                                   pattern="^[a-zA-Z]+$"
+                                   maxlength="50"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+
+                    <!-- Last Name -->
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[1].id">@data.fields[1].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required alphabeticOnly"
+                                   id="@data.fields[1].id"
+                                   name="@data.fields[1].id"
+                                   data-name="@data.fields[1].id"
+                                   type="text"
+                                   pattern="^[a-zA-Z]+$"
+                                   maxlength="50"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fields-row">
+                    <!-- Email -->
+                    <div class="field field--xlarge">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[2].id">@data.fields[2].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required email"
+                                   id="@data.fields[2].id"
+                                   name="@data.fields[2].id"
+                                   data-name="@data.fields[2].id"
+                                   type="email"
+                                   maxlength="100"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+
+                    <!-- Phone Type -->
+                    <div class="field field--medium">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[3].id">@data.fields[3].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input required"
+                                    id="@data.fields[3].id"
+                                    name="@data.fields[3].id"
+                                    data-name="@data.fields[3].id"
+                                    type="select">
+                                <option value="">--</option>
+                                @foreach (Options opt in data.fields[3].options)
+                                {
+                                    <option value="@opt.value">@opt.label</option>
+                                }
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Phone Number -->
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[4].id">@data.fields[4].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input  required numberOnly phone"
+                                   id="@data.fields[4].id"
+                                   name="@data.fields[4].id"
+                                   data-name="@data.fields[4].id"
+                                   type="text"
+                                   pattern="\(\d\d\d\) \d\d\d-?\d\d\d\d"
+                                   maxlength="14"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+                </div>
+
+                <p class="note">
+                    @Html.Raw(data.fields[5].note)
+                </p>
+            </div>
+
+            @if (data.sidebar != null && data.sidebar.content.Count > 0)
+            {
+        <aside class="quote_request_aside" style="max-width: 200px">
+            <h2 class="quote_request_sidebar__heading">        @data.sidebar.heading</h2>
+            <div class="quote_request_sidebar__content">
+                @foreach (SideBarContent sideContent in data.sidebar.content)
+                {
+                    <div class="quote_request_sidebar__item">
+                        <h3 class="quote_request_sidebar__item_heading">
+                            @sideContent.heading
+                        </h3>
+                        <p class="quote_request_sidebar__item_description">
+                            @sideContent.content
+                        </p>
+                    </div>
+                }
+            </div>
+            <!--Updated By 25.7.23 Start-->
+            <button class="button button--reversed quote-request-sidebar__hide-trigger" type="button">Close</button>
+            <!--Updated By  25.7.23 End-->
+        </aside>
+            }
+
+        </div>
+    </div>
+</section>

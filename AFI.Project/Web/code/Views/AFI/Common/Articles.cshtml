@@ -1,0 +1,36 @@
+﻿@using Sitecore.Mvc
+@using Sitecore
+@using Sitecore.Data.Fields
+@using Sitecore.Data.Items
+@using System.Configuration
+@model AFI.Feature.Article.Models.ArticleSpotlight
+
+
+<section class="related-articles__wrapper wrapper">
+    <h1 class="heading-red"> @Model.Title</h1>
+    <div class="related-articles__grid">
+
+        @foreach (var item in Model.Articles)
+        {
+            <article class="related-article">
+                <div class="article-img-outer__container">
+                    <div class="article-img-inner__container">
+                        <a href="@item.ArticlePageURL">
+                            <img src="@item.ThumbImage"
+                                 alt=""
+                                 class="article-img" />
+                        </a>
+                    </div>
+                </div>
+                <div class="related-article-content">
+                    <h1>@item.Title</h1>
+                    <p>
+                        @item.Description
+                    </p>
+                    <p><a href="@item.ArticlePageURL">@item.LinkText</a></p>
+                </div>
+            </article>
+        }
+
+    </div>
+</section>

@@ -1,0 +1,79 @@
+﻿@model AFI.Foundation.QuoteForm.Areas.ShortForms.Models.ShortFormViewModel
+
+@using AFI.Feature.Identifiers
+@using Sitecore.Mvc
+<div class="wrapper">
+    <section id="short-form" class="short-form" data-module="shortForm">
+        <form class="short-form__form js-form js-recaptcha-form" data-sitekey="@Sitecore.Configuration.Settings.GetAppSetting("ReCaptcha.SiteKey")" data-action="shortForm">
+
+            <div class="grid-three short-form__wrapper">
+                <div class="grid__item--25 short-form__headlines">
+                    <h2>@Html.Sitecore().Field(Templates.Short_Form.FieldNames.Title)</h2>
+                    <p>@Html.Sitecore().Field(Templates.Short_Form.FieldNames.Description)</p>
+                    <div class="recaptcha__text"> This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy">Privacy Policy</a> and <a href="https://policies.google.com/terms">Terms of Service</a> apply. </div>
+                </div>
+                <div class="grid__item grid__item--33">
+                    <div class="field js-validation-field ">
+                        <label for="firstName" class="label ">@Html.Sitecore().Field(Templates.Short_Form.FieldNames.Fist_Name)</label>
+                        <input class="input field__input " id="firstName" name="FirstName" type="text" value="@Model.FirstName" required aria-required="true" maxlength="50" />
+                        <div class="validation-field__errors "></div>
+                    </div>
+                    <div class="field js-validation-field ">
+                        <label for="lastName" class="label ">@Html.Sitecore().Field(Templates.Short_Form.FieldNames.Last_Name)</label>
+                        <input class="input field__input " id="lastName" name="LastName" type="text" value="@Model.LastName" required aria-required="true" maxlength="50" />
+                        <div class="validation-field__errors "></div>
+                    </div>
+                    <div class="field js-validation-field " data-validation-email-message="Please enter a valid email address">
+                        <label for="email" class="label ">@Html.Sitecore().Field(Templates.Short_Form.FieldNames.Email_Address)</label>
+                        <input class="input field__input " id="email" name="email" type="Email" value="@Model.Email" required aria-required="true" maxlength="100" />
+                        <div class="validation-field__errors "></div>
+                    </div>
+                    <div class="field js-validation-field " data-validation-pattern-message="Please enter a valid phone number">
+                        <label for="phone" class="label ">@Html.Sitecore().Field(Templates.Short_Form.FieldNames.Phone_Number)</label>
+                        <input class="input field__input js-phone-mask " id="phone" name="Phone" type="text" value="@Model.Phone" required aria-required="true" maxlength="20" pattern="^(\(\d{3}\))\s(\d{3})(\-)(\d{4})$" />
+                        <div class="validation-field__errors "></div>
+                    </div>
+                </div>
+                <div class="grid__item grid__item--33">
+                    <div class="field js-validation-field ">
+                        <label for="address" class="label ">@Html.Sitecore().Field(Templates.Short_Form.FieldNames.Address)</label>
+                        <input class="input field__input " id="address" name="Address" type="text" value="@Model.Address" maxlength="100" />
+                        <div class="validation-field__errors "></div>
+                    </div>
+                    <div class="field js-validation-field ">
+                        <label for="city" class="label ">@Html.Sitecore().Field(Templates.Short_Form.FieldNames.City)</label>
+                        <input class="input field__input " id="city" name="City" type="text" value="@Model.City" maxlength="50" />
+                        <div class="validation-field__errors "></div>
+                    </div>
+                    <div class="field js-validation-field ">
+                        <label for="state" class="label ">@Html.Sitecore().Field(Templates.Short_Form.FieldNames.State)</label>
+                        <select class="input field__input " id="state" name="State">
+                            <option value="" selected></option>
+                            @foreach (var item in Model.States)
+                            {
+                                if (Model.State == item.value)
+                                {
+                                    <option value="@item.value" selected>@item.label</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.value">@item.label</option>
+                                }
+                            }
+                        </select>
+                        <div class="validation-field__errors "></div>
+                    </div>
+                    <div class="field js-validation-field " data-validation-pattern-message="An invalid character has been entered, please re-enter a value">
+                        <label for="zip" class="label ">@Html.Sitecore().Field(Templates.Short_Form.FieldNames.Zip_Code)</label>
+                        <input class="input field__input " id="zip" name="Zip" type="text" value="" maxlength="5" pattern="[0-9]{5}" />
+                        <div class="validation-field__errors "></div>
+                    </div>
+
+
+                    <!-- Submit button -->
+                    <button type="submit" class="button short-form__button js-submit-button">Submit</button>
+                </div>
+            </div>
+        </form>
+    </section>
+</div>

@@ -1,0 +1,58 @@
+﻿@using AFI.Project.Web.Areas.AFIWEB.Models.Form_Models
+@model AFI.Project.Web.Areas.AFIQuoteForm.Models.HillAFBForm.HillAFBForm
+
+
+
+<!-- ************************************************ -->
+<!---------------------- MULTI-STEP 2 ------------------>
+<!-- ************************************************ -->
+@{
+    Section data = Model.form.sections.Where(x => x.id == "submitQuote").SingleOrDefault();
+}
+<section class="form_section email_confirmation">
+    <div class="container">
+        <div class="quote_request__section_wrapper">
+            <!-- ******* FORM  *******-->
+            <div class="form_container">
+                <h2 class="quote_request_heading reach_out_title">
+                    @data.heading
+                </h2>
+
+                <div class="fields-row">
+                    <!-- Email -->
+                    <div class="field field--xlarge">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="policyHolderReachOutEmail">@data.fields[0].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required email"
+                                    id="@data.fields[0].id"
+                                   name="@data.fields[0].id"
+                                   data-name="policyHolderReachOutEmail"
+                                   type="email"
+                                   maxlength="100"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action_button">
+                    <div class="container d-flex justify-content-between">
+                        <button id="small_back_btn2"
+                                class="button button__back button__left"
+                                type="button">
+                            @Model.form.backButtonText
+                        </button>
+                        <button id="small_submit_btn"
+                                class="button button__submit button__right"
+                                type="submit">
+                            @Model.form.submitButtonText
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

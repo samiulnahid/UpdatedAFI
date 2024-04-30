@@ -1,0 +1,200 @@
+﻿@model AFI.Project.Web.Areas.AFIQuoteForm.Models.BusinessForm.BusinessForm
+@using AFI.Project.Web.Areas.AFIWEB.Models.Form_Models
+
+<section class="form_section multi__step_2 business_information">
+    <div class="container">
+
+        @{
+            int i = 1;
+            var stepsCount = Model.wayfinder.steps.Count;
+        }
+
+        <div class="step__container">
+            <ul class="steps__list">
+                @foreach (var step in Model.wayfinder.steps)
+                {
+                    <li class="step @(i <= 2 ? "active_step" : "")" data-text="@step.label">@i</li>
+                    @Html.Raw(i != stepsCount ? "<li class='line'></li>" : "")
+                    i++;
+                }
+            </ul>
+        </div>
+
+        <div class="quote_request__section_wrapper">
+            @{
+                Section data = Model.form.sections.Where(x => x.id == "businessInformation").SingleOrDefault();
+            }
+            <div class="form_container">
+                <!--Updated By  25.7.23 Start-->
+                <button class="quote-request-sidebar__show-trigger" type="button">?</button>
+                <!--Updated By  25.7.23 End-->
+                <h2 class="quote_request_heading">@data.heading</h2>
+
+                <!-- Business Name & Website -->
+                <div class="fields-row">
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[0].id">@data.fields[0].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required"
+                                   id="@data.fields[0].id"
+                                   name="@data.fields[0].id"
+                                   data-name="@data.fields[0].id"
+                                   type="text"
+                                   maxlength="100"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[1].id">@data.fields[1].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input"
+                                   id="@data.fields[1].id"
+                                   name="@data.fields[1].id"
+                                   data-name="@data.fields[1].id"
+                                   type="text"
+                                   maxlength="100"
+                                   placeholder=""
+                                   value="" />
+                            <p class="field__note">@data.fields[1].note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Business Description and Tax ID -->
+                <div class="fields-row">
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[2].id">@data.fields[2].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required"
+                                   id="@data.fields[2].id"
+                                   name="@data.fields[2].id"
+                                   data-name="@data.fields[2].id"
+                                   type="text"
+                                   maxlength="100"
+                                   placeholder=""
+                                   value="" />
+                            <p class="field__note">
+                                @data.fields[2].note
+                            </p>
+                        </div>
+                    </div>
+                    <div class="field field--large">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[3].id">@data.fields[3].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input numberOnly"
+                                   id="@data.fields[3].id"
+                                   name="@data.fields[3].id"
+                                   data-name="@data.fields[3].id"
+                                   type="text"
+                                   maxlength="9"
+                                   placeholder=""
+                                   value="" />
+                            <p class="field__note">@data.fields[3].note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Business Physical Address -->
+                <div class="fields-row">
+                    <div class="field field--xxlarge">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[4].id">@data.fields[4].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required"
+                                   id="@data.fields[4].id"
+                                   name="@data.fields[4].id"
+                                   data-name="@data.fields[4].id"
+                                   type="text"
+                                   maxlength="100"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- City, State, Zip -->
+                <div class="fields-row">
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[5].id">@data.fields[5].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required"
+                                   id="@data.fields[5].id"
+                                   name="@data.fields[5].id"
+                                   data-name="@data.fields[5].id"
+                                   type="text"
+                                   maxlength="100"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[6].id">@data.fields[6].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input required"
+                                    id="@data.fields[6].id"
+                                    name="@data.fields[6].id"
+                                    type="select">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field field--small">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@data.fields[7].id">@data.fields[7].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required zip numberOnly"
+                                   id="@data.fields[7].id"
+                                   name="@data.fields[7].id"
+                                   data-name="@data.fields[7].id"
+                                   type="text"
+                                   maxlength="5"
+                                   pattern="[0-9]{5}"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @if (data.sidebar != null && data.sidebar.content.Count > 0)
+            {
+        <aside class="quote_request_aside">
+            <h2 class="quote_request_sidebar__heading">
+                @data.sidebar.heading
+            </h2>
+            <div class="quote_request_sidebar__content">
+                @foreach (SideBarContent sideContent in data.sidebar.content)
+                {
+                    <div class="quote_request_sidebar__item">
+                        <h3 class="quote_request_sidebar__item_heading">
+                            @sideContent.heading
+                        </h3>
+                        <p class="quote_request_sidebar__item_description">
+                            @sideContent.content
+                        </p>
+                    </div>
+                }
+            </div>
+            <!--Updated By 25.7.23 Start-->
+            <button class="button button--reversed quote-request-sidebar__hide-trigger" type="button">Close</button>
+            <!--Updated By 25.7.23 End-->
+        </aside>
+            }
+
+        </div>
+    </div>
+</section>

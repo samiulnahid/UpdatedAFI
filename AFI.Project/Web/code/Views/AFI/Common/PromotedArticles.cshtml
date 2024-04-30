@@ -1,0 +1,72 @@
+﻿@using Sitecore.Mvc
+@using Sitecore
+@using Sitecore.Data.Fields
+@using Sitecore.Data.Items
+@using System.Configuration
+@model AFI.Feature.Article.Models.ArticleSpotlight
+
+
+<section class="wrapper mtb-20">
+    @if (Sitecore.Context.PageMode.IsExperienceEditor && Model == null)
+    {
+        <h4>Please set Promoted articles</h4>
+    }
+    else
+    {
+        if (Model != null)
+        {
+            if (Model.Article != null)
+            {
+                <div class="full-img">
+                    @if (!string.IsNullOrEmpty(Model.Article.Category))
+                    {
+                        <a href="@Model.Article.CategoryPageURL" class="cat">@Model.Article.Category</a>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.Article.ThumbImage))
+                    {
+                        <picture>
+                            <source srcset="@Model.Article.ThumbImage" media="(min-width:576px)">
+                           
+                            <img src="@Model.Article.ThumbImage" alt="">
+                        </picture>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.Article.Title))
+                    {
+                        <p class="bot-text"> <a href="@Model.Article.ArticlePageURL">@Model.Article.Title</a></p>
+                    }
+                </div>
+
+            }
+            if (Model.Articles.Count > 0)
+            {
+                <div class="card-section mobile_mb_80">
+                    @foreach (var data in Model.Articles)
+                    {
+                        if (string.IsNullOrEmpty(data.ThumbImage))
+                        {
+
+                            <article>
+                                <h2>
+                                    @data.Title
+                                </h2>
+                                <a href="@data.ArticlePageURL">@data.LinkText</a>
+                            </article>
+                        }
+                        else
+                        {
+                            <div class="full-img" style="background: url(@data.ThumbImage) no-repeat;">
+                                <a href="@data.CategoryPageURL" class="cat">@data.Category</a>
+                                <p class="bot-text"> <a href="@data.ArticlePageURL">@data.Title</a></p>
+                            </div>
+
+                        }
+
+                    }
+
+                </div>
+            }
+        }
+    }
+
+</section>

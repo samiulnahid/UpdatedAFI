@@ -1,0 +1,143 @@
+﻿@using AFI.Project.Web.Areas.AFIWEB.Models.Form_Models
+
+<section class="form_section military_information">
+    <div class="container">
+        <h1 class="quote_request_heading">@Model.heading</h1>
+        <div class="quote_request__section_wrapper">
+            <!-- ******* FORM  *******-->
+            <div class="form_container">
+                <!--Updated By  25.7.23 Start-->
+                <button class="quote-request-sidebar__show-trigger" type="button">?</button>
+                <!--Updated By  25.7.23 End-->
+                <h2 class="quote_request_heading">@Model.subheading</h2>
+
+                <div class="fields-row">
+                    <!-- First Name -->
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@Model.fields[0].id">@Model.fields[0].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required alphabeticOnly"
+                                   id="@Model.fields[0].id"
+                                   name="@Model.fields[0].id"
+                                   data-name="@Model.fields[0].id"
+                                   type="text"
+                                   pattern="^[a-zA-Z]+$"
+                                   maxlength="50"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+
+                    <!-- Last Name -->
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@Model.fields[1].id">@Model.fields[1].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <input class="field__input required alphabeticOnly"
+                                   id="@Model.fields[1].id"
+                                   name="@Model.fields[1].id"
+                                   data-name="@Model.fields[1].id"
+                                   type="text"
+                                   pattern="^[a-zA-Z]+$"
+                                   maxlength="50"
+                                   placeholder=""
+                                   value="" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Branch of Service -->
+                <div class="fields-row">
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@Model.fields[2].id">@Model.fields[2].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input required"
+                                    id="@Model.fields[2].id"
+                                    name="@Model.fields[2].id"
+                                    data-name="@Model.fields[2].id"
+                                    type="select">
+                                <option value="">Choose One</option>
+                                @foreach (Options opt in @Model.fields[2].options)
+                                {
+                                    <option value="@opt.value">@opt.label</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="fields-row">
+                    <div class="field">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@Model.fields[3].id">@Model.fields[3].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input required"
+                                    id="@Model.fields[3].id"
+                                    name="@Model.fields[3].id"
+                                    data-name="@Model.fields[3].id"
+                                    type="select">
+                                <option value="">Choose One</option>
+                                @foreach (Options opt in @Model.fields[3].options)
+                                {
+                                    <option value="@opt.value">@opt.label</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rank -->
+                <div class="fields-row">
+                    <div class="field field--xlarge">
+                        <div class="field__label-wrapper">
+                            <label class="field__label" for="@Model.fields[4].id">@Model.fields[4].label</label>
+                        </div>
+                        <div class="field__input-wrapper">
+                            <select class="field__input "
+                                    id="@Model.fields[4].id"
+                                    name="@Model.fields[4].id"
+                                    data-name="@Model.fields[4].id"
+                                    type="select"
+                                    disabled>
+                                <option value="" hidden selected>Choose One</option>
+                                <option value="wait" hidden>Please wait...</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @if (Model.sidebar != null && Model.sidebar.content.Count > 0)
+            {
+
+        <aside class="quote_request_aside">
+            <h2 class="quote_request_sidebar__heading">@Model.sidebar.heading</h2>
+            <div class="quote_request_sidebar__content">
+                @foreach (SideBarContent sideContent in Model.sidebar.content)
+                {
+                    <div class="quote_request_sidebar__item">
+                        <h3 class="quote_request_sidebar__item_heading">
+                            @sideContent.heading
+                        </h3>
+                        <p class="quote_request_sidebar__item_description">
+                            @sideContent.content
+                        </p>
+                    </div>
+                }
+
+            </div>
+            <!--Updated By  25.7.23 Start-->
+            <button class="button button--reversed quote-request-sidebar__hide-trigger" type="button">Close</button>
+            <!--Updated By  25.7.23 End-->
+        </aside>
+            }
+
+        </div>
+    </div>
+</section>

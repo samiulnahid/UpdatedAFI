@@ -1,0 +1,458 @@
+﻿@model AFI.Project.Web.Areas.AFIQuoteForm.Models.CollectorForm.CollectorVehicleForm
+@using AFI.Project.Web.Areas.AFIWEB.Models.Form_Models
+
+@{
+    int i = 1;
+    var stepsCount = Model.wayfinder.steps.Count;
+    int j = 1;
+    int n = 1;
+}
+
+<!-- ************************************************ -->
+<!---------------------- MULTI-STEP 3 ------------------>
+<!-- ************************************************ -->
+        @{
+            Section data = Model.form.sections.Where(x => x.id == "householdViolations").SingleOrDefault();
+        }
+<section class="form_section multi__step_3 violations__form">
+    <div class="container">
+        <!-- ******** STEP ******** -->
+        <div class="step__container">
+            <ul class="steps__list">
+                @foreach (var step in Model.wayfinder.steps)
+                {
+                    <li class="step @(i <= 3 ? "active_step" : "")" data-text="@step.label">@i</li>
+                    @Html.Raw(i != stepsCount ? "<li class='line'></li>" : "")
+                    i++;
+                }
+            </ul>
+        </div>
+
+        <div class="quote_request__section_wrapper">
+            <!-- ******* FORM  *******-->
+            <div class="form_container">
+                <!--Updated By  25.7.23 Start-->
+                <button class="quote-request-sidebar__show-trigger" type="button">?</button>
+                <!--Updated By  25.7.23 End-->
+                <h2 class="quote_request_heading">@data.heading</h2>
+
+                <!-- Has Any Violation -->
+                <div class="fields-row has_violation_row">
+                    <div class="field field--full has_violation_inputs_container">
+                        <div class="field__label-wrapper">
+                            <label class="field__label"
+                                   for="@data.fields[0].id">
+                                @data.fields[0].label
+                            </label>
+                        </div>
+                        <div class="field-group has_violation_inputs">
+                        @{
+                            var value = "";
+                        }
+                            @foreach (Options opt in data.fields[0].options)
+                            {
+                                 value = opt.value;
+                                <div class="field__input-wrapper">
+                                    <input class="field__input"
+                                           id="@data.fields[0].id--@opt.label"
+                                           name="@data.fields[0].id"
+                                           type="radio"
+                                           value="@opt.value"
+                                            @(value == "No" ? "checked" : "") />
+                                    <label class="field__label"
+                                           for="@data.fields[0].id--@opt.label">@opt.label</label>
+                                    </div>
+                                }
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Driver, Type, Date -->
+                <div id="violation_info_fields_wrapper">
+                    <div class="fields-row violation_info_fields">
+                        <div class="field">
+                            <div class="field__label-wrapper">
+                                <label class="field__label" for="@data.fields[1].id">@data.fields[1].label</label>
+                            </div>
+                            <div class="field__input-wrapper">
+                                <input class="field__input alphabeticOnly householdViolationsDriver"
+                                       id="@data.fields[1].id"
+                                       name="@data.fields[1].id"
+                                       type="text"
+                                       pattern="^[a-zA-Z]+$"
+                                       maxlength="50"
+                                       placeholder=""
+                                       value="" />
+                            </div>
+                        </div>
+                        <div class="field field--xlarge">
+                            <div class="field__label-wrapper">
+                                <label class="field__label" for="@data.fields[2].id">@data.fields[2].label</label>
+                            </div>
+                            <div class="field__input-wrapper">
+                                <select class="field__input householdViolationsType"
+                                        id="@data.fields[2].id"
+                                        name="@data.fields[2].id"
+                                        type="select">
+                                    <option value="">Choose One</option>
+                                    @foreach (Options opt in data.fields[2].options)
+                                    {
+                                        <option value="@opt.value">@opt.label</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field field--large">
+                            <div class="field__label-wrapper">
+                                <label class="field__label" for="@data.fields[3].id">@data.fields[3].label</label>
+                            </div>
+                            <div class="field__input-wrapper">
+                                <!-- Updated by  24.7.23 start-->
+                                <input class="field__input date householdViolationsDate"
+                                       id="@data.fields[3].id"
+                                       name="@data.fields[3].id"
+                                       type="text"
+                                       pattern="\d{1,2}/\d{1,2}/\d{4}"
+                                       placeholder="@data.fields[3].placeholder"
+                                       value="" />
+                                <!-- Updated by  24.7.23 End-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add Violation Button -->
+                <button id="add_violation_btn"
+                        class="button add_violation_btn"
+                        type="button">
+                    @Model.form.unique.AddViolationButtonText
+                </button>
+            </div>
+
+            <!-- ******* ASIDE  *******-->
+            @if (data.sidebar != null && data.sidebar.content.Count > 0)
+            {
+        <aside class="quote_request_aside">
+            <h2 class="quote_request_sidebar__heading">@data.sidebar.heading</h2>
+            <div class="quote_request_sidebar__content">
+                @foreach (SideBarContent sideContent in data.sidebar.content)
+                {
+                    <div class="quote_request_sidebar__item">
+                        <h3 class="quote_request_sidebar__item_heading">
+                            @sideContent.heading
+                        </h3>
+                        <p class="quote_request_sidebar__item_description">
+                            @sideContent.content
+                        </p>
+                    </div>
+                }
+
+            </div>
+            <!--Updated By  25.7.23 Start-->
+            <button class="button button--reversed quote-request-sidebar__hide-trigger" type="button">Close</button>
+            <!--Updated By  25.7.23 End-->
+        </aside>
+            }
+        </div>
+    </div>
+</section>
+
+       @{
+            Section dataitem = Model.form.sections.Where(x => x.id == "overallCoverages").SingleOrDefault();
+        }
+<section class="form_section multi__step_3 coverage_limits_form">
+    <div class="container">
+        <!-- ******** STEP ******** -->
+        <div class="step__container">
+            <ul class="steps__list">
+                @foreach (var step in Model.wayfinder.steps)
+                {
+                    <li class="step @(j <= 3 ? "active_step" : "")" data-text="@step.label">@j</li>
+                    @Html.Raw(j != stepsCount ? "<li class='line'></li>" : "")
+                    j++;
+                }
+            </ul>
+        </div>
+ 
+        <h1 class="quote_request_heading">
+            @dataitem.heading
+        </h1>
+        <div class="quote_request__section_wrapper">
+            <!-- ******* FORM  *******-->
+            <div class="form_container">
+                <div class="quote-request__section-columns">
+                    <div class="quote-request__fields quote-request__fields--separated">
+                        <div class="fields-row">
+                            <div class="field extra_message_margin">
+                                <div class="field__label-wrapper">
+                                    <label class="field__label" for="bodilyInjuryLiability">
+                                        @dataitem.fields[0].label<span class="field__sublabel">
+                                            @Model.form.unique.BodilyInjuryLiabilitySublabel
+                                        </span>
+                                    </label>
+
+                                    <div class="qrf-accordion">
+                                        <button class="button-bare qrf-accordion__trigger"
+                                                type="button">
+                                            <span class="qrf_accordion">+</span> @Model.form.unique.OverallCoveragesSidebars.BodilyInjuryLiability.triggerText
+                                        </button>
+
+                                        <h5 class="qrf-accordion__heading">
+                                            @Model.form.unique.OverallCoveragesSidebars.BodilyInjuryLiability.heading
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="field__input-wrapper">
+                                    <select class="field__input required"
+                                            id=" @dataitem.fields[0].id"
+                                            name=" @dataitem.fields[0].id"
+                                            type="select">
+                                        <option value="">Choose One</option>
+                                        @foreach (Options opt in dataitem.fields[0].options)
+                                        {
+                                            <option value="@opt.value">@opt.label</option>
+                                        }
+                                    </select>
+                                    <p class="field__note">@dataitem.fields[0].note</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fields-row">
+                            <div class="field extra_message_margin">
+                                <div class="field__label-wrapper">
+                                    <label class="field__label" for="propertyDamageLiability">
+                                        @dataitem.fields[1].label<span class="field__sublabel">
+                                            @Model.form.unique.PropertyDamageLiabilitySublabel
+                                        </span>
+                                    </label>
+                                    <div class="qrf-accordion">
+                                        <button class="button-bare qrf-accordion__trigger"
+                                                type="button">
+                                            <span class="qrf_accordion">+</span> @Model.form.unique.OverallCoveragesSidebars.PropertyDamageLiability.triggerText
+                                        </button>
+
+                                        <h5 class="qrf-accordion__heading">
+                                            @Model.form.unique.OverallCoveragesSidebars.PropertyDamageLiability.heading
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="field__input-wrapper">
+                                    <select class="field__input required"
+                                            id="@dataitem.fields[1].id"
+                                            name="@dataitem.fields[1].id"
+                                            type="select">
+                                        <option value="">Choose One</option>
+                                        @foreach (Options opt in dataitem.fields[1].options)
+                                        {
+                                            <option value="@opt.value">@opt.label</option>
+                                        }
+                                    </select>
+                                    <p class="field__note">@dataitem.fields[1].note</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fields-row">
+                            <div class="field extra_message_margin">
+                                <div class="field__label-wrapper">
+                                    <label class="field__label" for="medicalPayment">
+                                        @dataitem.fields[2].label<span class="field__sublabel">
+                                            @Model.form.unique.MedicalPaymentSublabel
+                                        </span>
+                                    </label>
+                                    <div class="qrf-accordion">
+                                        <button class="button-bare qrf-accordion__trigger"
+                                                type="button">
+                                            <span class="qrf_accordion">+</span> @Model.form.unique.OverallCoveragesSidebars.MedicalPayment.triggerText
+                                        </button>
+
+                                        <h5 class="qrf-accordion__heading">
+                                            @Model.form.unique.OverallCoveragesSidebars.MedicalPayment.heading
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="field__input-wrapper">
+                                    <select class="field__input required"
+                                                 id="@dataitem.fields[2].id"
+                                            name="@dataitem.fields[2].id"
+                                            type="select">
+                                        <option value="">Choose One</option>
+                                        @foreach (Options opt in dataitem.fields[2].options)
+                                        {
+                                            <option value="@opt.value">@opt.label</option>
+                                        }
+                                    </select>
+                                    <p class="field__note">@dataitem.fields[2].note</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fields-row">
+                            <div class="field extra_message_margin">
+                                <div class="field__label-wrapper">
+                                    <label class="field__label"
+                                           for="uninsuredMotoristBodilyInjury">
+                                        @dataitem.fields[3].label<span class="field__sublabel">@Model.form.unique.UninsuredMotoristBodilyInjurySublabel</span>
+                                    </label>
+                                    <div class="qrf-accordion">
+                                        <button class="button-bare qrf-accordion__trigger"
+                                                type="button">
+                                            <span class="qrf_accordion">+</span> @Model.form.unique.OverallCoveragesSidebars.UninsuredMotoristBodilyInjury.triggerText
+                                        </button>
+
+                                        <h5 class="qrf-accordion__heading">
+                                            @Model.form.unique.OverallCoveragesSidebars.UninsuredMotoristBodilyInjury.heading
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="field__input-wrapper">
+                                    <select class="field__input required"
+                                            id="@dataitem.fields[3].id"
+                                            name="@dataitem.fields[3].id"
+                                            type="select">
+                                        <option value="">Choose One</option>
+                                        @foreach (Options opt in dataitem.fields[3].options)
+                                        {
+                                            <option value="@opt.value">@opt.label</option>
+                                        }
+                                    </select>
+                                    <p class="field__note">@dataitem.fields[3].note</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+     @{
+            Section datavalue = Model.form.sections.Where(x => x.id == "physicalDamageCoverages").SingleOrDefault();
+        }
+<section class="form_section multi__step_3 physical_damage_form">
+    <div class="container">
+        <!-- ******** STEP ******** -->
+        <div class="step__container">
+            <ul class="steps__list">
+                @foreach (var step in Model.wayfinder.steps)
+                {
+                    <li class="step @(n <= 3 ? "active_step" : "")" data-text="@step.label">@n</li>
+                    @Html.Raw(n != stepsCount ? "<li class='line'></li>" : "")
+                    n++;
+                }
+            </ul>
+        </div>
+   
+        <div class="quote_request__section_wrapper">
+            <div class="form_container">
+                <!--Updated By  25.7.23 Start-->
+                <button class="quote-request-sidebar__show-trigger" type="button">?</button>
+                <!--Updated By  25.7.23 End-->
+                <section class="damage__form __hide">
+
+                    <h1 class="quote_request_heading extra_mb">
+                        @datavalue.heading
+                        <span class="vehicle_name"><!-- 2020 Toyota V-22 --></span>
+                    </h1>
+
+                    <!-- Comprehensive Deductible -->
+                    <div class="fields-row">
+                        <div class="field field--full gap_20">
+                            <div class="field__label-wrapper">
+                                <label class="field__label" for="empty">@datavalue.fields[0].label</label>
+                            </div>
+                            <div class="field-group flex_gap_10">
+                                <div class="field__input-wrapper">
+                                    <input class="field__input"
+                                           id="liability--Yes"
+                                           name="liability"
+                                           type="radio"
+                                           value="Yes" 
+                                           checked/><label class="field__label liability_Yes_label"
+                                                                for="liability--Yes">Yes</label>
+                                </div>
+
+                                <div class="field__input-wrapper">
+                                    <input class="field__input"
+                                           id="liability--No"
+                                           name="liability"
+                                           type="radio"
+                                           value="No" /><label class="field__label liability_No_label"
+                                                               for="liability--No">No</label>
+                                </div>
+                            </div>
+                            <span class="field__error-message">This field is required</span>
+                        </div>
+                    </div>
+
+                    <!-- Collision Deductible -->
+                    <div class="fields-row">
+                        <div class="field field--xlarge">
+                            <div class="field__label-wrapper">
+                                <label class="field__label"
+                                       for="vehicleComprehensiveDeductible">@datavalue.fields[1].label</label>
+                                </div>
+                                <div class="field__input-wrapper">
+                                    <select class="field__input damage vehicleComprehensiveDeductible"
+                                            id="vehicleComprehensiveDeductible"
+                                            name="@datavalue.fields[1].id"
+                                            type="select"
+                                            disabled>
+                                        <option value="">Choose One</option>
+                                        @foreach (Options opt in datavalue.fields[1].options)
+                                        {
+                                            <option value="@opt.value">@opt.label</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="field field--xlarge">
+                                <div class="field__label-wrapper">
+                                    <label class="field__label" for="vehicleCollisionDeductible">@datavalue.fields[2].label</label>
+                                </div>
+                                <div class="field__input-wrapper">
+                                    <select class="field__input damage vehicleCollisionDeductible"
+                                            id="vehicleCollisionDeductible"
+                                            name="@datavalue.fields[2].id"
+                                            type="select"
+                                            disabled>
+                                        <option value="">Choose One</option>
+                                        @foreach (Options opt in datavalue.fields[2].options)
+                                        {
+                                            <option value="@opt.value">@opt.label</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div id="physical_damage_form_wrapper"></div>
+                </div>
+
+                <!-- ******* ASIDE  *******-->
+                @if (datavalue.sidebar != null && datavalue.sidebar.content.Count > 0)
+                {
+        <aside class="quote_request_aside">
+            <h2 class="quote_request_sidebar__heading">@datavalue.sidebar.heading</h2>
+            <div class="quote_request_sidebar__content">
+                @foreach (SideBarContent sideContent in datavalue.sidebar.content)
+                {
+                    <div class="quote_request_sidebar__item">
+                        <h3 class="quote_request_sidebar__item_heading">
+                            @sideContent.heading
+                        </h3>
+                        <p class="quote_request_sidebar__item_description">
+                            @sideContent.content
+                        </p>
+                    </div>
+                }
+
+            </div>
+            <!--Updated By  25.7.23 Start-->
+            <button class="button button--reversed quote-request-sidebar__hide-trigger" type="button">Close</button>
+            <!--Updated By  25.7.23 End-->
+        </aside>
+                }
+            </div>
+        </div>
+    </section>

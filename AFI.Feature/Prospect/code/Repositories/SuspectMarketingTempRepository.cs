@@ -13,7 +13,7 @@ namespace AFI.Feature.Prospect.Repositories
     {
         IEnumerable<SuspectMarketingTemp> GetAllForMarketing();
 
-		IEnumerable<SuspectMarketingTemp> GetAllForMarketing(int page, int pageSize, string leadStatus, string isSynced, string coverage);
+		IEnumerable<SuspectMarketingTemp> GetAllForMarketing(int page, int pageSize, string leadStatus, string isSynced, string coverage, string coverageType);
 		IEnumerable<SuspectMarketingTemp> GetAllForLeadSource(string leadSource);
 		IEnumerable<SuspectMarketingTemp> GetAllForLeadStatus(string leadStatus);
 		IEnumerable<SuspectMarketingTemp> GetAllForLeadOwner(string leadOwner); 
@@ -23,7 +23,7 @@ namespace AFI.Feature.Prospect.Repositories
         int CreateOrUpdate(SuspectMarketingTemp entity);
 		int SyncTempApprovedtoProspect(string ids);
 
-		IEnumerable<SuspectMarketingTemp> GetAllForDownloadTempSuspect(string leadStatus, string isSynced, string coverage); 
+		IEnumerable<SuspectMarketingTemp> GetAllForDownloadTempSuspect(string leadStatus, string isSynced, string coverage, string coverageType); 
 	}
 
     public class SuspectMarketingRepositoryTemp : ISuspectMarketingRepositoryTemp
@@ -188,7 +188,7 @@ namespace AFI.Feature.Prospect.Repositories
         }
 
 
-		public IEnumerable<SuspectMarketingTemp> GetAllForMarketing(int page = 1, int pageSize = 50, string leadStatus = null, string isSynced = null, string coverage = null)
+		public IEnumerable<SuspectMarketingTemp> GetAllForMarketing(int page = 1, int pageSize = 50, string leadStatus = null, string isSynced = null, string coverage = null , string coverageType = null)
 		{
 			int ofsetItem = (page - 1) * pageSize;
 
@@ -218,6 +218,10 @@ namespace AFI.Feature.Prospect.Repositories
 				{
 					sql += " AND PreferredCoverage = @PreferredCoverage"; // Corrected missing "AND" here
 				}
+				if (!string.IsNullOrEmpty(coverageType) && coverageType.ToLower() != "all")
+				{
+					sql += " AND EntityType = @EntityType"; // Corrected missing "AND" here
+				}
 
 				sql += " ORDER BY ID OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY ; ";
 
@@ -239,13 +243,17 @@ namespace AFI.Feature.Prospect.Repositories
 				{
 					parameters.Add("@PreferredCoverage", coverage);
 				}
+				if (!string.IsNullOrEmpty(coverageType) && coverageType.ToLower() != "all")
+				{
+					parameters.Add("@EntityType", coverageType);
+				}
 
 				return db.Query<SuspectMarketingTemp>(sql, parameters);
 
 			}
 		}
 
-		public IEnumerable<SuspectMarketingTemp> GetAllForDownloadTempSuspect(string leadStatus = null, string isSynced = null, string coverage = null)
+		public IEnumerable<SuspectMarketingTemp> GetAllForDownloadTempSuspect(string leadStatus = null, string isSynced = null, string coverage = null, string coverageType = null)
 		{
 
 			using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
@@ -275,6 +283,12 @@ namespace AFI.Feature.Prospect.Repositories
 					sql += " AND PreferredCoverage = @PreferredCoverage"; // Corrected missing "AND" here
 				}
 
+				if (!string.IsNullOrEmpty(coverageType) && coverageType.ToLower() != "all")
+				{
+					sql += " AND EntityType = @EntityType"; // Corrected missing "AND" here
+				}
+
+
 				//sql += " ORDER BY SuspectID OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY; ";
 
 				var parameters = new DynamicParameters();
@@ -288,6 +302,10 @@ namespace AFI.Feature.Prospect.Repositories
 				if (!string.IsNullOrEmpty(coverage) && coverage.ToLower() != "all")
 				{
 					parameters.Add("@PreferredCoverage", coverage);
+				}
+				if (!string.IsNullOrEmpty(coverageType) && coverageType.ToLower() != "all")
+				{
+					parameters.Add("@EntityType", coverageType);
 				}
 
 				return db.Query<SuspectMarketingTemp>(sql, parameters);

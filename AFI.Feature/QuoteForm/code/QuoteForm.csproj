@@ -503,6 +503,7 @@
     <Compile Include="Areas\AFIWEB\Helpers\EnableCorsAttribute.cs" />
     <Compile Include="Areas\AFIWEB\Helpers\Strings.cs" />
     <Compile Include="Areas\AFIWEB\Job\Service.cs" />
+    <Compile Include="Areas\AFIWEB\Job\SurveyClaimMailTest.cs" />
     <Compile Include="Areas\AFIWEB\Job\SyncVoteMemberToMoosendCopy.cs" />
     <Compile Include="Areas\AFIWEB\Job\SyncVoteMemberToMoosend.cs" />
     <Compile Include="Areas\AFIWEB\Job\SurveyClaimMail.cs" />
@@ -536,6 +537,7 @@
     <Compile Include="Areas\AFIWEB\Models\PressReleaseList.cs" />
     <Compile Include="Areas\AFIWEB\Models\ProcessorResponseModel.cs" />
     <Compile Include="Areas\AFIWEB\Models\ProxyVoteCandidate.cs" />
+    <Compile Include="Areas\AFIWEB\Models\VotingMemberCSV.cs" />
     <Compile Include="Areas\AFIWEB\Models\ProxyVoteMember.cs" />
     <Compile Include="Areas\AFIWEB\Models\ProxyVoteMemberCandidateBallot.cs" />
     <Compile Include="Areas\AFIWEB\Models\ProxyVoteVotingPeriod.cs" />

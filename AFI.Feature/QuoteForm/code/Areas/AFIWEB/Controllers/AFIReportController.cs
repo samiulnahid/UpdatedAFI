@@ -1374,6 +1374,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
 
             return sb.ToString();
         }
+
         [HttpGet]
         public JsonResult GetAllVotingPeriod()
         {
@@ -1496,7 +1497,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
         }
 
         [HttpPost]
-        public JsonResult SubmitMemberVote()
+        public JsonResult SubmitMemberVote2()
         {
             try
             {
@@ -1546,6 +1547,11 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
                                 YearsAsMember = values[16],
                                 Gender = values[17],
                                 Deceased = values[18],
+                                PIN = values[19],
+                                MarketingCode = values[20],
+                                ProperFirstName = values[21],
+                                MiddleName = values[22],
+                                Suffix = values[23],
                                 CreateDate = _created,
 
                                 FullName= CultureInfo.CurrentCulture.TextInfo.ToTitleCase(values[3].ToLower())  +' '+ CultureInfo.CurrentCulture.TextInfo.ToTitleCase(values[4].ToLower()),
@@ -1553,7 +1559,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
                                 Enabled=true,
                               
                                 IsEmailUpdated= false,
-                                PIN= randomNumber,
+                               // PIN= randomNumber,
                                 // Set other properties to default values or null
                             };
                             var _insert = _AFIReportRepository.InsertMemberVote(member);
@@ -1576,6 +1582,117 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
 
         }
 
+       
+
+        [HttpPost]
+        public JsonResult SubmitMemberVote()
+        {
+            try
+            {
+                var httpRequest = HttpContext.Request;
+                var dropdownValue = httpRequest.Form["dropdownValue"];
+
+                var file = httpRequest.Files["file"];
+                if (file != null && file.ContentLength > 0)
+                {
+                    using (var reader = new StreamReader(file.InputStream))
+                    {
+                        var headers = reader.ReadLine()?.Split(','); // Read the header row
+
+                        while (!reader.EndOfStream)
+                        {
+                            var line = reader.ReadLine();
+                            var values = line.Split(',');
+                            Log.Error($" Import Member csv data >" + values, this);
+                            string randomNumber = GenerateRandomPIN();
+
+                            // Create a dictionary to map header names to index positions 
+                            var headerIndexMap = new Dictionary<string, int>();
+                            for (var i = 0; i < headers.Length; i++)
+                            {
+                                headerIndexMap[headers[i]] = i;
+                            }
+
+                            // Map CSV columns to Member model properties  using header names
+                            var member = new ProxyVoteMember
+                            {
+                                MemberNumber = GetFieldValue(headerIndexMap, values, "Member Number"),
+                                EmailAddress = GetFieldValue(headerIndexMap, values, "Email"),
+                                Prefix = GetFieldValue(headerIndexMap, values, "Rank_Abbreviation"),
+                                Salutation = GetFieldValue(headerIndexMap, values, "Salutation"),
+                                InsuredFirstName = GetFieldValue(headerIndexMap, values, "First Name"),
+                                InsuredLastName = GetFieldValue(headerIndexMap, values, "Last Name"),
+                                ClientType = GetFieldValue(headerIndexMap, values, "ClientType"),
+                                ServiceStatus = GetFieldValue(headerIndexMap, values, "Military_Status"),
+                                MailingAddressLine1 = GetFieldValue(headerIndexMap, values, "Address Line 1 (Optional Line)"),
+                                MailingAddressLine2 = GetFieldValue(headerIndexMap, values, "Address Line 2"),
+                                MailingCityName = GetFieldValue(headerIndexMap, values, "City"),
+                                MailingCountyName = GetFieldValue(headerIndexMap, values, "MailingCountyName"),
+                                MailingStateAbbreviation = GetFieldValue(headerIndexMap, values, "State"),
+                                MailingZip = GetFieldValue(headerIndexMap, values, "Postal Code"),
+                                MailingCountry = GetFieldValue(headerIndexMap, values, "Country"),
+                                MembershipDate = GetFieldValue(headerIndexMap, values, "MembershipDate"),
+                                YearsAsMember = GetFieldValue(headerIndexMap, values, "YearsAsMember"),
+                                Gender = GetFieldValue(headerIndexMap, values, "Gender"),
+                                Deceased = GetFieldValue(headerIndexMap, values, "Deceased"),
+                                PIN = GetFieldValue(headerIndexMap, values, "PIN Number") ?? randomNumber, // Use randomNumber if PIN is not found
+                                MarketingCode = GetFieldValue(headerIndexMap, values, "Marketing Code"),
+                                ProperFirstName = GetFieldValue(headerIndexMap, values, "Proper First Name"),
+                                MiddleName = GetFieldValue(headerIndexMap, values, "Middle Name"),
+                                Suffix = GetFieldValue(headerIndexMap, values, "Suffix"),
+                                CreateDate = DateTime.Now,
+
+                                FullName = GetFullName(headerIndexMap, values), // Concatenate first, middle, and last names if available
+                                VotingPeriodId = dropdownValue != null ? Convert.ToInt32(dropdownValue) : 0,
+                                Enabled = true,
+                                IsEmailUpdated = false,
+
+                            };
+                            var _insert = _AFIReportRepository.InsertMemberVote(member);
+                        }
+                    }
+
+                    return Json(new { success = true, message = "Members imported successfully." });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "No file uploaded." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Error occurred while importing members.", error = ex.Message });
+            }
+        }
+
+        // Helper method to get field value from values array based on header name
+        private string GetFieldValue(Dictionary<string, int> headerIndexMap, string[] values, string fieldName)
+        {
+            if (headerIndexMap.ContainsKey(fieldName))
+            {
+                return values[headerIndexMap[fieldName]];
+            }
+            return null;
+        }
+
+        // Helper method to concatenate first, middle, and last names if available
+        private string GetFullName(Dictionary<string, int> headerIndexMap, string[] values)
+        {
+            string fullName = "";
+            if (headerIndexMap.ContainsKey("InsuredFirstName"))
+            {
+                fullName += CultureInfo.CurrentCulture.TextInfo.ToTitleCase(values[headerIndexMap["InsuredFirstName"]].ToLower());
+            }
+            if (headerIndexMap.ContainsKey("MiddleName"))
+            {
+                fullName += " " + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(values[headerIndexMap["MiddleName"]].ToLower());
+            }
+            if (headerIndexMap.ContainsKey("InsuredLastName"))
+            {
+                fullName += " " + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(values[headerIndexMap["InsuredLastName"]].ToLower());
+            }
+            return fullName.Trim();
+        }
 
         private string GenerateRandomPIN()
         {
@@ -2268,11 +2385,13 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
             try
             {
 
-                var data = _AFIReportRepository.GetAllVotingMemberData(0, 0, VotingId, IsEmail);
+                //var data = _AFIReportRepository.GetAllVotingMemberData(0, 0, VotingId, IsEmail);
 
+                var data = _AFIReportRepository.GetAllFilterVotingMemberData(0, 0, VotingId, IsEmail);
+                
                 if (data.Any())
                 {
-                    string csvData = ConvertToCSV(data);
+                    string csvData = ConvertToCSVForExportMember(data);
 
                     byte[] bytes = Encoding.UTF8.GetBytes(csvData);
                     Response.Headers.Add("Content-Disposition", "attachment; filename=VoteMember.csv");
@@ -2345,6 +2464,60 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
                 string finalJson = JsonConvert.SerializeObject(response);
                 return Json(finalJson, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        private static string ConvertToCSVForExportMember<T>(IEnumerable<T> dataList)
+        {
+            var sb = new StringBuilder();
+            var properties = typeof(T).GetProperties()
+                                          .Where(p => p.Name != "MemberId" && p.Name != "Enabled" && p.Name != "VotingPeriodId" && p.Name != "TotalCount" && p.Name != "IsActive" && p.Name != "IsEmailUpdated" && p.Name != "VotingPeriod"); // Exclude Id and UpdatedTime 
+                                                                                                                                                                // Dictionary to map original property names to desired header names
+            var headerMap = new Dictionary<string, string>
+            {
+                { "MemberNumber", "Member Number" }, // Example: Mapping "MemberNumber" to "My Member Number"
+                { "PIN", "PIN Number" },
+                { "MarketingCode", "Marketing Code" },
+                { "Salutation", "Salutation" },
+                { "Prefix", "Rank_Abbreviation" },
+                { "ProperFirstName", "Proper First Name" },
+                { "InsuredFirstName", "First Name" },
+                { "MiddleName", "Middle Name" },
+                { "InsuredLastName", "Last Name" },
+                { "Suffix", "Suffix" },
+                { "ServiceStatus", "Military_Status" },
+                { "MailingAddressLine1", "Address Line 1 (Optional Line)" },
+                { "MailingAddressLine2", "Address Line 2" },
+                { "MailingCityName", "City" },
+                { "MailingStateAbbreviation", "State" },
+                { "MailingZip", "Postal Code" },
+                { "MailingCountry", "Country" },
+                { "EmailAddress", "Email" },
+            };
+
+            // Write headers
+            sb.AppendLine(string.Join(",", properties.Select(p => headerMap.ContainsKey(p.Name) ? headerMap[p.Name] : p.Name)));
+
+            // Write data
+            foreach (var data in dataList)
+            {
+                var values = new List<string>();
+                foreach (var property in properties)
+                {
+                    var value = property.GetValue(data);
+                    if (value is DateTime)
+                    {
+                        // Format DateTime values
+                        values.Add($"\"{((DateTime)value).ToString("yyyy-MM-dd HH:mm:ss")}\"");
+                    }
+                    else
+                    {
+                        values.Add($"\"{value}\"");
+                    }
+                }
+                sb.AppendLine(string.Join(",", values));
+            }
+
+            return sb.ToString();
         }
     }
 }

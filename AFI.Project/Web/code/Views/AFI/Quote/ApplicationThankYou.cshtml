@@ -1,0 +1,814 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <!-- Datepicker CSS -->
+    <link rel="stylesheet" href="~/css/bootstrap-datepicker.min.css" />
+    <!-- Fontawesome  styles -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" />
+    <!-- Coustom CSS -->
+    <link rel="stylesheet" href="~/css/style.css" crossorigin="anonymous" />
+    <link href="~/css/daterangepicker.css" rel="stylesheet" />
+
+    <link href="~/css/app.css" rel="stylesheet" />
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+
+    <title>AFI QUOTE HUB</title>
+
+    <style>
+        .unstyled::-webkit-inner-spin-button,
+        .unstyled::-webkit-calendar-picker-indicator {
+            display: none;
+            -webkit-appearance: none;
+        }
+
+        .help-block with-errors list-unstyled {
+            color: red !important;
+        }
+        /*.error
+        {
+            display:none;
+        }*/
+        .text-afi-dkblue {
+            color: #004976;
+        }
+    </style>
+
+    @*Loader*@
+    <style type="text/css">
+        .how-it-works {
+            background-color: #f9f9f9;
+            border-radius: 16px;
+            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.04);
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+            .how-it-works h2 {
+                font-weight: 400;
+                text-align: center;
+                font-size: 1.5rem;
+            }
+
+            .how-it-works p {
+                font-weight: 300;
+                font-size: 0.75rem;
+                margin: 0;
+                /*text-align: center;*/
+            }
+
+            .how-it-works .icon-container {
+                max-height: 56px;
+                max-width: 56px;
+            }
+
+            .how-it-works .icon {
+                max-height: 36px;
+                max-width: 36px;
+            }
+
+        .loading {
+            position: fixed;
+            display: none;
+            z-index: 1031;
+            height: 2em;
+            width: 2em;
+            overflow: show;
+            margin: auto;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+            .loading:before {
+                content: '';
+                display: block;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0,0,0,0.3);
+            }
+
+            .loading:not(:required) {
+                font: 0/0 a;
+                color: transparent;
+                text-shadow: none;
+                background-color: transparent;
+                border: 0;
+            }
+
+                .loading:not(:required):after {
+                    content: '';
+                    display: block;
+                    font-size: 10px;
+                    width: 1em;
+                    height: 1em;
+                    margin-top: -0.5em;
+                    -webkit-animation: spinner 1500ms infinite linear;
+                    -moz-animation: spinner 1500ms infinite linear;
+                    -ms-animation: spinner 1500ms infinite linear;
+                    -o-animation: spinner 1500ms infinite linear;
+                    animation: spinner 1500ms infinite linear;
+                    border-radius: 0.5em;
+                    -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+                    box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+                }
+
+        @@-webkit-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @@-moz-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @@-o-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @@keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        #InsFirstName, #InsLastName {
+            text-transform: capitalize;
+        }
+    </style>
+    @*Loader End*@
+    <style type="text/css">
+        ul {
+            padding-inline-start: 2.5rem;
+        }
+
+        li {
+            line-height: 1.5rem;
+        }
+
+            li + li {
+                margin-top: 0;
+            }
+        /*QHD-438*/
+        .let-save-box {
+            color: #ffffff;
+            margin: 0 auto;
+            border-radius: 5px;
+            padding: 10px;
+            background-image: linear-gradient(120deg,#cb2c30,#881b26);
+            margin-top: 20px;
+        }
+
+            .let-save-box span { /*New change*/
+                display: block;
+            }
+
+        .all-links ul li:first-child { /*New Change*/
+            padding-top: 0px; /*0 in dev but kept as 6 for Staging nad Prod*/
+        }
+
+        .all-links ul { /*New Change*/
+            padding-left: 30px;
+        }
+
+        .let-save-box h2 {
+            font-weight: bold;
+        }
+
+        .let-save-box ul {
+            list-style: none;
+            padding: 0 0 0 15px;
+            padding-left: 15px;
+            padding-left: 0;
+            justify-content: center; /*New Change*/
+            display: flex;
+            flex-basis: min-content;
+            margin: 0 auto;
+        }
+
+            .let-save-box ul li a {
+                color: #ffffff;
+            }
+
+
+        .dotted-line {
+            border-right: 3px dotted;
+        }
+
+        .all-links {
+            margin: 0 auto 30px;
+            border: 2px solid #CCCCCC;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .show-links {
+            /*color: #ffffff;*/
+            color: #0570c5; /*Blue*/
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+
+        .light-box li {
+            float: left;
+            width: 30%;
+            text-align: left;
+            padding-bottom: 15px;
+        }
+
+        .close-btn {
+            background: red;
+            color: #ffffff;
+            padding: 4px 11px;
+            padding-top: 4px;
+            padding-right: 11px;
+            padding-bottom: 4px;
+            padding-left: 11px;
+            border-radius: 48%;
+            position: absolute;
+            right: -9px;
+            top: -12px;
+            cursor: pointer;
+        }
+
+
+
+        @@media (min-width: 768px) and (max-width: 1024px) {
+            .light-box li {
+                width: 50%;
+            }
+
+            .let-save-box {
+                max-width: 100%;
+            }
+        }
+
+
+        @@media (min-width: 481px) and (max-width: 767px) {
+
+            .auto-box span, .umbrella-box span {
+                display: block;
+            }
+
+            .auto-box {
+                border: none;
+                margin-bottom: 20px;
+            }
+
+            .light-box li {
+                width: 49%;
+            }
+        }
+
+
+        /*
+        ##Device = Most of the Smartphones Mobiles (Portrait)
+        ##Screen = B/w 320px to 479px
+          */
+        @@media (min-width: 320px) and (max-width: 480px) {
+
+
+            .let-save-box ul {
+                display: block;
+            }
+
+                .let-save-box ul li {
+                    margin-bottom: 30px;
+                }
+
+            .dotted-line {
+                border: 0;
+            }
+
+            .let-save-box {
+                padding: 10px 0;
+                width: 90%;
+            }
+
+            .all-links {
+                width: 90%;
+            }
+
+            .light-box li {
+                width: 49%;
+            }
+        }
+
+        .swal-button--confirm { /*QHD-506*/
+            background-color: #DD6B55;
+        }
+
+        .swal-text { /*QHD-506*/
+            font-size: 14px;
+        }
+
+        .collapse show {
+            display: none;
+        }
+        /*.collapse {
+            display: none;
+
+        }*/
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center renter__post">
+            <div class="col-12">
+                <h1 class="text-center mt-5 mb-5">Thank You.</h1>
+                <h2 class="h4 text-center mb-5" style="color: #881b26">
+                    Your insurance application has been submitted for review.<br /> A licensed agent will contact you within the next business day
+                </h2>
+                <h3 class="h5 text-center">
+                    Still shopping around? Let us do the shopping for you!
+                </h3>
+                <p class="text-center col-md-8 offset-md-2">
+                    Our agents will provide you with coverage options through our
+                    network of national carriers. This is part of our commitment to find
+                    you the best coverage to meet your needs.<br><br>Because at
+                    Armed Forces Insurance, Our Mission is You.<sup><small>®</small></sup>
+                </p>
+                <p id="pAgentCall" class="text-center">
+                    <strong class="d-block">
+                        Prefer to schedule a call with an agent?
+                        @*<a data-toggle="collapse"
+                           href="#collapseExample"
+                           role="button"
+                           aria-expanded="false"
+                           aria-controls="collapseExample">Click Here</a>*@
+                    </strong>
+                </p>
+
+                <!-- Hidden Field -->
+                <div class="collapse" id="collapseExample" style="display: block !important;">
+                    <p class="text-center">
+                        Please fill out the form below. Agents are available Monday -
+                        Friday 7:30 a.m. to 6:00 p.m. CST.
+                    </p>
+                    <form name="contentFormApplication" id="contentFormApplication" enctype="multipart/form-data" method="" action="" role="form" data-toggle="validator" novalidate="true">
+                        <div class="row align-items-start">
+                            <div class="col-12 col-md-3 offset-md-2">
+                                <div class="form-group dateGroup">
+                                    <label for="">Date</label>
+                                    <input type="date"
+                                           placeholder="MM/DD/YYYY"
+                                           class="form-control input__field unstyled"
+                                           name="txtCallDate"
+                                           id="txtCallDate"
+                                           onkeydown="keyDown(event)"
+                                           onblur="InvalidDOC()"
+                                           max="2000-03-11" />
+
+                                    <span class="error__msg text-danger d-none">required</span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <label for="">Time</label>
+                                <div class="form-row">
+                                    <div class="col-4 form-group">
+                                        <select class="form-control input__field" name="drpHH" id="drpHH" onchange="OnHHMMChange()" style="width: 83px;">
+                                            <option value="">Hours</option>
+                                            <option value="1">01</option>
+                                            <option value="2">02</option>
+                                            <option value="3">03</option>
+                                            <option value="4">04</option>
+                                            <option value="5">05</option>
+                                            <option value="6">06</option>
+                                            <option value="7">07</option>
+                                            <option value="8">08</option>
+                                            <option value="9">09</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                        </select>
+                                        <span class="error__msg text-danger d-none">required</span>
+                                    </div>
+                                    <div class="col-4 form-group" style="position:relative;">
+                                        <select class="form-control" name="drpMM" id="drpMM" onchange="OnHHMMChange()" style="width: 83px;">
+                                            <option value="">Minute</option>
+                                            <option value="00">00</option>
+                                            <option value="30">30</option>
+                                        </select>
+                                        <span class="error__msg text-danger d-none">required</span>
+                                    </div>
+                                    <div class="col-4 form-group">
+                                        <select class="form-control input__field" name="drpAMPM" id="drpAMPM">
+                                            <option value=""></option>
+                                            <option value="am">a.m.</option>
+                                            <option value="pm">p.m.</option>
+                                        </select>
+                                        <input type="hidden" id="hdnAMPM" name="hdnAMPM" />
+                                        <span class="error__msg text-danger d-none">required</span>
+                                    </div>
+                                </div>
+                                <p>Please enter CST time zone</p>
+                            </div>
+                            <div class="col-12 col-md-2 btnSubmitParent align-self-center">
+                                <div class="form-group">
+                                    <button id="btnSubmit" type="button" class="btn btn-secondary">Submit</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+
+                <!-- Outside Area -->
+                <p id="confirmation-message" class="text-center" style="display: none;">
+                    Thanks for scheduling a call, we’ll be in touch.
+                </p>
+                <p class="text-center mt-5">
+                    <a href="https://www.afi.org/request-a-quote"
+                       class="btn btn-primary">Get Another Quote</a>
+                </p>
+
+                <div class="row mt-1">
+                    <div class="col-md-8 text-center let-save-box">
+                        <h3>Let us save you more!</h3>
+                        <div class="mt-3">
+                            <ul>
+
+                                <li class="dotted-line">
+                                    <a href="/quote%20hub/startautoquote?UserType=C&MemberNumber=@HttpContext.Current.Session["ChipMemberId"]&CoverageType=Auto&OP=True">
+
+                                        <img alt="auto" src="/images/icon-Auto-Other.png" />
+                                        <span style="">Auto</span>
+                                    </a>
+                                </li>
+                                <li>
+
+                                    <a href="/quote%20hub/startumbrellaquote?UserType=C&MemberNumber=@HttpContext.Current.Session["ChipMemberId"]&CoverageType=Umbrella&OP=True">
+
+                                        <img alt="auto" src="/images/icon-Umbrella-Other.png" />
+                                        <span style="">Umbrella</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+
+                    <div class="col-md-12">
+                        <p class="text-center mt-2">To get quote for other products <b id="show-links" class="show-links">click here</b></p>
+                    </div>
+
+                </div>
+                <div class="row mt-3">
+                    <div style="display:none;" id="all-links" class="col-md-8 text-center all-links">
+                        <span class="close-btn">X</span>
+                        <p class="text-center"><b>Request a Quote for</b></p>
+                        <ul class="light-box">
+
+                            <li><a href="/business-form-page?CoverageType=Business" target="_blank">Business</a></li>
+                            <li><a href="/collector-form-page? CoverageType=Collector%20Vehicle" target="_blank">Collector Vehicle</a></li>
+                            <li><a href="/quote%20hub/StartDwellingQuote?UserType=C&MemberNumber=@HttpContext.Current.Session["ChipMemberId"]&CoverageType=Dwelling+Fire&OP=True"> Dwelling Fire (Landlord)</a></li>
+                            <li><a href="/flood-form-page? CoverageType=Flood" target="_blank">Flood </a></li>
+                            <li><a href="/quote%20hub/startquote?UserType=C&MemberNumber=@HttpContext.Current.Session["ChipMemberId"]&CoverageType=Homeowner&OP=True" target="_blank">Home </a></li>
+                            <li><a href="/mobilehome-form-page?CoverageType=Mobile%20Home" target="_blank"> Mobile Home</a></li>
+                            <li><a href="/motorcycle-form-page?CoverageType=Motorcycle" target="_blank">Motorcycle </a></li>
+                            <li><a href="/motorhome-form-page?CoverageType=Motorhome" target="_blank"> Motorhome</a></li>
+                            <li><a href="https://quote.embracepetinsurance.com/pet-information#/PetInformation?CoverageType=Pet%20Health" target="_blank"> Pet Health</a></li>
+                            <li><a href="/motorhome-form-page?CoverageType=Motorhome" target="_blank"> Travel Trailer</a></li>
+                            <li><a href="/watercraft-form-page?CoverageType=Watercraft" target="_blank">Watercraft </a></li>
+                        </ul>
+                    </div>
+                    <div class="col-12 mt-5">
+                        <div style="background-color: #fafafa" class="p-2">
+                            @*<h2 class="h5 text-center">Need help now?</h2>
+        <p class="text-center">
+            <strong>
+                If your quote is time sensitive or you need help now,<br />
+                please call us at
+                <a href="tel:+1-800-495-8234">800-495-8234</a>.
+            </strong>
+        </p>*@
+                            <p class="text-center">
+                                Save time by setting up EZPay, AFI’s recurring ACH payment
+                                plan. Call us at  <a href="tel:+1-800-524-9325">800-524-9325</a> and we will be happy to assist you. Our billing
+                                representatives are available from 8:00am to 6:30pm CST, Monday through Friday. <br />
+                                Thank you for choosing Armed Forces Insurance.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+            integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+            crossorigin="anonymous"></script>
+    <!-- Optional JavaScript -->
+    <script src="~/js/JqueryValidate.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+    <!-- Include Date Picker -->
+    <script src="~/js/moment.min.js"></script>
+    <script src="~/js/daterangepicker.js"></script>
+    <script src="~/js/JqueryValidate.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="~/NewDesign/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+    <script>
+            $("#show-links").click(function () {
+                $("#all-links").fadeIn(1000);
+                //var scrollPos = $("#jeet").offset().top;
+                //$(window).scrollTop(scrollPos);
+            });
+
+            $(".close-btn").click(function () {
+                $("#all-links").slideUp(1000);
+            });
+
+       //$('#txtCallDate').val('@{@System.DateTime.Now.ToString("yyyy-MM-dd")}');
+        $('#txtCallDate').attr('min-date', '@{@System.DateTime.Now.ToString("yyyy-MM-dd")}');
+        $('#txtCallDate').attr('max-date', '@{@System.DateTime.Now.AddDays(7).ToString("yyyy-MM-dd")}');
+
+        function InvalidDOC() {
+            if ($("#txtCallDate").val() != '') {
+                $("#drpHH").attr("required", "required");
+                $("#drpHH").attr("data-error", "Required *");
+                $("#drpMM").attr("required", "required");
+                $("#drpMM").attr("data-error", "Required *");
+                // $('#contentFormApplication').validator('update');
+            } else {
+                $("#drpHH").removeAttr("required");
+                $("#drpHH").removeAttr("data-error");
+                $("#drpMM").removeAttr("required");
+                $("#drpMM").removeAttr("data-error");
+               // $('#contentFormApplication').validator('update');
+                $("#drpHH").change();
+                $("#drpMM").change();
+            }
+            if ($('#txtCallDate').val()!='' && !($('#txtCallDate').val() >= $('#txtCallDate').attr('min-date') && $('#txtCallDate').val() <= $('#txtCallDate').attr('max-date'))) {
+                setTimeout(function () {
+                    $("#txtCallDate").next(".help-block").html("<ul class='list-unstyled'><li>Require date between @System.DateTime.Now.ToString("MM-dd-yyyy") and @System.DateTime.Now.AddDays(7).ToString("MM-dd-yyyy").</li></ul>");
+                    $("#txtCallDate").parent(".form-group").addClass("has-error has-danger");
+                }, 200);
+                return false;
+            } else {
+                $("#txtCallDate").parent(".form-group").removeClass("has-error has-danger");
+                $("#txtCallDate").next(".help-block").html("");
+            }
+
+            //var today = new Date($('#txtCallDate').val());
+            var isValidDate = new Date($('#txtCallDate').val());
+            var strDateentered = $('#txtCallDate').val();
+            var year = strDateentered.substring(0, 4);
+            var month = strDateentered.substring(5, 7);//first two characters since 5th. It excludes the 7th character.
+            var date = strDateentered.substring(8, 10);
+            var today = new Date(year, month - 1, date);
+
+            if (isValidDate == "Invalid Date") {
+                $("#txtCallDate").next(".help-block").html("<ul class='list-unstyled'><li>Invalid date.</li></ul>");
+                $("#txtCallDate").parent(".form-group").addClass("has-error has-danger");
+                return false;
+            }
+
+            if (today.getDay() == 6 || today.getDay() == 0) {
+                $("#txtCallDate").next(".help-block").html("<ul class='list-unstyled'><li>Agents are available from Monday to Friday.</li></ul>");
+                $("#txtCallDate").parent(".form-group").addClass("has-error has-danger");
+                return false;
+            }
+            else {
+                $("#txtCallDate").parent(".form-group").removeClass("has-error has-danger");
+                $("#txtCallDate").next(".help-block").html("");
+                return true;
+            };
+
+        }
+        function OnHHMMChange() {
+            if ((parseFloat($("#drpHH").val()) <= 6) || (parseFloat($("#drpHH").val()) == 12 && parseFloat($("#drpMM").val())==30)) {
+                $("#drpAMPM").val("pm");
+                $("#hdnAMPM").val($("#drpAMPM").val());
+                $("#drpAMPM").prop('disabled', true);
+            } else if (parseFloat($("#drpHH").val()) > 6) {
+                $("#drpAMPM").val("am");
+                $("#hdnAMPM").val($("#drpAMPM").val());
+                $("#drpAMPM").prop('disabled', true);
+            }
+            else {
+                $("#drpAMPM").val("");
+                $("#hdnAMPM").val($("#drpAMPM").val());
+                $("#drpAMPM").prop('disabled', false);
+            }
+            if ($("#drpHH").val() != '' && $("#drpMM").val() != '') {
+                var HHMM = $("#drpHH").val() + '.' + $("#drpMM").val();
+                if (parseFloat(HHMM) == 7.00 || parseFloat(HHMM) == 6.30) {
+                    $("#drpHH").next(".help-block").html("<ul class='list-unstyled'><li>Agents are available 7:30 a.m. to 6:00 p.m. CST.</li></ul>");
+                    $("#drpHH").parent(".form-group").addClass("has-error has-danger");
+                    $("#drpMM").parent(".form-group").addClass("has-error has-danger");
+                    return false;
+                } else {
+                $("#drpHH").parent(".form-group").removeClass("has-error has-danger");
+                $("#drpHH").next(".help-block").html("");
+                    $("#drpMM").next(".help-block").html("");
+                    return true;
+                };
+            }
+            return true;
+        }
+        function keyDown(e) {
+            var e = window.event || e;
+            var key = e.keyCode;
+            //space pressed
+            if (key == 32) { //space
+                e.preventDefault();
+            }
+            if (key == 13) { //Enter
+                e.preventDefault();
+            }
+        }
+
+        /********************************************************
+        *                  Validation and Submission
+        ********************************************************/
+        function validation(formId) {
+            const fields = document.querySelectorAll(`${formId} .form-control`);
+
+            const results = [true];
+
+            fields.forEach(field => {
+                const errField = field.closest(".form-group").querySelector(".error__msg");
+
+                if (!field.value) {
+                    errField?.classList.remove("d-none")
+                    results.push(false)
+                } else {
+                    field.addEventListener("input", (e) => {
+                        errField?.classList.add("d-none");
+                    })
+                }
+
+
+            })
+
+            const isValid = results.every(r => r === true);
+
+            debugger;
+            return isValid;
+        }
+
+        function pastTimeValidation() {
+            const iDate = document.getElementById("txtCallDate").value;
+            const iHour = document.getElementById("drpHH").value;
+            const iMIN = document.getElementById("drpMM").value;
+            const iAmPm = document.getElementById("drpAMPM").value;
+
+            const getDate = new Date(iDate);
+            const iYR = getDate.getFullYear();
+            const iMM = getDate.getMonth();
+            const iDD = getDate.getDate();
+            const iHR = iAmPm === "pm" ? Number(iHour) + 12 : iHour;
+
+            const inputtedTime = new Date(iYR, iMM, iDD, iHR, iMIN);
+
+            const now = Date.now();
+            const iNow = inputtedTime.getTime();
+
+            const isFutureTime = iNow > now;
+
+            // show Error message
+            const errMsg = document.querySelector(".dateGroup .error__msg");
+            if (!isFutureTime) {
+                errMsg.innerHTML = "Date and time shouldn't be past";
+                errMsg.classList.remove("d-none");
+            } else {
+                errMsg.classList.add("d-none");
+                errMsg.innerHTML = "required";
+            }
+
+            return isFutureTime;
+        }
+
+
+
+        $("#btnSubmit").click(function (evt) {
+            SaveApplication(1);
+        });
+
+        function SaveApplication(nextAction) {
+           if(!validation("#contentFormApplication")) return false;
+           if(!pastTimeValidation()) return false;
+
+            var valdata = $("#contentFormApplication").serializeArray();
+            valdata.push({ name: "IdRiskAddress", value: '@HttpContext.Current.Session["IdRiskAddress"]' });
+            valdata.push({ name: "IdQuote", value: '@HttpContext.Current.Session["IdQuote"]' });
+
+            var HHMM = OnHHMMChange();
+            var DOC = InvalidDOC();
+     /*       if ($("#contentFormApplication").valid() == true && HHMM == true) {*/
+                $.ajax({
+                    type: "POST",
+                    dataType: 'json',
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    data: valdata,
+                    url: '/api/Sitecore/AFIReport/ApplicationThankYou',
+                    success: function (response) {
+                        $("#pAgentCall").hide();
+                        $("#collapseExample").hide();
+                        if ($("#txtCallDate").val() != '') {
+                            $("#confirmation-message").show();
+                        }
+                    },
+                    error: function (request, status, error) {
+                        window.location.href = "/Quote%20Hub/StartRenterQuote";
+                    }
+                });
+            //}
+            //else {
+            //    if (nextAction == 1) { //Added for QHD-425/107
+            //        //  swal("Please complete all required fields to submit.");
+            //        $("#drpHH").focus();
+            //        return false;
+            //    }
+            //}
+            }
+    </script>
+</body>
+</html>

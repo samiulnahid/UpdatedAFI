@@ -3,7 +3,7 @@
 @using Sitecore.Data.Fields
 @using Sitecore.Data.Items
 @using System.Configuration
-@model AFI.Project.Web.Areas.AFIWEB.Models.SitecoreSendModel
+@model AFI.Feature.QuoteForm.Areas.AFIWEB.Models.SitecoreSendModel
 
 
 <div>

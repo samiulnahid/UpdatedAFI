@@ -22,6 +22,7 @@ namespace AFI.Feature.Prospect.Job
             Sitecore.Diagnostics.Log.Info("Qhote Hub Suspect Sitecore scheduled task is being run!", this);
 
             // Fetching existing EntityIDs from AFI_Marketing_Suspect_Temp
+            Sitecore.Diagnostics.Log.Info("Get Existing QuoteHub Data ID from Suspect Temp DB", this);
             List<int> entityIdList = new List<int>();
             string entityType = "QH";
             using (var db = new SqlConnection(AFIConnectionString))
@@ -31,6 +32,7 @@ namespace AFI.Feature.Prospect.Job
             }
 
             // Fetching new quotes
+            Sitecore.Diagnostics.Log.Info("Get All QuoteHub Data from QuoteHub DB", this);
             List<QuoteHub> quotes = new List<QuoteHub>();
             using (var db = new SqlConnection(QHConnectionString))
             {
@@ -42,6 +44,7 @@ namespace AFI.Feature.Prospect.Job
             }
 
             // Inserting new quotes into AFI_Marketing_Suspect_Temp
+            Sitecore.Diagnostics.Log.Info("Check If QuoteHub Data is not Exist in Secpect Temp DB then  Insert Data", this);
             using (var db = new SqlConnection(AFIConnectionString))
             {
                 db.Open();
@@ -99,6 +102,7 @@ namespace AFI.Feature.Prospect.Job
                 }
             }
 
+            Sitecore.Diagnostics.Log.Info("Finished inserting Data into Suspect Temp DB", this);
 
             #region insert suspect
 
