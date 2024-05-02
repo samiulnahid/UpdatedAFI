@@ -1585,7 +1585,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
        
 
         [HttpPost]
-        public JsonResult SubmitMemberVote()
+        public JsonResult SubmitMemberVote3()
         {
             try
             {
@@ -1664,6 +1664,301 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
                 return Json(new { success = false, message = "Error occurred while importing members.", error = ex.Message });
             }
         }
+
+        [HttpPost]
+        public JsonResult SubmitMemberVote()
+        {
+            try
+            {
+                var httpRequest = HttpContext.Request;
+                var dropdownValue = httpRequest.Form["dropdownValue"];
+
+                var file = httpRequest.Files["file"];
+                if (file != null && file.ContentLength > 0)
+                {
+                    using (var reader = new StreamReader(file.InputStream))
+                    {
+                        // Read the header row to get column names
+                        var header = reader.ReadLine();
+                        var columnNames = header.Split(',');
+
+                        while (!reader.EndOfStream)
+                        {
+                            var line = reader.ReadLine();
+                            var values = line.Split(',');
+
+                            // Initialize member with default values
+                            var member = new ProxyVoteMember
+                            {
+                                CreateDate = DateTime.Now,
+                                Enabled = true,
+                                IsEmailUpdated = false,
+                                VotingPeriodId = dropdownValue != null ? Convert.ToInt32(dropdownValue) : 0,
+                                // Set other properties to default values or null
+                            };
+
+                            for (int i = 0; i < columnNames.Length; i++)
+                            {
+                                // Map values to corresponding properties based on column names
+                                switch (columnNames[i])
+                                {
+                                    case "Member Number":
+                                        member.MemberNumber = values[i];
+                                        break;
+                                    case "EmailAddress":
+                                    case "Email":
+                                        member.EmailAddress = values[i];
+                                        break;
+                                    case "Marketing Code":
+                                        member.MarketingCode = values[i];
+                                        break;
+                                    case "Rank_Abbreviation":
+                                    case "Prefix":
+                                        member.Prefix = values[i];
+                                        break;
+                                    case "Salutation":
+                                        member.Salutation = values[i];
+                                        break;
+                                    case "Proper First Name":
+                                        member.ProperFirstName = values[i];
+                                        break;
+                                    case "InsuredFirstName":
+                                    case "First Name":
+                                        member.InsuredFirstName = values[i];
+                                        break;
+                                    case "InsuredLastName":
+                                    case "Last Name":
+                                        member.InsuredLastName = values[i];
+                                        break;
+                                    case "Middle Name":
+                                        member.MiddleName = values[i];
+                                        break;
+                                    case "Suffix":
+                                        member.Suffix = values[i];
+                                        break;
+                                    case "ClientType":
+                                        member.ClientType = values[i];
+                                        break;
+                                    case "Military_Status":
+                                    case "ServiceStatus":
+                                        member.ServiceStatus = values[i];
+                                        break;
+                                    case "Address Line 1 (Optional Line)":
+                                    case "MailingAddressLine1":
+                                        member.MailingAddressLine1 = values[i];
+                                        break;
+                                    case "MailingAddressLine2":
+                                    case "Address Line 2":
+                                        member.MailingAddressLine2 = values[i];
+                                        break;
+                                    case "MailingCityName":
+                                    case "City":
+                                        member.MailingCityName = values[i];
+                                        break;
+                                    case "MailingCountyName":
+                                        member.MailingCountyName = values[i];
+                                        break;
+                                    case "MailingStateAbbreviation":
+                                    case "State":
+                                        member.MailingStateAbbreviation = values[i];
+                                        break;
+                                    case "MailingZip":
+                                    case "Postal Code":
+                                        member.MailingZip = values[i];
+                                        break;
+                                    case "MailingCountry":
+                                    case "Country":
+                                        member.MailingCountry = values[i];
+                                        break;
+                                    case "MembershipDate":
+                                        member.MembershipDate = values[i];
+                                        break;
+                                    case "YearsAsMember":
+                                        member.YearsAsMember = values[i];
+                                        break;
+                                    case "Gender":
+                                        member.Gender = values[i];
+                                        break;
+                                    case "Deceased":
+                                        member.Deceased = values[i];
+                                        break;
+                                    case "PIN Number":
+                                        member.PIN = !string.IsNullOrEmpty(values[i]) ? values[i] : GenerateRandomPIN();
+                                        break;
+                                    // Add cases for other properties
+                                    default:
+                                        // Handle unrecognized columns here, if necessary
+                                        break;
+                                }
+                            }
+                            member.FullName = member.InsuredFirstName + " " + member.InsuredLastName;
+                            // Insert the member into the database
+                            var _insert = _AFIReportRepository.InsertMemberVote(member);
+                        }
+                    }
+
+
+                    return Json(new { success = true, message = "Members imported successfully." });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "No file uploaded." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Error occurred while importing members.", error = ex.Message });
+            }
+
+        }
+
+        //[HttpPost]
+        //public async Task<JsonResult> SubmitMemberVote()
+        //{
+        //    try
+        //    {
+        //        var httpRequest = HttpContext.Request;
+        //        var dropdownValue = httpRequest.Form["dropdownValue"];
+
+        //        var file = httpRequest.Files["file"];
+        //        if (file != null && file.ContentLength > 0)
+        //        {
+        //            using (var reader = new StreamReader(file.InputStream))
+        //            {
+        //                // Read the header row to get column names
+        //                var header = await reader.ReadLineAsync();
+        //                var columnNames = header.Split(',');
+
+        //                var members = new List<ProxyVoteMember>();
+        //                while (!reader.EndOfStream)
+        //                {
+        //                    var line = await reader.ReadLineAsync();
+        //                    var values = line.Split(',');
+
+        //                    var member = new ProxyVoteMember
+        //                    {
+        //                        CreateDate = DateTime.Now,
+        //                        Enabled = true,
+        //                        IsEmailUpdated = false,
+        //                        VotingPeriodId = dropdownValue != null ? Convert.ToInt32(dropdownValue) : 0,
+        //                        // Set other properties to default values or null
+        //                    };
+
+        //                    for (int i = 0; i < columnNames.Length; i++)
+        //                    {
+        //                        // Map values to corresponding properties based on column names
+        //                        switch (columnNames[i])
+        //                        {
+        //                            case "Member Number":
+        //                                member.MemberNumber = values[i];
+        //                                break;
+        //                            case "EmailAddress":
+        //                            case "Email":
+        //                                member.EmailAddress = values[i];
+        //                                break;
+        //                            case "Marketing Code":
+        //                                member.MarketingCode = values[i];
+        //                                break;
+        //                            case "Rank_Abbreviation":
+        //                            case "Prefix":
+        //                                member.Prefix = values[i];
+        //                                break;
+        //                            case "Salutation":
+        //                                member.Salutation = values[i];
+        //                                break;
+        //                            case "Proper First Name":
+        //                                member.ProperFirstName = values[i];
+        //                                break;
+        //                            case "InsuredFirstName":
+        //                            case "First Name":
+        //                                member.InsuredFirstName = values[i];
+        //                                break;
+        //                            case "InsuredLastName":
+        //                            case "Last Name":
+        //                                member.InsuredLastName = values[i];
+        //                                break;
+        //                            case "Middle Name":
+        //                                member.MiddleName = values[i];
+        //                                break;
+        //                            case "Suffix":
+        //                                member.Suffix = values[i];
+        //                                break;
+        //                            case "ClientType":
+        //                                member.ClientType = values[i];
+        //                                break;
+        //                            case "Military_Status":
+        //                            case "ServiceStatus":
+        //                                member.ServiceStatus = values[i];
+        //                                break;
+        //                            case "Address Line 1 (Optional Line)":
+        //                            case "MailingAddressLine1":
+        //                                member.MailingAddressLine1 = values[i];
+        //                                break;
+        //                            case "MailingAddressLine2":
+        //                            case "Address Line 2":
+        //                                member.MailingAddressLine2 = values[i];
+        //                                break;
+        //                            case "MailingCityName":
+        //                            case "City":
+        //                                member.MailingCityName = values[i];
+        //                                break;
+        //                            case "MailingCountyName":
+        //                                member.MailingCountyName = values[i];
+        //                                break;
+        //                            case "MailingStateAbbreviation":
+        //                            case "State":
+        //                                member.MailingStateAbbreviation = values[i];
+        //                                break;
+        //                            case "MailingZip":
+        //                            case "Postal Code":
+        //                                member.MailingZip = values[i];
+        //                                break;
+        //                            case "MailingCountry":
+        //                            case "Country":
+        //                                member.MailingCountry = values[i];
+        //                                break;
+        //                            case "MembershipDate":
+        //                                member.MembershipDate = values[i];
+        //                                break;
+        //                            case "YearsAsMember":
+        //                                member.YearsAsMember = values[i];
+        //                                break;
+        //                            case "Gender":
+        //                                member.Gender = values[i];
+        //                                break;
+        //                            case "Deceased":
+        //                                member.Deceased = values[i];
+        //                                break;
+        //                            case "PIN Number":
+        //                                member.PIN = !string.IsNullOrEmpty(values[i]) ? values[i] : GenerateRandomPIN();
+        //                                break;
+        //                            // Add cases for other properties
+        //                            default:
+        //                                // Handle unrecognized columns here, if necessary
+        //                                break;
+        //                        }
+        //                    }
+        //                    member.FullName = member.InsuredFirstName + " " + member.InsuredLastName;
+        //                    members.Add(member);
+        //                }
+
+        //                // Bulk insert members into the database
+        //                await _AFIReportRepository.InsertMemberVotesAsync(members);
+        //            }
+
+        //            return Json(new { success = true, message = "Members imported successfully." });
+        //        }
+        //        else
+        //        {
+        //            return Json(new { success = false, message = "No file uploaded." });
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new { success = false, message = "Error occurred while importing members.", error = ex.Message });
+        //    }
+        //}
+
 
         // Helper method to get field value from values array based on header name
         private string GetFieldValue(Dictionary<string, int> headerIndexMap, string[] values, string fieldName)

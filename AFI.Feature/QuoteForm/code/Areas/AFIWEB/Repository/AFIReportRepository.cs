@@ -14,6 +14,7 @@ using AFI.Feature.Data.Repositories;
 using System.Diagnostics;
 using Sitecore.Diagnostics;
 using AFI.Feature.QuoteForm.Areas.AFIWEB.Models;
+using System.Threading.Tasks;
 
 namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Repository
 {
@@ -2141,5 +2142,139 @@ COUNT(*) AS TotalVotes
                 return db.Query<VotingMemberCSV>(sql, parameters);
             }
         }
+
+        //public async Task InsertMemberVotesAsync(IEnumerable<ProxyVoteMember> members)
+        //{
+        //    try
+        //    {
+        //        using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
+        //        {
+        //            await db.OpenAsync();
+
+        //            foreach (var member in members)
+        //            {
+        //                using (var transaction = db.BeginTransaction())
+        //                {
+        //                    var sql = @"
+        //                INSERT INTO [ProxyVote].[Member]
+        //                (
+        //                    [MemberNumber],
+        //                    [PIN],
+        //                    [VotingPeriodId],
+        //                    [Enabled],
+        //                    [EmailAddress],
+        //                    [FullName],
+        //                    [ResidentialOccupied],
+        //                    [ResidentialDwelling],
+        //                    [Renters],
+        //                    [Flood],
+        //                    [Life],
+        //                    [PersonalLiabilityRenters],
+        //                    [PersonalLiabilityCatastrophy],
+        //                    [Auto],
+        //                    [RV],
+        //                    [Watercraft],
+        //                    [Motorcycle],
+        //                    [Supplemental],
+        //                    [AnnualReport],
+        //                    [StatutoryFinancialStatements],
+        //                    [MobileHome],
+        //                    [PetHealth],
+        //                    [Business],
+        //                    [LongTermCare],
+        //                    [MailFinancials],
+        //                    [EmailFinancials],
+        //                    [IsEmailUpdated],
+        //                    [Prefix],
+        //                    [Salutation],
+        //                    [InsuredFirstName],
+        //                    [InsuredLastName],
+        //                    [ClientType],
+        //                    [ServiceStatus],
+        //                    [MailingAddressLine1],
+        //                    [MailingAddressLine2],
+        //                    [MailingCityName],
+        //                    [MailingCountyName],
+        //                    [MailingStateAbbreviation],
+        //                    [MailingZip],
+        //                    [MailingCountry],
+        //                    [MembershipDate],
+        //                    [YearsAsMember],
+        //                    [Gender],
+        //                    [Deceased],
+        //                    [MarketingCode],
+        //                    [ProperFirstName],
+        //                    [MiddleName],
+        //                    [Suffix],
+        //                    [CreateDate]
+        //                )
+        //                VALUES
+        //                (
+        //                    @MemberNumber,
+        //                    @PIN,
+        //                    @VotingPeriodId,
+        //                    @Enabled,
+        //                    @EmailAddress,
+        //                    @FullName,
+        //                    @ResidentialOccupied,
+        //                    @ResidentialDwelling,
+        //                    @Renters,
+        //                    @Flood,
+        //                    @Life,
+        //                    @PersonalLiabilityRenters,
+        //                    @PersonalLiabilityCatastrophy,
+        //                    @Auto,
+        //                    @RV,
+        //                    @Watercraft,
+        //                    @Motorcycle,
+        //                    @Supplemental,
+        //                    @AnnualReport,
+        //                    @StatutoryFinancialStatements,
+        //                    @MobileHome,
+        //                    @PetHealth,
+        //                    @Business,
+        //                    @LongTermCare,
+        //                    @MailFinancials,
+        //                    @EmailFinancials,
+        //                    @IsEmailUpdated,
+        //                    @Prefix,
+        //                    @Salutation,
+        //                    @InsuredFirstName,
+        //                    @InsuredLastName,
+        //                    @ClientType,
+        //                    @ServiceStatus,
+        //                    @MailingAddressLine1,
+        //                    @MailingAddressLine2,
+        //                    @MailingCityName,
+        //                    @MailingCountyName,
+        //                    @MailingStateAbbreviation,
+        //                    @MailingZip,
+        //                    @MailingCountry,
+        //                    @MembershipDate,
+        //                    @YearsAsMember,
+        //                    @Gender,
+        //                    @Deceased,
+        //                    @MarketingCode,
+        //                    @ProperFirstName,
+        //                    @MiddleName,
+        //                    @Suffix,
+        //                    @CreateDate
+        //                );";
+
+        //                    var id = await db.ExecuteAsync(sql, member, transaction);
+        //                    transaction.Commit();
+
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+
+        //        throw;
+        //    }
+        //}
+
+
     }
 }
