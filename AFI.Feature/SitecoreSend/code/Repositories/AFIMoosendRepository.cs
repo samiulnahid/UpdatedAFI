@@ -922,14 +922,14 @@ namespace AFI.Feature.SitecoreSend.Repositories
 
             using (SqlConnection connection = new SqlConnection(AFIConnectionString))
             {
-                string query = $@" SELECT m.* 
-FROM [dbo].[Member] m
+                string query = $@" SELECT TOP 5000 m.* 
+FROM [ProxyVote].[Member] m
 WHERE m.VotingPeriodId = (
     SELECT TOP 1 VotingPeriodId 
-    FROM dbo.VotingPeriod 
+    FROM ProxyVote.VotingPeriod 
     ORDER BY VotingPeriodId DESC
 )
-AND (m.EmailAddress IS NOT NULL AND m.EmailAddress <> '');";
+AND (m.EmailAddress IS NOT NULL AND m.EmailAddress <> '') AND EmailFinancials = 1;";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -971,7 +971,7 @@ AND (m.EmailAddress IS NOT NULL AND m.EmailAddress <> '');";
         {
             using (SqlConnection connection = new SqlConnection(AFIConnectionString))
             {
-                string query = @"SELECT TOP 1 Title FROM [dbo].[VotingPeriod] ORDER BY VotingPeriodId DESC";
+                string query = @"SELECT TOP 1 Title FROM [ProxyVote].[VotingPeriod] ORDER BY VotingPeriodId DESC";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {

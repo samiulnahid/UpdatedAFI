@@ -152,6 +152,12 @@ namespace AFI.Feature.SitecoreSend.Job
                     member.YearsAsMember,
                     member.Gender,
                     member.Deceased,
+
+                    member.MarketingCode,
+                    member.ProperFirstName,
+                    member.MiddleName,
+                    member.Suffix,
+
                     member.CreateDate
 
                 });
@@ -265,6 +271,12 @@ namespace AFI.Feature.SitecoreSend.Job
                                 $"YearsAsMember={item.YearsAsMember}",
                                 $"Gender={item.Gender}",
                                 $"Deceased={item.Deceased}",
+
+                                $"MarketingCode={item.MarketingCode}",
+                                $"ProperFirstName={item.ProperFirstName}",
+                                $"MiddleName={item.MiddleName}",
+                                $"Suffix={item.Suffix}",
+
                                 $"CreateDate={item.CreateDate}",
                             };
 
@@ -288,6 +300,7 @@ namespace AFI.Feature.SitecoreSend.Job
                         var _postList = _multipleDataAsync(jsonContent);
 
                         currentIndex += batchSize;
+
                     }
 
                 }
