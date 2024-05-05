@@ -2044,6 +2044,11 @@ COUNT(*) AS TotalVotes
                            m.MailingCountry,
                            m.VotingPeriodId,
                            m.EmailAddress,
+                           m.ClientType,
+                           m.MailingCountyName,
+                           m.MembershipDate,
+                           m.YearsAsMember,
+                           m.Gender,
                            v.Title AS VotingPeriod,
                            COUNT(*) OVER() AS TotalCount,
                            CASE
@@ -2083,6 +2088,11 @@ COUNT(*) AS TotalVotes
                                 m.MailingCountry,
                                 m.VotingPeriodId,
                                 m.EmailAddress,
+                                m.ClientType,
+                                m.MailingCountyName,
+                                m.MembershipDate,
+                                m.YearsAsMember,
+                                m.Gender,
                                 v.Title AS VotingPeriod,
                                 COUNT(*) OVER() AS TotalCount,
                                CASE

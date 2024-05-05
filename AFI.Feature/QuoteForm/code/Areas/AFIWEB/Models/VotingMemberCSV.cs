@@ -28,6 +28,13 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Models
 		public string MailingZip { get; set; }
 		public string MailingCountry { get; set; }
 		public string EmailAddress { get; set; }
+
+		public string ClientType { get; set; }
+		public string MailingCountyName { get; set; }
+		public string MembershipDate { get; set; }
+		public string YearsAsMember { get; set; }
+		public string Gender { get; set; }
+
 		public string VotingPeriod { get; set; }
 		public bool IsActive { get; set; }
 		public bool IsEmailUpdated { get; set; }
