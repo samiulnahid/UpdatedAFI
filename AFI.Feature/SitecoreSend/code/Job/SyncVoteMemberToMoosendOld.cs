@@ -22,7 +22,7 @@ using static AFI.Feature.SitecoreSend.Constant;
 
 namespace AFI.Feature.SitecoreSend.Job
 {
-    public class SyncVoteMemberToMoosend
+    public class SyncVoteMemberToMoosendOld
     {
 
         public static string api_key = string.Empty;
@@ -31,7 +31,7 @@ namespace AFI.Feature.SitecoreSend.Job
         Service service = new Service();
         AFIMoosendRepository _AFIReportRepository = new AFIMoosendRepository();
 
-
+   
         public void MoosendSettingItem()
         {
             Item moosendSetting = Sitecore.Context.Database.GetItem(Constant.MoosendSetting.MoosendSettingId);
@@ -56,7 +56,7 @@ namespace AFI.Feature.SitecoreSend.Job
         private Uri baseAddress;
         private string SitecoreSendApiKey;
         private string emailListID;
-
+     
 
         public bool Execute()
         {
@@ -152,10 +152,12 @@ namespace AFI.Feature.SitecoreSend.Job
                     member.YearsAsMember,
                     member.Gender,
                     member.Deceased,
+
                     member.MarketingCode,
                     member.ProperFirstName,
                     member.MiddleName,
                     member.Suffix,
+
                     member.CreateDate
 
                 });
@@ -269,10 +271,12 @@ namespace AFI.Feature.SitecoreSend.Job
                                 $"YearsAsMember={item.YearsAsMember}",
                                 $"Gender={item.Gender}",
                                 $"Deceased={item.Deceased}",
+
                                 $"MarketingCode={item.MarketingCode}",
                                 $"ProperFirstName={item.ProperFirstName}",
                                 $"MiddleName={item.MiddleName}",
                                 $"Suffix={item.Suffix}",
+
                                 $"CreateDate={item.CreateDate}",
                             };
 
@@ -295,25 +299,21 @@ namespace AFI.Feature.SitecoreSend.Job
 
                         var _postList = _multipleDataAsync(jsonContent);
 
-                        // Update Members Sync to SitecoreSend
                         _AFIReportRepository.UpdateProxyMemberSync(batch);
 
                         currentIndex += batchSize;
+
                     }
 
                 }
 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception )
             {
-                Sitecore.Diagnostics.Log.Error($"{nameof(ProxyVoteMember)}: Error ProxyVote Member Synce", ex, this);
                 return false;
             }
         }
-
-
-
         private async Task _multipleDataAsync(string item)
         {
             using (var httpClient = new HttpClient { BaseAddress = baseAddress })
@@ -330,7 +330,7 @@ namespace AFI.Feature.SitecoreSend.Job
                 }
             }
         }
-
+  
         static IEnumerable<string> GetKeys(JObject jObject)
         {
             foreach (var property in jObject.Properties())

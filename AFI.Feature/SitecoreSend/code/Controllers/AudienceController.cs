@@ -27,6 +27,7 @@ namespace AFI.Feature.SitecoreSend.Controllers
         public static string api_url = string.Empty;
         AFIMoosendRepository repository = new AFIMoosendRepository();
         SyncVoteMemberToMoosend _syncVoteMemberToMoosend = new SyncVoteMemberToMoosend();
+        SyncVoteMemberToMoosendByCount _syncVoteMemberToMoosendByCount = new SyncVoteMemberToMoosendByCount();
 
         public void MoosendSettingItem()
         {
@@ -410,7 +411,6 @@ namespace AFI.Feature.SitecoreSend.Controllers
         }
 
 
-
         //[HttpPost]
         //public JsonResult CustomfieldsCreate(CustomField data, string ListName, string securitykey)
         //{
@@ -769,7 +769,38 @@ namespace AFI.Feature.SitecoreSend.Controllers
                 return Json(finalJson, JsonRequestBehavior.AllowGet);
             }
         }
+        public JsonResult SyncVoteMemberToMoosendByCount(string count = "" , string listId = "")
+        {
+            try
+            {
+                int totalCount = 0;
+                if(!string.IsNullOrEmpty(count)) 
+                {
+                    totalCount = int.Parse(count);
+                }
 
+                bool MoosendResponse = _syncVoteMemberToMoosendByCount.Execute(totalCount, listId);
+
+                if (MoosendResponse)
+                {
+                    var response = new { MoosendSuccess = true, Message = $"Custom Field Created Successfully" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var response = new { MoosendSuccess = false, Message = $"Response Error !" };
+                    string finalJson = JsonConvert.SerializeObject(response);
+                    return Json(finalJson, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                var response = new { Success = false, Message = $"Error Insert Item Message " + ex.InnerException };
+                string finalJson = JsonConvert.SerializeObject(response);
+                return Json(finalJson, JsonRequestBehavior.AllowGet);
+            }
+        }
 
         #endregion
     }
