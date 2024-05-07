@@ -140,6 +140,8 @@ namespace AFI.Feature.SitecoreSend.Job
 
                             var response = JsonConvert.DeserializeObject<dynamic>(responseData);
 
+                            Sitecore.Diagnostics.Log.Error($"{nameof(ProxyVoteMemberMoosend)}: Error ProxyVote Member Synce", response.Error, this);
+
                             // Handling the response as needed
                             var membersResponse = new List<VoteMultiResponse>();
 
