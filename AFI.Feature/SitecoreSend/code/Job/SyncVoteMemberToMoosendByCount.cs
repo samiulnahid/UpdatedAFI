@@ -19,6 +19,7 @@ using Newtonsoft.Json.Linq;
 using AFI.Feature.SitecoreSend.Repositories;
 using AFI.Feature.SitecoreSend.Models;
 using static AFI.Feature.SitecoreSend.Constant;
+using System.Threading;
 
 namespace AFI.Feature.SitecoreSend.Job
 {
@@ -58,118 +59,165 @@ namespace AFI.Feature.SitecoreSend.Job
         private string emailListID;
 
 
-        public bool Execute(int count, string listId)
+        public  bool Execute(int count, string listId)
         {
             try
             {
                 MoosendSettingItem();
 
-                emailListID = listId; 
+                emailListID = listId;
 
+                List<ProxyVoteMemberMoosend> dataList;
 
-                List<ProxyVoteMember> dataList = _AFIReportRepository.GetAllVotingMemberDataByCount(count);// Load All Member Data
-
-                if (dataList != null)
+                do
                 {
-                    int batchSize = 500;
-                    int currentIndex = 0;
+                    // Load all member data
+                    dataList = _AFIReportRepository.GetAllVotingMemberDataByCount(count);
 
-                    while (currentIndex < dataList.Count)
+
+                    if (dataList != null)
                     {
+                        int batchSize = 300;
+                        int currentIndex = 0;
 
-                        var batch = dataList.Skip(currentIndex).Take(batchSize);
-
-                        // Multiple
-                        var subscribers = new List<object>();
-
-                        foreach (ProxyVoteMember item in batch)
+                        while (currentIndex < dataList.Count)
                         {
-                            var customFields = new List<string>
+
+                            var batch = dataList.Skip(currentIndex).Take(batchSize);
+
+                            // Multiple
+                            var subscribers = new List<object>();
+
+                            foreach (ProxyVoteMemberMoosend item in batch)
+                            {
+                               
+
+                                var customFields = new List<string>
                             {
                                 $"MemberNumber={item.MemberNumber}",
-                                $"PIN={item.PIN}",
-                                $"Enabled={item.Enabled}",
-                                $"AnnualReport={item.AnnualReport}",
-                                $"EmailFinancials={item.EmailFinancials}",
-                                $"IsEmailUpdated={item.IsEmailUpdated}",
-                                $"RankAbbreviation={item.Prefix}",
+                                $"PIN={item.PINNumber}",
+                                $"RankAbbreviation={item.RankAbbreviation}",
                                 $"Salutation={item.Salutation}",
-                                $"FirstName={item.InsuredFirstName}",
-                                $"LastName={item.InsuredLastName}",
+                                $"FirstName={item.FirstName}",
+                                $"MiddleName={item.MiddleName}",
+                                $"LastName={item.LastName}",
                                 $"ClientType={item.ClientType}",
-                                $"MilitaryStatus={item.ServiceStatus}",
-                                $"AddressLine1={item.MailingAddressLine1}",
-                                $"AddressLine2={item.MailingAddressLine2}",
-                                $"City={item.MailingCityName}",
+                                $"MilitaryStatus={item.MilitaryStatus}",
+                                $"AddressLine1={item.AddressLine1}",
+                                $"AddressLine2={item.AddressLine2}",
+                                $"City={item.City}",
                                 $"MailingCountyName={item.MailingCountyName}",
-                                $"State={item.MailingStateAbbreviation}",
-                                $"PostalCode={item.MailingZip}",
-                                $"Country={item.MailingCountry}",
+                                $"State={item.State}",
+                                $"PostalCode={item.PostalCode}",
+                                $"Country={item.Country}",
                                 $"MembershipDate={item.MembershipDate}",
                                 $"YearsAsMember={item.YearsAsMember}",
                                 $"Gender={item.Gender}",
-                                $"Deceased={item.Deceased}",
                                 $"MarketingCode={item.MarketingCode}",
                                 $"ProperFirstName={item.ProperFirstName}",
-                                $"MiddleName={item.MiddleName}",
                                 $"Suffix={item.Suffix}",
                                 $"CreateDate={item.CreateDate}",
                             };
 
-                            var subscriber = new
-                            {
-                                Name = (item.Salutation) ?? string.Empty,
-                                Email = (item.EmailAddress) ?? string.Empty,
-                                Mobile = string.Empty,
-                                CustomFields = customFields
-                            };
+                                var subscriber = new
+                                {
+                                    Name = RemoveSpecialCharacters(item.Salutation) ?? string.Empty,
+                                    Email = (item.Email) ?? string.Empty,
+                                    Mobile = string.Empty,
+                                    CustomFields = customFields
+                                };
 
-                            subscribers.Add(subscriber);
+                                subscribers.Add(subscriber);
+                            }
+
+                            var jsonContent = JsonConvert.SerializeObject(new
+                            {
+                                HasExternalDoubleOptIn = true,
+                                Subscribers = subscribers
+                            });
+
+                            var responseData = Task.Run(() => _multipleDataAsync(jsonContent)).Result;
+
+                            var response = JsonConvert.DeserializeObject<dynamic>(responseData);
+
+                            // Handling the response as needed
+                            var membersResponse = new List<VoteMultiResponse>();
+
+                            foreach (var item in response.Context)
+                            {
+                                var member = new VoteMultiResponse
+                                {
+                                    ID = item.ID.ToString(),
+                                    Email = item.Email.ToString()
+                                };
+                                membersResponse.Add(member);
+                            }
+
+                            // Update
+                            _AFIReportRepository.UpdateMoosendProxyMemberSync(membersResponse);
+
+                            Thread.Sleep(10000);
+
+                            currentIndex += batchSize;
                         }
 
-                        var jsonContent = JsonConvert.SerializeObject(new
-                        {
-                            HasExternalDoubleOptIn = true,
-                            Subscribers = subscribers
-                        });
-
-                        var _postList = _multipleDataAsync(jsonContent);
-
-                        // Update Members Sync to SitecoreSend
-                        _AFIReportRepository.UpdateProxyMemberSync(batch);
-
-                        currentIndex += batchSize;
                     }
-
                 }
+                while (dataList != null && dataList.Any()); // Repeat if there's data left to synchronize
 
                 return true;
             }
             catch (Exception ex)
             {
-                Sitecore.Diagnostics.Log.Error($"{nameof(ProxyVoteMember)}: Error ProxyVote Member Synce", ex, this);
+                Sitecore.Diagnostics.Log.Error($"{nameof(ProxyVoteMemberMoosend)}: Error ProxyVote Member Synce", ex, this);
                 return false;
             }
         }
 
+        // Method to remove special characters from a string
+        private string RemoveSpecialCharacters(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+                return input;
 
+            // Define characters to be removed
+            char[] specialChars = { '<', '>', '"', '\'', '%', '&', '+', '?' };
 
-        private async Task _multipleDataAsync(string item)
+            // Remove special characters from the string
+            return new string(input.Where(c => !specialChars.Contains(c)).ToArray());
+        }
+
+        private async Task<string> _multipleDataAsync(string item)
         {
             using (var httpClient = new HttpClient { BaseAddress = baseAddress })
             {
-
                 httpClient.DefaultRequestHeaders.TryAddWithoutValidation("accept", "application/json");
 
                 using (var content = new StringContent(item, System.Text.Encoding.Default, "application/json"))
                 {
                     using (var response = await httpClient.PostAsync($"subscribers/{emailListID}/subscribe_many.json?apiKey={SitecoreSendApiKey}", content))
                     {
-                        string responseData = await response.Content.ReadAsStringAsync();
+                        return await response.Content.ReadAsStringAsync();
                     }
                 }
             }
         }
+        //private async Task _multipleDataAsync(string item)
+        //{
+        //    using (var httpClient = new HttpClient { BaseAddress = baseAddress })
+        //    {
+
+        //        httpClient.DefaultRequestHeaders.TryAddWithoutValidation("accept", "application/json");
+
+        //        using (var content = new StringContent(item, System.Text.Encoding.Default, "application/json"))
+        //        {
+        //            using (var response = await httpClient.PostAsync($"subscribers/{emailListID}/subscribe_many.json?apiKey={SitecoreSendApiKey}", content))
+        //            {
+        //                string responseData = await response.Content.ReadAsStringAsync();
+        //            }
+        //        }
+        //    }
+        //}
 
         static IEnumerable<string> GetKeys(JObject jObject)
         {

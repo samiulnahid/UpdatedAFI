@@ -68,7 +68,6 @@ namespace AFI.Feature.SitecoreSend.Models
         public DateTime CreatedDate { get; set; }
         public bool IsSynced { get; set; } = false;
         public DateTime? SyncedTime { get; set; }
-        //public int TotalCount { get; set; }
     }
 
     public class Status
@@ -80,7 +79,11 @@ namespace AFI.Feature.SitecoreSend.Models
     {
         Subscriber,
         EmailList,
-        CustomField,
-        SecurityKey
+        CustomField
+    }
+    public class VoteMultiResponse
+    {
+        public string ID { get; set; }
+        public string Email { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AFI.Feature.SitecoreSend.Models
 {
-	
+
 	public class ProxyVoteMember
 	{
 		public int MemberId { get; set; } 
@@ -53,12 +53,50 @@ namespace AFI.Feature.SitecoreSend.Models
 		public string YearsAsMember { get; set; } = string.Empty;
 		public string Gender { get; set; } = string.Empty;
 		public bool Deceased { get; set; } = false;
-
-		public string MarketingCode { get; set; }
-		public string ProperFirstName { get; set; }
-		public string MiddleName { get; set; }
-		public string Suffix { get; set; }
-
-		public DateTime CreateDate { get; set; } = DateTime.Now;
+        public string MarketingCode { get; set; }
+        public string ProperFirstName { get; set; }
+        public string MiddleName { get; set; }
+        public string Suffix { get; set; }
+        public DateTime CreateDate { get; set; } = DateTime.Now;
 	}
+
+
+    public class ProxyVoteMemberMoosend
+    {
+
+        public int MemberId { get; set; }
+        public int VotingPeriodId { get; set; }
+        public string MemberNumber { get; set; }
+        public string PINNumber { get; set; }
+        public string MarketingCode { get; set; }
+        public string Salutation { get; set; }
+        public string RankAbbreviation { get; set; }
+        public string ProperFirstName { get; set; }
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+        public string LastName { get; set; }
+        public string Suffix { get; set; }
+        public string MilitaryStatus { get; set; }
+        public string AddressLine1 { get; set; }
+        public string AddressLine2 { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string PostalCode { get; set; }
+        public string Country { get; set; }
+        public string Email { get; set; }
+        public string ClientType { get; set; }
+
+        public string MailingCountyName { get; set; }
+        public string MembershipDate { get; set; }
+        public string YearsAsMember { get; set; }
+
+        public string Gender { get; set; }
+
+        public bool IsSynced { get; set; }
+
+        public DateTime CreateDate { get; set; } = DateTime.Now;
+
+
+    }
+
 }

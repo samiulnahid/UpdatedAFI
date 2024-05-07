@@ -87,6 +87,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Repository
 
         IEnumerable<VoteCandidate> GetAllLatestVotingPeriodCandidateData();
         IEnumerable<VotingMemberCSV> GetAllFilterVotingMemberData(int page, int pageSize, int VotingPeriodId, string IsEmail);
+        int SubmitMoosendMemberVote(ProxyVoteMemberMoosend entity);
     }
 
     public class AFIReportRepository : IAFIReportRepository
@@ -2150,6 +2151,138 @@ COUNT(*) AS TotalVotes
                 }
 
                 return db.Query<VotingMemberCSV>(sql, parameters);
+            }
+        }
+
+        // Temp for Sync Moosend link AFIDB [dbo].[AFIVoteMemberMoosend]
+        public int SubmitMoosendMemberVote(ProxyVoteMemberMoosend entity)
+        {
+
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
+            {
+                db.Open();
+                using (var transaction = db.BeginTransaction())
+                {
+                    try
+                    {
+
+                        //  Check if the record already exists
+                        var existingRecord = db.QueryFirstOrDefault<ProxyVoteMemberMoosend>("SELECT Top 1 * FROM [dbo].[AFIVoteMemberMoosend] WHERE MemberNumber = @MemberNumber AND VotingPeriodId = @VotingPeriodId Order by 1 DESC", new
+                        {
+                            entity.MemberNumber,
+                            entity.VotingPeriodId
+                        }, transaction);
+
+                        if (existingRecord != null)
+                        {
+                            return -1;
+
+                        }
+
+                        var sql = @"
+                    INSERT INTO [dbo].[AFIVoteMemberMoosend]
+                           ([VotingPeriodId]
+                           ,[MemberNumber]
+                           ,[PINNumber]
+                           ,[MarketingCode]
+                           ,[Salutation]
+                           ,[RankAbbreviation]
+                           ,[ProperFirstName]
+                           ,[FirstName]
+                            ,[MiddleName]
+                           ,[LastName]
+                           ,[Suffix]
+                           ,[MilitaryStatus]
+                           ,[AddressLine1]
+                           ,[AddressLine2]
+                           ,[City]
+                           ,[State]
+                           ,[PostalCode]
+                           ,[Country]
+                           ,[Email]
+                           ,[ClientType]
+                           ,[MailingCountyName]
+                           ,[MembershipDate]
+                           ,[YearsAsMember]
+                           ,[Gender]
+                           ,[CreateDate]
+                           ,[IsSynced])
+                     VALUES
+                           (@VotingPeriodId
+                           ,@MemberNumber
+                           ,@PINNumber
+                           ,@MarketingCode
+                           ,@Salutation
+                           ,@RankAbbreviation
+                           ,@ProperFirstName
+                           ,@FirstName
+                           ,@MiddleName
+                           ,@LastName
+                           ,@Suffix
+                           ,@MilitaryStatus
+                           ,@AddressLine1
+                           ,@AddressLine2
+                           ,@City
+                           ,@State
+                           ,@PostalCode
+                           ,@Country
+                           ,@Email
+                           ,@ClientType
+                           ,@MailingCountyName
+                           ,@MembershipDate
+                           ,@YearsAsMember
+                           ,@Gender
+                           ,@CreateDate
+                           ,@IsSynced); ";
+
+                        // Execute the SQL query using Dapper
+                        var newId = db.Execute(sql, entity, transaction);
+                        transaction.Commit();
+                        sw.Stop();
+                        Sitecore.Diagnostics.Log.Info("STOPWATCH: create Member " + sw.Elapsed, "stopwatch");
+
+                        return newId;
+                    }
+                    catch (System.Exception ex)
+                    {
+                        if (ex is SqlException sqlEx)
+                        {
+                            foreach (SqlError error in sqlEx.Errors)
+                            {
+                                if (error.Number == 8152) // Error number for string or binary data would be truncated
+                                {
+                                    // Extracting the column name from the error message
+                                    string errorMessage = error.Message;
+                                    int startIndex = errorMessage.IndexOf("'");
+                                    int endIndex = errorMessage.IndexOf("'", startIndex + 1);
+                                    if (startIndex != -1 && endIndex != -1 && endIndex > startIndex)
+                                    {
+                                        string columnName = errorMessage.Substring(startIndex + 1, endIndex - startIndex - 1);
+                                        Log.Error($"{nameof(QuoteRepository)}: Error while attempting to insert Member. Truncated column: {columnName}", ex, this);
+                                    }
+                                    else
+                                    {
+                                        Log.Error($"{nameof(QuoteRepository)}: Error while attempting to insert Member. Unable to determine the truncated column.", ex, this);
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Log.Error($"{nameof(QuoteRepository)}: Error while attempting to insert Member.", ex, this);
+                        }
+
+
+                        // Log.Error($"{nameof(QuoteRepository)}: Error while attempting to insert Member.", ex, this);
+                        transaction.Rollback();
+                        sw.Stop();
+                        Sitecore.Diagnostics.Log.Info("STOPWATCH: create Member" + sw.Elapsed, "stopwatch");
+                        return 0;
+                    }
+                }
             }
         }
 

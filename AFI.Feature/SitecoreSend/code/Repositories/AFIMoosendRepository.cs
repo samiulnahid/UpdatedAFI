@@ -915,6 +915,7 @@ namespace AFI.Feature.SitecoreSend.Repositories
         }
         #endregion
 
+        
         #region AFI Vote
 
         public List<ProxyVoteMember> GetAllVotingMemberData()
@@ -949,52 +950,7 @@ AND (m.EmailAddress IS NOT NULL AND m.EmailAddress <> '') AND EmailFinancials=0 
 
             return members;
         }
-        public List<ProxyVoteMember> GetAllVotingMemberDataByCount(int count)
-        {
-            List<ProxyVoteMember> members = new List<ProxyVoteMember>();
 
-            using (SqlConnection connection = new SqlConnection(AFIConnectionString))
-            {
-                string query = $@" SELECT Top {count} m.* 
-                                FROM [dbo].[AFIVoteMemberMoosend] m
-                                WHERE m.VotingPeriodId = (
-                                    SELECT TOP 1 VotingPeriodId 
-                                    FROM ProxyVote.VotingPeriod 
-                                    ORDER BY VotingPeriodId DESC
-                                )
-                                AND (m.EmailAddress IS NOT NULL AND m.EmailAddress <> '') AND EmailFinancials=0 ;";
-
-                if (count == 0){
-                    query = $@" SELECT  m.* 
-                            FROM [dbo].[AFIVoteMemberMoosend] m
-                            WHERE m.VotingPeriodId = (
-                                SELECT TOP 1 VotingPeriodId 
-                                FROM ProxyVote.VotingPeriod 
-                                ORDER BY VotingPeriodId DESC
-                            )
-                            AND (m.EmailAddress IS NOT NULL AND m.EmailAddress <> '') AND EmailFinancials=0 ;";
-                }
-                
-               
-
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    connection.Open();
-
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            ProxyVoteMember data = RepositoryHelper.MapReaderToObject<ProxyVoteMember>(reader);
-                            members.Add(data);
-                        }
-                    }
-                }
-            }
-
-            return members;
-        }
-        
         public string GetVotingPeriodTitleById(int votingPeriodId)
         {
             using (SqlConnection connection = new SqlConnection(AFIConnectionString))
@@ -1030,6 +986,74 @@ AND (m.EmailAddress IS NOT NULL AND m.EmailAddress <> '') AND EmailFinancials=0 
             }
         }
 
+        public void UpdateMoosendProxyMemberSync(IEnumerable<VoteMultiResponse> dataList)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(AFIConnectionString))
+                {
+                    string query = "UPDATE [dbo].[AFIVoteMemberMoosend] SET IsSynced = @IsSynced WHERE MemberId = @MemberId";
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    cmd.Parameters.Add("@IsSynced", SqlDbType.Bit);
+                    cmd.Parameters.Add("@MemberId", SqlDbType.Int);
+
+                    con.Open();
+                    foreach (var item in dataList)
+                    {
+                        // Check if ID is a valid GUID and not equal to 0
+                        if (Guid.TryParse(item.ID, out _) && item.ID != "00000000-0000-0000-0000-000000000000")
+                        {
+                            // Retrieve MemberId corresponding to the Email
+                            int memberId = GetMemberIdByEmail(con, item.Email);
+                            if (memberId != 0)
+                            {
+                                cmd.Parameters["@IsSynced"].Value = true;
+                                cmd.Parameters["@MemberId"].Value = memberId;
+                                cmd.ExecuteNonQuery();
+                            }
+                            else
+                            {
+                                // Log a message indicating that MemberId couldn't be found for the Email
+                                Sitecore.Diagnostics.Log.Warn($"No MemberId found for email: {item.Email}", this);
+                            }
+                        }
+                        else
+                        {
+                            // Log a message indicating that ID is not a valid GUID or equal to 0
+                            Sitecore.Diagnostics.Log.Warn($"Invalid ID: {item.ID}", this);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Sitecore.Diagnostics.Log.Error($"{nameof(ProxyVoteMember)}: Error Update ProxyVote Member Synce", ex, this);
+            }
+        }
+
+        // Method to retrieve MemberId by Email from the database
+        private int GetMemberIdByEmail(SqlConnection con, string email)
+        {
+            int memberId = 0;
+            string query = $@"SELECT Top 1 MemberId FROM [dbo].[AFIVoteMemberMoosend] WHERE Email = @Email AND VotingPeriodId = (
+                                SELECT TOP 1 VotingPeriodId 
+                                FROM ProxyVote.VotingPeriod 
+                                ORDER BY VotingPeriodId DESC
+                            );";
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@Email", email);
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    memberId = reader.GetInt32(0); // Assuming MemberId is stored as an integer in the database
+                }
+            }
+
+            return memberId;
+        }
+
         public void UpdateProxyMemberSync(IEnumerable<ProxyVoteMember> dataList)
         {
             try
@@ -1057,7 +1081,52 @@ AND (m.EmailAddress IS NOT NULL AND m.EmailAddress <> '') AND EmailFinancials=0 
 
         }
 
+        public List<ProxyVoteMemberMoosend> GetAllVotingMemberDataByCount(int count)
+        {
+            List<ProxyVoteMemberMoosend> members = new List<ProxyVoteMemberMoosend>();
 
+            using (SqlConnection connection = new SqlConnection(AFIConnectionString))
+            {
+                string query = $@" SELECT Top {count} m.* 
+                                FROM [dbo].[AFIVoteMemberMoosend] m
+                                WHERE m.VotingPeriodId = (
+                                    SELECT TOP 1 VotingPeriodId 
+                                    FROM ProxyVote.VotingPeriod 
+                                    ORDER BY VotingPeriodId DESC
+                                )
+                                AND (m.Email IS NOT NULL AND m.Email <> '') AND IsSynced=0 ;";
+
+                if (count == 0)
+                {
+                    query = $@" SELECT  m.* 
+                            FROM [dbo].[AFIVoteMemberMoosend] m
+                            WHERE m.VotingPeriodId = (
+                                SELECT TOP 1 VotingPeriodId 
+                                FROM ProxyVote.VotingPeriod 
+                                ORDER BY VotingPeriodId DESC
+                            )
+                            AND (m.Email IS NOT NULL AND m.Email <> '') AND IsSynced=0 ;";
+                }
+
+
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ProxyVoteMemberMoosend data = RepositoryHelper.MapReaderToObject<ProxyVoteMemberMoosend>(reader);
+                            members.Add(data);
+                        }
+                    }
+                }
+            }
+
+            return members;
+        }
         #endregion
 
 
