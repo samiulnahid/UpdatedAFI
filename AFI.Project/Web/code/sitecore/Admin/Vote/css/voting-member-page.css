@@ -1,0 +1,144 @@
+.voting-member .filter_container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.voting-member .search_result .filter_container {
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.voting-member .api_result,
+.voting-member .search_result {
+    margin-bottom: 50px;
+}
+
+.voting-member .temp_table,
+.voting-member .button_container {
+    margin-top: 20px;
+}
+
+.voting-member .primary_btn {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    width: 140px;
+    padding: 11px !important;
+    font-size: 15px;
+}
+
+.voting-member .primary_btn:hover {
+    background-color: #0056b3;
+}
+
+.voting-member .temp_table_body #btn_delete {
+    font-size: 16px;
+}
+
+.voting-member #filter_range,
+.voting-member #search_status,
+.voting-member #filter_status,
+input[type="text"],
+input[type="date"],
+input[type="email"],
+.voting-member .primary_btn {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.voting-member .api_result .myPages {
+    margin: 30px auto !important;
+}
+
+.voting-member .temp_table {
+    display: none;
+}
+
+.voting-member .temp_table.active {
+    display: block;
+}
+
+.voting-member .jqp-active {
+    color: #0056b3;
+    background-color: #fff;
+    border: 1px solid #0056b3;
+    font-weight: 700;
+}
+
+.voting-member .jqp-active:hover {
+    color: #0056b3;
+    background-color: #fff;
+    border: 1px solid #0056b3;
+    font-weight: 700;
+}
+
+@media screen and (max-width: 575px) {
+    .voting-member .filter_container {
+        justify-content: flex-start;
+    }
+}
+
+.voting-member .iplog_title {
+    margin: 50px auto !important;
+    font-weight: 600 !important;
+}
+
+.voting-member .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    user-select: none;
+    gap: 10px;
+}
+
+.voting-member .pagination .prev__page,
+.voting-member .pagination .next__page,
+.voting-member .pagination .page {
+    padding: 10px;
+    color: #0056b3;
+    background-color: #fff;
+    border: 1px solid #0056b3;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.voting-member .pagination .page:hover {
+    background-color: #0056b3;
+    color: #fff;
+}
+
+.voting-member .pagination .active {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    font-weight: 700;
+}
+
+.voting-member .pagination .active:hover {
+    color: #0056b3;
+    background-color: #fff;
+    border: 1px solid #0056b3;
+    font-weight: 700;
+}
+
+.voting-member .fa-trash:before {
+    font-size: 17px;
+}
+
+.voting-member .download__container {
+    text-align: right;
+    margin-bottom: 40px;
+}
+
+.voting-member .download__container a {
+    display: inline-flex;
+    gap: 5px;
+    align-items: center;
+    padding: 10px;
+}

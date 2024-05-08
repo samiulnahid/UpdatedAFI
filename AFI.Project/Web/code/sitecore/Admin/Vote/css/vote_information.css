@@ -1,0 +1,130 @@
+.login-form-container {
+  max-width: 750px;
+  width: 90%;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  position: unset;
+  left: 50%;
+  top: 50%;
+  transform: unset;
+  background: #fff;
+  display: grid;
+  grid-template-columns: 1fr !important;
+  align-items: center;
+  padding: 20px 0;
+  margin: 50px auto;
+}
+
+.vote-step-two .form {
+  position: unset;
+  transform: unset;
+}
+
+.form_info_vote {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  max-width: 540px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  width: 100%;
+  /* padding: 10px; */
+  /* margin: 5px 0; */
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.form-group label {
+  flex: 1;
+  text-align: left;
+  margin-right: 10px;
+  font-family: Zilla Slab, serif !important;
+}
+
+.form-group input {
+  flex: 2;
+  width: 100%;
+}
+
+/* .vote_title {
+  text-align: center;
+  margin: 10px auto 0 !important;
+  font-size: 27px !important;
+  font-weight: 700 !important;
+  color: #000 !important;
+  font-family: Zilla Slab, serif !important;
+} */
+
+.vote_title {
+  margin: 10px auto 0 !important;
+  color: #014d8a !important;
+  text-align: center;
+  font-weight: 700 !important;
+}
+
+.afi_logo {
+  margin: 0 auto;
+}
+
+.text_msg {
+  text-align: center;
+  margin: 10px 0 10px !important;
+  line-height: 20px !important;
+  font-size: 14px !important;
+}
+
+.text_msg small {
+  display: block;
+}
+
+.vote-step-two {
+  width: 100%;
+  background: unset;
+  min-height: unset;
+  position: unset;
+}
+
+.vote-step-two #main-content {
+  background: unset;
+}
+
+.vote-step-two .dv-content-vote-bottom .person label.rdo-css,
+.vote-step-two .dv-content-vote-bottom .person a,
+.vote-step-two .white__text,
+.vote-step-two .dv-content-vote-bottom .txt-title {
+  color: #000 !important;
+}
+
+.landing-page-hero__wrapper {
+  overflow: unset;
+}
+
+#content {
+  margin-bottom: 100px;
+}
+
+.vote-step-two .contbtn .button {
+  background: #0070ab !important;
+  font-family: Zilla Slab, serif !important;
+}
+
+@media screen and(max-width:991px) {
+  .vote_title {
+    font-size: 25px !important;
+  }
+}

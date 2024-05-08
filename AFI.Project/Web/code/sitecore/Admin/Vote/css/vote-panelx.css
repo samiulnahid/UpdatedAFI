@@ -1,0 +1,439 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    text-decoration: none;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+    font-size: 100%;
+}
+
+body {
+    overflow-x: hidden;
+    background-color: #fff;
+    font-family: "Roboto", sans-serif;
+    transition: transform 0.25s;
+    font-size: 16px;
+    color: #000;
+}
+
+/* body::-webkit-scrollbar {
+    display: none;
+  } */
+
+section,
+header,
+footer {
+    width: 100%;
+    clear: both;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    font-weight: 400;
+    padding: 0;
+}
+
+h1,
+h2,
+h3 {
+    font-family: Zilla Slab, serif;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+a {
+    text-decoration: none;
+    color: #0570c5;
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+}
+
+a:hover {
+    color: #003864;
+    text-decoration: underline;
+}
+
+
+button,
+button:focus,
+input,
+input:focus,
+textarea,
+textarea:focus {
+    outline: 0;
+    outline-offset: 0;
+}
+
+.button {
+    background-color: #0570c5;
+    border-color: #0570c5;
+    color: #fff;
+    border-radius: 1.625rem;
+    border-style: solid;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 400;
+    width: 9.25rem;
+    opacity: 1;
+    padding: 8px 20px;
+    /* padding: 12px 20px; */
+    text-align: center;
+    transition: background-color 0.25s, border-color 0.25s, color 0.25s,
+        opacity 0.25s;
+}
+
+.button:hover,
+.button a:hover {
+    background-color: #025699;
+    border-color: #025699;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 1.625rem;
+}
+
+/******************* Header *******************/
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+}
+
+header .back {
+    padding-left: 10px;
+}
+
+header .back img {
+    max-width: 40px;
+}
+
+header .user-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+header .user-photo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+header .username {
+    margin-right: 10px;
+}
+
+header .logout-btn {
+    padding: 5px 10px;
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+header .logout-btn:hover {
+    background-color: white;
+    color: #333;
+}
+
+
+header nav ul {
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    padding: 0 20px 10px;
+    gap: 20px;
+    background-color: #333;
+    color: white;
+}
+
+
+
+/******************* title-logo-section *******************/
+.title-logo-section {
+    display: flex;
+    justify-content: center;
+    gap: 10%;
+    align-items: center;
+    margin: 20px auto;
+}
+
+.title-logo-section h1 {
+    font-weight: 600;
+    font-size: 36px;
+}
+
+
+/********************************************************
+*                   Voting Period List
+********************************************************/
+.voting__period__list {
+    padding: 50px 20px;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+.table_container th {
+    background-color: #f2f2f2;
+  }
+.voting__period__list   tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternate row background color */
+}
+.voting__period__list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.voting__period__list th,
+.voting__period__list td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    max-width: 350px;
+    border: 1px solid #ddd;
+}
+
+.voting__period__list th {
+    background-color: #f2f2f2;
+}
+
+.voting__period__list .action {
+    max-width: 99px;
+    display: inline-flex;
+    gap: 10px;
+}
+
+.voting__period__list td button {
+    border: 1px solid #333;
+    padding: 5px;
+    cursor: pointer;
+    /* width: 60px; */
+}
+
+.voting__period__list .delete-btn {
+    color: rgb(189, 1, 1);
+}
+
+.voting__period__list .edit-btn {
+    color: rgb(0, 90, 0);
+}
+
+
+
+.voting__period__list .add-btn-container {
+    display: flex;
+    justify-content: end;
+    margin-bottom: 10px;
+}
+
+@media screen and (max-width: 600px) {
+
+    .voting__period__list th,
+    .voting__period__list td {
+        display: block;
+        width: 100%;
+    }
+
+    .voting__period__list th {
+        text-align: center;
+    }
+
+    .voting__period__list td {
+        text-align: center;
+    }
+
+    .voting__period__list th:nth-child(5),
+    .voting__period__list td:nth-child(5) {
+        display: flex;
+        justify-content: center;
+    }
+
+    .voting__period__list th:nth-child(5) button,
+    .voting__period__list td:nth-child(5) button {
+        margin: 5px;
+    }
+}
+
+/******************* popup *******************/
+/* CSS for popup */
+.popup-ui {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background-color: white;
+    padding: 2%;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    border-radius: 20px;
+    text-align: center;
+    transition: .3s;
+    width: 90%;
+    max-width: 700px;
+}
+
+.popup-ui.show {
+    transform: translate(-50%, -50%) scale(1);
+    transition: .3s;
+}
+
+.popup-ui .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    transform: scale(2);
+}
+
+/******************* Add Form *******************/
+#add-form {
+    text-align: left;
+    font-size: 18px;
+}
+
+#add-form label,
+#add-form input,
+#add-form select,
+#add-form button {
+    display: block;
+    width: 100%;
+    font-size: 16px;
+    margin-bottom: 2px;
+}
+
+#add-form .field-control {
+    margin-bottom: 16px;
+}
+
+#add-form select,
+#add-form input {
+    border: 1px solid #666;
+    padding: 8px 10px;
+    border-radius: 6px;
+}
+
+
+.delete-warning h3 {
+    margin-bottom: 30px;
+    font-size: 30px;
+}
+
+.delete-warning .button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.delete-warning button {
+    border: 1px solid #003864;
+    padding: 5px;
+    width: 100px;
+    cursor: pointer;
+}
+
+/******************* import form *******************/
+
+#add-import-form {
+    width: 92%;
+    max-width: 700px;
+    margin: 100px auto 20px;
+}
+
+
+#add-import-form select,
+#add-import-form input {
+    display: inline;
+    width: auto;
+    border: 1px solid #666;
+    padding: 8px 10px;
+    border-radius: 6px;
+}
+
+#add-import-form .field-control {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+#add-import-form .submit-btn-container {
+    text-align: center;
+}
+
+#add-import-form .submit-btn {
+    width: 200px;
+}
+
+.header-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+ margin-bottom:50px;
+    color: #333;
+}
+
+.logo img {
+    max-width: 100%; /* Ensure the logo doesn't exceed the container width */
+    height: auto;
+}
+
+.title {
+    flex-grow: 1; /* Allow the title to grow and occupy remaining space */
+    text-align: right;
+}
+
+.title h1 {
+   
+    font-weight:600 !important;
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .title {
+        text-align: center;
+        margin-top: 10px; /* Add some space between logo and title on smaller screens */
+    }
+}

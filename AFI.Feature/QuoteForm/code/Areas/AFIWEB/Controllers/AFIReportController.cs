@@ -2765,7 +2765,7 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
         {
             var sb = new StringBuilder();
             var properties = typeof(T).GetProperties()
-                                          .Where(p => p.Name != "MemberId" && p.Name != "Enabled" && p.Name != "VotingPeriodId" && p.Name != "TotalCount" && p.Name != "IsActive" && p.Name != "IsEmailUpdated" && p.Name != "VotingPeriod"); // Exclude Id and UpdatedTime 
+                                          .Where(p => p.Name != "MemberId" && p.Name != "VotingPeriodId" && p.Name != "TotalCount" && p.Name != "IsActive" && p.Name != "IsEmailUpdated" && p.Name != "VotingPeriod"); // Exclude Id and UpdatedTime 
                                                                                                                                                                 // Dictionary to map original property names to desired header names
             var headerMap = new Dictionary<string, string>
             {
@@ -2955,6 +2955,68 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Controllers
                 return Json(new { success = false, message = "Error occurred while importing members.", error = ex.Message });
             }
 
+        }
+
+        [HttpGet]
+        public FileContentResult GetTotalMemberByVoting(int VotingId = 0, string memberVoted = "all")
+        {
+            try
+            {
+                var detailsList = _AFIReportRepository.GetTotalMemberByVoting(VotingId, memberVoted);
+
+               
+                if (detailsList.Any())
+                {
+                    string csvData = ConvertToCSVForExportMember(detailsList);
+
+                    byte[] bytes = Encoding.UTF8.GetBytes(csvData);
+                    Response.Headers.Add("Content-Disposition", "attachment; filename=MemberVoteDetails.csv");
+                    return File(bytes, "text/csv");
+
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                byte[] errorBytes = Encoding.UTF8.GetBytes($"Error: {ex.Message}");
+                Response.Headers.Add("Content-Disposition", "attachment; filename=Error_Report.csv");
+                return File(errorBytes, "text/csv");
+            }
+        }
+
+        public FileContentResult DownloadMemberFilterDataCSV2(int VotingId = 0, string IsEmail = "")
+        {
+
+            try
+            {
+
+                //var data = _AFIReportRepository.GetAllVotingMemberData(0, 0, VotingId, IsEmail);
+
+                var data = _AFIReportRepository.GetAllFilterVotingMemberData(0, 0, VotingId, IsEmail);
+
+                if (data.Any())
+                {
+                    string csvData = ConvertToCSVForExportMember(data);
+
+                    byte[] bytes = Encoding.UTF8.GetBytes(csvData);
+                    Response.Headers.Add("Content-Disposition", "attachment; filename=VoteMember.csv");
+                    return File(bytes, "text/csv");
+
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                byte[] errorBytes = Encoding.UTF8.GetBytes($"Error: {ex.Message}");
+                Response.Headers.Add("Content-Disposition", "attachment; filename=Error_Report.csv");
+                return File(errorBytes, "text/csv");
+            }
         }
     }
 }

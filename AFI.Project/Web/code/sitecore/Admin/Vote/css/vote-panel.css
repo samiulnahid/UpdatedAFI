@@ -1,0 +1,216 @@
+/******************* title-logo-section *******************/
+.title-logo-section {
+    display: flex;
+    justify-content: center;
+    gap: 10%;
+    align-items: center;
+    margin: 20px auto;
+}
+
+.title-logo-section h1 {
+    font-weight: 600;
+    font-size: 36px;
+}
+
+
+/********************************************************
+*                   Voting Period List
+********************************************************/
+.table-container {
+    overflow-x: auto;
+}
+
+.voting__period__list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.voting__period__list th,
+.voting__period__list td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    width: 200px;
+}
+
+.voting__period__list th {
+    background-color: #f2f2f2;
+}
+
+.voting__period__list .action {
+    max-width: 99px;
+    /* display: inline-flex; */
+    gap: 10px;
+}
+
+.voting__period__list td button {
+    border: 1px solid #333;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.voting__period__list td button:disabled {
+    opacity: .5;
+}
+
+.voting__period__list .delete-btn {
+    color: rgb(189, 1, 1);
+    margin-right: 10px;
+}
+
+.voting__period__list .edit-btn {
+    color: rgb(0, 90, 0);
+}
+
+
+
+.voting__period__list .add-btn-container {
+    display: flex;
+    justify-content: end;
+    margin-bottom: 10px;
+}
+
+@media screen and (max-width: 600px) {
+
+    .voting__period__list th,
+    .voting__period__list td {
+        display: block;
+        width: 100%;
+    }
+
+    .voting__period__list th {
+        text-align: center;
+    }
+
+    .voting__period__list td {
+        text-align: center;
+    }
+
+    .voting__period__list th:nth-child(5),
+    .voting__period__list td:nth-child(5) {
+        display: flex;
+        justify-content: center;
+    }
+
+    .voting__period__list th:nth-child(5) button,
+    .voting__period__list td:nth-child(5) button {
+        margin: 5px;
+    }
+}
+
+/******************* popup *******************/
+/* CSS for popup */
+.popup-ui {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background-color: white;
+    padding: 2%;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    border-radius: 20px;
+    text-align: center;
+    transition: .3s;
+    width: 90%;
+    max-width: 700px;
+}
+
+.popup-ui.show {
+    transform: translate(-50%, -50%) scale(1);
+    transition: .3s;
+}
+
+.popup-ui .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    transform: scale(2);
+}
+
+/******************* Add Form *******************/
+#add-form {
+    text-align: left;
+    font-size: 18px;
+}
+
+#add-form label,
+#add-form input,
+#add-form select,
+#add-form button {
+    display: block;
+    width: 100%;
+    font-size: 16px;
+    margin-bottom: 2px;
+}
+
+#add-form .field-control {
+    margin-bottom: 16px;
+}
+
+#add-form select,
+#add-form input {
+    border: 1px solid #666;
+    padding: 8px 10px;
+    border-radius: 6px;
+}
+
+
+.delete-warning h3 {
+    margin-bottom: 30px;
+    font-size: 30px;
+}
+
+.delete-warning .button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.delete-warning button {
+    border: 1px solid #003864;
+    padding: 5px;
+    width: 100px;
+    cursor: pointer;
+}
+
+/******************* import form *******************/
+
+#add-import-form {
+    width: 92%;
+    max-width: 700px;
+    margin: 80px auto 20px;
+    box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.441);
+    padding: 60px;
+    background: #373737;
+    color: #fff;
+    border-radius: 16px;
+}
+
+
+#add-import-form select,
+#add-import-form input {
+    display: inline;
+    width: auto;
+    border: 1px solid #666;
+    padding: 8px 10px;
+    border-radius: 6px;
+}
+
+#add-import-form .field-control {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+#add-import-form .submit-btn-container {
+    text-align: center;
+}
+
+#add-import-form .submit-btn {
+    width: 200px;
+}

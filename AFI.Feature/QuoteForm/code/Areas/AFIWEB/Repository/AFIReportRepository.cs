@@ -69,25 +69,18 @@ namespace AFI.Feature.QuoteForm.Areas.AFIWEB.Repository
         int DeleteCandidateData(int CandidateId);
         VoteCandidate GetCandidateById(int candidateId);
         IEnumerable<VoteMember> GetAllVotingMemberData(int page, int pageSize, int VotingPeriodId, string IsEmail);
-
-
         IEnumerable<VoteReport> GetVoteCountReportForResult(string voatingPeriodId = "");
-
         int DeleteMemberData(int MemberId);
         int UpdateMemberData(VoteMember voteMember);
-
         int GetMemberVoteCountByMemberIdAndVotePeriodId(int memberId, int votingPeriodId);
-
         bool GetCandidateVoteBallotStatus(string voatingPeriodId, string MemberId);
         object GetTotalVoteCountDetailsForResult(string voatingPeriodId = "");
-
         string GetMemberEmailByMemberNumberAndPIN(string MemberNumber, string PIN);
-
         object GetMemberInfoByMemberNumber(string MemberNumber);
-
         IEnumerable<VoteCandidate> GetAllLatestVotingPeriodCandidateData();
         IEnumerable<VotingMemberCSV> GetAllFilterVotingMemberData(int page, int pageSize, int VotingPeriodId, string IsEmail);
         int SubmitMoosendMemberVote(ProxyVoteMemberMoosend entity);
+        IEnumerable<VotingMemberCSV> GetTotalMemberByVoting(int VotingId,string memberVote);
     }
 
     public class AFIReportRepository : IAFIReportRepository
@@ -2283,6 +2276,93 @@ COUNT(*) AS TotalVotes
                         return 0;
                     }
                 }
+            }
+        }
+
+        public IEnumerable<VotingMemberCSV> GetTotalMemberByVoting(int VotingId , string memberVote)
+        {
+            
+            // string voatingPeriodId = "(SELECT TOP 1 VotingPeriodId FROM [ProxyVote].VotingPeriod ORDER BY VotingPeriodId DESC)";
+
+            using (var db = _dbConnectionProvider.GetAFIDatabaseConnection())
+            {
+                int votingPeriodId;
+                if(VotingId == 0)
+                {
+                    // Execute subquery to get the latest VotingPeriodId
+                    string subQuery = "SELECT TOP 1 VotingPeriodId FROM [ProxyVote].VotingPeriod ORDER BY VotingPeriodId DESC";
+                    votingPeriodId = db.QueryFirstOrDefault<int>(subQuery);
+                }
+                else
+                {
+                    votingPeriodId = VotingId;
+                }
+                
+
+                var sql = @"SELECT m.MemberId, 
+                           m.MemberNumber,
+                           m.PIN,
+                           m.MarketingCode,
+                           m.Salutation,
+                           m.Prefix,
+                           m.ProperFirstName,
+                           m.InsuredFirstName,
+                           m.MiddleName,
+                           m.InsuredLastName,
+                           m.Suffix,
+                           m.ServiceStatus,
+                           m.MailingAddressLine1,
+                           m.MailingAddressLine2,
+                           m.MailingCityName,
+                           m.MailingStateAbbreviation,
+                           m.MailingZip,
+                           m.MailingCountry,
+                           m.VotingPeriodId,
+                           m.EmailAddress,
+                           m.ClientType,
+                           m.MailingCountyName,
+                           m.MembershipDate,
+                           m.YearsAsMember,
+                           m.Gender,
+                           COUNT(*) OVER() AS TotalCount 
+
+                    FROM[ProxyVote].[Member] AS m
+                    WHERE  1 = 1 ";
+
+                
+                // Additional condition based on IsEmail parameter
+                if (memberVote.ToLower() == "all")
+                {
+                    // Get all email or non-email members
+                    // No additional condition needed
+                }
+                else if (memberVote.ToLower() == "voted")
+                {
+                    // Get members where email field has email
+                    sql += " AND m.[Enabled] = 0 ";
+                }
+                else if (memberVote.ToLower() == "notvoted")
+                {
+                    // Get members where email field is null or empty
+                    sql += " AND m.[Enabled] = 1 ";
+                }
+
+                if (votingPeriodId == 99999999)
+                {
+                   // get all voting period member
+                }
+                else
+                {
+                    sql += $" AND m.VotingPeriodId = {votingPeriodId} ";
+                }
+              
+
+                //var parameters = new DynamicParameters();
+                //parameters.Add("@VotingPeriodId", votingPeriodId);
+                
+               // return db.Query<VotingMemberCSV>(sql, parameters);
+
+                return db.Query<VotingMemberCSV>(sql);
             }
         }
 
