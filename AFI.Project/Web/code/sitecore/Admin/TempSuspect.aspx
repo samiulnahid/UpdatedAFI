@@ -295,20 +295,20 @@
                     <label for="coverage">Coverage:</label>
                     <select id="filter_coverage" name="coverage" class="input__field">
                         <option value="">All</option>
-                        <option value="Auto">Auto</option>
+                        <option value="AUTO">Auto</option>
                         <option value="Commercial">Business</option>
                         <option value="Collector Vehicle">Collector Vehicle</option>
-                        <option value="Home">Home</option>
+                        <option value="HO">Home</option>
                         <option value="Flood">Flood</option>
                         <option value="Motorhome">Motorhome</option>
                         <option value="Motorcycle">Motorcycle</option>
                         <option value="Pet Health">Pet Health</option>
-                        <option value="Renter">Renter</option>
+                        <option value="RN">Renter</option>
                         <option value="Travel Trailer">Travel Trailer</option>
-                        <option value="Umbrella">Umbrella</option>
+                        <option value="UM">Umbrella</option>
                         <option value="Watercraft">Watercraft</option>
                         <option value="Mobile Home">Mobile Home</option>
-                        <option value="Dwelling Fire (Landlord)">Dwelling Fire (Landlord)</option>
+                        <option value="DW">Dwelling Fire (Landlord)</option>
                         <option value="Condo">Condo</option>
                     </select>
                 </div>
