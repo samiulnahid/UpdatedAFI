@@ -6,7 +6,7 @@
     
     <title>Temp Suspect</title>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" /> -->
-    <link href="~/asset/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="assets/font-awesome/css/all.min.css" rel="stylesheet" />
     <link href="~/asset/Fonts/afi-fonts.css" rel="stylesheet" />
     <link href="~/asset/css/common.css" rel="stylesheet" />
     <link rel="icon" type="image/png" sizes="32x32" href="/-/media/Project/AFI/afi/FavIcon/favicon-32x32.png">
@@ -198,19 +198,67 @@
     text-align: right;
     margin-bottom: 20px;
             }
-    .table_container th:last-child,
-    .table_container td:last-child {
+    .table_container.data-table th:last-child,
+    .table_container.data-table td:last-child {
     display: none !important;
 }
 
 
 
     </style>
+    <link rel="stylesheet" href="assets/css/suspect-header.css" />
      <script type="text/javascript" src="/asset/js/jsLibrary/jquery.min.js"></script>
 </head>
 
 <body>
+    <form id="form1" runat="server">
+        <header>
+          <div class="icon-container">
+            <a
+              href="/sitecore/shell/sitecore/client/applications/launchpad"
+              title="Back to Lunchpad"
+              class="back"
+            >
+              <img src="./assets/image/back.svg" alt="back"
+            /></a>
   
+            <a
+              href="#"
+              title="Vote configure"
+              class="setting"
+            >
+              <img src="./assets/image/gear.png" alt="configure" style="width: 40px" />
+            </a>
+          </div>
+  
+          <div class="user-info">
+            
+            <!-- <input type="button" name="btnLogout" value="Logout" onclick="javascript:__doPostBack('btnLogout','')" id="btnLogout" class="logout-btn">
+
+           
+            <span id="lblUsername" class="username">Administrator</span> -->
+            
+             <asp:Button
+              ID="btnLogout"
+              usesubmitbehavior="false"
+              type="button"
+              runat="server"
+              Text="Logout"
+              OnClick="btnLogout_Click"
+              class="logout-btn"
+            />
+ 
+            <asp:Label
+              ID="lblUsername"
+              runat="server"
+              Text=""
+              class="username"
+            ></asp:Label>
+
+            <img src="./assets/image/avatar.png" alt="User Photo" class="user-photo" />
+          </div>
+        </header>
+      </form>
     <div class="container">
     <h1 class="iplog_title">Temp Suspect Data</h1>
     
@@ -326,7 +374,7 @@
             </div>
 
             <!-- Information Table Start  -->
-            <div class="table_container">
+            <div class="table_container data-table">
                 <table>
                     <thead>
                         <tr>
@@ -356,7 +404,7 @@
         <!-- Table Start  -->
         <h1 class="page_title">Suspective Table</h1>
 
-        <div class="table_container">
+        <div class="table_container ">
             <table>
                 <thead>
                     <tr>
@@ -810,4 +858,51 @@
 </body>
 
 </html>
+
+
+
+<script runat="server">
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            // Retrieve the logged-in username
+            string username = GetLoggedInUsername();
+  
+            // Display the username
+            lblUsername.Text = username;
+        }
+    }
+  
+    protected void btnLogout_Click(object sender, EventArgs e)
+    {
+        // Log out the user
+        Sitecore.Security.Authentication.AuthenticationManager.Logout();
+  
+        // Redirect to a logout page or the login page
+        Response.Redirect("/sitecore/login?fbc=1");
+    }
+  
+    private string GetLoggedInUsername()
+    {
+        // Get the currently logged-in user
+        Sitecore.Security.Accounts.User user = Sitecore.Context.User;
+  
+        // Get the username
+        string username = string.Empty;
+        if (user != null)
+        {
+            if (user.Profile != null && !string.IsNullOrEmpty(user.Profile.FullName))
+            {
+                username = user.Profile.FullName;
+            }
+            else
+            {
+                username = user.Name;
+            }
+        }
+        return username;
+    }
+  </script>
+  
 

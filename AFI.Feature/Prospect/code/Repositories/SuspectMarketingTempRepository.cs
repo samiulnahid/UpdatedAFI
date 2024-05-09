@@ -157,12 +157,12 @@ namespace AFI.Feature.Prospect.Repositories
                         [LeadScore], [DateCreated]
                     )
                     SELECT
-                        [FirstName], [LastName], [Email], [Phone], [Address], [City],
-                        [State], [ZipCode], [Country], [DateOfBirth], [Occupation],
-                        [PreferredCoverage], [LeadSource], [LeadStatus], [LeadOwner],
-                        [LeadScore], [DateCreated]
-                    FROM [AFI_Marketing_Suspect_Temp] MT
-                    WHERE MT.ID IN @Ids AND MT.[IsSynced] = 0 AND MT.[IsValid] = 1 AND MT.[IsBlockCountry] = 0";
+					[FirstName], [LastName], [Email], [Phone], [Address], [City],
+					[State], [ZipCode], [Country], [DateOfBirth], [Occupation],
+					[PreferredCoverage], [LeadSource], [LeadStatus], [LeadOwner],
+					[LeadScore], [DateCreated]
+				FROM [AFI_Marketing_Suspect_Temp] MT
+				WHERE MT.ID IN @Ids AND MT.[IsSynced] = 0 AND MT.[IsValid] = 1 AND (MT.[IsBlockCountry] = 0 OR MT.[IsBlockCountry] IS NULL) ";
 
                         // UPDATE AFI_Marketing_Suspect_Temp
                         var updateSql = @"

@@ -637,7 +637,20 @@
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="sitecore\Admin\assets\back_button.png" />
+    <Content Include="sitecore\Admin\assets\breadcrumb_red_bg.png" />
+    <Content Include="sitecore\Admin\assets\css\suspect-header.css" />
+    <Content Include="sitecore\Admin\assets\font-awesome\css\all.min.css" />
+    <Content Include="sitecore\Admin\assets\global_logo.png" />
+    <Content Include="sitecore\Admin\assets\image\avatar.png" />
+    <Content Include="sitecore\Admin\assets\image\back.svg" />
+    <Content Include="sitecore\Admin\assets\image\gear.png" />
+    <Content Include="sitecore\Admin\assets\image\loader-logo.png" />
+    <Content Include="sitecore\Admin\assets\image\logo.png" />
+    <Content Include="sitecore\Admin\assets\image\logo_1.png" />
+    <Content Include="sitecore\Admin\assets\logo_spiral.png" />
     <Content Include="sitecore\Admin\Suspect.aspx" />
+    <Content Include="sitecore\Admin\SuspectX.aspx" />
     <Content Include="sitecore\Admin\TempProspect.aspx" />
     <Content Include="sitecore\Admin\TempSuspect.aspx" />
     <Content Include="sitecore\Admin\TempSuspectX.aspx" />
@@ -1063,6 +1076,14 @@
     <Content Include="sitecore\Admin\Vote\icon\webfonts\fa-solid-900.woff2" />
     <Content Include="sitecore\Admin\Vote\icon\webfonts\fa-v4compatibility.ttf" />
     <Content Include="sitecore\Admin\Vote\icon\webfonts\fa-v4compatibility.woff2" />
+    <Content Include="sitecore\Admin\assets\font-awesome\webfonts\fa-brands-400.ttf" />
+    <Content Include="sitecore\Admin\assets\font-awesome\webfonts\fa-brands-400.woff2" />
+    <Content Include="sitecore\Admin\assets\font-awesome\webfonts\fa-regular-400.ttf" />
+    <Content Include="sitecore\Admin\assets\font-awesome\webfonts\fa-regular-400.woff2" />
+    <Content Include="sitecore\Admin\assets\font-awesome\webfonts\fa-solid-900.ttf" />
+    <Content Include="sitecore\Admin\assets\font-awesome\webfonts\fa-solid-900.woff2" />
+    <Content Include="sitecore\Admin\assets\font-awesome\webfonts\fa-v4compatibility.ttf" />
+    <Content Include="sitecore\Admin\assets\font-awesome\webfonts\fa-v4compatibility.woff2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\AFI.Feature\Article\code\Article.csproj">
