@@ -14,12 +14,12 @@ using System.Web;
 
 namespace AFI.Feature.SitecoreSend.Repositories
 {
-    public class AFIMoosendRepository
+    public class AFIMoosendRepositorySql
     {
 
         private readonly string AFIConnectionString;
 
-        public AFIMoosendRepository()
+        public AFIMoosendRepositorySql()
         {
             AFIConnectionString = ConfigurationManager.ConnectionStrings["AFIDB"].ConnectionString;
         }
@@ -599,6 +599,8 @@ namespace AFI.Feature.SitecoreSend.Repositories
                 }
             }
         }
+
+
         public void ListSubscriberUpdate(MoosendListSubscriber data)
         {
             using (SqlConnection connection = new SqlConnection(AFIConnectionString))
@@ -634,6 +636,8 @@ namespace AFI.Feature.SitecoreSend.Repositories
                 }
             }
         }
+
+
         public void DeleteListSubscriber(int Id)
         {
             using (SqlConnection connection = new SqlConnection(AFIConnectionString))
@@ -702,6 +706,7 @@ namespace AFI.Feature.SitecoreSend.Repositories
 
             return subscribers;
         }
+
         public MoosendListSubscriber GetListSubscriberById(int id)
         {
             using (SqlConnection connection = new SqlConnection(AFIConnectionString))
@@ -726,6 +731,7 @@ namespace AFI.Feature.SitecoreSend.Repositories
 
             return null;
         }
+
         public List<MoosendListSubscriber> GetAllListSubscriberByIsSynced(bool isSynced)
         {
             List<MoosendListSubscriber> subscribers = new List<MoosendListSubscriber>();
@@ -752,6 +758,7 @@ namespace AFI.Feature.SitecoreSend.Repositories
 
             return subscribers;
         }
+
         public List<MoosendListSubscriber> GetFilterSubscriberByIsSynced(bool isSynced )
         {
             //int ofsetItem = (page - 1) * pageSize;
@@ -785,54 +792,26 @@ namespace AFI.Feature.SitecoreSend.Repositories
             return subscribers;
         }
 
-
-        //public List<MoosendListSubscriber> GetAllListSubscriberGroupByListName(bool isSynced)
-        //{
-        //    List<MoosendListSubscriber> subscribers = new List<MoosendListSubscriber>();
-
-        //    using (SqlConnection connection = new SqlConnection(AFIConnectionString))
-        //    {
-        //        string query = @"SELECT *
-        //                        FROM[AFIMoosend_ListSubscriber] AS ls
-        //                        WHERE ls.IsSynced = 'false'
-        //                        AND ls.Id IN(
-        //                            SELECT MAX(Id)
-        //                            FROM [AFIMoosend_ListSubscriber]
-        //                            WHERE IsSynced = 'false'
-        //                            GROUP BY ListName
-        //                        )
-        //                        ORDER BY ls.Id DESC; ";
-
-        //        using (SqlCommand command = new SqlCommand(query, connection))
-        //        {
-        //            command.Parameters.AddWithValue("@IsSynced", isSynced);
-        //            connection.Open();
-
-        //            using (SqlDataReader reader = command.ExecuteReader())
-        //            {
-        //                while (reader.Read())
-        //                {
-        //                    MoosendListSubscriber data = RepositoryHelper.MapReaderToObject<MoosendListSubscriber>(reader);
-        //                    subscribers.Add(data);
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    return subscribers;
-        //}
-
         public List<MoosendListSubscriber> GetAllListSubscriberGroupByListName(bool isSynced)
         {
             List<MoosendListSubscriber> subscribers = new List<MoosendListSubscriber>();
 
             using (SqlConnection connection = new SqlConnection(AFIConnectionString))
             {
-                using (SqlCommand command = new SqlCommand("GetAllListSubscriberGroupByListName", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@IsSynced", isSynced);
+                string query = @"SELECT *
+                                FROM[AFIMoosend_ListSubscriber] AS ls
+                                WHERE ls.IsSynced = 'false'
+                                AND ls.Id IN(
+                                    SELECT MAX(Id)
+                                    FROM [AFIMoosend_ListSubscriber]
+                                    WHERE IsSynced = 'false'
+                                    GROUP BY ListName
+                                )
+                                ORDER BY ls.Id DESC; ";
 
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@IsSynced", isSynced);
                     connection.Open();
 
                     using (SqlDataReader reader = command.ExecuteReader())
@@ -848,7 +827,6 @@ namespace AFI.Feature.SitecoreSend.Repositories
 
             return subscribers;
         }
-
 
         //public List<MoosendListSubscriber> GetListSubscriberlist()
         //{
@@ -902,37 +880,7 @@ namespace AFI.Feature.SitecoreSend.Repositories
         //        }
         //    }
         //}
-        //public void InserAFIMoosendtLog(string data, Enum name, string jsonBody, string responseContext)
-        //{
-        //    using (SqlConnection db = new SqlConnection(AFIConnectionString))
-        //    {
-        //        db.Open();
-        //        try
-        //        {
-        //            var sql = "INSERT INTO [dbo].[AFIMoosend_Log] ([CreatedTime],[Logtype],[LogDescription],[RequestBody],[ResponseBody]) VALUES(@CreatedTime, @Logtype, @LogDescription,@RequestBody ,@ResponseBody)";
 
-        //            using (SqlCommand cmd = new SqlCommand(sql, db))
-        //            {
-        //                cmd.Parameters.AddWithValue("@CreatedTime", DateTime.Now);
-        //                cmd.Parameters.AddWithValue("@Logtype", name.ToString());
-        //                cmd.Parameters.AddWithValue("@LogDescription", data.ToString());
-        //                cmd.Parameters.AddWithValue("@RequestBody", jsonBody.ToString());
-        //                cmd.Parameters.AddWithValue("@ResponseBody", responseContext.ToString());
-
-
-        //                cmd.ExecuteNonQuery();
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Log.Error("Error while attempting to insert Quote.", ex, this);
-        //        }
-        //        finally
-        //        {
-        //            db.Close();
-        //        }
-        //    }
-        //}
 
         public void InserAFIMoosendtLog(string data, Enum name, string jsonBody, string responseContext)
         {
@@ -941,15 +889,16 @@ namespace AFI.Feature.SitecoreSend.Repositories
                 db.Open();
                 try
                 {
-                    using (SqlCommand cmd = new SqlCommand("InsertAFIMoosendLog", db))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
+                    var sql = "INSERT INTO [dbo].[AFIMoosend_Log] ([CreatedTime],[Logtype],[LogDescription],[RequestBody],[ResponseBody]) VALUES(@CreatedTime, @Logtype, @LogDescription,@RequestBody ,@ResponseBody)";
 
+                    using (SqlCommand cmd = new SqlCommand(sql, db))
+                    {
                         cmd.Parameters.AddWithValue("@CreatedTime", DateTime.Now);
                         cmd.Parameters.AddWithValue("@Logtype", name.ToString());
-                        cmd.Parameters.AddWithValue("@LogDescription", data);
-                        cmd.Parameters.AddWithValue("@RequestBody", jsonBody);
-                        cmd.Parameters.AddWithValue("@ResponseBody", responseContext);
+                        cmd.Parameters.AddWithValue("@LogDescription", data.ToString());
+                        cmd.Parameters.AddWithValue("@RequestBody", jsonBody.ToString());
+                        cmd.Parameters.AddWithValue("@ResponseBody", responseContext.ToString());
+
 
                         cmd.ExecuteNonQuery();
                     }
@@ -964,45 +913,10 @@ namespace AFI.Feature.SitecoreSend.Repositories
                 }
             }
         }
-
-
         #endregion
 
-
+        
         #region AFI Vote
-
-        //        public List<ProxyVoteMember> GetAllVotingMemberData()
-        //        {
-        //            List<ProxyVoteMember> members = new List<ProxyVoteMember>();
-
-        //            using (SqlConnection connection = new SqlConnection(AFIConnectionString))
-        //            {
-        //                string query = $@" SELECT Top 5000 m.* 
-        //FROM [ProxyVote].[Member] m
-        //WHERE m.VotingPeriodId = (
-        //    SELECT TOP 1 VotingPeriodId 
-        //    FROM ProxyVote.VotingPeriod 
-        //    ORDER BY VotingPeriodId DESC
-        //)
-        //AND (m.EmailAddress IS NOT NULL AND m.EmailAddress <> '') AND EmailFinancials=0 ;";
-
-        //                using (SqlCommand command = new SqlCommand(query, connection))
-        //                {
-        //                    connection.Open();
-
-        //                    using (SqlDataReader reader = command.ExecuteReader())
-        //                    {
-        //                        while (reader.Read())
-        //                        {
-        //                            ProxyVoteMember data = RepositoryHelper.MapReaderToObject<ProxyVoteMember>(reader);
-        //                            members.Add(data);
-        //                        }
-        //                    }
-        //                }
-        //            }
-
-        //            return members;
-        //        }
 
         public List<ProxyVoteMember> GetAllVotingMemberData()
         {
@@ -1010,10 +924,17 @@ namespace AFI.Feature.SitecoreSend.Repositories
 
             using (SqlConnection connection = new SqlConnection(AFIConnectionString))
             {
-                using (SqlCommand command = new SqlCommand("GetAllVotingMemberData", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
+                string query = $@" SELECT Top 5000 m.* 
+FROM [ProxyVote].[Member] m
+WHERE m.VotingPeriodId = (
+    SELECT TOP 1 VotingPeriodId 
+    FROM ProxyVote.VotingPeriod 
+    ORDER BY VotingPeriodId DESC
+)
+AND (m.EmailAddress IS NOT NULL AND m.EmailAddress <> '') AND EmailFinancials=0 ;";
 
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
                     connection.Open();
 
                     using (SqlDataReader reader = command.ExecuteReader())
@@ -1030,31 +951,14 @@ namespace AFI.Feature.SitecoreSend.Repositories
             return members;
         }
 
-        //public string GetVotingPeriodTitleById(int votingPeriodId)
-        //{
-        //    using (SqlConnection connection = new SqlConnection(AFIConnectionString))
-        //    {
-        //        string query = @"SELECT Title FROM [ProxyVote].[VotingPeriod] WHERE VotingPeriodId = @VotingPeriodId";
-
-        //        using (SqlCommand command = new SqlCommand(query, connection))
-        //        {
-        //            command.Parameters.AddWithValue("@VotingPeriodId", votingPeriodId);
-
-        //            connection.Open();
-
-        //            var title = command.ExecuteScalar() as string;
-
-        //            return title;
-        //        }
-        //    }
-        //}
         public string GetVotingPeriodTitleById(int votingPeriodId)
         {
             using (SqlConnection connection = new SqlConnection(AFIConnectionString))
             {
-                using (SqlCommand command = new SqlCommand("GetVotingPeriodTitleById", connection))
+                string query = @"SELECT Title FROM [ProxyVote].[VotingPeriod] WHERE VotingPeriodId = @VotingPeriodId";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@VotingPeriodId", votingPeriodId);
 
                     connection.Open();
@@ -1065,33 +969,14 @@ namespace AFI.Feature.SitecoreSend.Repositories
                 }
             }
         }
-
-
-        //public string GetLatestVotingPeriodTitle()
-        //{
-        //    using (SqlConnection connection = new SqlConnection(AFIConnectionString))
-        //    {
-        //        string query = @"SELECT TOP 1 Title FROM [ProxyVote].[VotingPeriod] ORDER BY VotingPeriodId DESC";
-
-        //        using (SqlCommand command = new SqlCommand(query, connection))
-        //        {
-        //            connection.Open();
-
-        //            var title = command.ExecuteScalar() as string;
-
-        //            return title;
-        //        }
-        //    }
-        //}
-
         public string GetLatestVotingPeriodTitle()
         {
             using (SqlConnection connection = new SqlConnection(AFIConnectionString))
             {
-                using (SqlCommand command = new SqlCommand("GetLatestVotingPeriodTitle", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
+                string query = @"SELECT TOP 1 Title FROM [ProxyVote].[VotingPeriod] ORDER BY VotingPeriodId DESC";
 
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
                     connection.Open();
 
                     var title = command.ExecuteScalar() as string;
@@ -1101,60 +986,14 @@ namespace AFI.Feature.SitecoreSend.Repositories
             }
         }
 
-
-        //public void UpdateMoosendProxyMemberSync(IEnumerable<VoteMultiResponse> dataList)
-        //{
-        //    try
-        //    {
-        //        using (SqlConnection con = new SqlConnection(AFIConnectionString))
-        //        {
-        //            string query = "UPDATE [dbo].[AFIVoteMemberMoosend] SET IsSynced = @IsSynced WHERE MemberId = @MemberId";
-        //            SqlCommand cmd = new SqlCommand(query, con);
-        //            cmd.Parameters.Add("@IsSynced", SqlDbType.Bit);
-        //            cmd.Parameters.Add("@MemberId", SqlDbType.Int);
-
-        //            con.Open();
-        //            foreach (var item in dataList)
-        //            {
-        //                // Check if ID is a valid GUID and not equal to 0
-        //                if (Guid.TryParse(item.ID, out _) && item.ID != "00000000-0000-0000-0000-000000000000")
-        //                {
-        //                    // Retrieve MemberId corresponding to the Email
-        //                    int memberId = GetMemberIdByEmail(con, item.Email);
-        //                    if (memberId != 0)
-        //                    {
-        //                        cmd.Parameters["@IsSynced"].Value = true;
-        //                        cmd.Parameters["@MemberId"].Value = memberId;
-        //                        cmd.ExecuteNonQuery();
-        //                    }
-        //                    else
-        //                    {
-        //                        // Log a message indicating that MemberId couldn't be found for the Email
-        //                        Sitecore.Diagnostics.Log.Warn($"No MemberId found for email: {item.Email}", this);
-        //                    }
-        //                }
-        //                else
-        //                {
-        //                    // Log a message indicating that ID is not a valid GUID or equal to 0
-        //                    Sitecore.Diagnostics.Log.Warn($"Invalid ID: {item.ID}", this);
-        //                }
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Sitecore.Diagnostics.Log.Error($"{nameof(ProxyVoteMember)}: Error Update ProxyVote Member Synce", ex, this);
-        //    }
-        //}
-
         public void UpdateMoosendProxyMemberSync(IEnumerable<VoteMultiResponse> dataList)
         {
             try
             {
                 using (SqlConnection con = new SqlConnection(AFIConnectionString))
                 {
-                    SqlCommand cmd = new SqlCommand("UpdateMoosendProxyMemberSync", con);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                    string query = "UPDATE [dbo].[AFIVoteMemberMoosend] SET IsSynced = @IsSynced WHERE MemberId = @MemberId";
+                    SqlCommand cmd = new SqlCommand(query, con);
                     cmd.Parameters.Add("@IsSynced", SqlDbType.Bit);
                     cmd.Parameters.Add("@MemberId", SqlDbType.Int);
 
@@ -1192,79 +1031,28 @@ namespace AFI.Feature.SitecoreSend.Repositories
             }
         }
 
-  
         // Method to retrieve MemberId by Email from the database
-
-        //private int GetMemberIdByEmail(SqlConnection con, string email)
-        //{
-        //    int memberId = 0;
-        //    string query = $@"SELECT Top 1 MemberId FROM [dbo].[AFIVoteMemberMoosend] WHERE Email = @Email AND VotingPeriodId = (
-        //                        SELECT TOP 1 VotingPeriodId 
-        //                        FROM ProxyVote.VotingPeriod 
-        //                        ORDER BY VotingPeriodId DESC
-        //                    );";
-        //    SqlCommand cmd = new SqlCommand(query, con);
-        //    cmd.Parameters.AddWithValue("@Email", email);
-
-        //    using (SqlDataReader reader = cmd.ExecuteReader())
-        //    {
-        //        if (reader.Read())
-        //        {
-        //            memberId = reader.GetInt32(0); // Assuming MemberId is stored as an integer in the database
-        //        }
-        //    }
-
-        //    return memberId;
-        //}
-
         private int GetMemberIdByEmail(SqlConnection con, string email)
         {
             int memberId = 0;
+            string query = $@"SELECT Top 1 MemberId FROM [dbo].[AFIVoteMemberMoosend] WHERE Email = @Email AND VotingPeriodId = (
+                                SELECT TOP 1 VotingPeriodId 
+                                FROM ProxyVote.VotingPeriod 
+                                ORDER BY VotingPeriodId DESC
+                            );";
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@Email", email);
 
-            using (SqlCommand cmd = new SqlCommand("GetMemberIdByEmail", con))
+            using (SqlDataReader reader = cmd.ExecuteReader())
             {
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Email", email);
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                if (reader.Read())
                 {
-                    if (reader.Read())
-                    {
-                        memberId = reader.GetInt32(0); // Assuming MemberId is stored as an integer in the database
-                    }
+                    memberId = reader.GetInt32(0); // Assuming MemberId is stored as an integer in the database
                 }
             }
 
             return memberId;
         }
-
-
-        //public void UpdateProxyMemberSync(IEnumerable<ProxyVoteMember> dataList)
-        //{
-        //    try
-        //    {
-        //        using (SqlConnection con = new SqlConnection(AFIConnectionString))
-        //        {
-        //            string query = "UPDATE [ProxyVote].[Member] SET EmailFinancials = @EmailFinancials WHERE MemberId = @MemberId";
-        //            SqlCommand cmd = new SqlCommand(query, con);
-        //            cmd.Parameters.Add("@EmailFinancials", SqlDbType.Bit);
-        //            cmd.Parameters.Add("@MemberId", SqlDbType.Int);
-
-        //            con.Open();
-        //            foreach (var item in dataList)
-        //            {
-        //                cmd.Parameters["@EmailFinancials"].Value = true;
-        //                cmd.Parameters["@MemberId"].Value = item.MemberId;
-        //                cmd.ExecuteNonQuery();
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Sitecore.Diagnostics.Log.Error($"{nameof(ProxyVoteMember)}: Error Update ProxyVote Member Synce", ex, this);
-        //    }
-
-        //}
 
         public void UpdateProxyMemberSync(IEnumerable<ProxyVoteMember> dataList)
         {
@@ -1272,8 +1060,8 @@ namespace AFI.Feature.SitecoreSend.Repositories
             {
                 using (SqlConnection con = new SqlConnection(AFIConnectionString))
                 {
-                    SqlCommand cmd = new SqlCommand("UpdateProxyMemberSync", con);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                    string query = "UPDATE [ProxyVote].[Member] SET EmailFinancials = @EmailFinancials WHERE MemberId = @MemberId";
+                    SqlCommand cmd = new SqlCommand(query, con);
                     cmd.Parameters.Add("@EmailFinancials", SqlDbType.Bit);
                     cmd.Parameters.Add("@MemberId", SqlDbType.Int);
 
@@ -1290,55 +1078,8 @@ namespace AFI.Feature.SitecoreSend.Repositories
             {
                 Sitecore.Diagnostics.Log.Error($"{nameof(ProxyVoteMember)}: Error Update ProxyVote Member Synce", ex, this);
             }
+
         }
-
-
-        //public List<ProxyVoteMemberMoosend> GetAllVotingMemberDataByCount(int count)
-        //{
-        //    List<ProxyVoteMemberMoosend> members = new List<ProxyVoteMemberMoosend>();
-
-        //    using (SqlConnection connection = new SqlConnection(AFIConnectionString))
-        //    {
-        //        string query = $@" SELECT Top {count} m.* 
-        //                        FROM [dbo].[AFIVoteMemberMoosend] m
-        //                        WHERE m.VotingPeriodId = (
-        //                            SELECT TOP 1 VotingPeriodId 
-        //                            FROM ProxyVote.VotingPeriod 
-        //                            ORDER BY VotingPeriodId DESC
-        //                        )
-        //                        AND (m.Email IS NOT NULL AND m.Email <> '') AND IsSynced=0 ;";
-
-        //        if (count == 0)
-        //        {
-        //            query = $@" SELECT  m.* 
-        //                    FROM [dbo].[AFIVoteMemberMoosend] m
-        //                    WHERE m.VotingPeriodId = (
-        //                        SELECT TOP 1 VotingPeriodId 
-        //                        FROM ProxyVote.VotingPeriod 
-        //                        ORDER BY VotingPeriodId DESC
-        //                    )
-        //                    AND (m.Email IS NOT NULL AND m.Email <> '') AND IsSynced=0 ;";
-        //        }
-
-
-
-        //        using (SqlCommand command = new SqlCommand(query, connection))
-        //        {
-        //            connection.Open();
-
-        //            using (SqlDataReader reader = command.ExecuteReader())
-        //            {
-        //                while (reader.Read())
-        //                {
-        //                    ProxyVoteMemberMoosend data = RepositoryHelper.MapReaderToObject<ProxyVoteMemberMoosend>(reader);
-        //                    members.Add(data);
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    return members;
-        //}
 
         public List<ProxyVoteMemberMoosend> GetAllVotingMemberDataByCount(int count)
         {
@@ -1346,11 +1087,31 @@ namespace AFI.Feature.SitecoreSend.Repositories
 
             using (SqlConnection connection = new SqlConnection(AFIConnectionString))
             {
-                using (SqlCommand command = new SqlCommand("GetAllVotingMemberDataByCount", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add(new SqlParameter("@count", count));
+                string query = $@" SELECT Top {count} m.* 
+                                FROM [dbo].[AFIVoteMemberMoosend] m
+                                WHERE m.VotingPeriodId = (
+                                    SELECT TOP 1 VotingPeriodId 
+                                    FROM ProxyVote.VotingPeriod 
+                                    ORDER BY VotingPeriodId DESC
+                                )
+                                AND (m.Email IS NOT NULL AND m.Email <> '') AND IsSynced=0 ;";
 
+                if (count == 0)
+                {
+                    query = $@" SELECT  m.* 
+                            FROM [dbo].[AFIVoteMemberMoosend] m
+                            WHERE m.VotingPeriodId = (
+                                SELECT TOP 1 VotingPeriodId 
+                                FROM ProxyVote.VotingPeriod 
+                                ORDER BY VotingPeriodId DESC
+                            )
+                            AND (m.Email IS NOT NULL AND m.Email <> '') AND IsSynced=0 ;";
+                }
+
+
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
                     connection.Open();
 
                     using (SqlDataReader reader = command.ExecuteReader())
@@ -1366,8 +1127,6 @@ namespace AFI.Feature.SitecoreSend.Repositories
 
             return members;
         }
-
-
         #endregion
 
 

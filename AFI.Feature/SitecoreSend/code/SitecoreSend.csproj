@@ -227,6 +227,7 @@
     <Compile Include="Models\SitecoreSendModel.cs" />
     <Compile Include="Pipeline\RegisterWebApiRoutes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AFIMoosendRepositorySql.cs" />
     <Compile Include="Repositories\AFIMoosendRepositoryOld.cs" />
   </ItemGroup>
   <ItemGroup>
