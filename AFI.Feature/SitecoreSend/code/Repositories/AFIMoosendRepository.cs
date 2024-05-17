@@ -267,7 +267,39 @@ namespace AFI.Feature.SitecoreSend.Repositories
 
         #endregion
 
+
         #region SecurityKey
+
+        //public void InsertAFISecurityKeyData(AFISecurityKeyData data)
+        //{
+        //    using (SqlConnection db = new SqlConnection(AFIConnectionString))
+        //    {
+        //        db.Open();
+        //        try
+        //        {
+        //            var sql = "INSERT INTO [AFIMooSend_SecurityKey] ([Email],[SecurityKey],[StateTime],[EndTime]) VALUES(@Email, @SecurityKey, @StateTime, @EndTime)";
+
+        //            using (SqlCommand cmd = new SqlCommand(sql, db))
+        //            {
+        //                cmd.Parameters.AddWithValue("@Email", data.Email);
+        //                cmd.Parameters.AddWithValue("@SecurityKey", data.SecurityKey);
+        //                cmd.Parameters.AddWithValue("@StateTime", data.StateTime);
+        //                cmd.Parameters.AddWithValue("@EndTime", data.EndTime);
+
+        //                cmd.ExecuteNonQuery();
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Log.Error("Error while attempting to insert Quote.", ex, this);
+        //        }
+        //        finally
+        //        {
+        //            db.Close();
+        //        }
+        //    }
+        //}
+
         public void InsertAFISecurityKeyData(AFISecurityKeyData data)
         {
             using (SqlConnection db = new SqlConnection(AFIConnectionString))
@@ -275,10 +307,10 @@ namespace AFI.Feature.SitecoreSend.Repositories
                 db.Open();
                 try
                 {
-                    var sql = "INSERT INTO [AFIMooSend_SecurityKey] ([Email],[SecurityKey],[StateTime],[EndTime]) VALUES(@Email, @SecurityKey, @StateTime, @EndTime)";
-
-                    using (SqlCommand cmd = new SqlCommand(sql, db))
+                    using (SqlCommand cmd = new SqlCommand("InsertAFISecurityKeyData", db))
                     {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
                         cmd.Parameters.AddWithValue("@Email", data.Email);
                         cmd.Parameters.AddWithValue("@SecurityKey", data.SecurityKey);
                         cmd.Parameters.AddWithValue("@StateTime", data.StateTime);
@@ -289,7 +321,7 @@ namespace AFI.Feature.SitecoreSend.Repositories
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("Error while attempting to insert Quote.", ex, this);
+                    Log.Error("Error while attempting to insert AFISecurityKeyData.", ex, this);
                 }
                 finally
                 {
@@ -298,6 +330,38 @@ namespace AFI.Feature.SitecoreSend.Repositories
             }
         }
 
+
+        //public void UpdateSecurityKey(AFISecurityKeyData data)
+        //{
+        //    using (SqlConnection db = new SqlConnection(AFIConnectionString))
+        //    {
+        //        db.Open();
+        //        try
+        //        {
+        //            var sql = "UPDATE [AFIMooSend_SecurityKey] SET [Email] = @Email, [SecurityKey] = @SecurityKey, [StateTime] = @StateTime, [EndTime] = @EndTime WHERE [Id] = @Id";
+
+        //            using (SqlCommand cmd = new SqlCommand(sql, db))
+        //            {
+        //                cmd.Parameters.AddWithValue("@Id", data.Id);
+        //                cmd.Parameters.AddWithValue("@Email", data.Email);
+        //                cmd.Parameters.AddWithValue("@SecurityKey", data.SecurityKey);
+        //                cmd.Parameters.AddWithValue("@StateTime", data.StateTime);
+        //                cmd.Parameters.AddWithValue("@EndTime", data.EndTime);
+
+        //                cmd.ExecuteNonQuery();
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            // Handle the exception as needed
+        //        }
+        //        finally
+        //        {
+        //            db.Close();
+        //        }
+        //    }
+        //}
+
         public void UpdateSecurityKey(AFISecurityKeyData data)
         {
             using (SqlConnection db = new SqlConnection(AFIConnectionString))
@@ -305,10 +369,10 @@ namespace AFI.Feature.SitecoreSend.Repositories
                 db.Open();
                 try
                 {
-                    var sql = "UPDATE [AFIMooSend_SecurityKey] SET [Email] = @Email, [SecurityKey] = @SecurityKey, [StateTime] = @StateTime, [EndTime] = @EndTime WHERE [Id] = @Id";
-
-                    using (SqlCommand cmd = new SqlCommand(sql, db))
+                    using (SqlCommand cmd = new SqlCommand("UpdateSecurityKey", db))
                     {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
                         cmd.Parameters.AddWithValue("@Id", data.Id);
                         cmd.Parameters.AddWithValue("@Email", data.Email);
                         cmd.Parameters.AddWithValue("@SecurityKey", data.SecurityKey);
@@ -321,6 +385,7 @@ namespace AFI.Feature.SitecoreSend.Repositories
                 catch (Exception ex)
                 {
                     // Handle the exception as needed
+                    Log.Error("Error while updating security key.", ex, this);
                 }
                 finally
                 {
@@ -328,6 +393,42 @@ namespace AFI.Feature.SitecoreSend.Repositories
                 }
             }
         }
+
+
+        //public List<AFISecurityKeyData> GetAllSecurityKeyData()
+        //{
+        //    List<AFISecurityKeyData> emailListDataList = new List<AFISecurityKeyData>();
+
+        //    using (SqlConnection db = new SqlConnection(AFIConnectionString))
+        //    {
+        //        db.Open();
+        //        try
+        //        {
+        //            var sql = "SELECT * FROM [AFIMooSend_SecurityKey]";
+
+        //            using (SqlCommand cmd = new SqlCommand(sql, db))
+        //            using (SqlDataReader reader = cmd.ExecuteReader())
+        //            {
+        //                while (reader.Read())
+        //                {
+        //                    AFISecurityKeyData data = RepositoryHelper.MapReaderToObject<AFISecurityKeyData>(reader);
+        //                    emailListDataList.Add(data);
+
+        //                }
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Log.Error("Error while attempting to get all Email List data.", ex, this);
+        //        }
+        //        finally
+        //        {
+        //            db.Close();
+        //        }
+        //    }
+
+        //    return emailListDataList;
+        //}
 
         public List<AFISecurityKeyData> GetAllSecurityKeyData()
         {
@@ -338,22 +439,23 @@ namespace AFI.Feature.SitecoreSend.Repositories
                 db.Open();
                 try
                 {
-                    var sql = "SELECT * FROM [AFIMooSend_SecurityKey]";
-
-                    using (SqlCommand cmd = new SqlCommand(sql, db))
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand("GetAllSecurityKeyData", db))
                     {
-                        while (reader.Read())
-                        {
-                            AFISecurityKeyData data = RepositoryHelper.MapReaderToObject<AFISecurityKeyData>(reader);
-                            emailListDataList.Add(data);
+                        cmd.CommandType = CommandType.StoredProcedure;
 
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                AFISecurityKeyData data = RepositoryHelper.MapReaderToObject<AFISecurityKeyData>(reader);
+                                emailListDataList.Add(data);
+                            }
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("Error while attempting to get all Email List data.", ex, this);
+                    Log.Error("Error while attempting to get all security key data.", ex, this);
                 }
                 finally
                 {
@@ -364,18 +466,53 @@ namespace AFI.Feature.SitecoreSend.Repositories
             return emailListDataList;
         }
 
+
+        //public AFISecurityKeyData GetSecurityKeyById(int id)
+        //{
+
+        //    using (SqlConnection db = new SqlConnection(AFIConnectionString))
+        //    {
+        //        db.Open();
+        //        try
+        //        {
+        //            var sql = "SELECT * FROM [AFIMooSend_SecurityKey] WHERE [Id] = @Id";
+
+        //            using (SqlCommand cmd = new SqlCommand(sql, db))
+        //            {
+        //                cmd.Parameters.AddWithValue("@Id", id);
+
+        //                using (SqlDataReader reader = cmd.ExecuteReader())
+        //                {
+        //                    if (reader.Read())
+        //                    {
+        //                        return RepositoryHelper.MapReaderToObject<AFISecurityKeyData>(reader);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            // Handle the exception as needed
+        //        }
+        //        finally
+        //        {
+        //            db.Close();
+        //        }
+        //    }
+
+        //    return null;
+        //}
+
         public AFISecurityKeyData GetSecurityKeyById(int id)
         {
-
             using (SqlConnection db = new SqlConnection(AFIConnectionString))
             {
                 db.Open();
                 try
                 {
-                    var sql = "SELECT * FROM [AFIMooSend_SecurityKey] WHERE [Id] = @Id";
-
-                    using (SqlCommand cmd = new SqlCommand(sql, db))
+                    using (SqlCommand cmd = new SqlCommand("GetSecurityKeyById", db))
                     {
+                        cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@Id", id);
 
                         using (SqlDataReader reader = cmd.ExecuteReader())
@@ -390,6 +527,8 @@ namespace AFI.Feature.SitecoreSend.Repositories
                 catch (Exception ex)
                 {
                     // Handle the exception as needed
+                    // For example, log the error
+                    Log.Error("Error while attempting to get security key by ID.", ex, this);
                 }
                 finally
                 {
@@ -400,20 +539,56 @@ namespace AFI.Feature.SitecoreSend.Repositories
             return null;
         }
 
+
+        //public AFISecurityKeyData GetBySecurityKey(string securityKey)
+        //{
+
+        //    using (SqlConnection db = new SqlConnection(AFIConnectionString))
+        //    {
+        //        db.Open();
+        //        try
+        //        {
+        //            var sql = "SELECT * FROM [AFIMooSend_SecurityKey] WHERE [SecurityKey] = @SecurityKey";
+
+        //            using (SqlCommand cmd = new SqlCommand(sql, db))
+        //            {
+        //                cmd.Parameters.AddWithValue("@SecurityKey", securityKey);
+
+        //                using (SqlDataReader reader = cmd.ExecuteReader())
+        //                {
+        //                    if (reader.Read())
+        //                    {
+        //                        return RepositoryHelper.MapReaderToObject<AFISecurityKeyData>(reader);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            // Handle the exception as needed
+        //        }
+        //        finally
+        //        {
+        //            db.Close();
+        //        }
+        //    }
+
+        //    return null;
+        //}
+
         public AFISecurityKeyData GetBySecurityKey(string securityKey)
         {
-
             using (SqlConnection db = new SqlConnection(AFIConnectionString))
             {
-                db.Open();
-                try
+                using (SqlCommand cmd = new SqlCommand("GetBySecurityKey", db))
                 {
-                    var sql = "SELECT * FROM [AFIMooSend_SecurityKey] WHERE [SecurityKey] = @SecurityKey";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@SecurityKey", securityKey);
 
-                    using (SqlCommand cmd = new SqlCommand(sql, db))
+                    db.Open();
+
+                    try
                     {
-                        cmd.Parameters.AddWithValue("@SecurityKey", securityKey);
-
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             if (reader.Read())
@@ -422,31 +597,70 @@ namespace AFI.Feature.SitecoreSend.Repositories
                             }
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    // Handle the exception as needed
-                }
-                finally
-                {
-                    db.Close();
+                    catch (Exception ex)
+                    {
+                        // Handle the exception as needed
+                        // For example, log the error
+                        Log.Error("Error while retrieving security key data.", ex, this);
+                    }
+                    finally
+                    {
+                        db.Close();
+                    }
                 }
             }
 
             return null;
         }
+
+
+        //public AFISecurityKeyData GetBSecurityKeyByEmail(string email)
+        //{
+
+        //    using (SqlConnection db = new SqlConnection(AFIConnectionString))
+        //    {
+        //        db.Open();
+        //        try
+        //        {
+        //            var sql = "SELECT * FROM [AFIMooSend_SecurityKey] WHERE [Email] = @email";
+
+        //            using (SqlCommand cmd = new SqlCommand(sql, db))
+        //            {
+        //                cmd.Parameters.AddWithValue("@Email", email);
+
+        //                using (SqlDataReader reader = cmd.ExecuteReader())
+        //                {
+        //                    if (reader.Read())
+        //                    {
+        //                        return RepositoryHelper.MapReaderToObject<AFISecurityKeyData>(reader);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            // Handle the exception as needed
+        //        }
+        //        finally
+        //        {
+        //            db.Close();
+        //        }
+        //    }
+
+        //    return null;
+        //}
+
+
         public AFISecurityKeyData GetBSecurityKeyByEmail(string email)
         {
-
             using (SqlConnection db = new SqlConnection(AFIConnectionString))
             {
                 db.Open();
                 try
                 {
-                    var sql = "SELECT * FROM [AFIMooSend_SecurityKey] WHERE [Email] = @email";
-
-                    using (SqlCommand cmd = new SqlCommand(sql, db))
+                    using (SqlCommand cmd = new SqlCommand("GetBSecurityKeyByEmail", db))
                     {
+                        cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@Email", email);
 
                         using (SqlDataReader reader = cmd.ExecuteReader())
@@ -461,6 +675,7 @@ namespace AFI.Feature.SitecoreSend.Repositories
                 catch (Exception ex)
                 {
                     // Handle the exception as needed
+                    Log.Error("Error while attempting to retrieve security key by email.", ex, this);
                 }
                 finally
                 {
@@ -470,6 +685,35 @@ namespace AFI.Feature.SitecoreSend.Repositories
 
             return null;
         }
+
+
+        //public void DeleteSecurityKey(int id)
+        //{
+        //    using (SqlConnection db = new SqlConnection(AFIConnectionString))
+        //    {
+        //        db.Open();
+        //        try
+        //        {
+        //            var sql = "DELETE FROM [AFIMooSend_SecurityKey] WHERE [Id] = @Id";
+
+        //            using (SqlCommand cmd = new SqlCommand(sql, db))
+        //            {
+        //                cmd.Parameters.AddWithValue("@Id", id);
+
+        //                cmd.ExecuteNonQuery();
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            // Handle the exception as needed
+        //        }
+        //        finally
+        //        {
+        //            db.Close();
+        //        }
+        //    }
+        //}
+
         public void DeleteSecurityKey(int id)
         {
             using (SqlConnection db = new SqlConnection(AFIConnectionString))
@@ -477,10 +721,9 @@ namespace AFI.Feature.SitecoreSend.Repositories
                 db.Open();
                 try
                 {
-                    var sql = "DELETE FROM [AFIMooSend_SecurityKey] WHERE [Id] = @Id";
-
-                    using (SqlCommand cmd = new SqlCommand(sql, db))
+                    using (SqlCommand cmd = new SqlCommand("DeleteSecurityKey", db))
                     {
+                        cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@Id", id);
 
                         cmd.ExecuteNonQuery();
@@ -488,7 +731,8 @@ namespace AFI.Feature.SitecoreSend.Repositories
                 }
                 catch (Exception ex)
                 {
-                    // Handle the exception as needed
+                    // Handle the exception as needed, e.g., logging
+                    // Log.Error("Error while attempting to delete security key.", ex, this);
                 }
                 finally
                 {
@@ -497,6 +741,44 @@ namespace AFI.Feature.SitecoreSend.Repositories
             }
         }
 
+
+        //public List<AFISecurityKeyData> GetBSecurityKeysByEmail(string email)
+        //{
+        //    List<AFISecurityKeyData> securityKeys = new List<AFISecurityKeyData>();
+
+        //    using (SqlConnection db = new SqlConnection(AFIConnectionString))
+        //    {
+        //        db.Open();
+        //        try
+        //        {
+        //            var sql = "SELECT * FROM [AFIMooSend_SecurityKey] WHERE [Email] = @Email";
+
+        //            using (SqlCommand cmd = new SqlCommand(sql, db))
+        //            {
+        //                cmd.Parameters.AddWithValue("@Email", email);
+
+        //                using (SqlDataReader reader = cmd.ExecuteReader())
+        //                {
+        //                    while (reader.Read())
+        //                    {
+        //                        AFISecurityKeyData keyData = RepositoryHelper.MapReaderToObject<AFISecurityKeyData>(reader);
+        //                        securityKeys.Add(keyData);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            // Handle the exception as needed
+        //        }
+        //        finally
+        //        {
+        //            db.Close();
+        //        }
+        //    }
+
+        //    return securityKeys;
+        //}
 
         public List<AFISecurityKeyData> GetBSecurityKeysByEmail(string email)
         {
@@ -507,10 +789,9 @@ namespace AFI.Feature.SitecoreSend.Repositories
                 db.Open();
                 try
                 {
-                    var sql = "SELECT * FROM [AFIMooSend_SecurityKey] WHERE [Email] = @Email";
-
-                    using (SqlCommand cmd = new SqlCommand(sql, db))
+                    using (SqlCommand cmd = new SqlCommand("GetBSecurityKeysByEmail", db))
                     {
+                        cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@Email", email);
 
                         using (SqlDataReader reader = cmd.ExecuteReader())
@@ -535,32 +816,98 @@ namespace AFI.Feature.SitecoreSend.Repositories
 
             return securityKeys;
         }
+
+
+        //public AFISecurityKeyData GetValidSecurityKeyByEmail(string email)
+        //{
+        //    List<AFISecurityKeyData> dataCollection = GetBSecurityKeysByEmail(email);
+
+        //    if (dataCollection.Count > 0)
+        //    {
+        //        DateTime currentTime = DateTime.Now;
+
+        //        // Find the first entry with valid time
+        //        AFISecurityKeyData validKey = dataCollection.FirstOrDefault(data =>
+        //            currentTime >= data.StateTime && currentTime <= data.EndTime);
+
+        //        return validKey;
+        //    }
+
+        //    return null;
+        //}
+
         public AFISecurityKeyData GetValidSecurityKeyByEmail(string email)
         {
-            List<AFISecurityKeyData> dataCollection = GetBSecurityKeysByEmail(email);
-
-            if (dataCollection.Count > 0)
+            using (SqlConnection connection = new SqlConnection(AFIConnectionString))
             {
-                DateTime currentTime = DateTime.Now;
+                string storedProcedureName = "GetValidSecurityKeyByEmail";
 
-                // Find the first entry with valid time
-                AFISecurityKeyData validKey = dataCollection.FirstOrDefault(data =>
-                    currentTime >= data.StateTime && currentTime <= data.EndTime);
+                using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
 
-                return validKey;
+                    command.Parameters.AddWithValue("@Email", email);
+
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            AFISecurityKeyData validKey = RepositoryHelper.MapReaderToObject<AFISecurityKeyData>(reader);
+                            return validKey;
+                        }
+                    }
+                }
             }
 
             return null;
         }
 
+
+        //public bool IsValidStateTimeAndEndTime(string securityKey)
+        //{
+        //    AFISecurityKeyData data = GetBySecurityKey(securityKey);
+
+        //    if (data != null)
+        //    {
+        //        DateTime currentTime = DateTime.Now;
+        //        return currentTime >= data.StateTime && currentTime <= data.EndTime;
+        //    }
+
+        //    return false;
+        //}
+
         public bool IsValidStateTimeAndEndTime(string securityKey)
         {
-            AFISecurityKeyData data = GetBySecurityKey(securityKey);
+            DateTime? stateTime = null;
+            DateTime? endTime = null;
 
-            if (data != null)
+            using (SqlConnection connection = new SqlConnection(AFIConnectionString))
+            {
+                string storedProcedureName = "GetSecurityKeyData";
+
+                using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@SecurityKey", securityKey);
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            stateTime = reader.GetDateTime(reader.GetOrdinal("StateTime"));
+                            endTime = reader.GetDateTime(reader.GetOrdinal("EndTime"));
+                        }
+                    }
+                }
+            }
+
+            if (stateTime.HasValue && endTime.HasValue)
             {
                 DateTime currentTime = DateTime.Now;
-                return currentTime >= data.StateTime && currentTime <= data.EndTime;
+                return currentTime >= stateTime.Value && currentTime <= endTime.Value;
             }
 
             return false;
@@ -568,6 +915,7 @@ namespace AFI.Feature.SitecoreSend.Repositories
 
 
         #endregion
+
 
         #region ListSubscriber
 
@@ -1649,6 +1997,4 @@ namespace AFI.Feature.SitecoreSend.Repositories
       
 
     }
-
-
 }
