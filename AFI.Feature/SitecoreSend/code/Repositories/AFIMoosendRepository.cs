@@ -570,15 +570,47 @@ namespace AFI.Feature.SitecoreSend.Repositories
         #endregion
 
         #region ListSubscriber
+
+        //public void ListSubscriberInsert(MoosendListSubscriber data)
+        //{
+        //    using (SqlConnection connection = new SqlConnection(AFIConnectionString))
+        //    {
+        //        string query = "INSERT INTO AFIMoosend_ListSubscriber (EmailListId,SendListId, ListName, SubscriberId, Email, Name, Mobile, JsonBody, Source, CreatedBy, CreatedDate, IsSynced, SyncedTime) " +
+        //                       "VALUES (@EmailListId,@SendListId, @ListName, @SubscriberId, @Email, @Name, @Mobile, @JsonBody, @Source, @CreatedBy, @CreatedDate, @IsSynced, @SyncedTime)";
+
+        //        using (SqlCommand command = new SqlCommand(query, connection))
+        //        {
+        //            // Set parameter values from the MoosendListSubscriber object
+        //            command.Parameters.AddWithValue("@EmailListId", data.EmailListId);
+        //            command.Parameters.AddWithValue("@SendListId", data.SendListId);
+        //            command.Parameters.AddWithValue("@ListName", data.ListName);
+        //            command.Parameters.AddWithValue("@SubscriberId", data.SubscriberId);
+        //            command.Parameters.AddWithValue("@Email", data.Email);
+        //            command.Parameters.AddWithValue("@Name", data.Name);
+        //            command.Parameters.AddWithValue("@Mobile", data.Mobile);
+        //            command.Parameters.AddWithValue("@JsonBody", data.JsonBody);
+        //            command.Parameters.AddWithValue("@Source", data.Source);
+        //            command.Parameters.AddWithValue("@CreatedBy", data.CreatedBy);
+        //            command.Parameters.AddWithValue("@CreatedDate", data.CreatedDate);
+        //            command.Parameters.AddWithValue("@IsSynced", data.IsSynced);
+        //            command.Parameters.AddWithValue("@SyncedTime", (object)data.SyncedTime ?? DBNull.Value); // Handle nullable SyncedTime
+
+        //            connection.Open();
+        //            command.ExecuteNonQuery();
+        //        }
+        //    }
+        //}
+
         public void ListSubscriberInsert(MoosendListSubscriber data)
         {
             using (SqlConnection connection = new SqlConnection(AFIConnectionString))
             {
-                string query = "INSERT INTO AFIMoosend_ListSubscriber (EmailListId,SendListId, ListName, SubscriberId, Email, Name, Mobile, JsonBody, Source, CreatedBy, CreatedDate, IsSynced, SyncedTime) " +
-                               "VALUES (@EmailListId,@SendListId, @ListName, @SubscriberId, @Email, @Name, @Mobile, @JsonBody, @Source, @CreatedBy, @CreatedDate, @IsSynced, @SyncedTime)";
+                string storedProcedureName = "InsertMoosendListSubscriber";
 
-                using (SqlCommand command = new SqlCommand(query, connection))
+                using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
                 {
+                    command.CommandType = CommandType.StoredProcedure;
+
                     // Set parameter values from the MoosendListSubscriber object
                     command.Parameters.AddWithValue("@EmailListId", data.EmailListId);
                     command.Parameters.AddWithValue("@SendListId", data.SendListId);
@@ -599,20 +631,53 @@ namespace AFI.Feature.SitecoreSend.Repositories
                 }
             }
         }
+
+        //public void ListSubscriberUpdate(MoosendListSubscriber data)
+        //{
+        //    using (SqlConnection connection = new SqlConnection(AFIConnectionString))
+        //    {
+        //        string query = "UPDATE AFIMoosend_ListSubscriber SET EmailListId = @EmailListId, " +
+        //                       "SendListId = @SendListId, ListName = @ListName, " +
+        //                       "SubscriberId = @SubscriberId, Email = @Email, " +
+        //                       "Name = @Name, Mobile = @Mobile, JsonBody = @JsonBody, " +
+        //                       "Source = @Source, CreatedBy = @CreatedBy, " +
+        //                       "CreatedDate = @CreatedDate, IsSynced = @IsSynced, " +
+        //                       "SyncedTime = @SyncedTime WHERE Id = @Id";
+
+        //        using (SqlCommand command = new SqlCommand(query, connection))
+        //        {
+        //            // Set parameter values from the MoosendListSubscriber object
+        //            command.Parameters.AddWithValue("@Id", data.Id);
+        //            command.Parameters.AddWithValue("@EmailListId", data.EmailListId);
+        //            command.Parameters.AddWithValue("@SendListId", data.SendListId);
+        //            command.Parameters.AddWithValue("@ListName", data.ListName);
+        //            command.Parameters.AddWithValue("@SubscriberId", data.SubscriberId);
+        //            command.Parameters.AddWithValue("@Email", data.Email);
+        //            command.Parameters.AddWithValue("@Name", data.Name);
+        //            command.Parameters.AddWithValue("@Mobile", data.Mobile);
+        //            command.Parameters.AddWithValue("@JsonBody", data.JsonBody);
+        //            command.Parameters.AddWithValue("@Source", data.Source);
+        //            command.Parameters.AddWithValue("@CreatedBy", data.CreatedBy);
+        //            command.Parameters.AddWithValue("@CreatedDate", data.CreatedDate);
+        //            command.Parameters.AddWithValue("@IsSynced", data.IsSynced);
+        //            command.Parameters.AddWithValue("@SyncedTime", data.SyncedTime);
+
+        //            connection.Open();
+        //            command.ExecuteNonQuery();
+        //        }
+        //    }
+        //}
+
         public void ListSubscriberUpdate(MoosendListSubscriber data)
         {
             using (SqlConnection connection = new SqlConnection(AFIConnectionString))
             {
-                string query = "UPDATE AFIMoosend_ListSubscriber SET EmailListId = @EmailListId, " +
-                               "SendListId = @SendListId, ListName = @ListName, " +
-                               "SubscriberId = @SubscriberId, Email = @Email, " +
-                               "Name = @Name, Mobile = @Mobile, JsonBody = @JsonBody, " +
-                               "Source = @Source, CreatedBy = @CreatedBy, " +
-                               "CreatedDate = @CreatedDate, IsSynced = @IsSynced, " +
-                               "SyncedTime = @SyncedTime WHERE Id = @Id";
+                string storedProcedureName = "UpdateListSubscriber";
 
-                using (SqlCommand command = new SqlCommand(query, connection))
+                using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
                 {
+                    command.CommandType = CommandType.StoredProcedure;
+
                     // Set parameter values from the MoosendListSubscriber object
                     command.Parameters.AddWithValue("@Id", data.Id);
                     command.Parameters.AddWithValue("@EmailListId", data.EmailListId);
@@ -634,14 +699,32 @@ namespace AFI.Feature.SitecoreSend.Repositories
                 }
             }
         }
+
+        //public void DeleteListSubscriber(int Id)
+        //{
+        //    using (SqlConnection connection = new SqlConnection(AFIConnectionString))
+        //    {
+        //        string query = "DELETE FROM AFIMoosend_ListSubscriber WHERE Id = @Id";
+
+        //        using (SqlCommand command = new SqlCommand(query, connection))
+        //        {
+        //            command.Parameters.AddWithValue("@Id", Id);
+
+        //            connection.Open();
+        //            command.ExecuteNonQuery();
+        //        }
+        //    }
+        //}
+
         public void DeleteListSubscriber(int Id)
         {
             using (SqlConnection connection = new SqlConnection(AFIConnectionString))
             {
-                string query = "DELETE FROM AFIMoosend_ListSubscriber WHERE Id = @Id";
+                string storedProcedureName = "DeleteListSubscriber";
 
-                using (SqlCommand command = new SqlCommand(query, connection))
+                using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
                 {
+                    command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@Id", Id);
 
                     connection.Open();
@@ -649,16 +732,48 @@ namespace AFI.Feature.SitecoreSend.Repositories
                 }
             }
         }
+
+        //public List<MoosendListSubscriber> GetAllListSubscriberByListId(int emailListId)
+        //{
+        //    List<MoosendListSubscriber> subscribers = new List<MoosendListSubscriber>();
+
+        //    using (SqlConnection connection = new SqlConnection(AFIConnectionString))
+        //    {
+        //        string query = "SELECT * FROM AFIMoosend_ListSubscriber WHERE EmailListId = @EmailListId";
+
+        //        using (SqlCommand command = new SqlCommand(query, connection))
+        //        {
+        //            command.Parameters.AddWithValue("@EmailListId", emailListId);
+
+        //            connection.Open();
+
+        //            using (SqlDataReader reader = command.ExecuteReader())
+        //            {
+        //                // Map each row from the reader to MoosendListSubscriber and add to subscribers list
+        //                while (reader.Read())
+        //                {
+        //                    MoosendListSubscriber subscriber = RepositoryHelper.MapReaderToObject<MoosendListSubscriber>(reader);
+        //                    subscribers.Add(subscriber);
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    return subscribers;
+        //}
+
         public List<MoosendListSubscriber> GetAllListSubscriberByListId(int emailListId)
         {
             List<MoosendListSubscriber> subscribers = new List<MoosendListSubscriber>();
 
             using (SqlConnection connection = new SqlConnection(AFIConnectionString))
             {
-                string query = "SELECT * FROM AFIMoosend_ListSubscriber WHERE EmailListId = @EmailListId";
+                string storedProcedureName = "GetAllSubscribersByListId";
 
-                using (SqlCommand command = new SqlCommand(query, connection))
+                using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
                 {
+                    command.CommandType = CommandType.StoredProcedure;
+
                     command.Parameters.AddWithValue("@EmailListId", emailListId);
 
                     connection.Open();
@@ -677,16 +792,46 @@ namespace AFI.Feature.SitecoreSend.Repositories
 
             return subscribers;
         }
+
+
+        //public List<MoosendListSubscriber> GetAllListSubscriber()
+        //{
+        //    List<MoosendListSubscriber> subscribers = new List<MoosendListSubscriber>();
+
+        //    using (SqlConnection connection = new SqlConnection(AFIConnectionString))
+        //    {
+        //        string query = "SELECT * FROM AFIMoosend_ListSubscriber";
+
+        //        using (SqlCommand command = new SqlCommand(query, connection))
+        //        {
+        //            connection.Open();
+
+        //            using (SqlDataReader reader = command.ExecuteReader())
+        //            {
+        //                while (reader.Read())
+        //                {
+        //                    MoosendListSubscriber data = RepositoryHelper.MapReaderToObject<MoosendListSubscriber>(reader);
+        //                    subscribers.Add(data);
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    return subscribers;
+        //}
+
         public List<MoosendListSubscriber> GetAllListSubscriber()
         {
             List<MoosendListSubscriber> subscribers = new List<MoosendListSubscriber>();
 
             using (SqlConnection connection = new SqlConnection(AFIConnectionString))
             {
-                string query = "SELECT * FROM AFIMoosend_ListSubscriber";
+                string storedProcedureName = "GetAllListSubscribers";
 
-                using (SqlCommand command = new SqlCommand(query, connection))
+                using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
                 {
+                    command.CommandType = CommandType.StoredProcedure;
+
                     connection.Open();
 
                     using (SqlDataReader reader = command.ExecuteReader())
@@ -702,14 +847,42 @@ namespace AFI.Feature.SitecoreSend.Repositories
 
             return subscribers;
         }
+
+
+        //public MoosendListSubscriber GetListSubscriberById(int id)
+        //{
+        //    using (SqlConnection connection = new SqlConnection(AFIConnectionString))
+        //    {
+        //        string query = "SELECT * FROM AFIMoosend_ListSubscriber WHERE Id = @Id";
+
+        //        using (SqlCommand command = new SqlCommand(query, connection))
+        //        {
+        //            command.Parameters.AddWithValue("@Id", id);
+
+        //            connection.Open();
+
+        //            using (SqlDataReader reader = command.ExecuteReader())
+        //            {
+        //                if (reader.Read())
+        //                {
+        //                    return RepositoryHelper.MapReaderToObject<MoosendListSubscriber>(reader);
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    return null;
+        //}
+
         public MoosendListSubscriber GetListSubscriberById(int id)
         {
             using (SqlConnection connection = new SqlConnection(AFIConnectionString))
             {
-                string query = "SELECT * FROM AFIMoosend_ListSubscriber WHERE Id = @Id";
+                string storedProcedureName = "GetListSubscriberById";
 
-                using (SqlCommand command = new SqlCommand(query, connection))
+                using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
                 {
+                    command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@Id", id);
 
                     connection.Open();
@@ -726,16 +899,47 @@ namespace AFI.Feature.SitecoreSend.Repositories
 
             return null;
         }
+
+
+        //public List<MoosendListSubscriber> GetAllListSubscriberByIsSynced(bool isSynced)
+        //{
+        //    List<MoosendListSubscriber> subscribers = new List<MoosendListSubscriber>();
+
+        //    using (SqlConnection connection = new SqlConnection(AFIConnectionString))
+        //    {
+        //        string query = "Select * From [AFIMoosend_ListSubscriber] where IsSynced = @IsSynced";
+
+        //        using (SqlCommand command = new SqlCommand(query, connection))
+        //        {
+        //            command.Parameters.AddWithValue("@IsSynced", isSynced);
+        //            connection.Open();
+
+        //            using (SqlDataReader reader = command.ExecuteReader())
+        //            {
+        //                while (reader.Read())
+        //                {
+        //                    MoosendListSubscriber data = RepositoryHelper.MapReaderToObject<MoosendListSubscriber>(reader);
+        //                    subscribers.Add(data);
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    return subscribers;
+        //}
+
         public List<MoosendListSubscriber> GetAllListSubscriberByIsSynced(bool isSynced)
         {
             List<MoosendListSubscriber> subscribers = new List<MoosendListSubscriber>();
 
             using (SqlConnection connection = new SqlConnection(AFIConnectionString))
             {
-                string query = "Select * From [AFIMoosend_ListSubscriber] where IsSynced = @IsSynced";
+                string storedProcedureName = "GetAllSubscribersByIsSynced";
 
-                using (SqlCommand command = new SqlCommand(query, connection))
+                using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
                 {
+                    command.CommandType = CommandType.StoredProcedure;
+
                     command.Parameters.AddWithValue("@IsSynced", isSynced);
                     connection.Open();
 
@@ -752,9 +956,43 @@ namespace AFI.Feature.SitecoreSend.Repositories
 
             return subscribers;
         }
-        public List<MoosendListSubscriber> GetFilterSubscriberByIsSynced(bool isSynced )
+
+
+        //public List<MoosendListSubscriber> GetFilterSubscriberByIsSynced(bool isSynced )
+        //{
+        //    //int ofsetItem = (page - 1) * pageSize;
+        //    int ofsetItem = 0;
+        //    int pageSize = 50;
+
+        //    List<MoosendListSubscriber> subscribers = new List<MoosendListSubscriber>();
+
+        //    using (SqlConnection connection = new SqlConnection(AFIConnectionString))
+        //    {
+        //        string query = "select * from [AFIMoosend_ListSubscriber] WHERE IsSynced = @IsSynced ORDER BY Id OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY ;";
+
+        //        using (SqlCommand command = new SqlCommand(query, connection))
+        //        {
+        //            command.Parameters.AddWithValue("@IsSynced", isSynced);
+        //            command.Parameters.AddWithValue("@Offset", ofsetItem);
+        //            command.Parameters.AddWithValue("@PageSize", pageSize);
+        //            connection.Open();
+
+        //            using (SqlDataReader reader = command.ExecuteReader())
+        //            {
+        //                while (reader.Read())
+        //                {
+        //                    MoosendListSubscriber data = RepositoryHelper.MapReaderToObject<MoosendListSubscriber>(reader);
+        //                    subscribers.Add(data);
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    return subscribers;
+        //}
+
+        public List<MoosendListSubscriber> GetFilterSubscriberByIsSynced(bool isSynced)
         {
-            //int ofsetItem = (page - 1) * pageSize;
             int ofsetItem = 0;
             int pageSize = 50;
 
@@ -762,13 +1000,16 @@ namespace AFI.Feature.SitecoreSend.Repositories
 
             using (SqlConnection connection = new SqlConnection(AFIConnectionString))
             {
-                string query = "select * from [AFIMoosend_ListSubscriber] WHERE IsSynced = @IsSynced ORDER BY Id OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY ;";
+                string storedProcedureName = "GetFilteredSubscribers";
 
-                using (SqlCommand command = new SqlCommand(query, connection))
+                using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
                 {
+                    command.CommandType = CommandType.StoredProcedure;
+
                     command.Parameters.AddWithValue("@IsSynced", isSynced);
                     command.Parameters.AddWithValue("@Offset", ofsetItem);
                     command.Parameters.AddWithValue("@PageSize", pageSize);
+
                     connection.Open();
 
                     using (SqlDataReader reader = command.ExecuteReader())
