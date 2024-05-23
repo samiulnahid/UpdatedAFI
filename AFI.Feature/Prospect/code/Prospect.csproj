@@ -303,6 +303,7 @@
     <Compile Include="Job\CleanProspectTableData.cs" />
     <Compile Include="Job\CleanTempProspectTableData.cs" />
     <Compile Include="Job\MarketingProspectTempMail.cs" />
+    <Compile Include="Job\DeleteFinishEmailtoTempSuspect.cs" />
     <Compile Include="Job\QuoteHubSuspectData.cs" />
     <Compile Include="Models\ObjectModel.cs" />
     <Compile Include="Models\ProspectMarketingTrack.cs" />
