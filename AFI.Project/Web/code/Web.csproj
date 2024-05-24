@@ -1084,6 +1084,7 @@
     <Content Include="sitecore\Admin\assets\font-awesome\webfonts\fa-solid-900.woff2" />
     <Content Include="sitecore\Admin\assets\font-awesome\webfonts\fa-v4compatibility.ttf" />
     <Content Include="sitecore\Admin\assets\font-awesome\webfonts\fa-v4compatibility.woff2" />
+    <Content Include="Views\AFI\Prospect\ProspectDashboard - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\AFI.Feature\Article\code\Article.csproj">
